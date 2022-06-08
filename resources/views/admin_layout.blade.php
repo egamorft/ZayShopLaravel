@@ -28,7 +28,16 @@
             <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="/admin2" target="_blank">
                 <img src="{{asset('public/backend/images/logo-ct.png')}}" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold text-white">Hello Admin</span>
+                <span class="ms-1 font-weight-bold text-white">Hello
+                    <?php
+
+                    $name = Session::get('admin_name');
+
+                    if ($name) {
+                        echo  $name;
+                    }
+                    ?>
+                </span>
             </a>
         </div>
         <hr class="horizontal light mt-0 mb-2">
@@ -94,7 +103,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="./pages/sign-in.html">
+                    <a class="nav-link text-white " href="{{URL::to('/logout')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">login</i>
                         </div>
@@ -119,7 +128,13 @@
                         <li class="nav-item d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Admin</span>
+                                <span class="d-sm-inline d-none">
+                                    <?php
+                                    if ($name) {
+                                        echo  $name;
+                                    }
+                                    ?>
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">

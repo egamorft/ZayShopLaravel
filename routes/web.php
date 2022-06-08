@@ -27,3 +27,7 @@ Route::get('/shop', 'HomeController@shop');
 Route::get('/admin', 'AdminController@home');
 
 Route::get('/dashboard', 'AdminController@dashboard');
+
+Route::post('/admin-login', 'AdminController@login');
+
+Route::get('/logout', 'AdminController@logout');

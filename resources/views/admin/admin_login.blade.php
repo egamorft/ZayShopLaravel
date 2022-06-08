@@ -48,21 +48,30 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start" autocomplete="off">
+                <?php
+
+                $message = Session::get('message');
+                if ($message) {
+                  echo '<div class="alert alert-danger">' . $message . '</div>';
+                  Session::put('message', null);
+                }
+                ?>
+                <form method="POST" role="form" action="{{URL::to('/admin-login')}}" class="text-start" autocomplete="off">
+                  @csrf
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control">
+                    <input type="text" class="form-control" name="admin_email">
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" class="form-control">
+                    <input type="password" name="admin_password" class="form-control">
                   </div>
                   <div class="form-check form-switch d-flex align-items-center mb-3">
                     <input class="form-check-input" type="checkbox" id="rememberMe">
                     <label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
+                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Log in</button>
                   </div>
                 </form>
               </div>
@@ -88,8 +97,16 @@
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{asset('public/backend/js/material-dashboard.min.js?v=3.0.2')}}"></script>
+  <script>
+    /** HIDE ALERT**/
+    $(document).click(function(e) {
+      $('.alert').hide();
+    });
+    /** HIDE ALERT**/
+  </script>
 </body>
 
 </html>
