@@ -3,4 +3,4 @@
     <div class="text-center">
         <h3>Welcome to admin page</h3>
     </div>
-    @endsection
+@endsection

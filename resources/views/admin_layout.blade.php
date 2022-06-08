@@ -44,7 +44,7 @@
         <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-white active bg-gradient-primary" href="./pages/dashboard.html">
+                    <a class="nav-link text-white active bg-gradient-primary" href="{{URL::to('/dashboard')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="./pages/tables.html">
+                    <a class="nav-link text-white " href="{{URL::to('/show-category')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">table_view</i>
                         </div>
@@ -156,8 +156,8 @@
             </div>
         </nav>
         <!-- End Navbar -->
+        @yield('admin_content')
     </main>
-    @yield('admin_content')
     <div class="fixed-plugin">
         <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
             <i class="material-icons py-2">settings</i>
@@ -226,6 +226,22 @@
     <script src="{{asset('public/backend/js/plugins/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/smooth-scrollbar.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/chartjs.min.js')}}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        /** HIDE ALERT**/
+        $(document).click(function(e) {
+            $('.alert').hide();
+        });
+        /** HIDE ALERT**/
+    </script>
+    <script type="text/javascript">
+        ClassicEditor
+            .create(document.querySelector('#ckeditorAddCategory'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
     <script>
         var ctx = document.getElementById("chart-bars").getContext("2d");
 

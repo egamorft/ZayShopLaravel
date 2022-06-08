@@ -31,3 +31,10 @@ Route::get('/dashboard', 'AdminController@dashboard');
 Route::post('/admin-login', 'AdminController@login');
 
 Route::get('/logout', 'AdminController@logout');
+
+//Category
+Route::get('/show-category', 'CategoryController@show_category');
+
+Route::get('/add-category', 'CategoryController@add_category');
+
+Route::post('/save-category', 'CategoryController@save_category');
