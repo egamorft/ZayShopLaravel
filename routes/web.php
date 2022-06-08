@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Public
+//Public frontend
 Route::get('/home', 'HomeController@home');
 
 Route::get('/about', 'HomeController@about');
@@ -22,3 +22,8 @@ Route::get('/about', 'HomeController@about');
 Route::get('/contact', 'HomeController@contact');
 
 Route::get('/shop', 'HomeController@shop');
+
+//Backend - Admin
+Route::get('/admin', 'AdminController@home');
+
+Route::get('/dashboard', 'AdminController@dashboard');
