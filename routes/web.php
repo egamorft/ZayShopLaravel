@@ -60,6 +60,8 @@ Route::get('/unactive-sub-category/{subcategory_id}', 'SubCategoryController@una
 
 Route::get('/active-sub-category/{subcategory_id}', 'SubCategoryController@active_sub_category');
 
+Route::get('/edit-sub-category/{subcategory_id}', 'SubCategoryController@edit_sub_category');
+
 Route::get('/delete-sub-category/{subcategory_id}', 'SubCategoryController@delete_sub_category');
 
 Route::post('/update-sub-category/{subcategory_id}', 'SubCategoryController@update_sub_category');

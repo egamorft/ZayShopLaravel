@@ -65,11 +65,12 @@ class SubCategoryController extends Controller
         Session::put('message', 'Active subcategory ' . $subcategory_id);
         return Redirect::to('show-sub-category');
     }
-    public function edit_category($category_id)
+    public function edit_sub_category($subcategory_id)
     {
-        $edit_category = DB::table('tbl_category')->where('category_id', $category_id)->get();
-        $manager_category = view('admin.edit_category')->with('edit_category', $edit_category);
-        return view('admin_layout')->with('admin.edit_category', $manager_category);
+        $get_category = DB::table('tbl_category')->where('category_status', '1')->get();
+        $edit_sub_category = DB::table('tbl_subcategory')->where('subcategory_id', $subcategory_id)->get();
+        $manager_sub_category = view('admin.edit_sub_category')->with('edit_sub_category', $edit_sub_category)->with('get_category', $get_category);
+        return view('admin_layout')->with('admin.edit_sub_category', $manager_sub_category);
     }
     public function delete_sub_category($subcategory_id)
     {
@@ -77,13 +78,30 @@ class SubCategoryController extends Controller
         Session::put('message', 'Delete subcategory ' . $subcategory_id);
         return Redirect::to('show-sub-category');
     }
-    public function update_category(Request $request, $category_id)
+    public function update_sub_category(Request $request, $subcategory_id)
     {
         $data = array();
-        $data['category_name'] = $request->category_name;
-        $data['category_desc'] = $request->category_desc;
-        DB::table('tbl_category')->where('category_id', $category_id)->update($data);
-        Session::put('message', 'Update category ' . $category_id);
-        return Redirect::to('show-category');
+        $data['subcategory_name'] = $request->subcategory_name;
+        $data['subcategory_desc'] = $request->subcategory_desc;
+        $data['category_id'] = $request->category_id;
+        $get_category = DB::table('tbl_category')->where('category_status', '1')->get();
+        $manager_category = view('admin.add_sub_category')->with('get_category', $get_category);
+        foreach ($manager_category->get_category as $m) {
+            if ($m->category_id == (string)$data['category_id']) {
+                if ($data['subcategory_name'] == null) {
+                    Session::forget('error');
+                    Session::put('error', 'Update subcategory fail');
+                    break;
+                } else {
+                    DB::table('tbl_subcategory')->where('subcategory_id', $subcategory_id)->update($data);
+                    Session::forget('error');
+                    Session::put('message', 'Update subcategory');
+                    break;
+                }
+            } else {
+                Session::put('error', 'Please choose one category in the box');
+            }
+        }
+        return Redirect::to('show-sub-category');
     }
 }

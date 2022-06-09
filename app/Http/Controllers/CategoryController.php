@@ -31,13 +31,14 @@ class CategoryController extends Controller
             return Redirect::to('add-category');
         } else {
             DB::table('tbl_category')->insert($data);
-            Session::put('message', 'Add category successfully');
+            Session::put('message', 'Add category');
             return Redirect::to('add-category');
         }
     }
     public function unactive_category($category_id)
     {
         DB::table('tbl_category')->where('category_id', $category_id)->update(['category_status' => 0]);
+        DB::table('tbl_subcategory')->where('category_id', $category_id)->update(['subcategory_status' => 0]);
         Session::put('message', 'Unactive category ' . $category_id);
         return Redirect::to('show-category');
     }
@@ -56,6 +57,7 @@ class CategoryController extends Controller
     public function delete_category($category_id)
     {
         DB::table('tbl_category')->where('category_id', $category_id)->delete();
+        DB::table('tbl_subcategory')->where('category_id', $category_id)->delete();
         Session::put('message', 'Delete category ' . $category_id);
         return Redirect::to('show-category');
     }
@@ -64,8 +66,14 @@ class CategoryController extends Controller
         $data = array();
         $data['category_name'] = $request->category_name;
         $data['category_desc'] = $request->category_desc;
-        DB::table('tbl_category')->where('category_id', $category_id)->update($data);
-        Session::put('message', 'Update category ' . $category_id);
-        return Redirect::to('show-category');
+        if ($data['category_name'] == null) {
+            Session::put('error', 'Update category fail ' . $category_id);
+            return Redirect::to('show-category');
+
+        }else{
+            DB::table('tbl_category')->where('category_id', $category_id)->update($data);
+            Session::put('message', 'Update category ' . $category_id);
+            return Redirect::to('show-category');
+        }
     }
 }
