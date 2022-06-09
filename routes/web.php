@@ -48,3 +48,18 @@ Route::get('/edit-category/{category_id}', 'CategoryController@edit_category');
 Route::get('/delete-category/{category_id}', 'CategoryController@delete_category');
 
 Route::post('/update-category/{category_id}', 'CategoryController@update_category');
+
+//SubCategory
+Route::get('/show-sub-category', 'SubCategoryController@show_sub_category');
+
+Route::get('/add-sub-category', 'SubCategoryController@add_sub_category');
+
+Route::post('/save-sub-category', 'SubCategoryController@save_sub_category');
+
+Route::get('/unactive-sub-category/{subcategory_id}', 'SubCategoryController@unactive_sub_category');
+
+Route::get('/active-sub-category/{subcategory_id}', 'SubCategoryController@active_sub_category');
+
+Route::get('/delete-sub-category/{subcategory_id}', 'SubCategoryController@delete_sub_category');
+
+Route::post('/update-sub-category/{subcategory_id}', 'SubCategoryController@update_sub_category');
