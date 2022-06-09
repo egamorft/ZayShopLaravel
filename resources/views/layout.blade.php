@@ -95,22 +95,38 @@ https://templatemo.com/tm-559-zay-shop
                     <a class="nav-icon position-relative text-decoration-none" href="#" aria-placeholder="cart">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                     </a>
-                    <div class="dropdown">
-                        <a class="nav-icon position-relative text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#">
-                            <i class="fa fa-fw fa-user text-dark mr-3"></i> Hello
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <h5 class="dropdown-header">Account action</h5>
-                            </li>
-                            <li><a class="dropdown-item" href="#">My profile</a></li>
-                            <li><a class="dropdown-item" href="#">Change password</a></li>
-                            <li>
-                                <h5 class="dropdown-header">Logout</h5>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
-                        </ul>
-                    </div>
+                    <?php
+
+                    $customer_id = Session::get('customer_id');
+                    if ($customer_id != null) {
+                    ?>
+                        <div class="dropdown">
+                            <a class="nav-icon position-relative text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                                <i class="fa fa-fw fa-user text-dark mr-3"></i> Hello
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <h5 class="dropdown-header">Account action</h5>
+                                </li>
+                                <li><a class="dropdown-item" href="#">My profile</a></li>
+                                <li><a class="dropdown-item" href="#">Change password</a></li>
+                                <li>
+                                    <h5 class="dropdown-header">Logout</h5>
+                                </li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="dropdown">
+                            <a class="nav-icon position-relative text-decoration-none" href="login">
+                                <i class="fa fa-fw fa-lock text-dark mr-3"></i> Login
+                            </a>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
 

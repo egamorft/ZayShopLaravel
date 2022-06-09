@@ -23,6 +23,10 @@ Route::get('/contact', 'HomeController@contact');
 
 Route::get('/shop', 'HomeController@shop');
 
+Route::get('/login', 'HomeController@login');
+
+Route::get('/register', 'HomeController@register');
+
 //Backend - Admin
 Route::get('/admin', 'AdminController@home');
 
