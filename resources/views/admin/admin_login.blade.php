@@ -48,24 +48,22 @@
                 </div>
               </div>
               <div class="card-body">
-                <?php
-
-                $message = Session::get('message');
-                if ($message) {
-                  echo '<div class="alert alert-danger">' . $message . '</div>';
-                  Session::put('message', null);
-                }
-                ?>
                 <form method="POST" role="form" action="{{URL::to('/admin-login')}}" class="text-start" autocomplete="off">
                   @csrf
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
                     <input type="text" class="form-control" name="admin_email">
                   </div>
+                  @error('admin_email')
+                  <span style="color: red">{{$message}}</span>
+                  @enderror
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Password</label>
                     <input type="password" name="admin_password" class="form-control">
                   </div>
+                  @error('admin_password')
+                  <span style="color: red">{{$message}}</span>
+                  @enderror
                   <div class="form-check form-switch d-flex align-items-center mb-3">
                     <input class="form-check-input" type="checkbox" id="rememberMe">
                     <label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>
