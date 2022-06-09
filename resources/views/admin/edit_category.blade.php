@@ -39,11 +39,12 @@ Session::put('error', null);
 
 <div class="container">
     <div class="col-lg-11">
+    @foreach($edit_category as $key => $edit_value)
         <div class="card">
             <div class="card-header pb-0">
                 <div class="row">
                     <div class="col-lg-6 col-7">
-                        <h6>Add category</h6>
+                        <h6>Edit category: {{$edit_value->category_name}}</h6>
                     </div>
                     <div class="col-lg-6 col-5 my-auto text-end">
                         <div class="dropdown float-lg-end pe-4">
@@ -56,29 +57,24 @@ Session::put('error', null);
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="col-md-7 container">
-                    <form role="form" method="POST" action="{{URL::to('/save-category')}}">
+                    <form role="form" method="POST" action="{{URL::to('/update-category/'.$edit_value->category_id)}}">
                         @csrf
                         <div class="input-group input-group-outline my-3">
                             <label class="form-label">Category Name</label>
-                            <input name="category_name" type="text" class="form-control">
+                            <input value="{{$edit_value->category_name}}" name="category_name" type="text" class="form-control">
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAddCategory">Category Description</label>
-                            <textarea name="category_desc" placeholder="Enter Category Description" class="form-control" id="ckeditorAddCategory" rows="8"></textarea>
-                        </div>
-                        <div class="form-check mb-3 ">
-                            <label for="show">Show</label>
-                            <input class="form-check-input" type="radio" name="category_status" id="show" value="1" checked>
-                            <label class="form-check-label" for="hide">Hide</label>
-                            <input class="form-check-input" type="radio" name="category_status" id="hide" value="0">
+                            <textarea name="category_desc" placeholder="Enter Category Description" class="form-control" id="ckeditorAddCategory" rows="8"> {{$edit_value->category_desc}} </textarea>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Add category</button>
+                            <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Save category</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
 </div>
 

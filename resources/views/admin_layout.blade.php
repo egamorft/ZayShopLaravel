@@ -229,11 +229,6 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        /** HIDE ALERT**/
-        $(document).click(function(e) {
-            $('.alert').hide();
-        });
-        /** HIDE ALERT**/
     </script>
     <script type="text/javascript">
         ClassicEditor
@@ -502,6 +497,13 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('public/backend/js/material-dashboard.min.js?v=3.0.2')}}"></script>
+    <script>
+        $(document).ready(function(){
+            window.setTimeout(function() {
+                $("#alertMessage").fadeOut(1000)
+            }, 2000);
+    });
+    </script>
 </body>
 
 </html>

@@ -1,6 +1,42 @@
 @extends('admin_layout')
 @section('admin_content')
 
+<!-- Alert -->
+@if(session()->has('message'))
+<div class="container">
+    <div class="row">
+        <div class="col-9"></div>
+        <div class="col-sm-3">
+            <div id="alertMessage" class="alert alert-success">
+            <strong>Success! </strong>
+                {{session()->get('message')}}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<?php 
+Session::put('message', null);
+?>
+@elseif(session()->has('error'))
+<div class="container">
+    <div class="row">
+        <div class="col-9"></div>
+        <div class="col-sm-3">
+            <div id="alertMessage" class="alert alert-danger">
+                <strong>Error! </strong>
+                {{session()->get('error')}}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<?php 
+Session::put('error', null);
+?>
+@endif
+<!-- End Alert -->
+
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-12">
@@ -38,7 +74,6 @@
                                     <td>
                                         <p class="font-weight-bold mb-0">
                                             {{$cate->category_name}}
-
                                         </p>
                                     </td>
 
@@ -56,12 +91,12 @@
                                         ?>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="" class="font-weight-bold" data-toggle="tooltip">
+                                        <a href="{{URL::to('/edit-category/'.$cate->category_id)}}" class="font-weight-bold" data-toggle="tooltip">
                                             <i class="material-icons" style="font-size: 30px;">edit</i>
                                         </a>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="" class="font-weight-bold" data-toggle="tooltip">
+                                        <a onclick="return confirm('Are you sure to delete?')" href="{{URL::to('/delete-category/'.$cate->category_id)}}" class="font-weight-bold" data-toggle="tooltip">
                                             <i class="material-icons" style="font-size: 30px;">delete</i>
                                         </a>
                                     </td>
