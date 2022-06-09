@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //Public frontend
-Route::get('/home', 'HomeController@home');
+Route::get('/', 'HomeController@home');
 
 Route::get('/about', 'HomeController@about');
 

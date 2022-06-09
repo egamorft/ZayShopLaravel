@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,9 @@ class HomeController extends Controller
     }
 
     public function shop(){
-        return view('pages.public.shop');
+        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'asc')->get();
+        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('category_id', 'asc')->get();
+        return view('pages.public.shop')->with(compact('category', 'subcategory'));
     }
 
     public function contact(){
