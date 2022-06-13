@@ -30,4 +30,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'facebook' => [
+        'client_id' => '508433067730596', //client face của bạn
+        'client_secret' => '32d6dc4d7a38e20848ca243923bf53ba', //client app service face của bạn
+        'redirect' => 'http://localhost/shopZay/callback' //callback trả về
+    ],
+
+    'google' => [
+        'client_id' => '822453206136-g514hsocegdmnccc8ocog1d7adp1a6c8.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => 'http://localhost/shopZay/google/callback' 
+    ],
+
 ];

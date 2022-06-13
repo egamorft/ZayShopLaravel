@@ -68,10 +68,10 @@ Session::put('error', null);
                 <span class="d-block text-left my-4 text-muted"> or sign in with</span>
 
                 <div class="social-login">
-                    <a href="#" class="facebook">
+                    <a href="{{URL::to('/login-facebook')}}" class="facebook">
                         <i class="fa-brands fa-facebook fa-2xl"></i>
                     </a>
-                    <a href="#" class="twitter" style="margin-left: 50px;">
+                    <a href="{{URL::to('/login-google')}}" class="twitter" style="margin-left: 50px;">
                         <i class="fa-brands fa-google fa-2xl"></i>
                     </a>
                 </div>
