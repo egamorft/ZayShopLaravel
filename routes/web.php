@@ -25,7 +25,13 @@ Route::get('/shop', 'HomeController@shop');
 
 Route::get('/login', 'HomeController@login');
 
+Route::post('/login-account', 'HomeController@login_account');
+
 Route::get('/register', 'HomeController@register');
+
+Route::post('/register-account', 'HomeController@register_account');
+
+Route::get('/logout_account', 'HomeController@logout_account');
 
 //Backend - Admin
 Route::get('/admin', 'AdminController@home');

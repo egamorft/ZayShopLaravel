@@ -97,12 +97,13 @@ https://templatemo.com/tm-559-zay-shop
                     </a>
                     <?php
 
-                    $customer_id = Session::get('customer_id');
-                    if ($customer_id != null) {
+                    $account_id = Session::get('account_id');
+                    $account_name = Session::get('account_name');
+                    if ($account_id != null) {
                     ?>
                         <div class="dropdown">
                             <a class="nav-icon position-relative text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#">
-                                <i class="fa fa-fw fa-user text-dark mr-3"></i> Hello
+                                <i class="fa fa-fw fa-user text-dark mr-3"></i> Hello <?php echo $account_name ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -113,7 +114,7 @@ https://templatemo.com/tm-559-zay-shop
                                 <li>
                                     <h5 class="dropdown-header">Logout</h5>
                                 </li>
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                                <li><a class="dropdown-item" href="{{URL::to('/logout_account')}}">Logout</a></li>
                             </ul>
                         </div>
                     <?php
@@ -238,6 +239,13 @@ https://templatemo.com/tm-559-zay-shop
     <script src="{{asset('public/frontend/js/templatemo.js')}}"></script>
     <script src="{{asset('public/frontend/js/custom.js')}}"></script>
     <!-- End Script -->
+    <script>
+        $(document).ready(function() {
+            window.setTimeout(function() {
+                $("#alertMessage").fadeOut(1000)
+            }, 2000);
+        });
+    </script>
 </body>
 
 </html>
