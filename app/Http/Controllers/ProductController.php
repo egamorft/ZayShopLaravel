@@ -85,61 +85,61 @@ class ProductController extends Controller
     public function unactive_product($product_id)
     {
         DB::table('tbl_product')->where('product_id', $product_id)->update(['product_status' => 0]);
-        Session::put('message', 'Successfully unactive product ' . $product_id);
-        return Redirect::to('/all-product');
+        Session::put('message', 'Unactive product ' . $product_id);
+        return Redirect::to('/show-product');
     }
 
     public function active_product($product_id)
     {
         DB::table('tbl_product')->where('product_id', $product_id)->update(['product_status' => 1]);
-        Session::put('message', 'Successfully active product ' . $product_id);
-        return Redirect::to('/all-product');
+        Session::put('message', 'Active product ' . $product_id);
+        return Redirect::to('/show-product');
     }
 
     public function edit_product($product_id)
     {
-        $this->AuthLogin();
-        $cate_product = DB::table('tbl_category_product')->orderBy('category_id', 'desc')->get();
-        $brand_product = DB::table('tbl_brand')->orderBy('brand_id', 'desc')->get();
+        $get_category = DB::table('tbl_category')->where('category_status', '1')->get();
+        $get_subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->get();
         $edit_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
-        $manager_product = view('admin.edit_product')->with('edit_product', $edit_product)
-            ->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+        $manager_product = view('admin.edit_product')->with(compact('edit_product', 'get_category', 'get_subcategory'));
         return view('admin_layout')->with('admin.edit_product', $manager_product);
     }
 
     public function update_product(Request $request, $product_id)
     {
-        $this->AuthLogin();
         $data = array();
         $data['product_name'] = $request->product_name;
         $data['product_price'] = $request->product_price;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
-        $data['category_id'] = $request->product_cate;
-        $data['brand_id'] = $request->product_brand;
-        $data['product_status'] = $request->product_status;
+        $data['category_id'] = $request->category;
+        $data['subcategory_id'] = $request->subcategory;
         $get_image = $request->file('product_image');
-        if ($get_image) {
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('public/upload/product', $new_image);
-            $data['product_image'] = $new_image;
-            DB::table('tbl_product')->where('product_id', $product_id)->update($data);
-            Session::put('message', 'Update product successfully');
-            return Redirect::to('/all-product');
+        if ($data['category_id'] == null  || $data['subcategory_id'] == null) {
+            Session::put('error', 'Choose category and subcategory');
+            return Redirect::to('/edit-product'.'/'.$product_id);
         } else {
-            DB::table('tbl_product')->where('product_id', $product_id)->update($data);
-            Session::put('message', 'Update product successfully without image');
-            return Redirect::to('/all-product');
+            if ($get_image) {
+                $get_name_image = $get_image->getClientOriginalName();
+                $name_image = current(explode('.', $get_name_image));
+                $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
+                $get_image->move('public/upload/product', $new_image);
+                $data['product_image'] = $new_image;
+                DB::table('tbl_product')->where('product_id', $product_id)->update($data);
+                Session::put('message', 'Update product'.$product_id);
+                return Redirect::to('/show-product');
+            } else {
+                DB::table('tbl_product')->where('product_id', $product_id)->update($data);
+                Session::put('message', 'Update product '. $product_id .' without change image');
+                return Redirect::to('/show-product');
+            }
         }
     }
 
     public function delete_product($product_id)
     {
-        $this->AuthLogin();
         DB::table('tbl_product')->where('product_id', $product_id)->delete();
         Session::put('message', 'Successfully delete product ' . $product_id);
-        return Redirect::to('/all-product');
+        return Redirect::to('/show-product');
     }
 }

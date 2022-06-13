@@ -229,6 +229,13 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
+        function preview() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+            var file = document.getElementById('productImage')
+            var bodyFormData = new FormData();
+            bodyFormData.append('product_image', file.files[0]);
+
+        }
     </script>
     <script>
         $(document).ready(function() {
