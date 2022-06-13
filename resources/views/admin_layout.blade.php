@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="./pages/virtual-reality.html">
+                    <a class="nav-link text-white " href="{{URL::to('/show-product')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">view_in_ar</i>
                         </div>
@@ -230,9 +230,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
     </script>
+    <script>
+        $(document).ready(function() {
+            $('.choose').change(function() {
+                var action = $(this).attr('id');
+                var cate_id = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                var result = '';
+                if (action == 'category') {
+                    result = 'subcategory';
+                }
+                $.ajax({
+                    url: '{{url("/select-category")}}',
+                    method: 'POST',
+                    data: {
+                        action: action,
+                        cate_id: cate_id,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#' + result).html(data);
+                    }
+                });
+            });
+        })
+    </script>
     <script type="text/javascript">
         ClassicEditor
             .create(document.querySelector('#ckeditorAdd'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#ckeditorAdd1'))
             .catch(error => {
                 console.error(error);
             });
@@ -498,11 +529,11 @@
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('public/backend/js/material-dashboard.min.js?v=3.0.2')}}"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             window.setTimeout(function() {
                 $("#alertMessage").fadeOut(1000)
             }, 2000);
-    });
+        });
     </script>
 </body>
 

@@ -83,3 +83,12 @@ Route::get('/edit-sub-category/{subcategory_id}', 'SubCategoryController@edit_su
 Route::get('/delete-sub-category/{subcategory_id}', 'SubCategoryController@delete_sub_category');
 
 Route::post('/update-sub-category/{subcategory_id}', 'SubCategoryController@update_sub_category');
+
+//Product
+Route::get('/show-product', 'ProductController@show_product');
+
+Route::get('/add-product', 'ProductController@add_product');
+
+Route::post('/select-category', 'ProductController@select_category');
+
+Route::post('/save-product', 'ProductController@save_product');
