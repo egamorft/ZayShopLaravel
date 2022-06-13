@@ -56,6 +56,7 @@ class SubCategoryController extends Controller
     public function unactive_sub_category($subcategory_id)
     {
         DB::table('tbl_subcategory')->where('subcategory_id', $subcategory_id)->update(['subcategory_status' => 0]);
+        DB::table('tbl_product')->where('subcategory_id', $subcategory_id)->update(['product_status' => 0]);
         Session::put('message', 'Unactive subcategory ' . $subcategory_id);
         return Redirect::to('show-sub-category');
     }

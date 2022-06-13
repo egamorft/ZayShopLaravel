@@ -39,6 +39,7 @@ class CategoryController extends Controller
     {
         DB::table('tbl_category')->where('category_id', $category_id)->update(['category_status' => 0]);
         DB::table('tbl_subcategory')->where('category_id', $category_id)->update(['subcategory_status' => 0]);
+        DB::table('tbl_product')->where('category_id', $category_id)->update(['product_status' => 0]);
         Session::put('message', 'Unactive category ' . $category_id);
         return Redirect::to('show-category');
     }

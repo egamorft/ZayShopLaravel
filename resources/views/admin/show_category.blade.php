@@ -81,7 +81,7 @@ Session::put('error', null);
                                         <?php
                                         if ($cate->category_status == 1) {
                                         ?>
-                                            <a onclick="return confirm('This action also unactive their subcategory status. Continue?')" href="{{URL::to('/unactive-category/'.$cate->category_id)}}"><i class="material-icons" style="font-size: 40px; color:green;">thumb_up</i></a>
+                                            <a onclick="return confirm('This action also unactive their subcategory and product status. Continue?')" href="{{URL::to('/unactive-category/'.$cate->category_id)}}"><i class="material-icons" style="font-size: 40px; color:green;">thumb_up</i></a>
                                         <?php
                                         } else {
                                         ?>
