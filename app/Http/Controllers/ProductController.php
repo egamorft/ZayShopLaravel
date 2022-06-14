@@ -162,7 +162,7 @@ class ProductController extends Controller
             ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
             ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
             ->where('tbl_category.category_id', $category_id)
-            ->whereNotIn('tbl_product.product_id', [$product_id])->get();
+            ->whereNotIn('tbl_product.product_id', [$product_id])->take(4)->get();
 
         return view('pages.product.shop_details')->with(compact('product_details', 'related_product'));
     }

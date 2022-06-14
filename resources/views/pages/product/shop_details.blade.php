@@ -230,9 +230,9 @@ Session::put('error', null);
         </div>
 
         <!--Start Carousel Wrapper-->
-        <div id="carousel-related-product">
-            @foreach($related_product as $key => $relate)
-            <div class="p-2 pb-3">
+        <div class="container-fluid">
+            <div class="row">
+                @foreach($related_product as $key => $relate)
                 <div class="product-wap card rounded-0">
                     <div class="card rounded-0">
                         <img class="card-img rounded-0 img-fluid" src="{{URL::to('/public/upload/product/'.$relate->product_image)}}">
@@ -258,8 +258,8 @@ Session::put('error', null);
                         <p class="text-center mb-0">{{number_format($relate->product_price, 0, ',' , '.').' '.'VNĐ'}}</p>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
 
 
