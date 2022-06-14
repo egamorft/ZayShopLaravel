@@ -56,7 +56,9 @@ Session::put('error', null);
                                     <?php
                                     $content = Cart::content();
                                     ?>
-
+                                    @if(count(Cart::content()) == 0)
+                                    <h2>Your cart is empty!</h2>
+                                    @else
                                     @foreach($content as $value)
                                     <hr class="my-4">
                                     <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -66,14 +68,19 @@ Session::put('error', null);
                                         <div class="col-md-3 col-lg-3 col-xl-3">
                                             <h6 class="text-black mb-0">{{$value->name}}</h6>
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                            <input min="1" name="quantity" value="{{$value->qty}}" type="number" class="form-control form-control-sm" />
+                                        <div class="col-md-3 col-lg-3 col-xl-2">
+                                            <form action="{{URL::to('/update-cart')}}" method="POST">
+                                                @csrf
+                                                <input min="1" name="cart_quantity" value="{{$value->qty}}" type="number" class="form-control form-control-sm" onchange="changeQuantity()" />
+                                                <input type="hidden" value="{{$value->rowId}}" name="rowId_cart">
+                                                <button disabled id="change_quantity" type="submit" value="Update" name="update_qty" class="btn btn-success"><i class="fa-solid fa-circle-check"></i></button>
+                                            </form>
                                         </div>
                                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                             <h6 class="mb-0">
                                                 <?php
                                                 $subtotal = $value->price * $value->qty;
-                                                echo number_format($subtotal, 0, ',', '.') . ' ' . 'VNĐ';
+                                                echo number_format($subtotal, 0, ',', '.') . ' ' . 'đ';
                                                 ?>
                                             </h6>
                                         </div>
@@ -135,6 +142,7 @@ Session::put('error', null);
 
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>

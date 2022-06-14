@@ -12,7 +12,13 @@ img#product-detail {
 img.card-img.img-fluid {
     height: 160px;
 }
+
 .product-wap.card.rounded-0 {
     width: 300px;
     margin: 20px;
+}
+
+input.form-control.form-control-sm {
+    width: 50%;
+    display: inline-flex;
 }

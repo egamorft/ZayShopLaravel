@@ -347,6 +347,11 @@ https://templatemo.com/tm-559-zay-shop
     <!-- Start Slider Script -->
     <script src="{{asset('public/frontend/js/slick.min.js')}}"></script>
     <script>
+        function changeQuantity() {
+            document.getElementById("change_quantity").removeAttribute("disabled"); 
+        }
+    </script>
+    <script>
         $('#carousel-related-product').slick({
             infinite: true,
             arrows: false,
