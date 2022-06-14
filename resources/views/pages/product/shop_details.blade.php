@@ -184,8 +184,8 @@ Session::put('error', null);
                                 <div class="col-auto">
                                     <div class="form-outline">
                                         <h6>Quantity: </h6>
-                                        <input type="number" id="qty" name="qty" class="form-control" min="1" value="1"/>
-                                        <input type="hidden" name="productid_hidden" value="{{$pro->product_id}}"/>
+                                        <input type="number" id="qty" name="qty" class="form-control" min="1" value="1" />
+                                        <input type="hidden" name="productid_hidden" value="{{$pro->product_id}}" />
                                     </div>
                                 </div>
                             </div>
@@ -221,14 +221,9 @@ Session::put('error', null);
                 @foreach($related_product as $key => $relate)
                 <div class="product-wap card rounded-0">
                     <div class="card rounded-0">
-                        <img class="card-img rounded-0 img-fluid" src="{{URL::to('/public/upload/product/'.$relate->product_image)}}">
-                        <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                            <ul class="list-unstyled">
-                                <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                <li><a class="btn btn-success text-white mt-2" href="{{URL::to('/product-details/'.$relate->product_id)}}"><i class="far fa-eye"></i></a></li>
-                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                            </ul>
-                        </div>
+                        <a href="{{URL::to('/product-details/'.$relate->product_id)}}">
+                            <img class="card-img rounded-0 img-fluid" src="{{URL::to('/public/upload/product/'.$relate->product_image)}}">
+                        </a>
                     </div>
                     <div class="card-body">
                         <a href="{{URL::to('/product-details/'.$relate->product_id)}}" class="h3 text-decoration-none">{{$relate->product_name}}</a>

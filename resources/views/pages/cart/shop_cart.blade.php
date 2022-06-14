@@ -71,12 +71,12 @@ Session::put('error', null);
                                         <div class="col-md-3 col-lg-3 col-xl-2">
                                             <form action="{{URL::to('/update-cart')}}" method="POST">
                                                 @csrf
-                                                <input min="1" name="cart_quantity" value="{{$value->qty}}" type="number" class="form-control form-control-sm" onchange="changeQuantity()" />
+                                                <input min="1" name="cart_quantity" value="{{$value->qty}}" type="number" class="form-control form-control-sm" />
                                                 <input type="hidden" value="{{$value->rowId}}" name="rowId_cart">
-                                                <button disabled id="change_quantity" type="submit" value="Update" name="update_qty" class="btn btn-success"><i class="fa-solid fa-circle-check"></i></button>
+                                                <button type="submit" value="Update" name="update_qty" class="btn btn-success"><i class="fa-solid fa-circle-check"></i></button>
                                             </form>
                                         </div>
-                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <div class="col-md-3 col-lg-3 col-xl-3 offset-lg-1">
                                             <h6 class="mb-0">
                                                 <?php
                                                 $subtotal = $value->price * $value->qty;
@@ -137,9 +137,11 @@ Session::put('error', null);
                                         <h5 class="text-uppercase">Total price</h5>
                                         <h5>{{Cart::total().' '.'VNĐ'}}</h5>
                                     </div>
-
+                                    @if(Session::get('account_id') != null)
                                     <button type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Register</button>
-
+                                    @else
+                                    <a href="{{URL::to('/login')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Register</a>
+                                    @endif
                                 </div>
                             </div>
                             @endif
