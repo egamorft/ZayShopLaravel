@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
+
+    //Admin Page
     public function show_product()
     {
         $show_product = DB::table('tbl_product')
@@ -117,7 +119,7 @@ class ProductController extends Controller
         $get_image = $request->file('product_image');
         if ($data['category_id'] == null  || $data['subcategory_id'] == null) {
             Session::put('error', 'Choose category and subcategory');
-            return Redirect::to('/edit-product'.'/'.$product_id);
+            return Redirect::to('/edit-product' . '/' . $product_id);
         } else {
             if ($get_image) {
                 $get_name_image = $get_image->getClientOriginalName();
@@ -126,11 +128,11 @@ class ProductController extends Controller
                 $get_image->move('public/upload/product', $new_image);
                 $data['product_image'] = $new_image;
                 DB::table('tbl_product')->where('product_id', $product_id)->update($data);
-                Session::put('message', 'Update product'.$product_id);
+                Session::put('message', 'Update product' . $product_id);
                 return Redirect::to('/show-product');
             } else {
                 DB::table('tbl_product')->where('product_id', $product_id)->update($data);
-                Session::put('message', 'Update product '. $product_id .' without change image');
+                Session::put('message', 'Update product ' . $product_id . ' without change image');
                 return Redirect::to('/show-product');
             }
         }
@@ -141,5 +143,27 @@ class ProductController extends Controller
         DB::table('tbl_product')->where('product_id', $product_id)->delete();
         Session::put('message', 'Successfully delete product ' . $product_id);
         return Redirect::to('/show-product');
+    }
+
+    //End Admin Page
+
+    public function product_details($product_id)
+    {
+        $product_details = DB::table('tbl_product')
+            ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+            ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+            ->where('tbl_product.product_id', $product_id)->get();
+
+        foreach ($product_details as $key => $value) {
+            $category_id = $value->category_id;
+        }
+
+        $related_product = DB::table('tbl_product')
+            ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+            ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+            ->where('tbl_category.category_id', $category_id)
+            ->whereNotIn('tbl_product.product_id', [$product_id])->get();
+
+        return view('pages.product.shop_details')->with(compact('product_details', 'related_product'));
     }
 }

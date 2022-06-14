@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="{{('public/frontend/images/apple-icon.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{('public/frontend/images/favicon.ico')}}">
+    <link rel="apple-touch-icon" href="{{asset('public/frontend/images/apple-icon.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('public/frontend/images/favicon.ico')}}">
 
     <link rel="stylesheet" href="{{asset('public/frontend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/frontend/css/templatemo.css')}}">
@@ -70,13 +70,13 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" href="{{URL::to('/')}}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about">About</a>
+                            <a class="nav-link" href="{{URL::to('/about')}}">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="shop">Shop</a>
+                            <a class="nav-link" href="{{URL::to('/shop')}}">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact">Contact</a>
+                            <a class="nav-link" href="{{URL::to('/contact')}}">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -136,6 +136,110 @@ https://templatemo.com/tm-559-zay-shop
     <!-- Close Header -->
 
     @yield('content')
+
+    <!-- Start Brands -->
+    <section class="bg-light py-5">
+        <div class="container my-4">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Our Brands</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        Lorem ipsum dolor sit amet.
+                    </p>
+                </div>
+                <div class="col-lg-9 m-auto tempaltemo-carousel">
+                    <div class="row d-flex flex-row">
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                                <i class="text-light fas fa-chevron-left"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+
+                        <!--Carousel Wrapper-->
+                        <div class="col">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
+                                <!--Slides-->
+                                <div class="carousel-inner product-links-wap" role="listbox">
+
+                                    <!--First slide-->
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_01.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_02.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_03.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_04.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End First slide-->
+
+                                    <!--Second slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_01.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_02.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_03.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_04.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Second slide-->
+
+                                    <!--Third slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_01.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_02.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_03.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_04.png')}}" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Third slide-->
+
+                                </div>
+                                <!--End Slides-->
+                            </div>
+                        </div>
+                        <!--End Carousel Wrapper-->
+
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                                <i class="text-light fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Brands-->
 
     <!-- Start Footer -->
     <footer class="bg-dark" id="tempaltemo_footer">

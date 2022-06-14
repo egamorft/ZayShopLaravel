@@ -4,3 +4,15 @@ Custom Css
 img.card-img.rounded-0.img-fluid {
     height: 290px;
 }
+
+img#product-detail {
+    height: 600px;
+}
+
+img.card-img.img-fluid {
+    height: 160px;
+}
+
+.p-2.pb-3 {
+    width: 450px;
+}
