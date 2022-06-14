@@ -106,6 +106,6 @@ Route::get('/delete-product/{product_id}', 'ProductController@delete_product');
 //Category - Home
 Route::get('/category/{category_id}', 'CategoryController@shop_category');
 
-Route::get('/thuong-hieu-san-pham/{brand_id}', 'BrandProduct@show_brand');
+Route::get('/subcategory/{subcategory_id}', 'SubcategoryController@shop_subcategory');
 
 Route::get('/product-details/{product_id}', 'ProductController@product_details');

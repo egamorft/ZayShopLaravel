@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class SubCategoryController extends Controller
 {
+    //Admin Page
     public function show_sub_category()
     {
         $show_sub_category = DB::table('tbl_subcategory')->join('tbl_category', 'tbl_subcategory.category_id', '=', 'tbl_category.category_id')->get();
@@ -105,4 +106,16 @@ class SubCategoryController extends Controller
         }
         return Redirect::to('show-sub-category');
     }
+    //End Admin Page
+
+
+    //public page
+    public function shop_subcategory(Request $request, $subcategory_id)
+    {
+        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'desc')->get();
+        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('subcategory_id', 'desc')->get();
+        $subcategory_by_id = DB::table('tbl_product')->join('tbl_subcategory', 'tbl_product.subcategory_id', '=', 'tbl_subcategory.subcategory_id')->where('tbl_product.subcategory_id', $subcategory_id)->where('tbl_product.product_status', 1)->get();
+        return view('pages.subcategory.shop_subcategory')->with(compact('category', 'subcategory', 'subcategory_by_id'));
+    }
+    //end public page
 }
