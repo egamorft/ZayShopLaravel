@@ -65,7 +65,7 @@ Session::put('error', null);
         <div class="col-lg-9">
             <div class="row">
                 <div class="col-md-6">
-                    <ul class="list-inline shop-top-menu pb-3 pt-1">
+                    <!-- <ul class="list-inline shop-top-menu pb-3 pt-1">
                         <li class="list-inline-item">
                             <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
                         </li>
@@ -75,7 +75,7 @@ Session::put('error', null);
                         <li class="list-inline-item">
                             <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
                 <div class="col-md-6 pb-4">
                     <div class="d-flex">
@@ -88,22 +88,22 @@ Session::put('error', null);
                 </div>
             </div>
             <div class="row">
+                @foreach($product as $key => $pro)
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="{{('public/frontend/images/shop_01.jpg')}}">
+                            <img class="card-img rounded-0 img-fluid" src="{{URL::to('/public/upload/product/'.$pro->product_image)}}"> 
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                    <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
+                            <a href="#" class="h3 text-decoration-none">{{$pro->product_name}}</a>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
                                 <li class="pt-2">
                                     <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
                                     <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
@@ -117,14 +117,15 @@ Session::put('error', null);
                                     <i class="text-warning fa fa-star"></i>
                                     <i class="text-warning fa fa-star"></i>
                                     <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
                                 </li>
                             </ul>
-                            <p class="text-center mb-0">$250.00</p>
+                            <p class="text-center mb-0">{{number_format($pro->product_price).' '.'VNĐ'}}</p>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
             <div div="row">
                 <ul class="pagination pagination-lg justify-content-end">
