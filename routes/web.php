@@ -109,3 +109,10 @@ Route::get('/category/{category_id}', 'CategoryController@shop_category');
 Route::get('/subcategory/{subcategory_id}', 'SubcategoryController@shop_subcategory');
 
 Route::get('/product-details/{product_id}', 'ProductController@product_details');
+
+//Cart
+Route::post('/save-cart', 'CartController@save_cart');
+
+Route::get('/shop-cart', 'CartController@shop_cart');
+
+Route::get('/delete-cart/{rowId}', 'CartController@delete_cart');

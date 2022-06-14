@@ -178,32 +178,18 @@ Session::put('error', null);
                             <li>{!!$pro->product_content!!}</li>
                         </ul>
 
-                        <form action="" method="GET">
-                            <input type="hidden" name="product-title" value="Activewear">
+                        <form action="{{URL::to('/save-cart')}}" method="POST">
+                            @csrf
                             <div class="row">
-                                <!-- <div class="col-auto">
-                                    <ul class="list-inline pb-3">
-                                        <li class="list-inline-item">Size :
-                                            <input type="hidden" name="product-size" id="product-size" value="S">
-                                        </li>
-                                        <li class="list-inline-item"><span class="btn btn-success btn-size">S</span></li>
-                                        <li class="list-inline-item"><span class="btn btn-success btn-size">M</span></li>
-                                        <li class="list-inline-item"><span class="btn btn-success btn-size">L</span></li>
-                                        <li class="list-inline-item"><span class="btn btn-success btn-size">XL</span></li>
-                                    </ul>
-                                </div> -->
                                 <div class="col-auto">
-                                    <ul class="list-inline pb-3">
-                                        <li class="list-inline-item text-right">
-                                            Quantity
-                                            <input type="hidden" name="product-quanity" id="product-quanity" value="1">
-                                        </li>
-                                        <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-                                        <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
-                                        <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-                                    </ul>
+                                    <div class="form-outline">
+                                        <h6>Quantity: </h6>
+                                        <input type="number" id="qty" name="qty" class="form-control" min="1" value="1"/>
+                                        <input type="hidden" name="productid_hidden" value="{{$pro->product_id}}"/>
+                                    </div>
                                 </div>
                             </div>
+                            </br>
                             <div class="row pb-3">
                                 <div class="col d-grid">
                                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
