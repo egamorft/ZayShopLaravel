@@ -143,6 +143,7 @@ Session::put('error', null);
                                 </div>
                             </div>
                             @endif
+                            <h6 class="mb-0"><a href="{{URL::to('/shop')}}" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Shopping more</a></h6>
                         </div>
                     </div>
                 </div>
