@@ -26,7 +26,7 @@ class ProductController extends Controller
         if ($data['action']) {
             $output = '';
             if ($data['action'] == "category") {
-                $select_subcategory = DB::table('tbl_subcategory')->where('category_id', $data['cate_id'])->orderby('category_id', 'asc')->get();
+                $select_subcategory = DB::table('tbl_subcategory')->where('category_id', $data['cate_id'])->where('subcategory_status', '1')->orderby('category_id', 'asc')->get();
                 $output .= '<option value="">Choose your subcategory</option>';
                 foreach ($select_subcategory as $key => $sub) {
                     $output .= '<option value="' . $sub->subcategory_id . '">' . $sub->subcategory_name . '</option>';
