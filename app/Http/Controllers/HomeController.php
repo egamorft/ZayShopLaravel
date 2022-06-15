@@ -10,6 +10,7 @@ use App\Login;
 use App\Social;
 use App\Rules\Captcha;
 use Laravel\Socialite\Facades\Socialite;
+use Psy\CodeCleaner\FunctionContextPass;
 
 class HomeController extends Controller
 {
@@ -195,5 +196,14 @@ class HomeController extends Controller
             Session::put('account_id', $account_name->account_id);
             return redirect('/shop')->with('message', 'Successfully login with facebook');
         }
+    }
+
+    public function search(Request $request)
+    {
+        $keywords = $request->keywords_submit;
+        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'asc')->get();
+        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('category_id', 'asc')->get();
+        $product = DB::table('tbl_product')->where('product_name', 'like', '%' . $keywords . '%')->get();
+        return view('pages.product.search')->with(compact('category', 'subcategory', 'product'));
     }
 }

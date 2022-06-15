@@ -33,6 +33,8 @@ Route::post('/register-account', 'HomeController@register_account');
 
 Route::get('/logout_account', 'HomeController@logout_account');
 
+Route::get('/search', 'HomeController@search');
+
 //Login facebook
 Route::get('/login-facebook','HomeController@login_facebook');
 Route::get('/callback','HomeController@callback_facebook');
