@@ -105,6 +105,10 @@ Session::put('error', null);
                                         <h5 class="text-uppercase">Taxes</h5>
                                         <h5>{{Cart::tax(0 , ',' , '.').' '.'VNĐ'}}</h5>
                                     </div>
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="text-uppercase">Discount</h5>
+                                        <h5>{{Cart::discount(0 , ',' , '.').' '.'VNĐ'}}</h5>
+                                    </div>
 
                                     <h5 class="text-uppercase mb-3">Shipping</h5>
 
@@ -119,12 +123,12 @@ Session::put('error', null);
 
                                     <h5 class="text-uppercase mb-3">Give code</h5>
 
-                                    <div class="mb-5">
-                                        <div class="form-outline">
-                                            <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                                            <label class="form-label" for="form3Examplea2">Enter your code</label>
+                                    <form class="card p-2">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Promo code">
+                                            <button type="submit" class="btn btn-danger">Add code</button>
                                         </div>
-                                    </div>
+                                    </form>
 
                                     <hr class="my-4">
 
