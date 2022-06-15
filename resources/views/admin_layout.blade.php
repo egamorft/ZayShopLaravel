@@ -279,24 +279,28 @@
                 var wards = $('.wards').val();
                 var _token = $('input[name="_token"]').val();
                 var fee_ship = $('.fee_ship').val();
-                // alert(city);
-                // alert(province);
-                // alert(wards);
-                // alert(fee_ship);
-                $.ajax({
-                    url: '{{url("/insert-delivery")}}',
-                    method: 'POST',
-                    data: {
-                        city: city,
-                        province: province,
-                        _token: _token,
-                        wards: wards,
-                        fee_ship: fee_ship
-                    },
-                    success: function(data) {
-                        fetch_delivery();
-                    },
-                });
+                if (city == '' || province == '' || wards == '' || fee_ship == '') {
+                    alert('Please fill all field');
+                } else {
+                    if (fee_ship > 0) {
+                        $.ajax({
+                            url: '{{url("/insert-delivery")}}',
+                            method: 'POST',
+                            data: {
+                                city: city,
+                                province: province,
+                                _token: _token,
+                                wards: wards,
+                                fee_ship: fee_ship
+                            },
+                            success: function(data) {
+                                fetch_delivery();
+                            },
+                        });
+                    }else{
+                        alert('Delivery fee cannot be negative ');
+                    }
+                }
             });
             $('.choose').change(function() {
                 var action = $(this).attr('id');

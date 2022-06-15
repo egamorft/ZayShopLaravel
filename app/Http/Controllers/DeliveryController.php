@@ -105,4 +105,45 @@ class DeliveryController extends Controller
             echo $output;
         }
     }
+
+
+    public function del_fee()
+    {
+        Session::forget('fee');
+        return redirect()->back()->with('message', 'Delete old address');
+    }
+    public function calculate_fee(Request $request)
+    {
+        $data = $request->all();
+        if ($data['matp']) {
+            $feeship = Feeship::where('fee_matp', $data['matp'])
+                ->where('fee_maqh', $data['maqh'])
+                ->where('fee_xaid', $data['xaid'])->get();
+            foreach ($feeship as $key => $fee) {
+                Session::put('fee', $fee->fee_feeship);
+                Session::save();
+            }
+        }
+    }
+    public function select_delivery_home(Request $request)
+    {
+        $data = $request->all();
+        if ($data['action']) {
+            $output = '';
+            if ($data['action'] == "city") {
+                $select_province = Province::where('matp', $data['ma_id'])->orderby('maqh', 'asc')->get();
+                $output .= '<option>-------Choose province-------</option>';
+                foreach ($select_province as $key => $province) {
+                    $output .= '<option value="' . $province->maqh . '">' . $province->name_quanhuyen . '</option>';
+                }
+            } else {
+                $select_wards = Wards::where('maqh', $data['ma_id'])->orderby('xaid', 'asc')->get();
+                $output .= '<option>-------Choose wards-------</option>';
+                foreach ($select_wards as $key => $ward) {
+                    $output .= '<option value="' . $ward->xaid . '">' . $ward->name_xaphuong . '</option>';
+                }
+            }
+            echo $output;
+        }
+    }
 }

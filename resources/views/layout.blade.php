@@ -90,7 +90,7 @@ https://templatemo.com/tm-559-zay-shop
                         <form action="{{URL::to('/search')}}" method="GET" class="modal-content modal-body border-0 p-0">
                             @csrf
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" id="inputModalSearch"  name="keywords_submit" placeholder="Search ...">
+                                <input type="text" class="form-control" id="inputModalSearch" name="keywords_submit" placeholder="Search ...">
                                 <button type="submit" class="input-group-text bg-success text-light">
                                     <i class="fa fa-fw fa-search text-white"></i>
                                 </button>
@@ -403,6 +403,61 @@ https://templatemo.com/tm-559-zay-shop
             window.setTimeout(function() {
                 $("#alertMessage").fadeOut(1000)
             }, 2000);
+        });
+    </script>
+    <script>
+        $('.choose').change(function() {
+            var action = $(this).attr('id');
+            var ma_id = $(this).val();
+            var _token = $('input[name="_token"]').val();
+            var result = '';
+            // alert(action);
+            // alert(matp);
+            // alert(_token);
+            if (action == 'city') {
+                result = 'province';
+            } else {
+                result = 'wards';
+            }
+            $.ajax({
+                url: '{{url("/select-delivery-home")}}',
+                method: 'POST',
+                data: {
+                    action: action,
+                    ma_id: ma_id,
+                    _token: _token
+                },
+                success: function(data) {
+                    $('#' + result).html(data);
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.calculate_delivery').click(function() {
+                var matp = $('.city').val();
+                var maqh = $('.province').val();
+                var xaid = $('.wards').val();
+                var _token = $('input[name="_token"]').val();
+                if (matp == '' || maqh == '' || xaid == '') {
+                    alert('Pls choose your address to calculate fee delivery');
+                } else {
+                    $.ajax({
+                        url: '{{url("/calculate-fee")}}',
+                        method: 'POST',
+                        data: {
+                            matp: matp,
+                            maqh: maqh,
+                            xaid: xaid,
+                            _token: _token
+                        },
+                        success: function() {
+                            location.reload();
+                        }
+                    });
+                }
+            });
         });
     </script>
 </body>

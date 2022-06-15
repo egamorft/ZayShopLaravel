@@ -90,17 +90,45 @@ Session::put('error', null);
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-success">
                         <h6 class="my-0">Promo code</h6>
-                        <small>SALE500</small>
+                        <small>NONE</small>
                     </div>
-                    <span class="text-success"></span>
+                    <span class="text-success">0 đ</span>
                 </li>
                 @endif
+                @if(Session::get('fee'))
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-danger">
+                        <h6 class="my-0">Shipping fee</h6>
+                    </div>
+
+                    <span class="text-danger">{{number_format(Session::get('fee'), 0 , ',' , '.')}} đ</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <p>Delete address here</p>
+                    <a class="cart_quantity_delete" href="{{url('/del-fee')}}"><i style="color: red; font-size:120% ;" class="fa fa-xmark"></i></a>
+                </li>
+                <?php
+                if (Session::get('fee') != null) {
+                    $total_after_shipping = Cart::total(0, ',', '') + Session::get('fee');
+                }
+                ?>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total</span>
+                    <strong>{{number_format($total_after_shipping, 0 , ',' , '.')}} đ</strong>
+                </li>
+                @else
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-danger">
+                        <h6 class="my-0">Shipping fee</h6>
+                    </div>
+                    <span class="text-danger">0 đ</span>
+                </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Total</span>
                     <strong>{{Cart::total(0 , ',' , '.').' '.'đ'}}</strong>
                 </li>
+                @endif
             </ul>
-
 
         </div>
         <div class="col-md-7 col-lg-8">
@@ -113,46 +141,45 @@ Session::put('error', null);
                     </div>
 
                     <div class="col-12">
-                        <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+                        <label for="email" class="form-label">Email
+                            <!-- <span class="text-muted">(Optional)</span> -->
+                        </label>
                         <input type="email" class="form-control" id="email" value="{{Session::get('account_email')}}">
-                        <div class="invalid-feedback">
-                            Please enter a valid email address for shipping updates.
+                    </div>
+
+                    <form>
+                        @csrf
+                        <div class="col-md-4">
+                            <label for="city" class="form-label">City</label>
+                            <select name="city" id="city" class="form-control choose city">
+                                <option value="">-----Choose your city-----</option>
+                                @foreach($city as $key => $ci)
+                                <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    </div>
 
-                    <div class="col-md-4">
-                        <label for="city" class="form-label">City</label>
-                        <select class="form-select" id="city" required>
-                            <option value="">Choose...</option>
-                            <option>India</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a valid country.
+                        <div class="col-md-4">
+                            <label for="state" class="form-label">Province</label>
+                            <select name="province" id="province" class="form-control province choose">
+                                <option value="">-----Choose your province-----</option>
+                            </select>
                         </div>
-                    </div>
 
-                    <div class="col-md-4">
-                        <label for="state" class="form-label">Province</label>
-                        <select class="form-select" id="state" required>
-                            <option value="">Choose...</option>
-                            <option>Delhi</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="state" class="form-label">Wards</label>
-                        <select class="form-select" id="state" required>
-                            <option value="">Choose...</option>
-                            <option>Delhi</option>
-                        </select>
-                    </div>
+                        <div class="col-md-4">
+                            <label for="state" class="form-label">Wards</label>
+                            <select name="wards" id="wards" class="form-control wards">
+                                <option value="">-----Choose your wards-----</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="button" value="Calculate delivery" name="calculate_order" class="btn btn-primary btn-sm calculate_delivery">
+                        </div>
+                    </form>
 
                     <div class="col-12">
                         <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="Plaza street" required>
-                        <div class="invalid-feedback">
-                            Please enter your shipping address.
-                        </div>
+                        <input type="text" class="form-control" id="address" placeholder="Plaza street">
                     </div>
                 </div>
 

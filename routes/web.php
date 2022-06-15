@@ -149,3 +149,9 @@ Route::post('/insert-delivery', 'DeliveryController@insert_delivery');
 Route::post('/select-feeship', 'DeliveryController@select_feeship');
 
 Route::post('/update-delivery', 'DeliveryController@update_delivery');
+
+Route::post('/select-delivery-home', 'DeliveryController@select_delivery_home');
+
+Route::post('/calculate-fee', 'DeliveryController@calculate_fee');
+
+Route::get('/del-fee', 'DeliveryController@del_fee');
