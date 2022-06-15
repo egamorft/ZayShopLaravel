@@ -74,13 +74,27 @@ Session::put('error', null);
                     </div>
                     <span class="text-danger">{{Cart::tax(0 , ',' , '.').' '.'đ'}}</span>
                 </li>
+                @if(Session::get('coupon'))
+                @foreach(Session::get('coupon') as $key => $cou)
+                @if($cou['coupon_condition']==1)
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-success">
+                        <h6 class="my-0">Promo code</h6>
+                        <small><?php echo '-' . $cou['coupon_number'] . '% cart' ?></small>
+                    </div>
+                    <span class="text-success">{{Cart::discount(0 , ',' , '.').' '.'đ'}}</span>
+                </li>
+                @endif
+                @endforeach
+                @else
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-success">
                         <h6 class="my-0">Promo code</h6>
                         <small>SALE500</small>
                     </div>
-                    <span class="text-success">{{Cart::discount(0 , ',' , '.').' '.'đ'}}</span>
+                    <span class="text-success"></span>
                 </li>
+                @endif
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Total</span>
                     <strong>{{Cart::total(0 , ',' , '.').' '.'đ'}}</strong>

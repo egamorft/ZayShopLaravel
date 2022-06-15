@@ -138,3 +138,14 @@ Route::post('/save-coupon', 'CouponController@save_coupon');
 Route::get('/delete-coupon/{coupon_id}', 'CouponController@delete_coupon');
 
 Route::get('/unset-coupon', 'CouponController@unset_coupon');
+
+//Delivery
+Route::get('/delivery', 'DeliveryController@delivery');
+
+Route::post('/select-delivery', 'DeliveryController@select_delivery');
+
+Route::post('/insert-delivery', 'DeliveryController@insert_delivery');
+
+Route::post('/select-feeship', 'DeliveryController@select_feeship');
+
+Route::post('/update-delivery', 'DeliveryController@update_delivery');
