@@ -99,7 +99,7 @@ Session::put('error', null);
 
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">products {{count(Cart::content())}}</h5>
-                                        <h5>{{Cart::subtotal(0 , ',' , '.').' '.'VNĐ'}}</h5>
+                                        <h5>{{Cart::pricetotal(0 , ',' , '.').' '.'VNĐ'}}</h5>
                                     </div>
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">Taxes</h5>
@@ -123,10 +123,11 @@ Session::put('error', null);
 
                                     <h5 class="text-uppercase mb-3">Give code</h5>
 
-                                    <form class="card p-2">
+                                    <form class="card p-2" method="POST" action="{{URL::to('/check-coupon')}}">
+                                        @csrf
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Promo code">
-                                            <button type="submit" class="btn btn-danger">Add code</button>
+                                            <input type="text" class="form-control" name="coupon" placeholder="Promo code">
+                                            <button type="submit" class="btn btn-danger check_coupon" name="check_coupon">Add code</button>
                                         </div>
                                     </form>
 

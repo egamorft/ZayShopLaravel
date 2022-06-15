@@ -65,7 +65,7 @@ Session::put('error', null);
                 @endforeach
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Sub Total</span>
-                    <strong>{{Cart::subtotal(0 , ',' , '.').' '.'đ'}}</strong>
+                    <strong>{{Cart::pricetotal(0 , ',' , '.').' '.'đ'}}</strong>
                 </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">

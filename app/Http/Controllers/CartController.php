@@ -64,6 +64,7 @@ class CartController extends Controller
         } else {
             Cart::add($data);
             Cart::setGlobalTax(10);
+            Cart::setGlobalDiscount(10);
             Session::put('message', 'Add ' . $data['name'] . ' to cart');
             return back();
         }

@@ -125,3 +125,14 @@ Route::post('/save-cart-home', 'CartController@save_cart_home');
 
 //Checkout
 Route::get('/check-out', 'CheckoutController@check_out');
+
+//Coupon
+Route::post('/check-coupon', 'CouponController@check_coupon');
+
+Route::get('/show-coupon', 'CouponController@show_coupon');
+
+Route::get('/add-coupon', 'CouponController@add_coupon');
+
+Route::post('/save-coupon', 'CouponController@save_coupon');
+
+Route::get('/delete-coupon/{coupon_id}', 'CouponController@delete_coupon');
