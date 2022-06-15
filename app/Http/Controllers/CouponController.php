@@ -6,13 +6,43 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use App\Coupon;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CouponController extends Controller
 {
     public function check_coupon(Request $request)
     {
         $data = $request->all();
-        echo $data['coupon'];
+        $coupon = Coupon::where('coupon_code', $data['coupon'])->first();
+        if ($coupon) {
+            $count_coupon = $coupon->count();
+            if ($count_coupon > 0) {
+                $coupon_session = Session::get('coupon');
+                if ($coupon_session == true) {
+                    $is_avaiable = 0;
+                    if ($is_avaiable == 0) {
+                        $cou[] = array(
+                            'coupon_code' => $coupon->coupon_code,
+                            'coupon_condition' => $coupon->coupon_condition,
+                            'coupon_number' => $coupon->coupon_number,
+                        );
+                        Session::put('coupon', $cou);
+                    }
+                } else {
+                    $cou[] = array(
+                        'coupon_code' => $coupon->coupon_code,
+                        'coupon_condition' => $coupon->coupon_condition,
+                        'coupon_number' => $coupon->coupon_number,
+                    );
+                    Session::put('coupon', $cou);
+                }
+                Session::save();
+                return redirect()->back()->with('message', 'Add coupon successfully');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Add coupon fail, wrong coupon');
+        }
     }
 
     public function show_coupon()
@@ -58,5 +88,19 @@ class CouponController extends Controller
         DB::table('tbl_coupon')->where('coupon_id', $coupon_id)->delete();
         Session::put('message', 'Successfully delete coupon ' . $coupon_id);
         return Redirect::to('/show-coupon');
+    }
+
+    public function unset_coupon()
+    {
+        $coupon = Session::get('coupon');
+        if ($coupon == true) {
+            foreach($coupon as $key => $cou){
+                if($cou['coupon_condition']==1){
+                    Cart::setGlobalDiscount(0);
+                }
+            }
+            Session::forget('coupon');
+            return redirect()->back()->with('message', 'Unset coupon');
+        }
     }
 }

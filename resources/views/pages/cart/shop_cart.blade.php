@@ -105,10 +105,32 @@ Session::put('error', null);
                                         <h5 class="text-uppercase">Taxes</h5>
                                         <h5>{{Cart::tax(0 , ',' , '.').' '.'VNĐ'}}</h5>
                                     </div>
+                                    @if(Session::get('coupon'))
+                                    @foreach(Session::get('coupon') as $key => $cou)
+                                    @if($cou['coupon_condition']==1)
+                                    <?php
+                                    Cart::setGlobalDiscount($cou['coupon_number']);
+                                    ?>
+                                    @endif
+                                    @endforeach
+                                    @endif
+
+
+                                    @if(Session::get('coupon'))
+                                    @foreach(Session::get('coupon') as $key => $cou)
+                                    @if($cou['coupon_condition']==1)
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="text-uppercase">Discount<span class="text-muted"><?php echo '( -' . $cou['coupon_number'] . '%)' ?></span></h5>
+                                        <h5>{{Cart::discount(0 , ',' , '.').' '.'VNĐ'}}</h5>
+                                    </div>
+                                    @endif
+                                    @endforeach
+                                    @else
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">Discount</h5>
                                         <h5>{{Cart::discount(0 , ',' , '.').' '.'VNĐ'}}</h5>
                                     </div>
+                                    @endif
 
                                     <h5 class="text-uppercase mb-3">Shipping</h5>
 
@@ -127,7 +149,11 @@ Session::put('error', null);
                                         @csrf
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="coupon" placeholder="Promo code">
+                                            @if(Session::get('coupon') == null)
                                             <button type="submit" class="btn btn-danger check_coupon" name="check_coupon">Add code</button>
+                                            @else
+                                            <button disabled type="submit" class="btn btn-dark check_coupon" name="check_coupon">Add code</button>
+                                            @endif
                                         </div>
                                     </form>
 
@@ -142,10 +168,14 @@ Session::put('error', null);
                                     @else
                                     <a href="{{URL::to('/login')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Checkout</a>
                                     @endif
+                                    @if(Session::get('coupon') != null)
+                                    <a style="margin-left: 50px;" href="{{URL::to('/unset-coupon')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Unset coupon</a>
+                                    @endif
                                 </div>
                             </div>
                             @endif
                             <h6 class="mb-0"><a href="{{URL::to('/shop')}}" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Shopping more</a></h6>
+                            <hr class="my-4">
                         </div>
                     </div>
                 </div>

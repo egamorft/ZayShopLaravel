@@ -136,3 +136,5 @@ Route::get('/add-coupon', 'CouponController@add_coupon');
 Route::post('/save-coupon', 'CouponController@save_coupon');
 
 Route::get('/delete-coupon/{coupon_id}', 'CouponController@delete_coupon');
+
+Route::get('/unset-coupon', 'CouponController@unset_coupon');
