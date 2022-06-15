@@ -23,6 +23,7 @@ class CartController extends Controller
         $data['weight'] = '68';
         $data['options']['image'] = $product_info->product_image;
         Cart::add($data);
+        Cart::setGlobalTax(10);
         return Redirect::to('/shop-cart');
     }
 
@@ -62,6 +63,7 @@ class CartController extends Controller
             return back();
         } else {
             Cart::add($data);
+            Cart::setGlobalTax(10);
             Session::put('message', 'Add ' . $data['name'] . ' to cart');
             return back();
         }

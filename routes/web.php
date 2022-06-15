@@ -120,3 +120,6 @@ Route::get('/delete-cart/{rowId}', 'CartController@delete_cart');
 Route::post('/update-cart', 'CartController@update_cart');
 
 Route::post('/save-cart-home', 'CartController@save_cart_home');
+
+//Checkout
+Route::get('/check-out', 'CheckoutController@check_out');

@@ -90,11 +90,6 @@ Session::put('error', null);
                                     </div>
                                     <hr class="my-4">
                                     @endforeach
-
-
-                                    <div class="pt-5">
-                                        <h6 class="mb-0"><a href="{{URL::to('/shop')}}" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Shopping more</a></h6>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 bg-grey">
@@ -104,17 +99,17 @@ Session::put('error', null);
 
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">products {{count(Cart::content())}}</h5>
-                                        <h5>{{Cart::subtotal().' '.'VNĐ'}}</h5>
+                                        <h5>{{Cart::subtotal(0 , ',' , '.').' '.'VNĐ'}}</h5>
                                     </div>
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">Taxes</h5>
-                                        <h5>{{Cart::tax().' '.'VNĐ'}}</h5>
+                                        <h5>{{Cart::tax(0 , ',' , '.').' '.'VNĐ'}}</h5>
                                     </div>
 
                                     <h5 class="text-uppercase mb-3">Shipping</h5>
 
                                     <div class="mb-4 pb-2">
-                                        <select class="select">
+                                        <select class="form-control">
                                             <option value="1">Standard-Delivery- €5.00</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
@@ -135,12 +130,12 @@ Session::put('error', null);
 
                                     <div class="d-flex justify-content-between mb-5">
                                         <h5 class="text-uppercase">Total price</h5>
-                                        <h5>{{Cart::total().' '.'VNĐ'}}</h5>
+                                        <h5>{{Cart::total(0 , ',' , '.').' '.'VNĐ'}}</h5>
                                     </div>
                                     @if(Session::get('account_id') != null)
-                                    <button type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Register</button>
+                                    <a href="{{URL::to('/check-out')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Checkout</a>
                                     @else
-                                    <a href="{{URL::to('/login')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Register</a>
+                                    <a href="{{URL::to('/login')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Checkout</a>
                                     @endif
                                 </div>
                             </div>
