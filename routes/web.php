@@ -160,3 +160,5 @@ Route::get('/del-fee', 'DeliveryController@del_fee');
 
 //Order
 Route::get('/order', 'OrderController@show_order');
+
+Route::get('/view-order/{order_code}', 'OrderController@view_order');
