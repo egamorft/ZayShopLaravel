@@ -38,7 +38,7 @@ Session::put('error', null);
 <!-- End Alert -->
 <div class="container-fluid">
     <div class="col-11 text-start">
-        <a href="{{URL::to('/print-bill/'.$details->order_code)}}" class="btn bg-gradient-dark mb-0"><i class="material-icons text-sm">print</i>&nbsp;&nbsp;Print bill</a>
+        <a target="_blank" href="{{URL::to('/print-bill/'.$details->order_code)}}" class="btn bg-gradient-dark mb-0"><i class="material-icons text-sm">print</i>&nbsp;&nbsp;Print bill</a>
     </div>
 </div>
 <div class="container-fluid py-2">
