@@ -178,24 +178,49 @@ Session::put('error', null);
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Billing address</h4>
             <form method="POST" action="">
+                @csrf
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <label for="fullName" class="form-label">Full name</label>
-                        <input type="text" class="form-control" id="fullName" value="{{Session::get('account_name')}}">
+                        <label for="shipping_name" class="form-label">Full name</label>
+                        <input type="text" class="form-control shipping_name" name="shipping_name" id="shipping_name" value="{{Session::get('account_name')}}">
                     </div>
 
                     <div class="col-12">
-                        <label for="email" class="form-label">Email
+                        <label for="shipping_email" class="form-label">Email
                             <!-- <span class="text-muted">(Optional)</span> -->
                         </label>
-                        <input type="email" class="form-control" id="email" value="{{Session::get('account_email')}}">
+                        <input type="email" class="form-control shipping_email" name="shipping_email" id="shipping_email" value="{{Session::get('account_email')}}">
                     </div>
 
                     <div class="col-12">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="Plaza street">
+                        <label for="shipping_address" class="form-label">Address</label>
+                        <input type="text" class="form-control shipping_address" name="shipping_address" id="shipping_address" placeholder="Where ur house?...">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="shipping_phone" class="form-label">Phone</label>
+                        <input type="text" class="form-control shipping_phone" name="shipping_phone" id="shipping_phone" value="{{Session::get('account_phone')}}">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="shipping_notes" class="form-label">Delivery note</label>
+                        <span class="text-muted">(Optional)</span>
+                        <textarea rows="5" type="text" class="form-control shipping_notes" name="shipping_notes" id="shipping_notes" placeholder="Wanna note something for deliver man?..."></textarea>
                     </div>
                 </div>
+                @if(Session::get('fee'))
+                <input type="hidden" name="order_fee" class="order_fee" value="{{Session::get('fee')}}">
+                @else
+                <input type="hidden" name="order_fee" class="order_fee" value="50000">
+                @endif
+
+                @if(Session::get('coupon'))
+                @foreach(Session::get('coupon') as $key => $cou)
+                <input type="hidden" name="order_coupon" class="order_coupon" value="{{$cou['coupon_code']}}">
+                @endforeach
+                @else
+                <input type="hidden" name="order_coupon" class="order_coupon" value="no">
+                @endif
 
                 <hr class="my-4">
 
@@ -203,18 +228,18 @@ Session::put('error', null);
 
                 <div class="my-3">
                     <div class="form-check">
-                        <input id="cod" name="paymentMethod" type="radio" class="form-check-input" checked>
+                        <input id="cod" name="payment_select" type="radio" class="form-check-input payment_select" value="1" checked>
                         <label class="form-check-label" for="cod">COD</label>
                     </div>
                     <div class="form-check">
-                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input">
+                        <input id="paypal" name="payment_select" type="radio" class="form-check-input payment_select" value="0">
                         <label class="form-check-label" for="paypal">Paypal</label>
                     </div>
                 </div>
 
                 <hr class="my-4">
 
-                <button class="w-100 btn btn-danger btn-lg" type="submit">Continue to checkout</button>
+                <input name="send_order" class="w-100 btn btn-danger btn-lg send_order" type="button" value="Continue to checkout">
             </form>
             <hr class="my-4">
         </div>

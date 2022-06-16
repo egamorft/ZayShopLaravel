@@ -59,6 +59,7 @@ class HomeController extends Controller
             Session::put('account_id', $result->account_id);
             Session::put('account_name', $result->account_name);
             Session::put('account_email', $result->account_email);
+            Session::put('account_phone', $result->account_phone);
             return Redirect::to('/shop');
         } else {
             return redirect()->back()->with('error', 'Wrong username or password');

@@ -358,6 +358,7 @@ https://templatemo.com/tm-559-zay-shop
     <!-- End Footer -->
 
     <!-- Start Script -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('public/frontend/js/jquery-1.11.0.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery-migrate-1.2.1.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/bootstrap.bundle.min.js')}}"></script>
@@ -366,6 +367,7 @@ https://templatemo.com/tm-559-zay-shop
     <!-- End Script -->
     <!-- Start Slider Script -->
     <script src="{{asset('public/frontend/js/slick.min.js')}}"></script>
+
     <!-- <script>
         $('#carousel-related-product').slick({
             infinite: true,
@@ -398,6 +400,60 @@ https://templatemo.com/tm-559-zay-shop
         });
     </script> -->
     <!-- End Slider Script -->
+    <script>
+        $(document).ready(function() {
+            $('.send_order').click(function() {
+                Swal.fire({
+                    title: 'Ready to submit your order?',
+                    text: "Check your information and your shopping cart carefully",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, submit now!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var shipping_email = $('.shipping_email').val();
+                        var shipping_name = $('.shipping_name').val();
+                        var shipping_address = $('.shipping_address').val();
+                        var shipping_phone = $('.shipping_phone').val();
+                        var shipping_notes = $('.shipping_notes').val();
+                        var shipping_method = $('.payment_select').val();
+                        var order_fee = $('.order_fee').val();
+                        var order_coupon = $('.order_coupon').val();
+                        var _token = $('input[name="_token"]').val();
+
+                        $.ajax({
+                            url: "{{url('/confirm-order')}}",
+                            method: 'POST',
+                            data: {
+                                shipping_email: shipping_email,
+                                shipping_name: shipping_name,
+                                shipping_address: shipping_address,
+                                shipping_phone: shipping_phone,
+                                shipping_notes: shipping_notes,
+                                shipping_method: shipping_method,
+                                order_fee: order_fee,
+                                order_coupon: order_coupon,
+                                _token: _token
+                            },
+                            success: function() {
+                                Swal.fire(
+                                    'Submitted!',
+                                    'Your order has been submitted',
+                                    'success'
+                                )
+                            }
+                        });
+                        window.setTimeout(function(){
+                            location.reload();
+                        }, 3000);
+                    }
+                })
+
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             window.setTimeout(function() {
