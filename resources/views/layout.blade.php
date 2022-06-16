@@ -449,7 +449,7 @@ https://templatemo.com/tm-559-zay-shop
                             location.reload();
                         }, 3000);
                     }
-                })
+                });
 
             });
         });
