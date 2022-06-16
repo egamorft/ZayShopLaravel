@@ -57,8 +57,8 @@ class CheckoutController extends Controller
                 $order_details->save();
             }
         }
+        Cart::destroy();
         Session::forget('coupon');
         Session::forget('fee');
-        Cart::destroy();
     }
 }

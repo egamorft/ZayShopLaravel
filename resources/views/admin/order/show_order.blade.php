@@ -46,16 +46,14 @@ Session::put('error', null);
                         <h6 class="text-white text-capitalize ps-3">Order table</h6>
                     </div>
                 </div>
-                <div class="col-11 text-end">
-                    <a href="{{URL::to('/add-product')}}" class="btn bg-gradient-dark mb-0"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Product</a>
-                </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Index</th>
-                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Order Name</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Order Code</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Order Date</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Order Status</th>
                                     <th class="text-secondary opacity-7"></th>
                                     <th class="text-secondary opacity-7"></th>
@@ -80,6 +78,11 @@ Session::put('error', null);
                                     <td>
                                         <p class="font-weight-bold mb-0">
                                             {{$od->order_code}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="font-weight-bold mb-0">
+                                            {{$od->created_at}}
                                         </p>
                                     </td>
                                     <td>

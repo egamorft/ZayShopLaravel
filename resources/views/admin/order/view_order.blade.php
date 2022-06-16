@@ -175,6 +175,7 @@ Session::put('error', null);
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7"></th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Product name</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Coupon</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Quantity</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Product price</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Subtotal</th>
@@ -204,6 +205,21 @@ Session::put('error', null);
                                         <p class="font-weight-bold mb-0">
                                             {{$details->product_name}}
                                         </p>
+                                    </td>
+                                    <td>
+
+                                        @if($details->product_coupon != 'no')
+
+                                        <p class="font-weight-bold mb-0">
+                                            {{$details->product_coupon}}
+                                        </p>
+                                        @else
+
+                                        <p class="font-weight-italic mb-0">
+                                            NULL
+                                        </p>
+
+                                        @endif
                                     </td>
                                     <td>
                                         <p class="font-weight-bold mb-0">
