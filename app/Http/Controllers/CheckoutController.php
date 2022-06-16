@@ -21,7 +21,8 @@ class CheckoutController extends Controller
         return view('pages.checkout.shop_checkout')->with(compact('city'));
     }
 
-    public function confirm_order(Request $request){
+    public function confirm_order(Request $request)
+    {
         $data = $request->all();
         $shipping = new Shipping();
         $shipping->shipping_name = $data['shipping_name'];
@@ -32,7 +33,7 @@ class CheckoutController extends Controller
         $shipping->shipping_method = $data['shipping_method'];
         $shipping->save();
 
-        $checkout_code = substr(md5(microtime()),rand(0,26),5);
+        $checkout_code = substr(md5(microtime()), rand(0, 26), 5);
         $shipping_id = $shipping->shipping_id;
 
         $order = new Order();
@@ -44,8 +45,8 @@ class CheckoutController extends Controller
         $order->created_at = now();
         $order->save();
 
-        if(Cart::content()){
-            foreach(Cart::content() as $key => $cart){
+        if (Cart::content()) {
+            foreach (Cart::content() as $key => $cart) {
                 $order_details = new OrderDetails();
                 $order_details->order_code = $checkout_code;
                 $order_details->product_id = $cart->id;
@@ -56,9 +57,9 @@ class CheckoutController extends Controller
                 $order_details->product_feeship = $data['order_fee'];
                 $order_details->save();
             }
+            Cart::destroy();
+            Session::forget('coupon');
+            Session::forget('fee');
         }
-        Cart::destroy();
-        Session::forget('coupon');
-        Session::forget('fee');
     }
 }

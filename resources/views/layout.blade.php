@@ -445,7 +445,7 @@ https://templatemo.com/tm-559-zay-shop
                                 )
                             }
                         });
-                        window.setTimeout(function(){
+                        window.setTimeout(function() {
                             location.reload();
                         }, 3000);
                     }
