@@ -176,6 +176,7 @@ Session::put('error', null);
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7"></th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Product name</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Coupon</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Fee ship</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Quantity</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Product price</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Subtotal</th>
@@ -223,6 +224,11 @@ Session::put('error', null);
                                     </td>
                                     <td>
                                         <p class="font-weight-bold mb-0">
+                                            {{number_format($details->product_feeship, 0 , ',' , '.')}}đ
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="font-weight-bold mb-0">
                                             {{$details->product_sales_quantity}}
                                         </p>
                                     </td>
@@ -245,11 +251,11 @@ Session::put('error', null);
                                     @if($coupon_condition)
                                     @if($coupon_condition == 1)
                                     @php
-                                    $total_coupon = $total - (($coupon_number/100) * $total)
+                                    $total_coupon = $total - (($coupon_number/100) * $total) + $details->product_feeship
                                     @endphp
                                     @else
                                     @php
-                                    $total_coupon = $total - $coupon_number
+                                    $total_coupon = $total - $coupon_number + $details->product_feeship
                                     @endphp
                                     @endif
                                     @endif
@@ -259,6 +265,11 @@ Session::put('error', null);
                                     <td>
                                         <p class="text-success font-weight-bold mb-0">
                                             SubTotal: {{number_format($total, 0 , ',' , '.')}}đ
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="text-success font-weight-bold mb-0">
+                                            Fee ship:{{number_format($details->product_feeship, 0 , ',' , '.')}}đ
                                         </p>
                                     </td>
                                     <td>
