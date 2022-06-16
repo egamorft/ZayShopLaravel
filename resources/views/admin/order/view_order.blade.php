@@ -239,13 +239,36 @@ Session::put('error', null);
                                 </tr>
                                 @endforeach
                                 <tr>
-                                    <td></td>
+                                    @php
+                                    $total_coupon = 0;
+                                    @endphp
+                                    @if($coupon_condition)
+                                    @if($coupon_condition == 1)
+                                    @php
+                                    $total_coupon = $total - (($coupon_number/100) * $total)
+                                    @endphp
+                                    @else
+                                    @php
+                                    $total_coupon = $total - $coupon_number
+                                    @endphp
+                                    @endif
+                                    @endif
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>
                                         <p class="text-success font-weight-bold mb-0">
-                                            Total bill: {{number_format($total, 0 , ',' , '.')}}đ
+                                            SubTotal: {{number_format($total, 0 , ',' , '.')}}đ
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="text-success font-weight-bold mb-0">
+                                            Coupon discount:{{number_format(($coupon_number/100) * $total, 0 , ',' , '.')}}đ
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="text-success font-weight-bold mb-0">
+                                            Total bill: {{number_format($total_coupon, 0 , ',' , '.')}}đ
                                         </p>
                                     </td>
                                 </tr>
