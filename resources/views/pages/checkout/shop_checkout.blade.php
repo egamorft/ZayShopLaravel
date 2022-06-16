@@ -46,6 +46,50 @@ Session::put('error', null);
     </div>
     <div class="row g-5">
         <div class="col-md-5 col-lg-4 order-md-last">
+
+            <form>
+                @if(Session::get('fee'))
+                <fieldset disabled>
+                    @endif
+                    @csrf
+                    <div class="col-md">
+                        <label for="city" class="form-label">City</label>
+                        <select name="city" id="city" class="form-control choose city">
+                            <option value="">-----Choose your city-----</option>
+                            @foreach($city as $key => $ci)
+                            <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md">
+                        <label for="state" class="form-label">Province</label>
+                        <select name="province" id="province" class="form-control province choose">
+                            <option value="">-----Choose your province-----</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md">
+                        <label for="state" class="form-label">Wards</label>
+                        <select name="wards" id="wards" class="form-control wards">
+                            <option value="">-----Choose your wards-----</option>
+                        </select>
+                    </div>
+                    <hr class="my-4">
+                    @if(Session::get('fee'))
+                    <div class="col-md">
+                        <input type="button" value="Calculate delivery" name="calculate_order" class="w-100 btn btn-dark btn-lg calculate_delivery">
+                    </div>
+                    @else
+                    <div class="col-md">
+                        <input type="button" value="Calculate delivery" name="calculate_order" class="w-100 btn btn-primary btn-lg calculate_delivery">
+                    </div>
+                    @endif
+                    <hr class="my-4">
+                    @if(Session::get('fee'))
+                </fieldset>
+                @endif
+            </form>
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-primary">Check your cart</span>
                 <span class="badge bg-primary rounded-pill">{{Cart::count()}}</span>
@@ -146,36 +190,6 @@ Session::put('error', null);
                         </label>
                         <input type="email" class="form-control" id="email" value="{{Session::get('account_email')}}">
                     </div>
-
-                    <form>
-                        @csrf
-                        <div class="col-md-4">
-                            <label for="city" class="form-label">City</label>
-                            <select name="city" id="city" class="form-control choose city">
-                                <option value="">-----Choose your city-----</option>
-                                @foreach($city as $key => $ci)
-                                <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="state" class="form-label">Province</label>
-                            <select name="province" id="province" class="form-control province choose">
-                                <option value="">-----Choose your province-----</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="state" class="form-label">Wards</label>
-                            <select name="wards" id="wards" class="form-control wards">
-                                <option value="">-----Choose your wards-----</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="button" value="Calculate delivery" name="calculate_order" class="btn btn-primary btn-sm calculate_delivery">
-                        </div>
-                    </form>
 
                     <div class="col-12">
                         <label for="address" class="form-label">Address</label>
