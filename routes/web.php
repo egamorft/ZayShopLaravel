@@ -157,3 +157,6 @@ Route::post('/select-delivery-home', 'DeliveryController@select_delivery_home');
 Route::post('/calculate-fee', 'DeliveryController@calculate_fee');
 
 Route::get('/del-fee', 'DeliveryController@del_fee');
+
+//Order
+Route::get('/order', 'OrderController@show_order');
