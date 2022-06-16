@@ -36,7 +36,11 @@ Session::put('error', null);
 ?>
 @endif
 <!-- End Alert -->
-
+<div class="container-fluid">
+    <div class="col-11 text-start">
+        <a href="{{URL::to('/print-bill/'.$details->order_code)}}" class="btn bg-gradient-dark mb-0"><i class="material-icons text-sm">print</i>&nbsp;&nbsp;Print bill</a>
+    </div>
+</div>
 <div class="container-fluid py-2">
     <div class="row">
         <div class="col-12">

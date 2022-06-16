@@ -162,3 +162,7 @@ Route::get('/del-fee', 'DeliveryController@del_fee');
 Route::get('/order', 'OrderController@show_order');
 
 Route::get('/view-order/{order_code}', 'OrderController@view_order');
+
+Route::get('/print-bill/{checkout_code}', 'OrderController@print_bill');
+
+Route::get('/delete-order/{order_code}', 'OrderController@delete_order');
