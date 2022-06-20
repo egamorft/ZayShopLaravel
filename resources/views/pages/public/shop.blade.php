@@ -45,18 +45,18 @@ Session::put('error', null);
             <h1 class="h2 pb-4">Categories</h1>
             <ul class="list-unstyled templatemo-accordion">
                 <li class="pb-3">
-                    @foreach($subcategory as $key => $sub)
                     @foreach($category as $key => $cate)
-                    @if($cate->category_id == $sub->category_id)
                     <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="{{URL::to('/category/'.$cate->category_id)}}">
                         {{$cate->category_name}}
                         <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
                     </a>
                     <ul class="collapse show list-unstyled pl-3">
+                        @foreach($subcategory as $key => $sub)
+                        @if($cate->category_id == $sub->category_id)
                         <li><a class="text-decoration-none" href="{{URL::to('/subcategory/'.$sub->subcategory_id)}}">{{$sub->subcategory_name}}</a></li>
+                        @endif
+                        @endforeach
                     </ul>
-                    @endif
-                    @endforeach
                     @endforeach
                 </li>
             </ul>
@@ -92,7 +92,7 @@ Session::put('error', null);
                 <div class="col-md-4">
                     <form action="{{URL::to('/save-cart-home')}}" method="POST">
                         @csrf
-                        <input type="hidden" name="productid_hidden" value="{{$pro->product_id}}"/>
+                        <input type="hidden" name="productid_hidden" value="{{$pro->product_id}}" />
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
                                 <img class="card-img rounded-0 img-fluid" src="{{URL::to('/public/upload/product/'.$pro->product_image)}}">

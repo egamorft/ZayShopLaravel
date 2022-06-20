@@ -112,8 +112,8 @@ class SubCategoryController extends Controller
     //public page
     public function shop_subcategory(Request $request, $subcategory_id)
     {
-        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'desc')->get();
-        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('subcategory_id', 'desc')->get();
+        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'asc')->get();
+        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('category_id', 'asc')->get();
         $subcategory_by_id = DB::table('tbl_product')->join('tbl_subcategory', 'tbl_product.subcategory_id', '=', 'tbl_subcategory.subcategory_id')->where('tbl_product.subcategory_id', $subcategory_id)->where('tbl_product.product_status', 1)->get();
         return view('pages.subcategory.shop_subcategory')->with(compact('category', 'subcategory', 'subcategory_by_id'));
     }

@@ -84,8 +84,8 @@ class CategoryController extends Controller
     public function shop_category(Request $request, $category_id)
     {
 
-        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'desc')->get();
-        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('subcategory_id', 'desc')->get();
+        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'asc')->get();
+        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('category_id', 'asc')->get();
         $category_by_id = DB::table('tbl_product')->join('tbl_category', 'tbl_product.category_id', '=', 'tbl_category.category_id')->where('tbl_product.category_id', $category_id)->where('tbl_product.product_status', 1)->get();
         return view('pages.category.shop_category')
         ->with(compact('category', 'subcategory', 'category_by_id'));
