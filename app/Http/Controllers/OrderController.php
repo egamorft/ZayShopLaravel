@@ -15,14 +15,26 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
+  public function AuthLogin()
+  {
+    $admin_id = Session::get('admin_id');
+    if ($admin_id) {
+      return Redirect::to('admin.dashboard');
+    } else {
+      return Redirect::to('admin')->send();
+    }
+  }
+
   public function show_order()
   {
+    $this->AuthLogin();
     $order = Order::orderBy('created_at', 'DESC')->get();
     return view('admin.order.show_order')->with(compact('order'));
   }
 
   public function view_order($order_code)
   {
+    $this->AuthLogin();
     // $order_details = OrderDetails::where('order_code', $order_code)->get();
     $order = Order::where('order_code', $order_code)->get();
     foreach ($order as $key => $od) {
@@ -50,6 +62,7 @@ class OrderController extends Controller
 
   public function delete_order($order_code)
   {
+    $this->AuthLogin();
     $shipping_id = Order::where('order_code', $order_code)->first();
     Order::where('order_code', $order_code)->delete();
     OrderDetails::where('order_code', $order_code)->delete();
@@ -60,6 +73,7 @@ class OrderController extends Controller
 
   public function print_bill($checkout_code)
   {
+    $this->AuthLogin();
     $pdf = \App::make('dompdf.wrapper');
     $pdf->loadHTML($this->print_bill_convert($checkout_code));
     return $pdf->stream();

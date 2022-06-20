@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+    public function AuthLogin()
+    {
+        $admin_id = Session::get('admin_id');
+        if ($admin_id) {
+            return Redirect::to('admin.dashboard');
+        } else {
+            return Redirect::to('admin')->send();
+        }
+    } 
+
     public function home()
     {
         return view('admin.admin_login');
@@ -17,6 +27,7 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+        $this->AuthLogin();
         return view('admin.dashboard');
     }
 

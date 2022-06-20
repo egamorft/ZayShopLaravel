@@ -9,21 +9,34 @@ use Illuminate\Support\Facades\Session;
 
 class SubCategoryController extends Controller
 {
+    public function AuthLogin()
+    {
+        $admin_id = Session::get('admin_id');
+        if ($admin_id) {
+            return Redirect::to('admin.dashboard');
+        } else {
+            return Redirect::to('admin')->send();
+        }
+    }
+
     //Admin Page
     public function show_sub_category()
     {
+        $this->AuthLogin();
         $show_sub_category = DB::table('tbl_subcategory')->join('tbl_category', 'tbl_subcategory.category_id', '=', 'tbl_category.category_id')->get();
         $manager_sub_category = view('admin.show_sub_category')->with('show_sub_category', $show_sub_category);
         return view('admin_layout')->with('admin.show_sub_category', $manager_sub_category);
     }
     public function add_sub_category()
     {
+        $this->AuthLogin();
         $get_category = DB::table('tbl_category')->where('category_status', '1')->get();
         $manager_category = view('admin.add_sub_category')->with('get_category', $get_category);
         return view('admin_layout')->with('admin.add_sub_category', $manager_category);
     }
     public function save_sub_category(Request $request)
     {
+        $this->AuthLogin();
         $data = array();
         $data['subcategory_name'] = $request->subcategory_name;
         $data['subcategory_desc'] = $request->subcategory_desc;
@@ -56,6 +69,7 @@ class SubCategoryController extends Controller
     }
     public function unactive_sub_category($subcategory_id)
     {
+        $this->AuthLogin();
         DB::table('tbl_subcategory')->where('subcategory_id', $subcategory_id)->update(['subcategory_status' => 0]);
         DB::table('tbl_product')->where('subcategory_id', $subcategory_id)->update(['product_status' => 0]);
         Session::put('message', 'Unactive subcategory ' . $subcategory_id);
@@ -63,12 +77,14 @@ class SubCategoryController extends Controller
     }
     public function active_sub_category($subcategory_id)
     {
+        $this->AuthLogin();
         DB::table('tbl_subcategory')->where('subcategory_id', $subcategory_id)->update(['subcategory_status' => 1]);
         Session::put('message', 'Active subcategory ' . $subcategory_id);
         return Redirect::to('show-sub-category');
     }
     public function edit_sub_category($subcategory_id)
     {
+        $this->AuthLogin();
         $get_category = DB::table('tbl_category')->where('category_status', '1')->get();
         $edit_sub_category = DB::table('tbl_subcategory')->where('subcategory_id', $subcategory_id)->get();
         $manager_sub_category = view('admin.edit_sub_category')->with('edit_sub_category', $edit_sub_category)->with('get_category', $get_category);
@@ -76,12 +92,14 @@ class SubCategoryController extends Controller
     }
     public function delete_sub_category($subcategory_id)
     {
+        $this->AuthLogin();
         DB::table('tbl_subcategory')->where('subcategory_id', $subcategory_id)->delete();
         Session::put('message', 'Delete subcategory ' . $subcategory_id);
         return Redirect::to('show-sub-category');
     }
     public function update_sub_category(Request $request, $subcategory_id)
     {
+        $this->AuthLogin();
         $data = array();
         $data['subcategory_name'] = $request->subcategory_name;
         $data['subcategory_desc'] = $request->subcategory_desc;
