@@ -251,19 +251,19 @@ Session::put('error', null);
                                 <tr>
                                     @php
                                     $total_coupon = 0;
+                                    $tax = $total * 10 / 100;
                                     @endphp
                                     @if($coupon_condition)
                                     @if($coupon_condition == 1)
                                     @php
-                                    $total_coupon = $total - (($coupon_number/100) * $total) + $details->product_feeship
+                                    $total_coupon = $total - (($coupon_number/100) * $total) + $details->product_feeship + $tax
                                     @endphp
                                     @else
                                     @php
-                                    $total_coupon = $total - $coupon_number + $details->product_feeship
+                                    $total_coupon = $total - $coupon_number + $details->product_feeship + $tax
                                     @endphp
                                     @endif
                                     @endif
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>
@@ -272,7 +272,12 @@ Session::put('error', null);
                                         </p>
                                     </td>
                                     <td>
-                                        <p class="text-success font-weight-bold mb-0">
+                                        <p class="text-danger font-weight-bold mb-0">
+                                            Tax: {{number_format($tax, 0 , ',' , '.')}}đ
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="text-danger font-weight-bold mb-0">
                                             Fee ship:{{number_format($details->product_feeship, 0 , ',' , '.')}}đ
                                         </p>
                                     </td>

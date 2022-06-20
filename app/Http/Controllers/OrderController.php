@@ -15,75 +15,89 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
-    public function show_order()
-    {
-        $order = Order::orderBy('created_at', 'DESC')->get();
-        return view('admin.order.show_order')->with(compact('order'));
+  public function show_order()
+  {
+    $order = Order::orderBy('created_at', 'DESC')->get();
+    return view('admin.order.show_order')->with(compact('order'));
+  }
+
+  public function view_order($order_code)
+  {
+    // $order_details = OrderDetails::where('order_code', $order_code)->get();
+    $order = Order::where('order_code', $order_code)->get();
+    foreach ($order as $key => $od) {
+      $account_id = $od->account_id;
+      $shipping_id = $od->shipping_id;
+    }
+    $account = Account::where('account_id', $account_id)->first();
+    $shipping = Shipping::where('shipping_id', $shipping_id)->first();
+    $details = OrderDetails::with('product')->where('order_code', $order_code)->first();
+    $order_details = OrderDetails::with('product')->where('order_code', $order_code)->get();
+    foreach ($order_details as $key => $order_d) {
+      $product_coupon = $order_d->product_coupon;
+    }
+    if ($product_coupon != 'no') {
+      $coupon = Coupon::where('coupon_code', $product_coupon)->first();
+      $coupon_condition = $coupon->coupon_condition;
+      $coupon_number = $coupon->coupon_number;
+    } else {
+      $coupon_condition = 2;
+      $coupon_number = 0;
     }
 
-    public function view_order($order_code)
-    {
-        // $order_details = OrderDetails::where('order_code', $order_code)->get();
-        $order = Order::where('order_code', $order_code)->get();
-        foreach ($order as $key => $od) {
-            $account_id = $od->account_id;
-            $shipping_id = $od->shipping_id;
-        }
-        $account = Account::where('account_id', $account_id)->first();
-        $shipping = Shipping::where('shipping_id', $shipping_id)->first();
-        $details = OrderDetails::with('product')->where('order_code', $order_code)->first();
-        $order_details = OrderDetails::with('product')->where('order_code', $order_code)->get();
-        foreach ($order_details as $key => $order_d) {
-            $product_coupon = $order_d->product_coupon;
-        }
-        if ($product_coupon != 'no') {
-            $coupon = Coupon::where('coupon_code', $product_coupon)->first();
-            $coupon_condition = $coupon->coupon_condition;
-            $coupon_number = $coupon->coupon_number;
-        } else {
-            $coupon_condition = 2;
-            $coupon_number = 0;
-        }
+    return view('admin.order.view_order')->with(compact('details', 'order_details', 'account', 'shipping', 'coupon_condition', 'coupon_number'));
+  }
 
-        return view('admin.order.view_order')->with(compact('details', 'order_details', 'account', 'shipping', 'coupon_condition', 'coupon_number'));
-    }
+  public function delete_order($order_code)
+  {
+    $shipping_id = Order::where('order_code', $order_code)->first();
+    Order::where('order_code', $order_code)->delete();
+    OrderDetails::where('order_code', $order_code)->delete();
+    Shipping::where('shipping_id', $shipping_id->shipping_id)->delete();
+    Session::put('message', 'Successfully delete order ' . $order_code);
+    return Redirect::to('/order');
+  }
 
-    public function delete_order($order_code)
-    {
-        $shipping_id = Order::where('order_code', $order_code)->first();
-        Order::where('order_code', $order_code)->delete();
-        OrderDetails::where('order_code', $order_code)->delete();
-        Shipping::where('shipping_id', $shipping_id->shipping_id)->delete();
-        Session::put('message', 'Successfully delete order ' . $order_code);
-        return Redirect::to('/order');
+  public function print_bill($checkout_code)
+  {
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($this->print_bill_convert($checkout_code));
+    return $pdf->stream();
+  }
+  public function print_bill_convert($checkout_code)
+  {
+    $order_details = OrderDetails::where('order_code', $checkout_code)->get();
+    $order = Order::where('order_code', $checkout_code)->get();
+    $order_date = Order::where('order_code', $checkout_code)->first();
+    foreach ($order as $key => $od) {
+      $account_id = $od->account_id;
+      $shipping_id = $od->shipping_id;
     }
-
-    public function print_bill($checkout_code)
-    {
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($this->print_bill_convert($checkout_code));
-        return $pdf->stream();
-    }
-    public function print_bill_convert($checkout_code)
-    {
-        $order_details = OrderDetails::where('order_code', $checkout_code)->get();
-        $order = Order::where('order_code', $checkout_code)->get();
-        $order_date = Order::where('order_code', $checkout_code)->first();
-        foreach ($order as $key => $od) {
-            $account_id = $od->account_id;
-            $shipping_id = $od->shipping_id;
-        }
-        $account = Account::where('account_id', $account_id)->first();
-        $shipping = Shipping::where('shipping_id', $shipping_id)->first();
-        $order_details_product = OrderDetails::with('product')->where('order_code', $checkout_code)->get();
-        $output = '';
-        $output .= '
+    $account = Account::where('account_id', $account_id)->first();
+    $shipping = Shipping::where('shipping_id', $shipping_id)->first();
+    $order_details_product = OrderDetails::with('product')->where('order_code', $checkout_code)->get();
+    $output = '';
+    $output .= '
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <style>
         body{
             font-family: DejaVu Sans;
         }
         </style>
+        <div>
+        <p class="navbar-brand text-success logo h1 align-self-center">ZAY SHOP</p>
+        <ul class="list-unstyled">
+                        <li>
+                            3 Duy Tan, Dich Vong Hau, Cau Giay, Ha Noi
+                        </li>
+                        <li>
+                            Tel: 0888736810</a>
+                        </li>
+                        <li>
+                            Email: tungnh3011.work@gmail.com</a>
+                        </li>
+                    </ul>
+        </div>
         <div class="card">
         <div class="card-body">
           <div class="container mb-5 mt-3">
@@ -91,20 +105,13 @@ class OrderController extends Controller
               <div class="col-xl-9">
                 <p style="color: #7e8d9f;font-size: 20px;">Invoice >> <strong>ID: #' . strtoupper($checkout_code) . '</strong></p>
               </div>
+              <div class="col-xl-3">
+              <p style="color: #7e8d9f;font-size: 20px;">Invoice >> <strong>Created date: #' . $order_date->created_at . '</strong></p>
+              </div>
               <hr>
             </div>
       
             <div class="container">
-              <div class="col-md-12">
-                <center>
-                    <h1>
-                      ZAY SHOP
-                    </h1>
-                </center>
-      
-              </div>
-      
-      
               <div class="row">
                 <div class="col-xl-8">
                   <ul class="list-unstyled">
@@ -112,16 +119,6 @@ class OrderController extends Controller
                     <li class="text-muted">Address: ' . $shipping->shipping_address . '</li>
                     <li class="text-muted">Email: ' . $account->account_email . '</li>
                     <li class="text-muted">Phone number: ' . $account->account_phone . '</li>
-                  </ul>
-                </div>
-                <hr>
-                <div class="col-xl-4">
-                  <p class="text-muted">Invoice</p>
-                  <ul class="list-unstyled">
-                    <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                        class="fw-bold">ID:</span>#' . strtoupper($checkout_code) . '</li>
-                    <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                        class="fw-bold">Creation Date: </span>' . $order_date->created_at . '</li>
                   </ul>
                 </div>
                 <hr>
@@ -140,31 +137,30 @@ class OrderController extends Controller
                     </tr>
                   </thead>
                   <tbody>';
-                  $total = 0;
-                  $i = 0;
-                  foreach($order_details_product as $key => $product){
-                    $i++;
-                    $subtotal = $product->product_price * $product->product_sales_quantity;
-                    $total += $subtotal;
-                    if($product->product_coupon != 'no'){
-                        $product_coupon = $product->product_coupon;
-                    }else{
-                        $product_coupon = 'NULL';
-                    }
-                  $output .='
+    $total = 0;
+    $i = 0;
+    foreach ($order_details_product as $key => $product) {
+      $i++;
+      $subtotal = $product->product_price * $product->product_sales_quantity;
+      $total += $subtotal;
+      if ($product->product_coupon != 'no') {
+        $product_coupon = $product->product_coupon;
+      } else {
+        $product_coupon = 'NULL';
+      }
+      $output .= '
                     <tr>
-                      <th scope="row">'. $i.'</th>
-                      <td>'. $product->product_name.'</td>
-                      <td>'. $product_coupon.'</td>
-                      <td>'.$product->product_sales_quantity.'</td>
-                      <td>'. number_format($product->product_price, 0 , ',', '.').'đ</td>
-                      <td>'. number_format($subtotal, 0 , ',', '.').'đ</td>
+                      <th scope="row">' . $i . '</th>
+                      <td>' . $product->product_name . '</td>
+                      <td>' . $product_coupon . '</td>
+                      <td>' . $product->product_sales_quantity . '</td>
+                      <td>' . number_format($product->product_price, 0, ',', '.') . 'đ</td>
+                      <td>' . number_format($subtotal, 0, ',', '.') . 'đ</td>
                     </tr>
                     ';
-                    
-                  }
-                  $tax = ($total * 10) /100;
-                  $output .='
+    }
+    $tax = ($total * 10) / 100;
+    $output .= '
                   </tbody>
       
                 </table>
@@ -172,11 +168,11 @@ class OrderController extends Controller
               <div class="row">
                 <div class="col-xl-3">
                   <ul class="list-unstyled">
-                    <li class="text-muted ms-3"><span class="text-black me-4">Fee Ship</span>'. number_format($product->product_feeship, 0 , ',', '.').'đ</li>
-                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>'. number_format($tax, 0 , ',', '.').'đ</li>
+                    <li class="text-muted ms-3"><span class="text-black me-4">Fee Ship</span>' . number_format($product->product_feeship, 0, ',', '.') . 'đ</li>
+                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(10%)</span>' . number_format($tax, 0, ',', '.') . 'đ</li>
                   </ul>
                   <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
-                      style="font-size: 25px;">'. number_format($total, 0 , ',', '.').'đ</span></p>
+                      style="font-size: 25px;">' . number_format($total, 0, ',', '.') . ' VNĐ</span></p>
                 </div>
               </div>
               <hr>
@@ -186,6 +182,6 @@ class OrderController extends Controller
         </div>
       </div>';
 
-        return $output;
-    }
+    return $output;
+  }
 }

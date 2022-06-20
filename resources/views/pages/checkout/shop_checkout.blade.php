@@ -111,12 +111,15 @@ Session::put('error', null);
                     <span>Sub Total</span>
                     <strong>{{Cart::pricetotal(0 , ',' , '.').' '.'đ'}}</strong>
                 </li>
+                @php
+                $tax = Cart::pricetotal(0 , ',' , '') * 10 / 100;
+                @endphp
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
                         <h6 class="my-0">Tax</h6>
                         <small>10% cart</small>
                     </div>
-                    <span class="text-danger">{{Cart::tax(0 , ',' , '.').' '.'đ'}}</span>
+                    <span class="text-danger">{{number_format($tax, 0, ',', '.').' '.'đ'}}</span>
                 </li>
                 @if(Session::get('coupon'))
                 @foreach(Session::get('coupon') as $key => $cou)

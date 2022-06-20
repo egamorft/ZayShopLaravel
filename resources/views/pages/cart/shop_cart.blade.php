@@ -132,7 +132,7 @@ Session::put('error', null);
                                     </div>
                                     @endif
 
-                                    <h5 class="text-uppercase mb-3">Shipping</h5>
+                                    <!-- <h5 class="text-uppercase mb-3">Shipping</h5>
 
                                     <div class="mb-4 pb-2">
                                         <select class="form-control">
@@ -141,7 +141,7 @@ Session::put('error', null);
                                             <option value="3">Three</option>
                                             <option value="4">Four</option>
                                         </select>
-                                    </div>
+                                    </div> -->
 
                                     <h5 class="text-uppercase mb-3">Give code</h5>
 
