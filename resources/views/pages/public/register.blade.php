@@ -81,6 +81,14 @@ Session::put('error', null);
                         <span style="color: red">{{$message}}</span>
                         @enderror
                     </div>
+                    <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+                    <br />
+                    @if($errors->has('g-recaptcha-response'))
+                    <span class="invalid-feedback" style="display:block">
+                        <strong>{{$errors->first('g-recaptcha-response')}}</strong>
+                    </span>
+                    @endif
+
 
                     <input type="submit" value="Sign In" class="btn btn-outline-success">
 

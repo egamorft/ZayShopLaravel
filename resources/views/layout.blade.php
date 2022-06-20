@@ -358,6 +358,7 @@ https://templatemo.com/tm-559-zay-shop
     <!-- End Footer -->
 
     <!-- Start Script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="{{asset('public/frontend/js/sweetalert.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery-1.11.0.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery-migrate-1.2.1.min.js')}}"></script>

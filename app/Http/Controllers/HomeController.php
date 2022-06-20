@@ -72,7 +72,8 @@ class HomeController extends Controller
             'account_email' => 'required|min:6|email',
             'account_phone' => 'required|numeric|digits:10',
             'account_password' => 'required|min:6',
-            'account_cfpassword' => 'required|same:account_password'
+            'account_cfpassword' => 'required|same:account_password',
+            'g-recaptcha-response' => new Captcha(),
         ]);
         $email = $request->account_email;
         $result = DB::table('tbl_account')->where('account_email', $email)->first();
