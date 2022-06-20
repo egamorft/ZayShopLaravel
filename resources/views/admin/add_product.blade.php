@@ -66,6 +66,13 @@ Session::put('error', null);
                         <span style="color: red">{{$message}}</span>
                         @enderror
                         <div class="input-group input-group-outline my-3">
+                            <label class="form-label">Product Quantity</label>
+                            <input name="product_quantity" type="text" class="form-control">
+                        </div>
+                        @error('product_quantity')
+                        <span style="color: red">{{$message}}</span>
+                        @enderror
+                        <div class="input-group input-group-outline my-3">
                             <label class="form-label">Product Price</label>
                             <input name="product_price" type="text" class="form-control">
                         </div>

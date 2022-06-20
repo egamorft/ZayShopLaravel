@@ -64,6 +64,10 @@ Session::put('error', null);
                             <input value="{{$edit_value->product_name}}" name="product_name" type="text" class="form-control">
                         </div>
                         <div class="input-group input-group-outline my-3">
+                            <label class="form-label">Product Quantity</label>
+                            <input value="{{$edit_value->product_quantity}}" name="product_quantity" type="text" class="form-control">
+                        </div>
+                        <div class="input-group input-group-outline my-3">
                             <label class="form-label">Product Price</label>
                             <input value="{{$edit_value->product_price}}" name="product_price" type="text" class="form-control">
                         </div>

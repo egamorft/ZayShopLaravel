@@ -61,12 +61,14 @@ class ProductController extends Controller
         $this->AuthLogin();
         $request->validate([
             'product_name' => 'required',
+            'product_quantity' => 'required|numeric',
             'product_price' => 'required|numeric',
             'product_status' => 'required'
         ]);
 
         $data = array();
         $data['product_name'] = $request->product_name;
+        $data['product_quantity'] = $request->product_quantity;
         $data['product_price'] = $request->product_price;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
@@ -127,6 +129,7 @@ class ProductController extends Controller
         $this->AuthLogin();
         $data = array();
         $data['product_name'] = $request->product_name;
+        $data['product_quantity'] = $request->product_quantity;
         $data['product_price'] = $request->product_price;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;

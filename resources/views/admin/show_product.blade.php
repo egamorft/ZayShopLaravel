@@ -56,6 +56,7 @@ Session::put('error', null);
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">ID</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Product Name</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Product Quantity</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Product Price</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Product Image</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Category</th>
@@ -78,6 +79,11 @@ Session::put('error', null);
                                     <td>
                                         <p class="font-weight-bold mb-0">
                                             {{$pro->product_name}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="font-weight-bold mb-0">
+                                            {{$pro->product_quantity}}
                                         </p>
                                     </td>
                                     <td>
