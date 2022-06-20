@@ -179,6 +179,7 @@ Session::put('error', null);
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7"></th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Product name</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Product in stock</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Coupon</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Fee ship</th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Quantity</th>
@@ -198,7 +199,7 @@ Session::put('error', null);
                                 $subtotal = $details->product_price * $details->product_sales_quantity;
                                 $total += $subtotal;
                                 @endphp
-                                <tr>
+                                <tr class="color_qty_{{$details->product_id}}">
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="justify-content-center">
@@ -209,6 +210,11 @@ Session::put('error', null);
                                     <td>
                                         <p class="font-weight-bold mb-0">
                                             {{$details->product_name}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="font-weight-bold mb-0">
+                                            {{$details->product->product_quantity}}
                                         </p>
                                     </td>
                                     <td>
@@ -233,7 +239,16 @@ Session::put('error', null);
                                     </td>
                                     <td>
                                         <p class="font-weight-bold mb-0">
-                                            {{$details->product_sales_quantity}}
+                                            <input {{ $order_status == 2 ?"disabled":'' }} type="number" class="order_qty_{{$details->product_id}}" min="1" value="{{$details->product_sales_quantity}}" name="product_sales_quantity">
+
+                                            <input type="hidden" name="order_qty_storage" class="order_qty_storage_{{$details->product_id}}" value="{{$details->product->product_quantity}}">
+
+                                            <input type="hidden" name="order_code" class="order_code" value="{{$details->order_code}}">
+
+                                            <input type="hidden" name="order_product_id" class="order_product_id" value="{{$details->product_id}}">
+                                            @if($order_status != 2)
+                                            <button data-product_id="{{$details->product_id}}" name="update_quantity_order" class="btn btn-success update_quantity_order">Update</button>
+                                            @endif
                                         </p>
                                     </td>
                                     <td>
@@ -266,6 +281,7 @@ Session::put('error', null);
                                     @endif
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>
                                         <p class="text-success font-weight-bold mb-0">
                                             SubTotal: {{number_format($total, 0 , ',' , '.')}}đ
@@ -290,6 +306,39 @@ Session::put('error', null);
                                         <p class="text-success font-weight-bold mb-0">
                                             Total bill: {{number_format($total_coupon, 0 , ',' , '.')}}đ
                                         </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        @foreach($order as $key => $or)
+                                        @if($or->order_status==1)
+                                        <form class="input-group input-group-outline mb-3">
+                                            @csrf
+                                            <select class="form-control order_details">
+                                                <option id="{{$or->order_id}}" value="1" selected>--------Choose order status--------</option>
+                                                <option id="{{$or->order_id}}" value="2">Delivering</option>
+                                            </select>
+                                        </form>
+                                        @elseif($or->order_status==2)
+                                        <form class="input-group input-group-outline mb-3">
+                                            @csrf
+                                            <select class="form-control order_details">
+                                                <option id="{{$or->order_id}}" value="2" selected>Delivering</option>
+                                                <option id="{{$or->order_id}}" value="3">Cancel/ Pending order</option>
+                                            </select>
+                                        </form>
+                                        @else
+                                        <form class="input-group input-group-outline mb-3">
+                                            @csrf
+                                            <select class="form-control order_details">
+                                                <option id="{{$or->order_id}}" value="1">--------Choose order status--------</option>
+                                                <option id="{{$or->order_id}}" value="2">Delivering</option>
+                                                <option id="{{$or->order_id}}" value="3" selected>Cancel/ Pending order</option>
+                                            </select>
+                                        </form>
+
+                                        @endif
+                                        @endforeach
                                     </td>
                                 </tr>
                             </tbody>

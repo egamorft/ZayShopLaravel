@@ -230,6 +230,7 @@
     </div>
     <!--   Core JS Files   -->
     <script src="{{asset('public/backend/js/core/popper.min.js')}}"></script>
+    <script src="{{asset('public/frontend/js/sweetalert.js')}}"></script>
     <script src="{{asset('public/backend/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/smooth-scrollbar.min.js')}}"></script>
@@ -288,7 +289,12 @@
                 var _token = $('input[name="_token"]').val();
                 var fee_ship = $('.fee_ship').val();
                 if (city == '' || province == '' || wards == '' || fee_ship == '') {
-                    alert('Please fill all field');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'You must fill all field',
+                        showConfirmButton: false,
+                        timer: 1800
+                    })
                 } else {
                     if (fee_ship > 0) {
                         $.ajax({
@@ -306,7 +312,10 @@
                             },
                         });
                     } else {
-                        alert('Delivery fee cannot be negative ');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Delivery fee must > 0'
+                        })
                     }
                 }
             });
@@ -376,262 +385,6 @@
                 console.error(error);
             });
     </script>
-    <script>
-        var ctx = document.getElementById("chart-bars").getContext("2d");
-
-        new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: ["M", "T", "W", "T", "F", "S", "S"],
-                datasets: [{
-                    label: "Sales",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    borderRadius: 4,
-                    borderSkipped: false,
-                    backgroundColor: "rgba(255, 255, 255, .8)",
-                    data: [50, 20, 10, 22, 50, 10, 40],
-                    maxBarThickness: 6
-                }, ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5],
-                            color: 'rgba(255, 255, 255, .2)'
-                        },
-                        ticks: {
-                            suggestedMin: 0,
-                            suggestedMax: 500,
-                            beginAtZero: true,
-                            padding: 10,
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                            color: "#fff"
-                        },
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5],
-                            color: 'rgba(255, 255, 255, .2)'
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#f8f9fa',
-                            padding: 10,
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                },
-            },
-        });
-
-
-        var ctx2 = document.getElementById("chart-line").getContext("2d");
-
-        new Chart(ctx2, {
-            type: "line",
-            data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Mobile apps",
-                    tension: 0,
-                    borderWidth: 0,
-                    pointRadius: 5,
-                    pointBackgroundColor: "rgba(255, 255, 255, .8)",
-                    pointBorderColor: "transparent",
-                    borderColor: "rgba(255, 255, 255, .8)",
-                    borderColor: "rgba(255, 255, 255, .8)",
-                    borderWidth: 4,
-                    backgroundColor: "transparent",
-                    fill: true,
-                    data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-                    maxBarThickness: 6
-
-                }],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5],
-                            color: 'rgba(255, 255, 255, .2)'
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#f8f9fa',
-                            padding: 10,
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#f8f9fa',
-                            padding: 10,
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                },
-            },
-        });
-
-        var ctx3 = document.getElementById("chart-line-tasks").getContext("2d");
-
-        new Chart(ctx3, {
-            type: "line",
-            data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Mobile apps",
-                    tension: 0,
-                    borderWidth: 0,
-                    pointRadius: 5,
-                    pointBackgroundColor: "rgba(255, 255, 255, .8)",
-                    pointBorderColor: "transparent",
-                    borderColor: "rgba(255, 255, 255, .8)",
-                    borderWidth: 4,
-                    backgroundColor: "transparent",
-                    fill: true,
-                    data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                    maxBarThickness: 6
-
-                }],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5],
-                            color: 'rgba(255, 255, 255, .2)'
-                        },
-                        ticks: {
-                            display: true,
-                            padding: 10,
-                            color: '#f8f9fa',
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#f8f9fa',
-                            padding: 10,
-                            font: {
-                                size: 14,
-                                weight: 300,
-                                family: "Roboto",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                },
-            },
-        });
-    </script>
-    <script>
-        var win = navigator.platform.indexOf('Win') > -1;
-        if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-                damping: '0.5'
-            }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-        }
-    </script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
@@ -641,6 +394,116 @@
             window.setTimeout(function() {
                 $("#alertMessage").fadeOut(1000)
             }, 2000);
+        });
+    </script>
+    <script>
+        $('.order_details').change(function() {
+            var order_status = $(this).val();
+            var order_id = $(this).children(":selected").attr("id");
+            var _token = $("input[name='_token']").val();
+
+            // lay so luong
+            quantity = [];
+            $("input[name='product_sales_quantity']").each(function() {
+                quantity.push($(this).val());
+            });
+            //lay id
+            order_product_id = [];
+            $("input[name='order_product_id']").each(function() {
+                order_product_id.push($(this).val());
+            });
+            j = 0;
+            if (order_status == 2) {
+                for (i = 0; i < order_product_id.length; i++) {
+                    //So luong order
+                    var order_qty = $('.order_qty_' + order_product_id[i]).val();
+                    //So luong trong kho
+                    var order_qty_storage = $('.order_qty_storage_' + order_product_id[i]).val();
+                    if (parseInt(order_qty) > parseInt(order_qty_storage)) {
+                        j = j + 1;
+                        if (j == 1) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Product in stock not enough',
+                                showConfirmButton: false,
+                                timer: 1800
+                            })
+                        }
+                        $('.color_qty_' + order_product_id[i]).css('background', '#C11B17');
+                    }
+                }
+                if (j == 0) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Delivering this order',
+                        showConfirmButton: false,
+                        timer: 1800
+                    })
+                }
+            } else if (order_status == 3) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'This order has been canceled',
+                    showConfirmButton: false,
+                    timer: 1800
+                })
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Not handle yet',
+                    showConfirmButton: false,
+                    timer: 1800
+                })
+            }
+            if (j == 0) {
+                $.ajax({
+                    url: "{{url('/update-order-qty')}}",
+                    method: 'POST',
+                    data: {
+                        _token: _token,
+                        order_status: order_status,
+                        order_id: order_id,
+                        quantity: quantity,
+                        order_product_id: order_product_id
+                    },
+                    success: function(data) {
+                        setTimeout(function() { // wait for 5 secs(2)
+                            location.reload(); // then reload the page.(3)
+                        }, 2000);
+                    }
+                });
+
+            }
+
+        });
+    </script>
+    <script>
+        $('.update_quantity_order').click(function() {
+            var order_product_id = $(this).data('product_id');
+            var order_qty = $('.order_qty_' + order_product_id).val();
+            var order_code = $('.order_code').val();
+            var _token = $('input[name=_token]').val();
+            $.ajax({
+                url: "{{url('/update-qty')}}",
+                method: 'POST',
+                data: {
+                    _token: _token,
+                    order_qty: order_qty,
+                    order_code: order_code,
+                    order_product_id: order_product_id
+                },
+                success: function(data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Update product quantity',
+                        showConfirmButton: false,
+                        timer: 1800
+                    })
+                    setTimeout(function() { // wait for 5 secs(2)
+                        location.reload(); // then reload the page.(3)
+                    }, 2000);
+                }
+            });
         });
     </script>
 </body>

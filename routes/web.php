@@ -166,3 +166,7 @@ Route::get('/view-order/{order_code}', 'OrderController@view_order');
 Route::get('/print-bill/{checkout_code}', 'OrderController@print_bill');
 
 Route::get('/delete-order/{order_code}', 'OrderController@delete_order');
+
+Route::post('/update-order-qty', 'OrderController@update_order_qty');
+
+Route::post('/update-qty', 'OrderController@update_qty');

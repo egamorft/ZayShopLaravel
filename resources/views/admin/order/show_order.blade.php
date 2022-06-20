@@ -88,10 +88,12 @@ Session::put('error', null);
                                     <td>
                                         @if($od->order_status == 1)
                                         <p class="font-weight-bold mb-0">
-                                            New order
+                                            Not handle
                                         </p>
+                                        @elseif($od->order_status == 2)
+                                        Delivering
                                         @else
-                                        Handled
+                                        Cancel/ Pending
                                         @endif
                                     </td>
                                     <td class="align-middle">
