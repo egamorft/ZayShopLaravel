@@ -133,7 +133,6 @@ Session::put('error', null);
             </div>
             {!! $product->render('pagination')!!}
         </div>
-
     </div>
 </div>
 <!-- End Content -->

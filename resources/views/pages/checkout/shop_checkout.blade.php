@@ -44,6 +44,12 @@ Session::put('error', null);
     <div class="py-5 text-center">
         <h2>Checkout form</h2>
     </div>
+    @if(Cart::count() == 0)
+    <h2>Your cart is still null</h2>
+    <a class="btn btn-success" href="{{URL::to('/shop')}}" role="button">Shopping now</a>
+    <h4>OR</h4>
+    <a class="btn btn-success" href="{{URL::to('/shop-cart')}}" role="button">Check your cart</a>
+    @else
     <div class="row g-5">
         <div class="col-md-5 col-lg-4 order-md-last">
 
@@ -247,6 +253,7 @@ Session::put('error', null);
             <hr class="my-4">
         </div>
     </div>
+    @endif
 </main>
 
 @endsection

@@ -11,6 +11,7 @@ use App\Shipping;
 use App\Wards;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
