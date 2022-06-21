@@ -61,7 +61,10 @@ Session::put('error', null);
                                     @else
                                     @foreach($content as $value)
                                     <hr class="my-4">
-                                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                    @if($value->options->in_stock < $value->qty)
+                                    <div class="alert alert-danger">Product in stock is not enough!! Please order less or pick another</div>
+                                    @endif
+                                    <div class="row mb-4 d-flex justify-content-between align-items-center {{$value->options->in_stock < $value->qty ? 'bg-danger' : ''}}">
                                         <div class="col-md-2 col-lg-2 col-xl-2">
                                             <img src="{{URL::to('/public/upload/product/'.$value->options->image)}}" class="img-fluid rounded-3" alt="Cotton T-shirt">
                                         </div>

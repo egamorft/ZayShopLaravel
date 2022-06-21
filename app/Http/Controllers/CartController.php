@@ -20,11 +20,17 @@ class CartController extends Controller
         $data['qty'] = $quantity;
         $data['name'] = $product_info->product_name;
         $data['price'] = $product_info->product_price;
+        $data['options']['in_stock'] = $product_info->product_quantity;
         $data['weight'] = '68';
         $data['options']['image'] = $product_info->product_image;
-        Cart::add($data);
-        Cart::setGlobalTax(10);
-        return Redirect::to('/shop-cart');
+        if ($data['options']['in_stock'] < $data['qty']) {
+            Session::put('error', 'Quantity in stock is not enough');
+            return back();
+        } else {
+            Cart::add($data);
+            Cart::setGlobalTax(10);
+            return Redirect::to('/shop-cart');
+        }
     }
 
     public function shop_cart()
@@ -55,10 +61,11 @@ class CartController extends Controller
         $data['id'] = $product_info->product_id;
         $data['qty'] = $quantity;
         $data['name'] = $product_info->product_name;
+        $data['options']['in_stock'] = $product_info->product_quantity;
         $data['price'] = $product_info->product_price;
         $data['weight'] = '68';
         $data['options']['image'] = $product_info->product_image;
-        if ($data['id'] == null || $data['qty'] == null || $data['name'] == null || $data['price'] == null || $data['weight'] == null || $data['options']['image'] == null) {
+        if ($data['id'] == null || $data['qty'] == null || $data['name'] == null || $data['price'] == null || $data['weight'] == null || $data['options']['image'] == null || $data['options']['in_stock'] == null) {
             Session::put('error', 'Error');
             return back();
         } else {

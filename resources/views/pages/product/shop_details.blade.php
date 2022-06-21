@@ -178,13 +178,17 @@ Session::put('error', null);
                             <li>{!!$pro->product_content!!}</li>
                         </ul>
 
+                        <h6>Product available in stock:</h6>
+                        <ul class="list-unstyled pb-3">
+                            <li>{{$pro->product_quantity}}</li>
+                        </ul>
                         <form action="{{URL::to('/save-cart')}}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-auto">
                                     <div class="form-outline">
                                         <h6>Quantity: </h6>
-                                        <input type="number" id="qty" name="qty" class="form-control" min="1" value="1" />
+                                        <input type="number" id="qty" name="qty" class="form-control" min="1" value="1"/>
                                         <input type="hidden" name="productid_hidden" value="{{$pro->product_id}}" />
                                     </div>
                                 </div>

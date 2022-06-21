@@ -17,8 +17,20 @@ class CheckoutController extends Controller
 {
     public function check_out()
     {
-        $city = City::orderby('matp', 'asc')->get();
-        return view('pages.checkout.shop_checkout')->with(compact('city'));
+        $content = Cart::content();
+        $i = 0;
+        foreach ($content as $item) {
+            if ($item->options->in_stock < $item->qty) {
+                $i++;
+                Session::put('error', 'Quantity in stock is not enough');
+                return back();
+                break;
+            }
+        }
+        if ($i == 0) {
+            $city = City::orderby('matp', 'asc')->get();
+            return view('pages.checkout.shop_checkout')->with(compact('city'));
+        }
     }
 
     public function confirm_order(Request $request)
