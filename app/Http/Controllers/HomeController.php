@@ -30,7 +30,7 @@ class HomeController extends Controller
     {
         $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'asc')->get();
         $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('category_id', 'asc')->get();
-        $product = DB::table('tbl_product')->where('product_status', '1')->orderBy('product_id', 'desc')->get();
+        $product = DB::table('tbl_product')->where('product_status', '1')->orderBy('product_id', 'desc')->paginate(3);
         return view('pages.public.shop')->with(compact('category', 'subcategory', 'product'));
     }
 
