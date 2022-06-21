@@ -170,3 +170,20 @@ Route::get('/delete-order/{order_code}', 'OrderController@delete_order');
 Route::post('/update-order-qty', 'OrderController@update_order_qty');
 
 Route::post('/update-qty', 'OrderController@update_qty');
+
+//Slider
+Route::get('/slider', 'SliderController@show_slider');
+
+Route::get('/add-slider', 'SliderController@add_slider');
+
+Route::post('/save-slider', 'SliderController@save_slider');
+
+Route::get('/unactive-slider/{slider_id}', 'SliderController@unactive_slider');
+
+Route::get('/active-slider/{slider_id}', 'SliderController@active_slider');
+
+Route::get('/edit-slider/{slider_id}', 'SliderController@edit_slider');
+
+Route::post('/update-slider/{slider_id}', 'SliderController@update_slider');
+
+Route::get('/delete-slider/{slider_id}', 'SliderController@delete_slider');

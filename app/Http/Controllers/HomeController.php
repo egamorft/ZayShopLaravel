@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Login;
 use App\Social;
 use App\Rules\Captcha;
+use App\Slider;
 use Laravel\Socialite\Facades\Socialite;
 use Psy\CodeCleaner\FunctionContextPass;
 
@@ -16,7 +17,8 @@ class HomeController extends Controller
 {
     public function home()
     {
-        return view('pages.public.home');
+        $slider = Slider::where('slider_status', 1)->orderBy('slider_id', 'desc')->take(4)->get();
+        return view('pages.public.home')->with(compact('slider'));
     }
 
     public function about()

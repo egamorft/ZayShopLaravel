@@ -497,8 +497,11 @@ https://templatemo.com/tm-559-zay-shop
                 var maqh = $('.province').val();
                 var xaid = $('.wards').val();
                 var _token = $('input[name="_token"]').val();
-                if (matp == '' || maqh == '' || xaid == '') {
-                    alert('Pls choose your address to calculate fee delivery');
+                if (matp == "" || maqh == "" || xaid == "") {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Please choose your place'
+                    })
                 } else {
                     $.ajax({
                         url: '{{url("/calculate-fee")}}',
