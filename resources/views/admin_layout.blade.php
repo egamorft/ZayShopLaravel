@@ -44,7 +44,7 @@
         <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-white active bg-gradient-primary" href="{{URL::to('/dashboard')}}">
+                    <a class="nav-link text-white {{ Route::currentRouteNamed('dashboard') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/dashboard')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="{{URL::to('/show-category')}}">
+                    <a class="nav-link text-white {{ Route::currentRouteNamed('category') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/show-category')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">table_view</i>
                         </div>
@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="{{URL::to('/show-sub-category')}}">
+                    <a class="nav-link text-white {{ Route::currentRouteNamed('subcategory') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/show-sub-category')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
                         </div>
@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="{{URL::to('/show-product')}}">
+                    <a class="nav-link text-white {{ Route::currentRouteNamed('product') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/show-product')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">view_in_ar</i>
                         </div>
@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="{{URL::to('/show-coupon')}}">
+                    <a class="nav-link text-white {{ Route::currentRouteNamed('coupon') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/show-coupon')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
                         </div>
@@ -84,7 +84,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="{{URL::to('/delivery')}}">
+                    <a class="nav-link text-white {{ Route::currentRouteNamed('delivery') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/delivery')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">local_shipping</i>
                         </div>
@@ -92,7 +92,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="{{URL::to('/order')}}">
+                    <a class="nav-link text-white {{ Route::currentRouteNamed('order') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/order')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">list_alt</i>
                         </div>
@@ -100,7 +100,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="{{URL::to('/slider')}}">
+                    <a class="nav-link text-white {{ Route::currentRouteNamed('slider') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/slider')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">slideshow</i>
                         </div>

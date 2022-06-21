@@ -49,15 +49,15 @@ Route::get('/admin', 'AdminController@home')->name('admin');
 Route::post('/admin-login', 'AdminController@login');
 
 Route::get('/logout', 'AdminController@logout');
-//Admin
-
-Route::get('/dashboard', 'AdminController@dashboard');
 
 Route::middleware('admin.login')->group(function () {
 
+    //Admin
+    Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
     //End Admin
+
     //Category Admin
-    Route::get('/show-category', 'CategoryController@show_category');
+    Route::get('/show-category', 'CategoryController@show_category')->name('category');
 
     Route::get('/add-category', 'CategoryController@add_category');
 
@@ -75,7 +75,7 @@ Route::middleware('admin.login')->group(function () {
     // End Category Admin
 
     //SubCategory Admin
-    Route::get('/show-sub-category', 'SubCategoryController@show_sub_category');
+    Route::get('/show-sub-category', 'SubCategoryController@show_sub_category')->name('subcategory');
 
     Route::get('/add-sub-category', 'SubCategoryController@add_sub_category');
 
@@ -93,7 +93,7 @@ Route::middleware('admin.login')->group(function () {
     //End SubCategory Admin
 
     //Product Admin
-    Route::get('/show-product', 'ProductController@show_product');
+    Route::get('/show-product', 'ProductController@show_product')->name('product');
 
     Route::get('/add-product', 'ProductController@add_product');
 
@@ -113,7 +113,7 @@ Route::middleware('admin.login')->group(function () {
     //End Product Admin
 
     //Coupon Admin
-    Route::get('/show-coupon', 'CouponController@show_coupon');
+    Route::get('/show-coupon', 'CouponController@show_coupon')->name('coupon');
 
     Route::get('/add-coupon', 'CouponController@add_coupon');
 
@@ -123,11 +123,11 @@ Route::middleware('admin.login')->group(function () {
     //End Coupon Admin
 
     //Delivery Admin
-    Route::get('/delivery', 'DeliveryController@delivery');
+    Route::get('/delivery', 'DeliveryController@delivery')->name('delivery');
     //End Delivery Admin
 
     //Order Admin
-    Route::get('/order', 'OrderController@show_order');
+    Route::get('/order', 'OrderController@show_order')->name('order');
 
     Route::get('/view-order/{order_code}', 'OrderController@view_order');
 
@@ -139,7 +139,7 @@ Route::middleware('admin.login')->group(function () {
 
 
     //Slider Admin
-    Route::get('/slider', 'SliderController@show_slider');
+    Route::get('/slider', 'SliderController@show_slider')->name('slider');
 
     Route::get('/add-slider', 'SliderController@add_slider');
 
