@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Auth;
 use Closure;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Session;
 
 class AccessPermission
 {
@@ -18,13 +18,19 @@ class AccessPermission
      */
     public function handle($request, Closure $next)
     {
-        if(!$this->isLogin()){
+        if (!$this->isLogin()) {
             return redirect(route('admin'));
+        } else {
+            return $next($request);
         }
-        return $next($request);
     }
 
-    public function isLogin(){
-        return false;
+    public function isLogin()
+    {
+        if (Session::get('admin_id')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

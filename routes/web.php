@@ -49,11 +49,11 @@ Route::get('/admin', 'AdminController@home')->name('admin');
 Route::post('/admin-login', 'AdminController@login');
 
 Route::get('/logout', 'AdminController@logout');
+//Admin
+
+Route::get('/dashboard', 'AdminController@dashboard');
 
 Route::middleware('admin.login')->group(function () {
-    //Admin
-
-    Route::get('/dashboard', 'AdminController@dashboard');
 
     //End Admin
     //Category Admin
