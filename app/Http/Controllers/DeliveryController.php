@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\Session;
 
 class DeliveryController extends Controller
 {
-    public function AuthLogin()
-    {
-        $admin_id = Session::get('admin_id');
-        if ($admin_id) {
-            return Redirect::to('admin.dashboard');
-        } else {
-            return Redirect::to('admin')->send();
-        }
-    }
+    // public function AuthLogin()
+    // {
+    //     $admin_id = Session::get('admin_id');
+    //     if ($admin_id) {
+    //         return Redirect::to('admin.dashboard');
+    //     } else {
+    //         return Redirect::to('admin')->send();
+    //     }
+    // }
 
     public function update_delivery(Request $request)
     {
@@ -91,7 +91,7 @@ class DeliveryController extends Controller
 
     public function delivery(Request $request)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $city = City::orderBy('matp', 'asc')->get();
         return view('admin.delivery.add_delivery')->with(compact('city'));
     }
@@ -121,7 +121,7 @@ class DeliveryController extends Controller
 
     public function del_fee()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         Session::forget('fee');
         return redirect()->back()->with('message', 'Delete old address');
     }

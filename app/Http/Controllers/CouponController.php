@@ -11,19 +11,19 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CouponController extends Controller
 {
-    public function AuthLogin()
-    {
-        $admin_id = Session::get('admin_id');
-        if ($admin_id) {
-            return Redirect::to('admin.dashboard');
-        } else {
-            return Redirect::to('admin')->send();
-        }
-    }
+    // public function AuthLogin()
+    // {
+    //     $admin_id = Session::get('admin_id');
+    //     if ($admin_id) {
+    //         return Redirect::to('admin.dashboard');
+    //     } else {
+    //         return Redirect::to('admin')->send();
+    //     }
+    // }
 
     public function check_coupon(Request $request)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $data = $request->all();
         $coupon = Coupon::where('coupon_code', $data['coupon'])->first();
         if ($coupon) {
@@ -58,7 +58,7 @@ class CouponController extends Controller
 
     public function show_coupon()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $show_coupon = DB::table('tbl_coupon')->orderBy('tbl_coupon.coupon_id', 'desc')->get();
         $manager_coupon = view('admin.show_coupon')->with('show_coupon', $show_coupon);
         return view('admin_layout')->with('admin.show_coupon', $manager_coupon);
@@ -66,13 +66,13 @@ class CouponController extends Controller
 
     public function add_coupon()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         return view('admin.add_coupon');
     }
 
     public function save_coupon(Request $request)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $request->validate([
             'coupon_name' => 'required',
             'coupon_code' => 'required',
@@ -99,7 +99,7 @@ class CouponController extends Controller
 
     public function delete_coupon($coupon_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         DB::table('tbl_coupon')->where('coupon_id', $coupon_id)->delete();
         Session::put('message', 'Successfully delete coupon ' . $coupon_id);
         return Redirect::to('/show-coupon');
@@ -107,7 +107,7 @@ class CouponController extends Controller
 
     public function unset_coupon()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $coupon = Session::get('coupon');
         if ($coupon == true) {
             foreach($coupon as $key => $cou){

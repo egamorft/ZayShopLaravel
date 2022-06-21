@@ -9,33 +9,33 @@ use Illuminate\Support\Facades\Session;
 
 class SliderController extends Controller
 {
-    public function AuthLogin()
-    {
-        $admin_id = Session::get('admin_id');
-        if ($admin_id) {
-            return Redirect::to('admin.dashboard');
-        } else {
-            return Redirect::to('admin')->send();
-        }
-    }
+    // public function AuthLogin()
+    // {
+    //     $admin_id = Session::get('admin_id');
+    //     if ($admin_id) {
+    //         return Redirect::to('admin.dashboard');
+    //     } else {
+    //         return Redirect::to('admin')->send();
+    //     }
+    // }
 
     //Admin Page
     public function show_slider()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $slider = Slider::orderBy('slider_id', 'desc')->get();
         return view('admin.slider.show_slider')->with('slider', $slider);
     }
 
     public function add_slider()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         return view('admin.slider.add_slider');
     }
 
     public function save_slider(Request $request)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $data = $request->all();
         $request->validate([
             'slider_name' => 'required',
@@ -64,7 +64,7 @@ class SliderController extends Controller
     }
     public function unactive_slider($slider_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         Slider::where('slider_id', $slider_id)->update(['slider_status' => 0]);
         Session::put('message', 'Unactive slider ' . $slider_id);
         return Redirect::to('/slider');
@@ -72,7 +72,7 @@ class SliderController extends Controller
 
     public function active_slider($slider_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         Slider::where('slider_id', $slider_id)->update(['slider_status' => 1]);
         Session::put('message', 'Active slider ' . $slider_id);
         return Redirect::to('/slider');
@@ -80,14 +80,14 @@ class SliderController extends Controller
 
     public function edit_slider($slider_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $edit_slider = Slider::where('slider_id', $slider_id)->get();
         return view('admin.slider.edit_slider')->with(compact('edit_slider'));
     }
 
     public function update_slider(Request $request, $slider_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $data = $request->all();
         $slider = Slider::find($slider_id);
         $slider->slider_name = $data['slider_name'];
@@ -111,7 +111,7 @@ class SliderController extends Controller
 
     public function delete_slider($slider_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         Slider::where('slider_id', $slider_id)->delete();
         Session::put('message', 'Successfully delete slider ' . $slider_id);
         return Redirect::to('/slider');

@@ -36,74 +36,127 @@ Route::get('/logout_account', 'HomeController@logout_account');
 Route::get('/search', 'HomeController@search');
 
 //Login facebook
-Route::get('/login-facebook','HomeController@login_facebook');
-Route::get('/callback','HomeController@callback_facebook');
+Route::get('/login-facebook', 'HomeController@login_facebook');
+Route::get('/callback', 'HomeController@callback_facebook');
 
 //Login  google
-Route::get('/login-google','HomeController@login_google');
-Route::get('/google/callback','HomeController@callback_google');
+Route::get('/login-google', 'HomeController@login_google');
+Route::get('/google/callback', 'HomeController@callback_google');
 
 //Backend - Admin
-Route::get('/admin', 'AdminController@home');
-
-Route::get('/dashboard', 'AdminController@dashboard');
+Route::get('/admin', 'AdminController@home')->name('admin');
 
 Route::post('/admin-login', 'AdminController@login');
 
 Route::get('/logout', 'AdminController@logout');
 
-//Category
-Route::get('/show-category', 'CategoryController@show_category');
+Route::middleware('admin.login')->group(function () {
+    //Admin
 
-Route::get('/add-category', 'CategoryController@add_category');
+    Route::get('/dashboard', 'AdminController@dashboard');
 
-Route::post('/save-category', 'CategoryController@save_category');
+    //End Admin
+    //Category Admin
+    Route::get('/show-category', 'CategoryController@show_category');
 
-Route::get('/unactive-category/{category_id}', 'CategoryController@unactive_category');
+    Route::get('/add-category', 'CategoryController@add_category');
 
-Route::get('/active-category/{category_id}', 'CategoryController@active_category');
+    Route::post('/save-category', 'CategoryController@save_category');
 
-Route::get('/edit-category/{category_id}', 'CategoryController@edit_category');
+    Route::get('/unactive-category/{category_id}', 'CategoryController@unactive_category');
 
-Route::get('/delete-category/{category_id}', 'CategoryController@delete_category');
+    Route::get('/active-category/{category_id}', 'CategoryController@active_category');
 
-Route::post('/update-category/{category_id}', 'CategoryController@update_category');
+    Route::get('/edit-category/{category_id}', 'CategoryController@edit_category');
 
-//SubCategory
-Route::get('/show-sub-category', 'SubCategoryController@show_sub_category');
+    Route::get('/delete-category/{category_id}', 'CategoryController@delete_category');
 
-Route::get('/add-sub-category', 'SubCategoryController@add_sub_category');
+    Route::post('/update-category/{category_id}', 'CategoryController@update_category');
+    // End Category Admin
 
-Route::post('/save-sub-category', 'SubCategoryController@save_sub_category');
+    //SubCategory Admin
+    Route::get('/show-sub-category', 'SubCategoryController@show_sub_category');
 
-Route::get('/unactive-sub-category/{subcategory_id}', 'SubCategoryController@unactive_sub_category');
+    Route::get('/add-sub-category', 'SubCategoryController@add_sub_category');
 
-Route::get('/active-sub-category/{subcategory_id}', 'SubCategoryController@active_sub_category');
+    Route::post('/save-sub-category', 'SubCategoryController@save_sub_category');
 
-Route::get('/edit-sub-category/{subcategory_id}', 'SubCategoryController@edit_sub_category');
+    Route::get('/unactive-sub-category/{subcategory_id}', 'SubCategoryController@unactive_sub_category');
 
-Route::get('/delete-sub-category/{subcategory_id}', 'SubCategoryController@delete_sub_category');
+    Route::get('/active-sub-category/{subcategory_id}', 'SubCategoryController@active_sub_category');
 
-Route::post('/update-sub-category/{subcategory_id}', 'SubCategoryController@update_sub_category');
+    Route::get('/edit-sub-category/{subcategory_id}', 'SubCategoryController@edit_sub_category');
 
-//Product
-Route::get('/show-product', 'ProductController@show_product');
+    Route::get('/delete-sub-category/{subcategory_id}', 'SubCategoryController@delete_sub_category');
 
-Route::get('/add-product', 'ProductController@add_product');
+    Route::post('/update-sub-category/{subcategory_id}', 'SubCategoryController@update_sub_category');
+    //End SubCategory Admin
 
-Route::post('/select-category', 'ProductController@select_category');
+    //Product Admin
+    Route::get('/show-product', 'ProductController@show_product');
 
-Route::post('/save-product', 'ProductController@save_product');
+    Route::get('/add-product', 'ProductController@add_product');
 
-Route::get('/unactive-product/{product_id}', 'ProductController@unactive_product');
+    Route::post('/select-category', 'ProductController@select_category');
 
-Route::get('/active-product/{product_id}', 'ProductController@active_product');
+    Route::post('/save-product', 'ProductController@save_product');
 
-Route::get('/edit-product/{product_id}', 'ProductController@edit_product');
+    Route::get('/unactive-product/{product_id}', 'ProductController@unactive_product');
 
-Route::post('/update-product/{product_id}', 'ProductController@update_product');
+    Route::get('/active-product/{product_id}', 'ProductController@active_product');
 
-Route::get('/delete-product/{product_id}', 'ProductController@delete_product');
+    Route::get('/edit-product/{product_id}', 'ProductController@edit_product');
+
+    Route::post('/update-product/{product_id}', 'ProductController@update_product');
+
+    Route::get('/delete-product/{product_id}', 'ProductController@delete_product');
+    //End Product Admin
+
+    //Coupon Admin
+    Route::get('/show-coupon', 'CouponController@show_coupon');
+
+    Route::get('/add-coupon', 'CouponController@add_coupon');
+
+    Route::post('/save-coupon', 'CouponController@save_coupon');
+
+    Route::get('/delete-coupon/{coupon_id}', 'CouponController@delete_coupon');
+    //End Coupon Admin
+
+    //Delivery Admin
+    Route::get('/delivery', 'DeliveryController@delivery');
+    //End Delivery Admin
+
+    //Order Admin
+    Route::get('/order', 'OrderController@show_order');
+
+    Route::get('/view-order/{order_code}', 'OrderController@view_order');
+
+    Route::get('/print-bill/{checkout_code}', 'OrderController@print_bill');
+
+    Route::get('/delete-order/{order_code}', 'OrderController@delete_order');
+    //End Order Admin
+
+
+
+    //Slider Admin
+    Route::get('/slider', 'SliderController@show_slider');
+
+    Route::get('/add-slider', 'SliderController@add_slider');
+
+    Route::post('/save-slider', 'SliderController@save_slider');
+
+    Route::get('/unactive-slider/{slider_id}', 'SliderController@unactive_slider');
+
+    Route::get('/active-slider/{slider_id}', 'SliderController@active_slider');
+
+    Route::get('/edit-slider/{slider_id}', 'SliderController@edit_slider');
+
+    Route::post('/update-slider/{slider_id}', 'SliderController@update_slider');
+
+    Route::get('/delete-slider/{slider_id}', 'SliderController@delete_slider');
+    //End Slider Admin
+});
+
 
 //Category - Home
 Route::get('/category/{category_id}', 'CategoryController@shop_category');
@@ -128,21 +181,13 @@ Route::get('/check-out', 'CheckoutController@check_out');
 
 Route::post('/confirm-order', 'CheckoutController@confirm_order');
 
-//Coupon
+//Coupon Home
+
 Route::post('/check-coupon', 'CouponController@check_coupon');
-
-Route::get('/show-coupon', 'CouponController@show_coupon');
-
-Route::get('/add-coupon', 'CouponController@add_coupon');
-
-Route::post('/save-coupon', 'CouponController@save_coupon');
-
-Route::get('/delete-coupon/{coupon_id}', 'CouponController@delete_coupon');
 
 Route::get('/unset-coupon', 'CouponController@unset_coupon');
 
 //Delivery
-Route::get('/delivery', 'DeliveryController@delivery');
 
 Route::post('/select-delivery', 'DeliveryController@select_delivery');
 
@@ -159,31 +204,7 @@ Route::post('/calculate-fee', 'DeliveryController@calculate_fee');
 Route::get('/del-fee', 'DeliveryController@del_fee');
 
 //Order
-Route::get('/order', 'OrderController@show_order');
-
-Route::get('/view-order/{order_code}', 'OrderController@view_order');
-
-Route::get('/print-bill/{checkout_code}', 'OrderController@print_bill');
-
-Route::get('/delete-order/{order_code}', 'OrderController@delete_order');
 
 Route::post('/update-order-qty', 'OrderController@update_order_qty');
 
 Route::post('/update-qty', 'OrderController@update_qty');
-
-//Slider
-Route::get('/slider', 'SliderController@show_slider');
-
-Route::get('/add-slider', 'SliderController@add_slider');
-
-Route::post('/save-slider', 'SliderController@save_slider');
-
-Route::get('/unactive-slider/{slider_id}', 'SliderController@unactive_slider');
-
-Route::get('/active-slider/{slider_id}', 'SliderController@active_slider');
-
-Route::get('/edit-slider/{slider_id}', 'SliderController@edit_slider');
-
-Route::post('/update-slider/{slider_id}', 'SliderController@update_slider');
-
-Route::get('/delete-slider/{slider_id}', 'SliderController@delete_slider');

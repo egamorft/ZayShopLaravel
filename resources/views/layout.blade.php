@@ -302,10 +302,10 @@ https://templatemo.com/tm-559-zay-shop
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li><a class="text-decoration-none" href="{{URL::to('/')}}">Home</a></li>
-                        <li><a class="text-decoration-none" href="about">About Us</a></li>
-                        <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                        <li><a class="text-decoration-none" href="{{URL::to('/about')}}">About Us</a></li>
+                        <li><a class="text-decoration-none" href="{{URL::to('/contact')}}">Shop Locations</a></li>
                         <li><a class="text-decoration-none" href="#">FAQs</a></li>
-                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                        <li><a class="text-decoration-none" href="{{URL::to('/contact')}}">Contact</a></li>
                     </ul>
                 </div>
 

@@ -9,20 +9,20 @@ use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
-    public function AuthLogin()
-    {
-        $admin_id = Session::get('admin_id');
-        if ($admin_id) {
-            return Redirect::to('admin.dashboard');
-        } else {
-            return Redirect::to('admin')->send();
-        }
-    }
+    // public function AuthLogin()
+    // {
+    //     $admin_id = Session::get('admin_id');
+    //     if ($admin_id) {
+    //         return Redirect::to('admin.dashboard');
+    //     } else {
+    //         return Redirect::to('admin')->send();
+    //     }
+    // }
 
     //Admin Page
     public function show_product()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $show_product = DB::table('tbl_product')
             ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
             ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
@@ -50,7 +50,7 @@ class ProductController extends Controller
 
     public function add_product()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $get_category = DB::table('tbl_category')->where('category_status', '1')->get();
         $get_subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->get();
         return view('admin.add_product')->with(compact('get_category', 'get_subcategory'));
@@ -58,7 +58,7 @@ class ProductController extends Controller
 
     public function save_product(Request $request)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $request->validate([
             'product_name' => 'required',
             'product_quantity' => 'required|numeric',
@@ -100,7 +100,7 @@ class ProductController extends Controller
     }
     public function unactive_product($product_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         DB::table('tbl_product')->where('product_id', $product_id)->update(['product_status' => 0]);
         Session::put('message', 'Unactive product ' . $product_id);
         return Redirect::to('/show-product');
@@ -108,7 +108,7 @@ class ProductController extends Controller
 
     public function active_product($product_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         DB::table('tbl_product')->where('product_id', $product_id)->update(['product_status' => 1]);
         Session::put('message', 'Active product ' . $product_id);
         return Redirect::to('/show-product');
@@ -116,7 +116,7 @@ class ProductController extends Controller
 
     public function edit_product($product_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $get_category = DB::table('tbl_category')->where('category_status', '1')->get();
         $get_subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->get();
         $edit_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
@@ -126,7 +126,7 @@ class ProductController extends Controller
 
     public function update_product(Request $request, $product_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $data = array();
         $data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
@@ -159,7 +159,7 @@ class ProductController extends Controller
 
     public function delete_product($product_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         DB::table('tbl_product')->where('product_id', $product_id)->delete();
         Session::put('message', 'Successfully delete product ' . $product_id);
         return Redirect::to('/show-product');

@@ -9,32 +9,32 @@ use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
-    public function AuthLogin()
-    {
-        $admin_id = Session::get('admin_id');
-        if ($admin_id) {
-            return Redirect::to('admin.dashboard');
-        } else {
-            return Redirect::to('admin')->send();
-        }
-    }
+    // public function AuthLogin()
+    // {
+    //     $admin_id = Session::get('admin_id');
+    //     if ($admin_id) {
+    //         return Redirect::to('admin.dashboard');
+    //     } else {
+    //         return Redirect::to('admin')->send();
+    //     }
+    // }
 
     //admin pages
     public function show_category()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $show_category = DB::table('tbl_category')->get();
         $manager_category = view('admin.show_category')->with('show_category', $show_category);
         return view('admin_layout')->with('admin.show_category', $manager_category);
     }
     public function add_category()
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         return view('admin.add_category');
     }
     public function save_category(Request $request)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $data = array();
         $data['category_name'] = $request->category_name;
         $data['category_desc'] = $request->category_desc;
@@ -50,7 +50,7 @@ class CategoryController extends Controller
     }
     public function unactive_category($category_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         DB::table('tbl_category')->where('category_id', $category_id)->update(['category_status' => 0]);
         DB::table('tbl_subcategory')->where('category_id', $category_id)->update(['subcategory_status' => 0]);
         DB::table('tbl_product')->where('category_id', $category_id)->update(['product_status' => 0]);
@@ -59,21 +59,21 @@ class CategoryController extends Controller
     }
     public function active_category($category_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         DB::table('tbl_category')->where('category_id', $category_id)->update(['category_status' => 1]);
         Session::put('message', 'Active category ' . $category_id);
         return Redirect::to('show-category');
     }
     public function edit_category($category_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $edit_category = DB::table('tbl_category')->where('category_id', $category_id)->get();
         $manager_category = view('admin.edit_category')->with('edit_category', $edit_category);
         return view('admin_layout')->with('admin.edit_category', $manager_category);
     }
     public function delete_category($category_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         DB::table('tbl_category')->where('category_id', $category_id)->delete();
         DB::table('tbl_subcategory')->where('category_id', $category_id)->delete();
         Session::put('message', 'Delete category ' . $category_id);
@@ -81,7 +81,7 @@ class CategoryController extends Controller
     }
     public function update_category(Request $request, $category_id)
     {
-        $this->AuthLogin();
+        // $this->AuthLogin();
         $data = array();
         $data['category_name'] = $request->category_name;
         $data['category_desc'] = $request->category_desc;
