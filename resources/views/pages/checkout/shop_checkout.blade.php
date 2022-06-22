@@ -45,13 +45,19 @@ $content = Cart::content();
 $tax = Cart::pricetotal(0, ',', '') * 10 / 100;
 
 $total_all = Cart::total(0, ',', '') + Session::get('fee');
+
+
+$orderDate = Carbon\Carbon::now();
 ?>
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="OrderBill" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
+            <div class="modal-header">
+                <button id="closeBill" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="container">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <div class="card">
                             <div class="text-left logo p-2 px-5">
 
@@ -79,16 +85,7 @@ $total_all = Cart::total(0, ',', '') + Session::get('fee');
                                                     <div class="py-2">
 
                                                         <span class="d-block text-muted">Order Date</span>
-                                                        <span>12 Jan,2018</span>
-
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div class="py-2">
-
-                                                        <span class="d-block text-muted">Order No</span>
-                                                        <span>MT12332345</span>
+                                                        <span> <?php echo $orderDate->format('d/m/Y') ?></span>
 
                                                     </div>
                                                 </td>
@@ -97,7 +94,7 @@ $total_all = Cart::total(0, ',', '') + Session::get('fee');
                                                     <div class="py-2">
 
                                                         <span class="d-block text-muted">Payment</span>
-                                                        <span><img src="https://img.icons8.com/color/48/000000/mastercard.png" width="20" /></span>
+                                                        <span id="shipping_method"></span>
 
                                                     </div>
                                                 </td>
@@ -105,8 +102,18 @@ $total_all = Cart::total(0, ',', '') + Session::get('fee');
                                                 <td>
                                                     <div class="py-2">
 
-                                                        <span class="d-block text-muted">Shiping Address</span>
-                                                        <span>414 Advert Avenue, NY,USA</span>
+                                                        <span class="d-block text-muted">Shiping</span>
+                                                        <span><?php echo Session::get('city'); ?></span></br>
+                                                        <span><?php echo Session::get('province'); ?></span></br>
+                                                        <span><?php echo Session::get('ward'); ?></span>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="py-2">
+
+                                                        <span class="d-block text-muted">Address</span>
+                                                        <span id="shipping_address"></span>
 
                                                     </div>
                                                 </td>
@@ -290,7 +297,6 @@ $total_all = Cart::total(0, ',', '') + Session::get('fee');
 
                                 <span>Need Help? visit our <a href="#"> help center</a></span>
                                 @php
-                                $orderDate = Carbon\Carbon::now();
                                 echo $orderDate->format('d/m/Y');
                                 @endphp
 
@@ -309,9 +315,9 @@ $total_all = Cart::total(0, ',', '') + Session::get('fee');
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OrderBill">
     Open modal
-</button>
+</button> -->
 
 
 <!--Check out content -->
@@ -489,7 +495,6 @@ $total_all = Cart::total(0, ',', '') + Session::get('fee');
                 @if(Session::get('fee'))
                 <input type="hidden" name="order_fee" class="order_fee" value="{{Session::get('fee')}}">
                 @else
-                <input type="hidden" name="order_fee" class="order_fee" value="50000">
                 @endif
 
                 @if(Session::get('coupon'))
@@ -509,10 +514,10 @@ $total_all = Cart::total(0, ',', '') + Session::get('fee');
                         <input id="cod" name="payment_select" type="radio" class="form-check-input payment_select" value="1" checked>
                         <label class="form-check-label" for="cod">COD</label>
                     </div>
-                    <div class="form-check">
-                        <input id="paypal" name="payment_select" type="radio" class="form-check-input payment_select" value="0">
+                    <!-- <div class="form-check">
+                        <input id="paypal" name="payment_select" type="radio" class="form-check-input payment_select" value="2">
                         <label class="form-check-label" for="paypal">Paypal</label>
-                    </div>
+                    </div> -->
                 </div>
 
                 <hr class="my-4">

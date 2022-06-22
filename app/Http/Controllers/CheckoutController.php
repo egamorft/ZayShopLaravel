@@ -43,7 +43,7 @@ class CheckoutController extends Controller
         $shipping->shipping_phone = $data['shipping_phone'];
         $shipping->shipping_address = $data['shipping_address'];
         $shipping->shipping_notes = $data['shipping_notes'];
-        $shipping->shipping_method = $data['shipping_method'];
+        $shipping->shipping_method = $data['payment_select'];
         $shipping->save();
 
         $checkout_code = substr(md5(microtime()), rand(0, 26), 5);

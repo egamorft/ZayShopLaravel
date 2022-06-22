@@ -123,11 +123,21 @@ class DeliveryController extends Controller
     {
         // $this->AuthLogin();
         Session::forget('fee');
+        Session::forget('city');
+        Session::forget('province');
+        Session::forget('ward');
+
         return redirect()->back()->with('message', 'Delete old address');
     }
     public function calculate_fee(Request $request)
     {
         $data = $request->all();
+        $city = City::where('matp', $data['matp'])->first();
+        $province = Province::where('maqh', $data['maqh'])->first();
+        $ward = Wards::where('xaid', $data['xaid'])->first();
+        Session::put('city', $city ? $city->name_city : '');
+        Session::put('province', $province ? $province->name_quanhuyen : '');
+        Session::put('ward', $ward ? $ward->name_xaphuong : '');
         if ($data['matp']) {
             $feeship = Feeship::where('fee_matp', $data['matp'])
                 ->where('fee_maqh', $data['maqh'])
@@ -139,7 +149,7 @@ class DeliveryController extends Controller
                         Session::put('fee', $fee->fee_feeship);
                         Session::save();
                     }
-                }else{
+                } else {
                     Session::put('fee', 50000);
                     Session::save();
                 }
