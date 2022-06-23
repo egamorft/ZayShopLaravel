@@ -142,17 +142,15 @@ class DeliveryController extends Controller
             $feeship = Feeship::where('fee_matp', $data['matp'])
                 ->where('fee_maqh', $data['maqh'])
                 ->where('fee_xaid', $data['xaid'])->get();
-            if ($feeship) {
-                $count_feeship = $feeship->count();
-                if ($count_feeship > 0) {
-                    foreach ($feeship as $key => $fee) {
-                        Session::put('fee', $fee->fee_feeship);
-                        Session::save();
-                    }
-                } else {
-                    Session::put('fee', 50000);
+            $count_feeship = $feeship->count();
+            if ($count_feeship > 0) {
+                foreach ($feeship as $key => $fee) {
+                    Session::put('fee', $fee->fee_feeship);
                     Session::save();
                 }
+            } else {
+                Session::put('fee', 50000);
+                Session::save();
             }
         }
     }

@@ -42,7 +42,7 @@ class OrderController extends Controller
       $account_id = $od->account_id;
       $shipping_id = $od->shipping_id;
       $order_status = $od->order_status;
-    }
+    } 
     $account = Account::where('account_id', $account_id)->first();
     $shipping = Shipping::where('shipping_id', $shipping_id)->first();
     $details = OrderDetails::with('product')->where('order_code', $order_code)->first();

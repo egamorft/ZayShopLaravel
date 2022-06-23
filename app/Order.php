@@ -8,7 +8,7 @@ class Order extends Model
 {
     public $timestamps = false;
     protected $fillable =[
-        'account_id', 'shipping_id', 'order_status', 'order_code', 'created_at'
+        'account_id','shipping_id', 'order_status', 'order_code', 'created_at'
     ];
     protected $primaryKey = 'order_id';
     protected $table = 'tbl_order';

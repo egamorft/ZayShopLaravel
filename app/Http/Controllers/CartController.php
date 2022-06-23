@@ -65,7 +65,7 @@ class CartController extends Controller
         $data['price'] = $product_info->product_price;
         $data['weight'] = '68';
         $data['options']['image'] = $product_info->product_image;
-        if ($data['id'] == null || $data['qty'] == null || $data['name'] == null || $data['price'] == null || $data['weight'] == null || $data['options']['image'] == null || $data['options']['in_stock'] == null) {
+        if ($data['options']['in_stock'] < $data['qty']) {
             Session::put('error', 'Error');
             return back();
         } else {

@@ -58,7 +58,7 @@ class CheckoutController extends Controller
         $order->created_at = now();
         $order->save();
 
-        if (Cart::content()) {
+        if (Cart::count() != 0) {
             foreach (Cart::content() as $key => $cart) {
                 $order_details = new OrderDetails();
                 $order_details->order_code = $checkout_code;

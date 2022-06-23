@@ -31,15 +31,12 @@ class CouponController extends Controller
             if ($count_coupon > 0) {
                 $coupon_session = Session::get('coupon');
                 if ($coupon_session == true) {
-                    $is_avaiable = 0;
-                    if ($is_avaiable == 0) {
-                        $cou[] = array(
-                            'coupon_code' => $coupon->coupon_code,
-                            'coupon_condition' => $coupon->coupon_condition,
-                            'coupon_number' => $coupon->coupon_number,
-                        );
-                        Session::put('coupon', $cou);
-                    }
+                    $cou[] = array(
+                        'coupon_code' => $coupon->coupon_code,
+                        'coupon_condition' => $coupon->coupon_condition,
+                        'coupon_number' => $coupon->coupon_number,
+                    );
+                    Session::put('coupon', $cou);
                 } else {
                     $cou[] = array(
                         'coupon_code' => $coupon->coupon_code,
@@ -110,8 +107,8 @@ class CouponController extends Controller
         // $this->AuthLogin();
         $coupon = Session::get('coupon');
         if ($coupon == true) {
-            foreach($coupon as $key => $cou){
-                if($cou['coupon_condition']==1){
+            foreach ($coupon as $key => $cou) {
+                if ($cou['coupon_condition'] == 1) {
                     Cart::setGlobalDiscount(0);
                 }
             }
