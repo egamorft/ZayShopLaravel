@@ -39,7 +39,10 @@ class AdminController extends Controller
             'admin_email' => 'required|min:8|email',
             'admin_password' => 'required|min:6'
         ]);
-        $result = DB::table('tbl_admin')->where('admin_email', $admin_email)->where('admin_password', $admin_password)->first();
+        $result = DB::table('tbl_admin')
+            ->where('admin_email', $admin_email)
+            ->where('admin_password', $admin_password)->first();
+
         if ($result) {
             Session::put('admin_name', $result->admin_name);
             Session::put('admin_id', $result->admin_id);
@@ -52,8 +55,7 @@ class AdminController extends Controller
 
     public function logout()
     {
-        Session::put('admin_name', null);
-        Session::put('admin_id', null);
+        Session::flush();
         return view('admin.admin_login');
     }
 }

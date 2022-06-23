@@ -17,7 +17,11 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $slider = Slider::where('slider_status', 1)->orderBy('slider_id', 'desc')->take(4)->get();
+        $slider = Slider::where('slider_status', 1)
+            ->orderBy('slider_id', 'desc')
+                ->take(4)
+                    ->get();
+
         return view('pages.public.home')->with(compact('slider'));
     }
 
@@ -28,10 +32,21 @@ class HomeController extends Controller
 
     public function shop()
     {
-        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'asc')->get();
-        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('category_id', 'asc')->get();
-        $product = DB::table('tbl_product')->where('product_status', '1')->orderBy('product_id', 'desc')->paginate(3);
-        return view('pages.public.shop')->with(compact('category', 'subcategory', 'product'));
+        $category = DB::table('tbl_category')
+            ->where('category_status', '1')
+                ->orderBy('category_id', 'asc')
+                    ->get();
+        $subcategory = DB::table('tbl_subcategory')
+            ->where('subcategory_status', '1')
+                ->orderBy('category_id', 'asc')
+                    ->get();
+        $product = DB::table('tbl_product')
+            ->where('product_status', '1')
+                ->orderBy('product_id', 'desc')
+                    ->paginate(3);
+
+        return view('pages.public.shop')
+                ->with(compact('category', 'subcategory', 'product'));
     }
 
     public function contact()
@@ -55,16 +70,22 @@ class HomeController extends Controller
         ]);
         $email = $request->account_email;
         $password = md5($request->account_password);
-        $result = DB::table('tbl_account')->where('account_email', $email)
-            ->where('account_password', $password)->first();
+        $result = DB::table('tbl_account')
+                ->where('account_email', $email)
+                    ->where('account_password', $password)->first();
+
         if ($result) {
+
             Session::put('account_id', $result->account_id);
             Session::put('account_name', $result->account_name);
             Session::put('account_email', $result->account_email);
             Session::put('account_phone', $result->account_phone);
+            
             return Redirect::to('/shop');
+
         } else {
-            return redirect()->back()->with('error', 'Wrong username or password');
+            return redirect()->back()
+                        ->with('error', 'Wrong username or password');
         }
     }
     public function register_account(Request $request)
@@ -77,11 +98,17 @@ class HomeController extends Controller
             'account_cfpassword' => 'required|same:account_password',
             'g-recaptcha-response' => new Captcha(),
         ]);
+
         $email = $request->account_email;
-        $result = DB::table('tbl_account')->where('account_email', $email)->first();
+        $result = DB::table('tbl_account')
+            ->where('account_email', $email)
+                ->first();
+
         if ($result) {
-            return redirect()->back()->with('error', 'Email existed! Pls choose another email');
+            return redirect()->back()
+                        ->with('error', 'Email existed! Pls choose another email');
         } else {
+
             $data = array();
             $data['account_name'] = $request->account_name;
             $data['account_phone'] = $request->account_phone;
@@ -89,6 +116,7 @@ class HomeController extends Controller
             $data['account_password'] = md5($request->account_password);
 
             $account_id = DB::table('tbl_account')->insertGetId($data);
+
             if ($account_id) {
                 Session::put('message', 'Successfully register your account, now you can login');
                 return Redirect::to('/login');
@@ -112,16 +140,23 @@ class HomeController extends Controller
     {
         $users = Socialite::driver('google')->stateless()->user();
         // return $users->id;
-        $check_email_existed = DB::table('tbl_account')->where('account_email', $users->email)->first();
+        $check_email_existed = DB::table('tbl_account')
+                                ->where('account_email', $users->email)
+                                    ->first();
+
         if ($check_email_existed) {
+
             Session::put('account_name', $check_email_existed->account_name);
             Session::put('account_id', $check_email_existed->account_id);
+
             return redirect('/shop')->with('message', 'Successfully login');
         } else {
+
             $authUser = $this->findOrCreateUser($users, 'google');
             $account_name = Login::where('account_id', $authUser->user)->first();
             Session::put('account_name', $account_name->account_name);
             Session::put('account_id', $account_name->account_id);
+
             return redirect('/shop')->with('message', 'Successfully login with google');
         }
     }
@@ -141,6 +176,7 @@ class HomeController extends Controller
         $orang = Login::where('account_email', $users->email)->first();
 
         if (!$orang) {
+
             $orang = Login::create([
                 'account_name' => $users->name,
                 'account_email' => $users->email,
@@ -154,6 +190,7 @@ class HomeController extends Controller
         $account_name = Login::where('account_id', $result->user)->first();
         Session::put('account_name', $account_name->account_name);
         Session::put('account_id', $account_name->account_id);
+
         return redirect('/shop')->with('message', 'Successfully login');
     }
 
@@ -166,7 +203,10 @@ class HomeController extends Controller
     public function callback_facebook()
     {
         $provider = Socialite::driver('facebook')->user();
-        $account = Social::where('provider', 'facebook')->where('provider_user_id', $provider->getId())->first();
+        $account = Social::where('provider', 'facebook')
+                    ->where('provider_user_id', $provider->getId())
+                        ->first();
+        
         if ($account) {
             $account_name = Login::where('account_id', $account->user)->first();
             Session::put('account_name', $account_name->account_name);
@@ -205,9 +245,17 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         $keywords = $request->keywords_submit;
-        $category = DB::table('tbl_category')->where('category_status', '1')->orderBy('category_id', 'asc')->get();
-        $subcategory = DB::table('tbl_subcategory')->where('subcategory_status', '1')->orderBy('category_id', 'asc')->get();
-        $product = DB::table('tbl_product')->where('product_name', 'like', '%' . $keywords . '%')->get();
-        return view('pages.product.search')->with(compact('category', 'subcategory', 'product'));
+
+        $category = DB::table('tbl_category')
+            ->where('category_status', '1')
+                ->orderBy('category_id', 'asc')->get();
+        $subcategory = DB::table('tbl_subcategory')
+            ->where('subcategory_status', '1')
+                ->orderBy('category_id', 'asc')->get();
+        $product = DB::table('tbl_product')
+            ->where('product_name', 'like', '%' . $keywords . '%')
+                ->get();
+        return view('pages.product.search')
+                    ->with(compact('category', 'subcategory', 'product'));
     }
 }

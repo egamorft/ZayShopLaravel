@@ -14,7 +14,8 @@ class CartController extends Controller
     {
         $product_id = $request->productid_hidden;
         $quantity = $request->qty;
-        $product_info = DB::table('tbl_product')->where('product_id', $product_id)->first();
+        $product_info = DB::table('tbl_product')
+            ->where('product_id', $product_id)->first();
 
         $data['id'] = $product_info->product_id;
         $data['qty'] = $quantity;
@@ -23,6 +24,7 @@ class CartController extends Controller
         $data['options']['in_stock'] = $product_info->product_quantity;
         $data['weight'] = '68';
         $data['options']['image'] = $product_info->product_image;
+
         if ($data['options']['in_stock'] < $data['qty']) {
             Session::put('error', 'Quantity in stock is not enough');
             return back();
@@ -41,6 +43,7 @@ class CartController extends Controller
     public function delete_cart($rowId)
     {
         Cart::update($rowId, 0);
+
         return Redirect::to('/shop-cart');
     }
 
@@ -49,6 +52,7 @@ class CartController extends Controller
         $rowId = $request->rowId_cart;
         $qty = $request->cart_quantity;
         Cart::update($rowId, $qty);
+
         return Redirect::to('/shop-cart');
     }
 
@@ -65,6 +69,7 @@ class CartController extends Controller
         $data['price'] = $product_info->product_price;
         $data['weight'] = '68';
         $data['options']['image'] = $product_info->product_image;
+        
         if ($data['options']['in_stock'] < $data['qty']) {
             Session::put('error', 'Error');
             return back();

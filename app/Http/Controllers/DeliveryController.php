@@ -13,16 +13,6 @@ use Illuminate\Support\Facades\Session;
 
 class DeliveryController extends Controller
 {
-    // public function AuthLogin()
-    // {
-    //     $admin_id = Session::get('admin_id');
-    //     if ($admin_id) {
-    //         return Redirect::to('admin.dashboard');
-    //     } else {
-    //         return Redirect::to('admin')->send();
-    //     }
-    // }
-
     public function update_delivery(Request $request)
     {
         $data = $request->all();
@@ -50,14 +40,17 @@ class DeliveryController extends Controller
                 ';
         foreach ($feeship as $key => $fee) {
             $output .= '
-                    <tr>
-                        <td>' . $fee->city->name_city . '</td>
-                        <td>' . $fee->province->name_quanhuyen . '</td>
-                        <td>' . $fee->wards->name_xaphuong . '</td>
-                        <td class="fee_feeship_edit" contenteditable data-feeship_id = "' . $fee->fee_id . '">' . number_format($fee->fee_feeship, 0, ',', '.') . '</td>
-                    </tr>
+            <tr>
+                <td>' . $fee->city->name_city . '</td>
+                <td>' . $fee->province->name_quanhuyen . '</td>
+                <td>' . $fee->wards->name_xaphuong . '</td>
+                <td class="fee_feeship_edit" contenteditable 
+                    data-feeship_id = "' . $fee->fee_id . '">
+                    ' . number_format($fee->fee_feeship, 0, ',', '.') . '
+                </td>
+            </tr>
                     
-                    ';
+        ';
         }
 
         $output .= '
@@ -79,10 +72,18 @@ class DeliveryController extends Controller
         $fee_ship->fee_maqh = $data['province'];
         $fee_ship->fee_xaid = $data['wards'];
 
-        $check_matp = DB::table('tbl_feeship')->where('fee_matp', $fee_ship->fee_matp)->first();
-        $check_maqh = DB::table('tbl_feeship')->where('fee_maqh', $fee_ship->fee_maqh)->first();
-        $check_xaid = DB::table('tbl_feeship')->where('fee_xaid', $fee_ship->fee_xaid)->first();
+        $check_matp = DB::table('tbl_feeship')
+            ->where('fee_matp', $fee_ship->fee_matp)
+                ->first();
+        $check_maqh = DB::table('tbl_feeship')
+            ->where('fee_maqh', $fee_ship->fee_maqh)
+                ->first();
+        $check_xaid = DB::table('tbl_feeship')
+            ->where('fee_xaid', $fee_ship->fee_xaid)
+                ->first();
+
         if ($check_matp == true && $check_maqh == true && $check_xaid == true) {
+            Session::put('error', 'Dumplicate');
         } else {
             $fee_ship->fee_feeship = $data['fee_ship'];
             $fee_ship->save();
@@ -91,9 +92,9 @@ class DeliveryController extends Controller
 
     public function delivery(Request $request)
     {
-        // $this->AuthLogin();
         $city = City::orderBy('matp', 'asc')->get();
-        return view('admin.delivery.add_delivery')->with(compact('city'));
+        return view('admin.delivery.add_delivery')
+            ->with(compact('city'));
     }
 
     public function select_delivery(Request $request)
@@ -102,16 +103,21 @@ class DeliveryController extends Controller
         if ($data['action']) {
             $output = '';
             if ($data['action'] == "city") {
-                $select_province = Province::where('matp', $data['ma_id'])->orderby('maqh', 'asc')->get();
+                $select_province = Province::where('matp', $data['ma_id'])
+                    ->orderby('maqh', 'asc')->get();
                 $output .= '<option>-------Choose province-------</option>';
                 foreach ($select_province as $key => $province) {
-                    $output .= '<option value="' . $province->maqh . '">' . $province->name_quanhuyen . '</option>';
+                    $output .= '<option value="' . $province->maqh . '">
+                        ' . $province->name_quanhuyen . '</option>';
                 }
             } else {
-                $select_wards = Wards::where('maqh', $data['ma_id'])->orderby('xaid', 'asc')->get();
+                $select_wards = Wards::where('maqh', $data['ma_id'])
+                    ->orderby('xaid', 'asc')->get();
                 $output .= '<option>-------Choose wards-------</option>';
+
                 foreach ($select_wards as $key => $ward) {
-                    $output .= '<option value="' . $ward->xaid . '">' . $ward->name_xaphuong . '</option>';
+                    $output .= '<option value="' . $ward->xaid . '">
+                            ' . $ward->name_xaphuong . '</option>';
                 }
             }
             echo $output;
@@ -121,7 +127,6 @@ class DeliveryController extends Controller
 
     public function del_fee()
     {
-        // $this->AuthLogin();
         Session::forget('fee');
         Session::forget('city');
         Session::forget('province');
@@ -138,11 +143,14 @@ class DeliveryController extends Controller
         Session::put('city', $city ? $city->name_city : '');
         Session::put('province', $province ? $province->name_quanhuyen : '');
         Session::put('ward', $ward ? $ward->name_xaphuong : '');
+
         if ($data['matp']) {
+
             $feeship = Feeship::where('fee_matp', $data['matp'])
                 ->where('fee_maqh', $data['maqh'])
                 ->where('fee_xaid', $data['xaid'])->get();
             $count_feeship = $feeship->count();
+
             if ($count_feeship > 0) {
                 foreach ($feeship as $key => $fee) {
                     Session::put('fee', $fee->fee_feeship);
@@ -157,19 +165,29 @@ class DeliveryController extends Controller
     public function select_delivery_home(Request $request)
     {
         $data = $request->all();
+
         if ($data['action']) {
             $output = '';
+
             if ($data['action'] == "city") {
-                $select_province = Province::where('matp', $data['ma_id'])->orderby('maqh', 'asc')->get();
+                $select_province = Province::where('matp', $data['ma_id'])
+                                    ->orderby('maqh', 'asc')->get();
                 $output .= '<option>-------Choose province-------</option>';
+
                 foreach ($select_province as $key => $province) {
-                    $output .= '<option value="' . $province->maqh . '">' . $province->name_quanhuyen . '</option>';
+                    $output .= '<option value="' . $province->maqh . '">'
+                                 . $province->name_quanhuyen . '</option>';
                 }
+
             } else {
-                $select_wards = Wards::where('maqh', $data['ma_id'])->orderby('xaid', 'asc')->get();
+
+                $select_wards = Wards::where('maqh', $data['ma_id'])
+                                    ->orderby('xaid', 'asc')->get();
                 $output .= '<option>-------Choose wards-------</option>';
+
                 foreach ($select_wards as $key => $ward) {
-                    $output .= '<option value="' . $ward->xaid . '">' . $ward->name_xaphuong . '</option>';
+                    $output .= '<option value="' . $ward->xaid . '">'
+                                 . $ward->name_xaphuong . '</option>';
                 }
             }
             echo $output;

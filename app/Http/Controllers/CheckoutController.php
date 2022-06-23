@@ -21,6 +21,7 @@ class CheckoutController extends Controller
         $content = Cart::content();
         $i = 0;
         foreach ($content as $item) {
+            
             if ($item->options->in_stock < $item->qty) {
                 $i++;
                 Session::put('error', 'Quantity in stock is not enough');
@@ -59,6 +60,7 @@ class CheckoutController extends Controller
         $order->save();
 
         if (Cart::count() != 0) {
+            
             foreach (Cart::content() as $key => $cart) {
                 $order_details = new OrderDetails();
                 $order_details->order_code = $checkout_code;
@@ -70,6 +72,7 @@ class CheckoutController extends Controller
                 $order_details->product_feeship = $data['order_fee'];
                 $order_details->save();
             }
+
             Cart::destroy();
             Session::forget('coupon');
             Session::forget('fee');
