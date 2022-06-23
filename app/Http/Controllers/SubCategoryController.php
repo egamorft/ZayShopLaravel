@@ -19,7 +19,7 @@ class SubCategoryController extends Controller
 
         $manager_sub_category = view('admin.show_sub_category')
             ->with('show_sub_category', $show_sub_category);
-        return view('admin_layout')
+        return view('components.admin_layout')
             ->with('admin.show_sub_category', $manager_sub_category);
     }
     public function add_sub_category()
@@ -31,7 +31,7 @@ class SubCategoryController extends Controller
         $manager_category = view('admin.add_sub_category')
             ->with('get_category', $get_category);
 
-        return view('admin_layout')
+        return view('components.admin_layout')
             ->with('admin.add_sub_category', $manager_category);
     }
     public function save_sub_category(Request $request)
@@ -106,7 +106,7 @@ class SubCategoryController extends Controller
             ->with('edit_sub_category', $edit_sub_category)
             ->with('get_category', $get_category);
 
-        return view('admin_layout')
+        return view('components.admin_layout')
             ->with('admin.edit_sub_category', $manager_sub_category);
     }
     public function delete_sub_category($subcategory_id)

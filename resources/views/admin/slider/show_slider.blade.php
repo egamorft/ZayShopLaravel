@@ -1,4 +1,4 @@
-@extends('admin_layout')
+@extends('components.admin_layout')
 @section('admin_content')
 
 <!-- Alert -->

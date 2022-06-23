@@ -14,7 +14,7 @@ class CategoryController extends Controller
         $show_category = DB::table('tbl_category')->get();
         $manager_category = view('admin.show_category')->with('show_category', $show_category);
 
-        return view('admin_layout')->with('admin.show_category', $manager_category);
+        return view('components.admin_layout')->with('admin.show_category', $manager_category);
     }
     public function add_category()
     {
@@ -69,7 +69,7 @@ class CategoryController extends Controller
             ->get();
 
         $manager_category = view('admin.edit_category')->with('edit_category', $edit_category);
-        return view('admin_layout')->with('admin.edit_category', $manager_category);
+        return view('components.admin_layout')->with('admin.edit_category', $manager_category);
     }
     public function delete_category($category_id)
     {

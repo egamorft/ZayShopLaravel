@@ -1,41 +1,6 @@
-@extends('admin_layout')
+@extends('components.admin_layout')
 @section('admin_content')
-
-<!-- Alert -->
-@if(session()->has('message'))
-<div class="container">
-    <div class="row">
-        <div class="col-9"></div>
-        <div class="col-sm-3">
-            <div id="alertMessage" class="alert alert-success">
-                <strong>Success! </strong>
-                {{session()->get('message')}}
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<?php
-Session::put('message', null);
-?>
-@elseif(session()->has('error'))
-<div class="container">
-    <div class="row">
-        <div class="col-9"></div>
-        <div class="col-sm-3">
-            <div id="alertMessage" class="alert alert-danger">
-                <strong>Error! </strong>
-                {{session()->get('error')}}
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<?php
-Session::put('error', null);
-?>
-@endif
-<!-- End Alert -->
+@extends('components.alert')
 
 <div class="container">
     <div class="col-lg-11">
@@ -47,7 +12,10 @@ Session::put('error', null);
                     </div>
                     <div class="col-lg-6 col-5 my-auto text-end">
                         <div class="dropdown float-lg-end pe-4">
-                            <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="cursor-pointer" 
+                                id="dropdownTable" 
+                                    ata-bs-toggle="dropdown" 
+                                        aria-expanded="false">
                                 <i class="fa fa-ellipsis-v text-secondary"></i>
                             </a>
                         </div>

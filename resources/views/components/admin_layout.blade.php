@@ -172,6 +172,7 @@
             </div>
         </nav>
         <!-- End Navbar -->
+        @yield('alert_content')
         @yield('admin_content')
     </main>
     <div class="fixed-plugin">
@@ -275,8 +276,6 @@
                 var feeship_id = $(this).data('feeship_id');
                 var fee_value = $(this).text();
                 var _token = $('input[name="_token"]').val();
-                // alert(feeship_id);
-                // alert(fee_value);
                 $.ajax({
                     url: '{{url("/update-delivery")}}',
                     method: 'POST',

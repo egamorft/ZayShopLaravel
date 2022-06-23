@@ -1,41 +1,7 @@
-@extends('admin_layout')
+@extends('components.admin_layout')
 @section('admin_content')
+@extends('components.alert')
 
-<!-- Alert -->
-@if(session()->has('message'))
-<div class="container">
-    <div class="row">
-        <div class="col-9"></div>
-        <div class="col-sm-3">
-            <div id="alertMessage" class="alert alert-success">
-                <strong>Success! </strong>
-                {{session()->get('message')}}
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<?php
-Session::put('message', null);
-?>
-@elseif(session()->has('error'))
-<div class="container">
-    <div class="row">
-        <div class="col-9"></div>
-        <div class="col-sm-3">
-            <div id="alertMessage" class="alert alert-danger">
-                <strong>Error! </strong>
-                {{session()->get('error')}}
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<?php
-Session::put('error', null);
-?>
-@endif
-<!-- End Alert -->
 <div class="container-fluid">
     <div class="col-11 text-start">
         <a target="_blank" href="{{URL::to('/print-bill/'.$details->order_code)}}" class="btn bg-gradient-dark mb-0"><i class="material-icons text-sm">print</i>&nbsp;&nbsp;Print bill</a>

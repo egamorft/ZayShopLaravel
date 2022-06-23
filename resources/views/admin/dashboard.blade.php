@@ -1,4 +1,4 @@
-@extends('admin_layout')
+@extends('components.admin_layout')
 @section('admin_content')
     <div class="text-center">
         <h3>Welcome to admin page</h3>

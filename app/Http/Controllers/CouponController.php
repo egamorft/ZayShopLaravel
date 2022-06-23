@@ -55,7 +55,7 @@ class CouponController extends Controller
         $manager_coupon = view('admin.show_coupon')
             ->with('show_coupon', $show_coupon);
 
-        return view('admin_layout')
+        return view('components.admin_layout')
             ->with('admin.show_coupon', $manager_coupon);
     }
 

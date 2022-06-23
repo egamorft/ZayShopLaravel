@@ -155,7 +155,7 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </nav>
     <!-- Close Header -->
-
+    @yield('alert_content')
     @yield('content')
 
     <!-- Start Brands -->

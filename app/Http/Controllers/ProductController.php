@@ -19,7 +19,7 @@ class ProductController extends Controller
             ->get();
 
         $manager_product = view('admin.show_product')->with('show_product', $show_product);
-        return view('admin_layout')->with('admin.show_product', $manager_product);
+        return view('components.admin_layout')->with('admin.show_product', $manager_product);
     }
 
     public function select_category(Request $request)
@@ -141,7 +141,7 @@ class ProductController extends Controller
                 'get_subcategory'
             ));
 
-        return view('admin_layout')->with('admin.edit_product', $manager_product);
+        return view('components.admin_layout')->with('admin.edit_product', $manager_product);
     }
 
     public function update_product(Request $request, $product_id)
