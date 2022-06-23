@@ -64,8 +64,11 @@
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
                                         <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="{{URL::to('/product-details/'.$pro->product_id)}}"><i class="far fa-eye"></i></a></li>
-                                        <li><button type="submit" class="add-to-cart btn btn-success text-white mt-2" name="add-to-cart" data-id_product="{{$pro->product_id}}"><i class="fas fa-cart-plus"></i></button></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{URL::to('/product-details/'.$pro->product_id)}}">
+                                            <i class="far fa-eye"></i></a></li>
+                                        <li><button type="submit" class="add-to-cart btn btn-success text-white mt-2" 
+                                        name="add-to-cart" data-id_product="{{$pro->product_id}}">
+                                            <i class="fas fa-cart-plus"></i></button></li>
                                     </ul>
                                 </div>
                             </div>

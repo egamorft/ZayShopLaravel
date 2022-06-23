@@ -3,16 +3,19 @@
 @extends('components.alert')
 
 <?php
+
 $content = Cart::content();
 
 $tax = Cart::pricetotal(0, ',', '') * 10 / 100;
 
 $total_all = Cart::total(0, ',', '') + Session::get('fee');
 
-
 $orderDate = Carbon\Carbon::now();
+
 ?>
-<div class="modal fade" id="OrderBill" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="OrderBill" data-bs-backdrop="static" 
+    data-bs-keyboard="false" tabindex="-1" 
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,7 +27,8 @@ $orderDate = Carbon\Carbon::now();
                         <div class="card">
                             <div class="text-left logo p-2 px-5">
 
-                                <a class="navbar-brand text-success logo h1 align-self-center" href="{{URL::to('/')}}">
+                                <a class="navbar-brand text-success logo h1 align-self-center" 
+                                    href="{{URL::to('/')}}">
                                     Zay Shop
                                 </a>
 
@@ -33,10 +37,19 @@ $orderDate = Carbon\Carbon::now();
                             <h3 class="text-left logo p-2 px-5" id="countdown"></h3>
                             <div class="invoice p-5">
 
-                                <h5>Your order is now Confirmed!</h5>
+                                <h5>
+                                    Your order is now Confirmed!
+                                </h5>
 
-                                <span class="font-weight-bold d-block mt-4">Hello, <?php echo Session::get('account_name'); ?></span>
-                                <span>You order has been confirmed and will coming to you as soon as possible!</span>
+                                <span class="font-weight-bold d-block mt-4">
+                                    Hello, 
+                                    <?php 
+                                        echo Session::get('account_name'); 
+                                    ?>
+                                </span>
+                                <span>
+                                    You order has been confirmed and will coming to you as soon as possible!
+                                </span>
 
                                 <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
 
@@ -47,8 +60,14 @@ $orderDate = Carbon\Carbon::now();
                                                 <td>
                                                     <div class="py-2">
 
-                                                        <span class="d-block text-muted">Order Date</span>
-                                                        <span> <?php echo $orderDate->format('d/m/Y') ?></span>
+                                                        <span class="d-block text-muted">
+                                                            Order Date
+                                                        </span>
+                                                        <span> 
+                                                            <?php 
+                                                                echo $orderDate->format('d/m/Y') 
+                                                            ?>
+                                                        </span>
 
                                                     </div>
                                                 </td>
@@ -56,7 +75,9 @@ $orderDate = Carbon\Carbon::now();
                                                 <td>
                                                     <div class="py-2">
 
-                                                        <span class="d-block text-muted">Payment</span>
+                                                        <span class="d-block text-muted">
+                                                            Payment
+                                                        </span>
                                                         <span id="shipping_method"></span>
 
                                                     </div>
@@ -65,17 +86,35 @@ $orderDate = Carbon\Carbon::now();
                                                 <td>
                                                     <div class="py-2">
 
-                                                        <span class="d-block text-muted">Shiping</span>
-                                                        <span><?php echo Session::get('city'); ?></span></br>
-                                                        <span><?php echo Session::get('province'); ?></span></br>
-                                                        <span><?php echo Session::get('ward'); ?></span>
+                                                        <span class="d-block text-muted">
+                                                            Shiping
+                                                        </span>
+                                                        <span>
+                                                            <?php 
+                                                                echo Session::get('city'); 
+                                                            ?>
+                                                        </span>
+                                                    </br>
+                                                        <span>
+                                                            <?php 
+                                                                echo Session::get('province');
+                                                            ?>
+                                                        </span>
+                                                    </br>
+                                                        <span>
+                                                            <?php 
+                                                                echo Session::get('ward'); 
+                                                            ?>
+                                                        </span>
 
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="py-2">
 
-                                                        <span class="d-block text-muted">Address</span>
+                                                        <span class="d-block text-muted">
+                                                            Address
+                                                        </span>
                                                         <span id="shipping_address"></span>
 
                                                     </div>
@@ -103,20 +142,27 @@ $orderDate = Carbon\Carbon::now();
                                             <tr>
                                                 <td width="20%">
 
-                                                    <img src="{{URL::to('/public/upload/product/'.$con->options->image)}}" width="90px">
+                                                    <img src="{{URL::to('/public/upload/product/'.$con->options->image)}}" 
+                                                        width="90px">
 
                                                 </td>
 
                                                 <td width="60%">
-                                                    <span class="font-weight-bold">{{$con->name}}</span>
+                                                    <span class="font-weight-bold">
+                                                        {{$con->name}}
+                                                    </span>
                                                     <div class="product-qty">
-                                                        <small class="text-muted">Quantity:{{$con->qty}}</small>
+                                                        <small class="text-muted">
+                                                            Quantity:{{$con->qty}}
+                                                        </small>
 
                                                     </div>
                                                 </td>
                                                 <td width="20%">
                                                     <div class="text-right">
-                                                        <span class="font-weight-bold">{{$con->price(0 , ',' , '.').' '.'đ'}}</span>
+                                                        <span class="font-weight-bold">
+                                                            {{$con->price(0 , ',' , '.').' '.'đ'}}
+                                                        </span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -143,13 +189,17 @@ $orderDate = Carbon\Carbon::now();
                                                     <td>
                                                         <div class="text-left">
 
-                                                            <span class="text-muted">Subtotal</span>
+                                                            <span class="text-muted">
+                                                                Subtotal
+                                                            </span>
 
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="text-right">
-                                                            <span>{{Cart::pricetotal(0 , ',' , '.').' '.'đ'}}</span>
+                                                            <span>
+                                                                {{Cart::pricetotal(0 , ',' , '.').' '.'đ'}}
+                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -159,13 +209,17 @@ $orderDate = Carbon\Carbon::now();
                                                     <td>
                                                         <div class="text-left">
 
-                                                            <span class="text-muted">Shipping Fee</span>
+                                                            <span class="text-muted">
+                                                                Shipping Fee
+                                                            </span>
 
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="text-right">
-                                                            <span class="text-danger">{{number_format(Session::get('fee'), 0 , ',' , '.')}} đ</span>
+                                                            <span class="text-danger">
+                                                                {{number_format(Session::get('fee'), 0 , ',' , '.')}} đ
+                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -174,13 +228,17 @@ $orderDate = Carbon\Carbon::now();
                                                     <td>
                                                         <div class="text-left">
 
-                                                            <span class="text-muted">Shipping Fee</span>
+                                                            <span class="text-muted">
+                                                                Shipping Fee
+                                                            </span>
 
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="text-right">
-                                                            <span class="text-danger">0 đ</span>
+                                                            <span class="text-danger">
+                                                                0 đ
+                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -191,13 +249,17 @@ $orderDate = Carbon\Carbon::now();
                                                     <td>
                                                         <div class="text-left">
 
-                                                            <span class="text-muted">Tax Fee</span>
+                                                            <span class="text-muted">
+                                                                Tax Fee
+                                                            </span>
 
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="text-right">
-                                                            <span class="text-danger">{{number_format($tax, 0, ',', '.').' '.'đ'}}</span>
+                                                            <span class="text-danger">
+                                                                {{number_format($tax, 0, ',', '.').' '.'đ'}}
+                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -207,13 +269,17 @@ $orderDate = Carbon\Carbon::now();
                                                     <td>
                                                         <div class="text-left">
 
-                                                            <span class="text-muted">Discount</span>
+                                                            <span class="text-muted">
+                                                                Discount
+                                                            </span>
 
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="text-right">
-                                                            <span class="text-success">{{Cart::discount(0 , ',' , '.').' '.'đ'}}</span>
+                                                            <span class="text-success">
+                                                                {{Cart::discount(0 , ',' , '.').' '.'đ'}}
+                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -223,13 +289,17 @@ $orderDate = Carbon\Carbon::now();
                                                     <td>
                                                         <div class="text-left">
 
-                                                            <span class="font-weight-bold">Subtotal</span>
+                                                            <span class="font-weight-bold">
+                                                                Subtotal
+                                                            </span>
 
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="text-right">
-                                                            <span class="font-weight-bold">{{number_format($total_all, 0 , ',' , '.')}} đ</span>
+                                                            <span class="font-weight-bold">
+                                                                {{number_format($total_all, 0 , ',' , '.')}} đ
+                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -245,9 +315,15 @@ $orderDate = Carbon\Carbon::now();
                                 </div>
 
 
-                                <p>We will be sending shipping confirmation email when the item shipped successfully!</p>
-                                <p class="font-weight-bold mb-0">Thanks for shopping with us!</p>
-                                <span>Zay Shop Team</span>
+                                <p>
+                                    We will be sending shipping confirmation email when the item shipped successfully!
+                                </p>
+                                <p class="font-weight-bold mb-0">
+                                    Thanks for shopping with us!
+                                </p>
+                                <span>
+                                    Zay Shop Team
+                                </span>
 
 
 
@@ -258,9 +334,14 @@ $orderDate = Carbon\Carbon::now();
 
                             <div class="d-flex justify-content-between footer p-3">
 
-                                <span>Need Help? visit our <a href="#"> help center</a></span>
+                                <span>
+                                    Need Help? visit our 
+                                    <a href="#"> 
+                                        help center
+                                    </a>
+                                </span>
                                 @php
-                                echo $orderDate->format('d/m/Y');
+                                    echo $orderDate->format('d/m/Y');
                                 @endphp
 
                             </div>
@@ -278,21 +359,26 @@ $orderDate = Carbon\Carbon::now();
         </div>
     </div>
 </div>
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OrderBill">
-    Open modal
-</button> -->
 
-
-<!--Check out content -->
 <main class="container">
     <div class="py-5 text-center">
-        <h2>Checkout form</h2>
+        <h2>
+            Checkout form
+        </h2>
     </div>
     @if(Cart::count() == 0)
-    <h2>Your cart is still null</h2>
-    <a class="btn btn-success" href="{{URL::to('/shop')}}" role="button">Shopping now</a>
-    <h4>OR</h4>
-    <a class="btn btn-success" href="{{URL::to('/shop-cart')}}" role="button">Check your cart</a>
+        <h2>
+            Your cart is still null
+        </h2>
+        <a class="btn btn-success" href="{{URL::to('/shop')}}" role="button">
+            Shopping now
+        </a>
+        <h4>
+            OR
+        </h4>
+        <a class="btn btn-success" href="{{URL::to('/shop-cart')}}" role="button">
+            Check your cart
+        </a>
     @else
     <div class="row g-5">
         <div class="col-md-5 col-lg-4 order-md-last">
@@ -303,37 +389,53 @@ $orderDate = Carbon\Carbon::now();
                     @endif
                     @csrf
                     <div class="col-md">
-                        <label for="city" class="form-label">City</label>
+                        <label for="city" class="form-label">
+                            City
+                        </label>
                         <select name="city" id="city" class="form-control choose city">
-                            <option value="">-----Choose your city-----</option>
+                            <option value="">
+                                -----Choose your city-----
+                            </option>
                             @foreach($city as $key => $ci)
-                            <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+                                <option value="{{$ci->matp}}">
+                                    {{$ci->name_city}}
+                                </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="col-md">
-                        <label for="state" class="form-label">Province</label>
+                        <label for="state" class="form-label">
+                            Province
+                        </label>
                         <select name="province" id="province" class="form-control province choose">
-                            <option value="">-----Choose your province-----</option>
+                            <option value="">
+                                -----Choose your province-----
+                            </option>
                         </select>
                     </div>
 
                     <div class="col-md">
-                        <label for="state" class="form-label">Wards</label>
+                        <label for="state" class="form-label">
+                            Wards
+                        </label>
                         <select name="wards" id="wards" class="form-control wards">
-                            <option value="">-----Choose your wards-----</option>
+                            <option value="">
+                                -----Choose your wards-----
+                            </option>
                         </select>
                     </div>
                     <hr class="my-4">
                     @if(Session::get('fee'))
-                    <div class="col-md">
-                        <input type="button" value="Calculate delivery" name="calculate_order" class="w-100 btn btn-dark btn-lg calculate_delivery">
-                    </div>
+                        <div class="col-md">
+                            <input type="button" value="Calculate delivery" 
+                                name="calculate_order" class="w-100 btn btn-dark btn-lg calculate_delivery">
+                        </div>
                     @else
-                    <div class="col-md">
-                        <input type="button" value="Calculate delivery" name="calculate_order" class="w-100 btn btn-primary btn-lg calculate_delivery">
-                    </div>
+                        <div class="col-md">
+                            <input type="button" value="Calculate delivery" 
+                                name="calculate_order" class="w-100 btn btn-primary btn-lg calculate_delivery">
+                        </div>
                     @endif
                     <hr class="my-4">
                     @if(Session::get('fee'))
@@ -341,62 +443,104 @@ $orderDate = Carbon\Carbon::now();
                 @endif
             </form>
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-primary">Check your cart</span>
-                <span class="badge bg-primary rounded-pill">{{Cart::count()}}</span>
+                <span class="text-primary">
+                    Check your cart
+                </span>
+                <span class="badge bg-primary rounded-pill">
+                    {{Cart::count()}}
+                </span>
             </h4>
             <ul class="list-group mb-3">
                 @foreach($content as $value)
                 <li class="list-group-item d-flex justify-content-between lh-sm">
                     <div>
-                        <h6 class="my-0">{{$value->name}}</h6>
-                        <small class="text-muted">{{$value->qty}}</small>
+                        <h6 class="my-0">
+                            {{$value->name}}
+                        </h6>
+                        <small class="text-muted">
+                            {{$value->qty}}
+                        </small>
                     </div>
-                    <span class="text-muted">{{number_format($value->price, 0, ',', '.').' '.'đ'}}</span>
+                    <span class="text-muted">
+                        {{number_format($value->price, 0, ',', '.').' '.'đ'}}
+                    </span>
                 </li>
                 @endforeach
                 <li class="list-group-item d-flex justify-content-between">
-                    <span>Sub Total</span>
-                    <strong>{{Cart::pricetotal(0 , ',' , '.').' '.'đ'}}</strong>
+                    <span>
+                        Sub Total
+                    </span>
+                    <strong>
+                        {{Cart::pricetotal(0 , ',' , '.').' '.'đ'}}
+                    </strong>
                 </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
-                        <h6 class="my-0">Tax</h6>
-                        <small>10% cart</small>
+                        <h6 class="my-0">
+                            Tax
+                        </h6>
+                        <small>
+                            10% cart
+                        </small>
                     </div>
-                    <span class="text-danger">{{number_format($tax, 0, ',', '.').' '.'đ'}}</span>
+                    <span class="text-danger">
+                        {{number_format($tax, 0, ',', '.').' '.'đ'}}
+                    </span>
                 </li>
                 @if(Session::get('coupon'))
-                @foreach(Session::get('coupon') as $key => $cou)
-                @if($cou['coupon_condition']==1)
-                <li class="list-group-item d-flex justify-content-between bg-light">
-                    <div class="text-success">
-                        <h6 class="my-0">Promo code</h6>
-                        <small><?php echo '-' . $cou['coupon_number'] . '% cart' ?></small>
-                    </div>
-                    <span class="text-success">{{Cart::discount(0 , ',' , '.').' '.'đ'}}</span>
-                </li>
-                @endif
-                @endforeach
-                @else
-                <li class="list-group-item d-flex justify-content-between bg-light">
-                    <div class="text-success">
-                        <h6 class="my-0">Promo code</h6>
-                        <small>NONE</small>
-                    </div>
-                    <span class="text-success">0 đ</span>
-                </li>
+                    @foreach(Session::get('coupon') as $key => $cou)
+                        @if($cou['coupon_condition']==1)
+                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                <div class="text-success">
+                                    <h6 class="my-0">
+                                        Promo code
+                                    </h6>
+                                    <small>
+                                        <?php 
+                                            echo '-' . $cou['coupon_number'] . '% cart' 
+                                        ?>
+                                    </small>
+                                </div>
+                                <span class="text-success">
+                                    {{Cart::discount(0 , ',' , '.').' '.'đ'}}
+                                </span>
+                            </li>
+                        @endif
+                    @endforeach
+                    @else
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <div class="text-success">
+                            <h6 class="my-0">
+                                Promo code
+                            </h6>
+                            <small>
+                                NONE
+                            </small>
+                        </div>
+                        <span class="text-success">
+                            0 đ
+                        </span>
+                    </li>
                 @endif
                 @if(Session::get('fee'))
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
-                        <h6 class="my-0">Shipping fee</h6>
+                        <h6 class="my-0">
+                            Shipping fee
+                        </h6>
                     </div>
 
-                    <span class="text-danger">{{number_format(Session::get('fee'), 0 , ',' , '.')}} đ</span>
+                    <span class="text-danger">
+                        {{number_format(Session::get('fee'), 0 , ',' , '.')}} đ
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
-                    <p>Delete address here</p>
-                    <a class="cart_quantity_delete" href="{{url('/del-fee')}}"><i style="color: red; font-size:120% ;" class="fa fa-xmark"></i></a>
+                    <p>
+                        Delete address here
+                    </p>
+                    <a class="cart_quantity_delete" href="{{url('/del-fee')}}">
+                        <i style="color: red; font-size:120% ;" class="fa fa-xmark"></i>
+                    </a>
                 </li>
                 <?php
                 if (Session::get('fee') != null) {
@@ -404,83 +548,118 @@ $orderDate = Carbon\Carbon::now();
                 }
                 ?>
                 <li class="list-group-item d-flex justify-content-between">
-                    <span>Total</span>
-                    <strong>{{number_format($total_after_shipping, 0 , ',' , '.')}} đ</strong>
+                    <span>
+                        Total
+                    </span>
+                    <strong>
+                        {{number_format($total_after_shipping, 0 , ',' , '.')}} đ
+                    </strong>
                 </li>
                 @else
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
-                        <h6 class="my-0">Shipping fee</h6>
+                        <h6 class="my-0">
+                            Shipping fee
+                        </h6>
                     </div>
-                    <span class="text-danger">0 đ</span>
+                    <span class="text-danger">
+                        0 đ
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <span>Total</span>
-                    <strong>{{Cart::total(0 , ',' , '.').' '.'đ'}}</strong>
+                    <span>
+                        Total
+                    </span>
+                    <strong>
+                        {{Cart::total(0 , ',' , '.').' '.'đ'}}
+                    </strong>
                 </li>
                 @endif
             </ul>
 
         </div>
         <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">Billing address</h4>
+            <h4 class="mb-3">
+                Billing address
+            </h4>
             <form method="POST" action="">
                 @csrf
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <label for="shipping_name" class="form-label">Full name</label>
-                        <input type="text" class="form-control shipping_name" name="shipping_name" id="shipping_name" value="{{Session::get('account_name')}}">
-                    </div>
-
-                    <div class="col-12">
-                        <label for="shipping_email" class="form-label">Email
-                            <!-- <span class="text-muted">(Optional)</span> -->
+                        <label for="shipping_name" class="form-label">
+                            Full name
                         </label>
-                        <input type="email" class="form-control shipping_email" name="shipping_email" id="shipping_email" value="{{Session::get('account_email')}}">
+                        <input type="text" class="form-control shipping_name" 
+                            name="shipping_name" id="shipping_name" 
+                                value="{{Session::get('account_name')}}">
                     </div>
 
                     <div class="col-12">
-                        <label for="shipping_address" class="form-label">Address</label>
-                        <input type="text" class="form-control shipping_address" name="shipping_address" id="shipping_address" placeholder="Where ur house?...">
+                        <label for="shipping_email" class="form-label">
+                            Email
+                        </label>
+                        <input type="email" class="form-control shipping_email" 
+                            name="shipping_email" id="shipping_email" 
+                                value="{{Session::get('account_email')}}">
                     </div>
 
                     <div class="col-12">
-                        <label for="shipping_phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control shipping_phone" name="shipping_phone" id="shipping_phone" value="{{Session::get('account_phone')}}">
+                        <label for="shipping_address" class="form-label">
+                            Address
+                        </label>
+                        <input type="text" class="form-control shipping_address" 
+                            name="shipping_address" id="shipping_address" 
+                                placeholder="Where ur house?...">
                     </div>
 
                     <div class="col-12">
-                        <label for="shipping_notes" class="form-label">Delivery note</label>
-                        <span class="text-muted">(Optional)</span>
-                        <textarea rows="5" type="text" class="form-control shipping_notes" name="shipping_notes" id="shipping_notes" placeholder="Wanna note something for deliver man?..."></textarea>
+                        <label for="shipping_phone" class="form-label">
+                            Phone
+                        </label>
+                        <input type="text" class="form-control shipping_phone" 
+                            name="shipping_phone" id="shipping_phone" 
+                                value="{{Session::get('account_phone')}}">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="shipping_notes" class="form-label">
+                            Delivery note
+                        </label>
+                        <span class="text-muted">
+                            (Optional)
+                        </span>
+                        <textarea rows="5" type="text" class="form-control shipping_notes" 
+                            name="shipping_notes" id="shipping_notes" 
+                                placeholder="Wanna note something for deliver man?...">
+                        </textarea>
                     </div>
                 </div>
                 @if(Session::get('fee'))
-                <input type="hidden" name="order_fee" class="order_fee" value="{{Session::get('fee')}}">
+                    <input type="hidden" name="order_fee" class="order_fee" value="{{Session::get('fee')}}">
                 @else
                 @endif
 
                 @if(Session::get('coupon'))
-                @foreach(Session::get('coupon') as $key => $cou)
-                <input type="hidden" name="order_coupon" class="order_coupon" value="{{$cou['coupon_code']}}">
-                @endforeach
+                    @foreach(Session::get('coupon') as $key => $cou)
+                        <input type="hidden" name="order_coupon" class="order_coupon" value="{{$cou['coupon_code']}}">
+                    @endforeach
                 @else
-                <input type="hidden" name="order_coupon" class="order_coupon" value="no">
+                    <input type="hidden" name="order_coupon" class="order_coupon" value="no">
                 @endif
 
                 <hr class="my-4">
 
-                <h4 class="mb-3">Payment</h4>
+                <h4 class="mb-3">
+                    Payment
+                </h4>
 
                 <div class="my-3">
                     <div class="form-check">
                         <input id="cod" name="payment_select" type="radio" class="form-check-input payment_select" value="1" checked>
-                        <label class="form-check-label" for="cod">COD</label>
+                        <label class="form-check-label" for="cod">
+                            COD
+                        </label>
                     </div>
-                    <!-- <div class="form-check">
-                        <input id="paypal" name="payment_select" type="radio" class="form-check-input payment_select" value="2">
-                        <label class="form-check-label" for="paypal">Paypal</label>
-                    </div> -->
                 </div>
 
                 <hr class="my-4">

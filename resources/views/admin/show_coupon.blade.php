@@ -8,23 +8,42 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Coupon table</h6>
+                        <h6 class="text-white text-capitalize ps-3">
+                            Coupon table
+                        </h6>
                     </div>
                 </div>
                 <div class="col-11 text-end">
-                    <a href="{{URL::to('/add-coupon')}}" class="btn bg-gradient-dark mb-0"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add Coupon</a>
+                    <a href="{{URL::to('/add-coupon')}}" class="btn bg-gradient-dark mb-0">
+                        <i class="material-icons text-sm">
+                            add
+                        </i>&nbsp;&nbsp;
+                        Add Coupon
+                    </a>
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7">ID</th>
-                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Coupon Name</th>
-                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Coupon Code</th>
-                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Coupon Time</th>
-                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Coupon Condition</th>
-                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">Coupon Number</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
+                                        ID
+                                    </th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                                        Coupon Name
+                                    </th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                                        Coupon Code
+                                    </th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
+                                        Coupon Time
+                                    </th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                                        Coupon Condition
+                                    </th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                                        Coupon Number
+                                    </th>
                                     <th class="text-secondary opacity-7"></th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -58,12 +77,14 @@
                                         <?php
                                         if ($cou->coupon_condition == 1) {
                                         ?>
-                                            <p class="font-weight-bold mb-0"> Sale by %
+                                            <p class="font-weight-bold mb-0"> 
+                                                Sale by %
                                             </p>
                                         <?php
                                         } else {
                                         ?>
-                                            <p class="font-weight-bold mb-0"> Sale by VND
+                                            <p class="font-weight-bold mb-0"> 
+                                                Sale by VND
                                             </p>
                                         <?php
                                         }
@@ -88,8 +109,11 @@
                                         ?>
                                     </td>
                                     <td class="align-middle">
-                                        <a onclick="return confirm('Are you sure to delete this coupon?')" href="{{URL::to('/delete-coupon/'.$cou->coupon_id)}}" class="font-weight-bold" data-toggle="tooltip">
-                                            <i class="material-icons" style="font-size: 30px;">delete</i>
+                                        <a onclick="return confirm('Are you sure to delete this coupon?')" 
+                                            href="{{URL::to('/delete-coupon/'.$cou->coupon_id)}}" class="font-weight-bold" data-toggle="tooltip">
+                                            <i class="material-icons" style="font-size: 30px;">
+                                                delete
+                                            </i>
                                         </a>
                                     </td>
                                 </tr>

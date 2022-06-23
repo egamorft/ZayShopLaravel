@@ -119,7 +119,7 @@ class CategoryController extends Controller
             ->join('tbl_category', 'tbl_product.category_id', '=', 'tbl_category.category_id')
                 ->where('tbl_product.category_id', $category_id)
                         ->where('tbl_product.product_status', 1)
-                            ->get();
+                            ->paginate(3);
                             
         return view('pages.category.shop_category')
             ->with(compact('category', 'subcategory', 'category_by_id'));

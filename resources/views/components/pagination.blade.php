@@ -19,13 +19,17 @@
         @if (is_array($element))
         @foreach ($element as $page => $url)
         @if ($page == $paginator->currentPage())
-        <li class="page-item disabled">
-            <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#">{{ $page }}</a>
-        </li>
+            <li class="page-item disabled">
+                <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#">
+                    {{ $page }}
+                </a>
+            </li>
         @else
-        <li class="page-item">
-            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="{{ $url }}">{{ $page }}</a>
-        </li>
+            <li class="page-item">
+                <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="{{ $url }}">
+                    {{ $page }}
+                </a>
+            </li>
         @endif
         @endforeach
         @endif

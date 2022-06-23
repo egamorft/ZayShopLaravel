@@ -174,7 +174,7 @@ class SubCategoryController extends Controller
                             '=', 'tbl_subcategory.subcategory_id')
                 ->where('tbl_product.subcategory_id', $subcategory_id)
                     ->where('tbl_product.product_status', 1)
-                        ->get();
+                        ->paginate(3);
 
         return view('pages.subcategory.shop_subcategory')
             ->with(compact('category', 'subcategory', 'subcategory_by_id'));
