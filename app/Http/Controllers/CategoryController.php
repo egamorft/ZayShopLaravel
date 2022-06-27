@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function show_category()
     {
-        $show_category = DB::table('tbl_category')->get();
+        $show_category = DB::table('tbl_category')->orderBy('category_id', 'desc')->paginate(4);
         $manager_category = view('admin.show_category')->with('show_category', $show_category);
 
         return view('components.admin_layout')->with('admin.show_category', $manager_category);

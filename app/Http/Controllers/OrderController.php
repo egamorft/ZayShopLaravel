@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
   public function show_order()
   {
-    $order = Order::orderBy('created_at', 'DESC')->get();
+    $order = Order::orderBy('created_at', 'DESC')->paginate(4);
 
     return view('admin.order.show_order')->with(compact('order'));
   }

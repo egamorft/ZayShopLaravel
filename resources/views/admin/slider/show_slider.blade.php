@@ -109,6 +109,7 @@
                     </div>
                 </div>
             </div>
+            {!! $slider->render('components.admin_pagination')!!}
         </div>
     </div>
 

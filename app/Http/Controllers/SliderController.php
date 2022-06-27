@@ -12,7 +12,7 @@ class SliderController extends Controller
     //Admin Page
     public function show_slider()
     {
-        $slider = Slider::orderBy('slider_id', 'desc')->get();
+        $slider = Slider::orderBy('slider_id', 'desc')->paginate(2);
 
         return view('admin.slider.show_slider')->with('slider', $slider);
     }

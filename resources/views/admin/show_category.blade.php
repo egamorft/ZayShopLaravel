@@ -99,6 +99,7 @@
                     </div>
                 </div>
             </div>
+            {!! $show_category->render('components.admin_pagination')!!}
         </div>
     </div>
 

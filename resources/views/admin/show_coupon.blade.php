@@ -123,6 +123,7 @@
                     </div>
                 </div>
             </div>
+            {!! $show_coupon->render('components.admin_pagination')!!}
         </div>
     </div>
 

@@ -16,7 +16,7 @@ class ProductController extends Controller
             ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
             ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
             ->orderBy('tbl_product.product_id', 'desc')
-            ->get();
+            ->paginate(4);
 
         $manager_product = view('admin.show_product')->with('show_product', $show_product);
         return view('components.admin_layout')->with('admin.show_product', $manager_product);

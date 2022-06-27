@@ -107,6 +107,7 @@
                     </div>
                 </div>
             </div>
+            {!! $show_sub_category->render('components.admin_pagination')!!}
         </div>
     </div>
 

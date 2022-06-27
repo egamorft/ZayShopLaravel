@@ -15,7 +15,8 @@ class SubCategoryController extends Controller
         $show_sub_category = DB::table('tbl_subcategory')
             ->join('tbl_category', 'tbl_subcategory.category_id', 
                                 '=', 'tbl_category.category_id')
-            ->get();
+            ->orderBy('subcategory_id', 'desc')
+            ->paginate(4);
 
         $manager_sub_category = view('admin.show_sub_category')
             ->with('show_sub_category', $show_sub_category);

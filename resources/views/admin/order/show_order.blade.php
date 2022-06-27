@@ -19,7 +19,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
-                                        Index
+                                        Order Id
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
                                         Order Code
@@ -37,21 +37,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-
-                                    $i = 0;
-
-                                @endphp
-
                                 @foreach($order as $key => $od)
-                                    @php
-                                        $i++;
-                                    @endphp
                                 <tr>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="justify-content-center">
-                                                {{$i}}
+                                                {{$od->order_id}}
                                             </div>
                                         </div>
                                     </td>
@@ -105,6 +96,7 @@
                     </div>
                 </div>
             </div>
+            {!! $order->render('components.admin_pagination')!!}
         </div>
     </div>
 
