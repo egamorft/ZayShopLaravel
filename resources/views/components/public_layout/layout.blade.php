@@ -112,7 +112,6 @@ https://templatemo.com/tm-559-zay-shop
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="{{URL::to('/search')}}" method="GET" class="modal-content modal-body border-0 p-0">
-                            @csrf
                             <div class="input-group mb-2">
                                 <input type="text" class="form-control" 
                                     id="inputModalSearch" name="keywords_submit" placeholder="Search ...">
@@ -732,6 +731,19 @@ https://templatemo.com/tm-559-zay-shop
                 }
             });
         });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('#sort').on('change', function(){
+                var url = $(this).val();
+                if(url){
+                    window.location = url;
+                }
+                return false;
+            });
+        });
+
     </script>
 </body>
 

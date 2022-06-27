@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -93,7 +94,6 @@ class CategoryController extends Controller
 
             Session::put('error', 'Update category fail ' . $category_id);
             return Redirect::to('show-category');
-
         } else {
 
             DB::table('tbl_category')->where('category_id', $category_id)->update($data);
@@ -109,18 +109,52 @@ class CategoryController extends Controller
     {
         $category = DB::table('tbl_category')
             ->where('category_status', '1')
-                ->orderBy('category_id', 'asc')
-                    ->get();
+            ->orderBy('category_id', 'asc')
+            ->get();
         $subcategory = DB::table('tbl_subcategory')
             ->where('subcategory_status', '1')
-                ->orderBy('category_id', 'asc')
-                    ->get();
-        $category_by_id = DB::table('tbl_product')
-            ->join('tbl_category', 'tbl_product.category_id', '=', 'tbl_category.category_id')
+            ->orderBy('category_id', 'asc')
+            ->get();
+
+        if (isset($_GET['sort_by'])) {
+            $sort_by = $_GET['sort_by'];
+            if ($sort_by == 'asc') {
+                $category_by_id = Product::with('category')
+                    ->where('tbl_product.category_id', $category_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->orderBy('product_price', 'asc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'desc') {
+                $category_by_id = Product::with('category')
+                    ->where('tbl_product.category_id', $category_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->orderBy('product_price', 'desc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'atoz') {
+                $category_by_id = Product::with('category')
+                    ->where('tbl_product.category_id', $category_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->orderBy('product_name', 'asc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'ztoa') {
+                $category_by_id = Product::with('category')
+                    ->where('tbl_product.category_id', $category_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->orderBy('product_name', 'desc')
+                    ->paginate(3)->appends(request()->query());
+            } else {
+                $category_by_id = Product::with('category')
+                    ->where('tbl_product.category_id', $category_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->paginate(3)->appends(request()->query());
+            }
+        } else {
+            $category_by_id = Product::with('category')
                 ->where('tbl_product.category_id', $category_id)
-                        ->where('tbl_product.product_status', 1)
-                            ->paginate(3);
-                            
+                ->where('tbl_product.product_status', 1)
+                ->paginate(3)->appends(request()->query());
+        }
+
         return view('pages.category.shop_category')
             ->with(compact('category', 'subcategory', 'category_by_id'));
     }

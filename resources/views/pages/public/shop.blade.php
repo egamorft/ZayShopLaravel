@@ -43,13 +43,18 @@
                     </ul> -->
                 </div>
                 <div class="col-md-6 pb-4">
-                    <div class="d-flex">
-                        <select class="form-control">
-                            <option>Featured</option>
-                            <option>A to Z</option>
-                            <option>Item</option>
-                        </select>
-                    </div>
+                    <form>
+                        <div class="d-flex">
+                            @csrf
+                            <select name="sort" id="sort" class="form-control">
+                                <option value="{{Request::url()}}?sort_by=none">Featured</option>
+                                <option value="{{Request::url()}}?sort_by=desc" {{Request::fullurl() == Request::url().'?sort_by=desc' ? "selected" : ""}}>Descending</option>
+                                <option value="{{Request::url()}}?sort_by=asc" {{Request::fullurl() == Request::url().'?sort_by=asc' ? "selected" : ""}}>Ascending</option>
+                                <option value="{{Request::url()}}?sort_by=atoz" {{Request::fullurl() == Request::url().'?sort_by=atoz' ? "selected" : ""}}>A to Z</option>
+                                <option value="{{Request::url()}}?sort_by=ztoa" {{Request::fullurl() == Request::url().'?sort_by=ztoa' ? "selected" : ""}}>Z to A</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="row">
@@ -65,10 +70,9 @@
                                     <ul class="list-unstyled">
                                         <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
                                         <li><a class="btn btn-success text-white mt-2" href="{{URL::to('/product-details/'.$pro->product_id)}}">
-                                            <i class="far fa-eye"></i></a></li>
-                                        <li><button type="submit" class="add-to-cart btn btn-success text-white mt-2" 
-                                        name="add-to-cart" data-id_product="{{$pro->product_id}}">
-                                            <i class="fas fa-cart-plus"></i></button></li>
+                                                <i class="far fa-eye"></i></a></li>
+                                        <li><button type="submit" class="add-to-cart btn btn-success text-white mt-2" name="add-to-cart" data-id_product="{{$pro->product_id}}">
+                                                <i class="fas fa-cart-plus"></i></button></li>
                                     </ul>
                                 </div>
                             </div>

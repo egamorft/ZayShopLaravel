@@ -35,19 +35,18 @@
                     </h2>
                 </div>
                 <div class="col-md-6 pb-4">
-                    <div class="d-flex">
-                        <select class="form-control">
-                            <option>
-                                Featured
-                            </option>
-                            <option>
-                                A to Z
-                            </option>
-                            <option>
-                                Item
-                            </option>
-                        </select>
-                    </div>
+                    <form>
+                        <div class="d-flex">
+                            @csrf
+                            <select name="sort" id="sort" class="form-control">
+                                <option value="{{Request::url()}}?sort_by=none">Featured</option>
+                                <option value="{{Request::url()}}?sort_by=desc" {{Request::fullurl() == Request::url().'?sort_by=desc' ? "selected" : ""}}>Descending</option>
+                                <option value="{{Request::url()}}?sort_by=asc" {{Request::fullurl() == Request::url().'?sort_by=asc' ? "selected" : ""}}>Ascending</option>
+                                <option value="{{Request::url()}}?sort_by=atoz" {{Request::fullurl() == Request::url().'?sort_by=atoz' ? "selected" : ""}}>A to Z</option>
+                                <option value="{{Request::url()}}?sort_by=ztoa" {{Request::fullurl() == Request::url().'?sort_by=ztoa' ? "selected" : ""}}>Z to A</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="row">

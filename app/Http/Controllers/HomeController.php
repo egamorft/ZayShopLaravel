@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\Login;
+use App\Product;
 use App\Social;
 use App\Rules\Captcha;
 use App\Slider;
@@ -41,10 +42,37 @@ class HomeController extends Controller
             ->where('subcategory_status', '1')
             ->orderBy('category_id', 'asc')
             ->get();
-        $product = DB::table('tbl_product')
-            ->where('product_status', '1')
-            ->orderBy('product_id', 'desc')
-            ->paginate(3);
+
+        if (isset($_GET['sort_by'])) {
+            $sort_by = $_GET['sort_by'];
+            if ($sort_by == 'asc') {
+                $product = Product::orderBy('product_price', 'asc')
+                    ->where('product_status', '1')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'desc') {
+                $product = Product::orderBy('product_price', 'desc')
+                    ->where('product_status', '1')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'atoz') {
+                $product = Product::orderBy('product_name', 'asc')
+                    ->where('product_status', '1')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'ztoa') {
+                $product = Product::orderBy('product_name', 'desc')
+                    ->where('product_status', '1')
+                    ->paginate(3)->appends(request()->query());
+            } else {
+                $product = Product::orderBy('product_id', 'desc')
+                    ->where('product_status', '1')
+                    ->paginate(3);
+            }
+        } else {
+            $product = Product::orderBy('product_id', 'desc')
+                ->where('product_status', '1')
+                ->paginate(3);
+        }
+
+
 
         return view('pages.public.shop')
             ->with(compact('category', 'subcategory', 'product'));
@@ -65,13 +93,15 @@ class HomeController extends Controller
     }
     public function login_account(Request $request)
     {
-        $request->validate([
-            'account_email' => 'required|min:6|email|exists:tbl_account,account_email',
-            'account_password' => 'required|min:6'
-        ],
-        [
-            'account_email.exists' => 'This email has not been register'
-        ]);
+        $request->validate(
+            [
+                'account_email' => 'required|min:6|email|exists:tbl_account,account_email',
+                'account_password' => 'required|min:6'
+            ],
+            [
+                'account_email.exists' => 'This email has not been register'
+            ]
+        );
         $email = $request->account_email;
         $password = md5($request->account_password);
         $result = DB::table('tbl_account')
@@ -93,17 +123,19 @@ class HomeController extends Controller
     }
     public function register_account(Request $request)
     {
-        $rule = $request->validate([
-            'account_name' => 'required|min:6',
-            'account_email' => 'required|min:6|email|unique:tbl_account,account_email',
-            'account_phone' => 'required|numeric|digits:10',
-            'account_password' => 'required|min:6',
-            'account_cfpassword' => 'required|same:account_password',
-            'g-recaptcha-response' => new Captcha(),
-        ],
-        [
-            'account_name.unique' => 'This email has already been taken'
-        ]);
+        $rule = $request->validate(
+            [
+                'account_name' => 'required|min:6',
+                'account_email' => 'required|min:6|email|unique:tbl_account,account_email',
+                'account_phone' => 'required|numeric|digits:10',
+                'account_password' => 'required|min:6',
+                'account_cfpassword' => 'required|same:account_password',
+                'g-recaptcha-response' => new Captcha(),
+            ],
+            [
+                'account_name.unique' => 'This email has already been taken'
+            ]
+        );
 
         $email = $request->account_email;
         $result = DB::table('tbl_account')
@@ -258,10 +290,39 @@ class HomeController extends Controller
         $subcategory = DB::table('tbl_subcategory')
             ->where('subcategory_status', '1')
             ->orderBy('category_id', 'asc')->get();
-        $product_search = DB::table('tbl_product')
-            ->where('product_name', 'like', '%' . $keywords . '%')
-            ->where('product_status', '1')
-            ->paginate(3);
+
+        if (isset($_GET['sort_by'])) {
+            $sort_by = $_GET['sort_by'];
+            if ($sort_by == 'asc') {
+                $product_search = Product::where('product_name', 'like', '%' . $keywords . '%')
+                    ->where('product_status', '1')
+                    ->orderBy('product_price', 'asc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'desc') {
+                $product_search = Product::where('product_name', 'like', '%' . $keywords . '%')
+                    ->where('product_status', '1')
+                    ->orderBy('product_price', 'desc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'atoz') {
+                $product_search = Product::where('product_name', 'like', '%' . $keywords . '%')
+                    ->where('product_status', '1')
+                    ->orderBy('product_name', 'asc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'ztoa') {
+                $product_search = Product::where('product_name', 'like', '%' . $keywords . '%')
+                    ->where('product_status', '1')
+                    ->orderBy('product_name', 'desc')
+                    ->paginate(3)->appends(request()->query());
+            } else {
+                $product_search = Product::where('product_name', 'like', '%' . $keywords . '%')
+                    ->where('product_status', '1')
+                    ->paginate(3)->appends(request()->query());
+            }
+        } else {
+            $product_search = Product::where('product_name', 'like', '%' . $keywords . '%')
+                ->where('product_status', '1')
+                ->paginate(3)->appends(request()->query());
+        }
         return view('pages.product.search')
             ->with(compact('category', 'subcategory', 'product_search'));
     }

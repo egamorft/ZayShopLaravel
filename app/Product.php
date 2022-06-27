@@ -13,4 +13,12 @@ class Product extends Model
     ];
     protected $primaryKey = 'product_id';
     protected $table = 'tbl_product';
+
+    public function category(){
+        return $this->belongsTo('App\Category','category_id');
+    }
+
+    public function subcategory(){
+        return $this->belongsTo('App\SubCategory','subcategory_id');
+    }
 }

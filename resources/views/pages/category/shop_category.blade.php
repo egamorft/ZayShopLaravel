@@ -21,8 +21,7 @@
                         @foreach($subcategory as $key => $sub)
                         @if($cate->category_id == $sub->category_id)
                         <li>
-                            <a class="text-decoration-none" 
-                                href="{{URL::to('/subcategory/'.$sub->subcategory_id)}}">
+                            <a class="text-decoration-none" href="{{URL::to('/subcategory/'.$sub->subcategory_id)}}">
                                 {{$sub->subcategory_name}}
                             </a>
                         </li>
@@ -50,19 +49,18 @@
                     </ul> -->
                 </div>
                 <div class="col-md-6 pb-4">
-                    <div class="d-flex">
-                        <select class="form-control">
-                            <option>
-                                Featured
-                            </option>
-                            <option>
-                                A to Z
-                            </option>
-                            <option>
-                                Item
-                            </option>
-                        </select>
-                    </div>
+                    <form>
+                        <div class="d-flex">
+                            @csrf
+                            <select name="sort" id="sort" class="form-control">
+                                <option value="{{Request::url()}}?sort_by=none">Featured</option>
+                                <option value="{{Request::url()}}?sort_by=desc" {{Request::fullurl() == Request::url().'?sort_by=desc' ? "selected" : ""}}>Descending</option>
+                                <option value="{{Request::url()}}?sort_by=asc" {{Request::fullurl() == Request::url().'?sort_by=asc' ? "selected" : ""}}>Ascending</option>
+                                <option value="{{Request::url()}}?sort_by=atoz" {{Request::fullurl() == Request::url().'?sort_by=atoz' ? "selected" : ""}}>A to Z</option>
+                                <option value="{{Request::url()}}?sort_by=ztoa" {{Request::fullurl() == Request::url().'?sort_by=ztoa' ? "selected" : ""}}>Z to A</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="row">
@@ -79,8 +77,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="btn btn-success text-white mt-2" 
-                                            href="{{URL::to('/product-details/'.$pro->product_id)}}">
+                                        <a class="btn btn-success text-white mt-2" href="{{URL::to('/product-details/'.$pro->product_id)}}">
                                             <i class="far fa-eye"></i>
                                         </a>
                                     </li>
@@ -93,9 +90,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <a href="{{URL::to('/product-details/'.$pro->product_id)}}" 
-                                class="h3 text-decoration-none">
-                                    {{$pro->product_name}}
+                            <a href="{{URL::to('/product-details/'.$pro->product_id)}}" class="h3 text-decoration-none">
+                                {{$pro->product_name}}
                             </a>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                 <li class="pt-2">
