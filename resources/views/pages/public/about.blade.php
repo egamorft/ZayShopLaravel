@@ -1,4 +1,4 @@
-@extends('components.layout')
+@extends('components.public_layout.layout')
 @section('content')
 <!-- Modal -->
 <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" 

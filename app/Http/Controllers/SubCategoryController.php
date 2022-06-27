@@ -18,9 +18,9 @@ class SubCategoryController extends Controller
             ->orderBy('subcategory_id', 'desc')
             ->paginate(4);
 
-        $manager_sub_category = view('admin.show_sub_category')
+        $manager_sub_category = view('admin.subcategory.show_sub_category')
             ->with('show_sub_category', $show_sub_category);
-        return view('components.admin_layout')
+        return view('components.admin_layout.admin_layout')
             ->with('admin.show_sub_category', $manager_sub_category);
     }
     public function add_sub_category()
@@ -29,10 +29,10 @@ class SubCategoryController extends Controller
             ->where('category_status', '1')
             ->get();
 
-        $manager_category = view('admin.add_sub_category')
+        $manager_category = view('admin.subcategory.add_sub_category')
             ->with('get_category', $get_category);
 
-        return view('components.admin_layout')
+        return view('components.admin_layout.admin_layout')
             ->with('admin.add_sub_category', $manager_category);
     }
     public function save_sub_category(Request $request)
@@ -46,7 +46,7 @@ class SubCategoryController extends Controller
         $get_category = DB::table('tbl_category')
             ->where('category_status', '1')
             ->get();
-        $manager_category = view('admin.add_sub_category')
+        $manager_category = view('admin.subcategory.add_sub_category')
             ->with('get_category', $get_category);
 
         foreach ($manager_category->get_category as $m) {
@@ -103,11 +103,11 @@ class SubCategoryController extends Controller
             ->where('subcategory_id', $subcategory_id)
             ->get();
 
-        $manager_sub_category = view('admin.edit_sub_category')
+        $manager_sub_category = view('admin.subcategory.edit_sub_category')
             ->with('edit_sub_category', $edit_sub_category)
             ->with('get_category', $get_category);
 
-        return view('components.admin_layout')
+        return view('components.admin_layout.admin_layout')
             ->with('admin.edit_sub_category', $manager_sub_category);
     }
     public function delete_sub_category($subcategory_id)
@@ -127,7 +127,7 @@ class SubCategoryController extends Controller
         $get_category = DB::table('tbl_category')
             ->where('category_status', '1')
             ->get();
-        $manager_category = view('admin.add_sub_category')
+        $manager_category = view('admin.subcategory.add_sub_category')
             ->with('get_category', $get_category);
 
         foreach ($manager_category->get_category as $m) {

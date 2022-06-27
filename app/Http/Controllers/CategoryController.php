@@ -12,13 +12,13 @@ class CategoryController extends Controller
     public function show_category()
     {
         $show_category = DB::table('tbl_category')->orderBy('category_id', 'desc')->paginate(4);
-        $manager_category = view('admin.show_category')->with('show_category', $show_category);
+        $manager_category = view('admin.category.show_category')->with('show_category', $show_category);
 
-        return view('components.admin_layout')->with('admin.show_category', $manager_category);
+        return view('components.admin_layout.admin_layout')->with('admin.category.show_category', $manager_category);
     }
     public function add_category()
     {
-        return view('admin.add_category');
+        return view('admin.category.add_category');
     }
     public function save_category(Request $request)
     {
@@ -68,8 +68,8 @@ class CategoryController extends Controller
             ->where('category_id', $category_id)
             ->get();
 
-        $manager_category = view('admin.edit_category')->with('edit_category', $edit_category);
-        return view('components.admin_layout')->with('admin.edit_category', $manager_category);
+        $manager_category = view('admin.category.edit_category')->with('edit_category', $edit_category);
+        return view('components.admin_layout.admin_layout')->with('admin.edit_category', $manager_category);
     }
     public function delete_category($category_id)
     {

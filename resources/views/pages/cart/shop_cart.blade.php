@@ -1,6 +1,6 @@
-@extends('components.layout')
+@extends('components.public_layout.layout')
 @section('content')
-@extends('components.alert')
+@extends('components.alert.alert')
 
 
 <section class="h-100 h-custom" style="background-color: #59AB6E;">

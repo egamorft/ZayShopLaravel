@@ -1,6 +1,6 @@
-@extends('components.admin_layout')
+@extends('components.admin_layout.admin_layout')
 @section('admin_content')
-@extends('components.alert')
+@extends('components.alert.alert')
 
 <div class="container-fluid py-4">
     <div class="row">
@@ -109,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            {!! $slider->render('components.admin_pagination')!!}
+            {!! $slider->render('components.admin_paginate.admin_pagination')!!}
         </div>
     </div>
 

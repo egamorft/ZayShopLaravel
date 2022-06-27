@@ -1,6 +1,6 @@
-@extends('components.layout')
+@extends('components.public_layout.layout')
 @section('content')
-@extends('components.alert')
+@extends('components.alert.alert')
 
 <?php
 

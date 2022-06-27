@@ -1,6 +1,6 @@
-@extends('components.layout')
+@extends('components.public_layout.layout')
 @section('content')
-@extends('components.alert')
+@extends('components.alert.alert')
 
 <!-- Start Content -->
 <div class="container py-5">
@@ -110,7 +110,7 @@
                 </div>
                 @endforeach
             </div>
-            {!! $product_search->render('components.pagination')!!}
+            {!! $product_search->render('components.public_paginate.pagination')!!}
         </div>
 
     </div>

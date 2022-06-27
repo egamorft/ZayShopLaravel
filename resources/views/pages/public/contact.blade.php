@@ -1,4 +1,4 @@
-@extends('components.layout')
+@extends('components.public_layout.layout')
 @section('content')
 
 <!-- Modal -->

@@ -1,6 +1,6 @@
-@extends('components.admin_layout')
+@extends('components.admin_layout.admin_layout')
 @section('admin_content')
-@extends('components.alert')
+@extends('components.alert.alert')
 
 <div class="container-fluid">
     <div class="col-11 text-start">

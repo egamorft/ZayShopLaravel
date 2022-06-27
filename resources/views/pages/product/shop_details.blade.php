@@ -1,6 +1,6 @@
-@extends('components.layout')
+@extends('components.public_layout.layout')
 @section('content')
-@extends('components.alert')
+@extends('components.alert.alert')
 
 <!-- Open Content -->
 @foreach($product_details as $key => $pro)

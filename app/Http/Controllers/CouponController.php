@@ -52,16 +52,16 @@ class CouponController extends Controller
         $show_coupon = DB::table('tbl_coupon')
             ->orderBy('tbl_coupon.coupon_id', 'desc')
                 ->paginate(4);
-        $manager_coupon = view('admin.show_coupon')
+        $manager_coupon = view('admin.coupon.show_coupon')
             ->with('show_coupon', $show_coupon);
 
-        return view('components.admin_layout')
+        return view('components.admin_layout.admin_layout')
             ->with('admin.show_coupon', $manager_coupon);
     }
 
     public function add_coupon()
     {
-        return view('admin.add_coupon');
+        return view('admin.coupon.add_coupon');
     }
 
     public function save_coupon(Request $request)

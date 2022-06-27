@@ -18,8 +18,8 @@ class ProductController extends Controller
             ->orderBy('tbl_product.product_id', 'desc')
             ->paginate(4);
 
-        $manager_product = view('admin.show_product')->with('show_product', $show_product);
-        return view('components.admin_layout')->with('admin.show_product', $manager_product);
+        $manager_product = view('admin.product.show_product')->with('show_product', $show_product);
+        return view('components.admin_layout.admin_layout')->with('admin.show_product', $manager_product);
     }
 
     public function select_category(Request $request)
@@ -55,7 +55,7 @@ class ProductController extends Controller
             ->where('subcategory_status', '1')
             ->get();
 
-        return view('admin.add_product')->with(compact('get_category', 'get_subcategory'));
+        return view('admin.product.add_product')->with(compact('get_category', 'get_subcategory'));
     }
 
     public function save_product(Request $request)
@@ -134,14 +134,14 @@ class ProductController extends Controller
             ->where('product_id', $product_id)
             ->get();
 
-        $manager_product = view('admin.edit_product')
+        $manager_product = view('admin.product.edit_product')
             ->with(compact(
                 'edit_product',
                 'get_category',
                 'get_subcategory'
             ));
 
-        return view('components.admin_layout')->with('admin.edit_product', $manager_product);
+        return view('components.admin_layout.admin_layout')->with('admin.edit_product', $manager_product);
     }
 
     public function update_product(Request $request, $product_id)

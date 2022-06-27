@@ -1,4 +1,4 @@
-@extends('components.admin_layout')
+@extends('components.admin_layout.admin_layout')
 @section('admin_content')
     <div class="text-center">
         <h3>

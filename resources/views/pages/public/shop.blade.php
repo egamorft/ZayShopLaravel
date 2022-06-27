@@ -1,6 +1,6 @@
-@extends('components.layout')
+@extends('components.public_layout.layout')
 @section('content')
-@extends('components.alert')
+@extends('components.alert.alert')
 
 <!-- Start Content -->
 <div class="container py-5">
@@ -99,7 +99,7 @@
                 </div>
                 @endforeach
             </div>
-            {!! $product->render('components.pagination')!!}
+            {!! $product->render('components.public_paginate.pagination')!!}
         </div>
     </div>
 </div>
