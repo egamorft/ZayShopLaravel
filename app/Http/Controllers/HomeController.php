@@ -43,6 +43,9 @@ class HomeController extends Controller
             ->orderBy('category_id', 'asc')
             ->get();
 
+        $min_price = Product::min('product_price')->where('product_status', '1');
+        $max_price = Product::max('product_price')->where('product_status', '1');
+
         if (isset($_GET['sort_by'])) {
             $sort_by = $_GET['sort_by'];
             if ($sort_by == 'asc') {
@@ -66,6 +69,12 @@ class HomeController extends Controller
                     ->where('product_status', '1')
                     ->paginate(3);
             }
+        } else if (isset($_GET['start_price']) && $_GET['end_price']) {
+            $min_price = $_GET['start_price'];
+            $max_price = $_GET['end_price'];
+            $product = Product::whereBetween('product_price', [$min_price, $max_price])
+                ->orderBy('product_id', 'asc')
+                ->paginate(3)->appends(request()->query());
         } else {
             $product = Product::orderBy('product_id', 'desc')
                 ->where('product_status', '1')
@@ -75,7 +84,7 @@ class HomeController extends Controller
 
 
         return view('pages.public.shop')
-            ->with(compact('category', 'subcategory', 'product'));
+            ->with(compact('category', 'subcategory', 'product', 'min_price', 'max_price'));
     }
 
     public function contact()

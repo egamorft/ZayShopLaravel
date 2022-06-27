@@ -18,8 +18,7 @@
     <!-- <link rel="stylesheet" href="{{('public/frontend/css/fontawesome.min.css')}}">
     <link rel="stylesheet" href="{{('public/frontend/css/fontawesome.css')}}"> -->
     <!-- Load map styles -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" 
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <!--
     
 TemplateMo 559 Zay Shop
@@ -36,13 +35,11 @@ https://templatemo.com/tm-559-zay-shop
             <div class="w-100 d-flex justify-content-between">
                 <div>
                     <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" 
-                        href="mailto:info@company.com">
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">
                         info@company.com
                     </a>
                     <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" 
-                        href="tel:010-020-0340">
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">
                         010-020-0340
                     </a>
                 </div>
@@ -105,16 +102,14 @@ https://templatemo.com/tm-559-zay-shop
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade bg-white" id="templatemo_search" tabindex="-1"
-                     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="w-100 pt-1 mb-5 text-right">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="{{URL::to('/search')}}" method="GET" class="modal-content modal-body border-0 p-0">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" 
-                                    id="inputModalSearch" name="keywords_submit" placeholder="Search ...">
+                                <input type="text" class="form-control" id="inputModalSearch" name="keywords_submit" placeholder="Search ...">
                                 <button type="submit" class="input-group-text bg-success text-light">
                                     <i class="fa fa-fw fa-search text-white"></i>
                                 </button>
@@ -150,10 +145,10 @@ https://templatemo.com/tm-559-zay-shop
                     ?>
                         <div class="dropdown">
                             <a class="nav-icon position-relative text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#">
-                                <i class="fa fa-fw fa-user text-dark mr-3"></i> 
-                                Hello 
-                                <?php 
-                                    echo $account_name 
+                                <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                                Hello
+                                <?php
+                                echo $account_name
                                 ?>
                             </a>
                             <ul class="dropdown-menu">
@@ -189,7 +184,7 @@ https://templatemo.com/tm-559-zay-shop
                     ?>
                         <div class="dropdown">
                             <a class="nav-icon position-relative text-decoration-none" href="login">
-                                <i class="fa fa-fw fa-lock text-dark mr-3"></i> 
+                                <i class="fa fa-fw fa-lock text-dark mr-3"></i>
                                 Login
                             </a>
                         </div>
@@ -228,8 +223,7 @@ https://templatemo.com/tm-559-zay-shop
 
                         <!--Carousel Wrapper-->
                         <div class="col">
-                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0"
-                                 id="multi-item-example" data-bs-ride="carousel">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
                                 <!--Slides-->
                                 <div class="carousel-inner product-links-wap" role="listbox">
 
@@ -238,30 +232,22 @@ https://templatemo.com/tm-559-zay-shop
                                         <div class="row">
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img"
-                                                        src="{{asset('public/frontend/images/brand_01.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_01.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_02.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_02.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_03.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_03.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_04.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_04.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                         </div>
@@ -273,30 +259,22 @@ https://templatemo.com/tm-559-zay-shop
                                         <div class="row">
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_01.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_01.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_02.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_02.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_03.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_03.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_04.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_04.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                         </div>
@@ -308,30 +286,22 @@ https://templatemo.com/tm-559-zay-shop
                                         <div class="row">
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_01.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_01.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_02.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_02.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_03.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_03.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                             <div class="col-3 p-md-5">
                                                 <a href="#">
-                                                    <img class="img-fluid brand-img" 
-                                                        src="{{asset('public/frontend/images/brand_04.png')}}" 
-                                                            alt="Brand Logo">
+                                                    <img class="img-fluid brand-img" src="{{asset('public/frontend/images/brand_04.png')}}" alt="Brand Logo">
                                                 </a>
                                             </div>
                                         </div>
@@ -374,15 +344,13 @@ https://templatemo.com/tm-559-zay-shop
                         </li>
                         <li>
                             <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" 
-                                href="tel:0888736810">
+                            <a class="text-decoration-none" href="tel:0888736810">
                                 0888736810
                             </a>
                         </li>
                         <li>
                             <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" 
-                                href="mailto:tungnh3011.work@gmail.com">
+                            <a class="text-decoration-none" href="mailto:tungnh3011.work@gmail.com">
                                 tungnh3011.work@gmail.com
                             </a>
                         </li>
@@ -474,31 +442,23 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="col-auto me-auto">
                     <ul class="list-inline text-left footer-icons">
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" 
-                                target="_blank" 
-                                    href="http://facebook.com/">
-                                    <i class="fab fa-facebook-f fa-lg fa-fw"></i>
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/">
+                                <i class="fab fa-facebook-f fa-lg fa-fw"></i>
                             </a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" 
-                                target="_blank" 
-                                    href="https://www.instagram.com/">
-                                    <i class="fab fa-instagram fa-lg fa-fw"></i>
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/">
+                                <i class="fab fa-instagram fa-lg fa-fw"></i>
                             </a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" 
-                                target="_blank" 
-                                    href="https://twitter.com/">
-                                    <i class="fab fa-twitter fa-lg fa-fw"></i>
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/">
+                                <i class="fab fa-twitter fa-lg fa-fw"></i>
                             </a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" 
-                                target="_blank" 
-                                    href="https://www.linkedin.com/">
-                                    <i class="fab fa-linkedin fa-lg fa-fw"></i>
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/">
+                                <i class="fab fa-linkedin fa-lg fa-fw"></i>
                             </a>
                         </li>
                     </ul>
@@ -508,8 +468,7 @@ https://templatemo.com/tm-559-zay-shop
                         Email address
                     </label>
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" 
-                            id="subscribeEmail" placeholder="Email address">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
                         <div class="input-group-text btn-success text-light">
                             Subscribe
                         </div>
@@ -524,9 +483,8 @@ https://templatemo.com/tm-559-zay-shop
                     <div class="col-12">
                         <p class="text-left text-light">
                             Copyright &copy; 2021 Company Name
-                            | Designed by 
-                            <a rel="sponsored" 
-                                href="https://templatemo.com" target="_blank">
+                            | Designed by
+                            <a rel="sponsored" href="https://templatemo.com" target="_blank">
                                 TemplateMo
                             </a>
                         </p>
@@ -546,6 +504,14 @@ https://templatemo.com/tm-559-zay-shop
     <script src="{{asset('public/frontend/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/templatemo.js')}}"></script>
     <script src="{{asset('public/frontend/js/custom.js')}}"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.structure.min.css"></script> -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <!-- End Script -->
     <!-- Start Slider Script -->
     <script src="{{asset('public/frontend/js/slick.min.js')}}"></script>
@@ -582,7 +548,22 @@ https://templatemo.com/tm-559-zay-shop
         });
     </script> -->
     <!-- End Slider Script -->
-
+    <script>
+        $("#slider-range").slider({
+            range: true,
+            min: {{$min_price}},
+            max: {{$max_price}},
+            step: 100000,
+            values: [{{$min_price}}, {{$max_price}}],
+            slide: function(event, ui) {
+                $("#amount").val("đ" + ui.values[0] + " - đ" + ui.values[1]);
+                $("#start_price").val(ui.values[0]);
+                $("#end_price").val(ui.values[1]);
+            }
+        });
+        $("#amount").val("đ" + $("#slider-range").slider("values", 0) +
+            " - đ" + $("#slider-range").slider("values", 1));
+    </script>
     <script>
         $(document).ready(function() {
             $('.send_order').click(function() {
@@ -734,16 +715,15 @@ https://templatemo.com/tm-559-zay-shop
     </script>
 
     <script>
-        $(document).ready(function(){
-            $('#sort').on('change', function(){
+        $(document).ready(function() {
+            $('#sort').on('change', function() {
                 var url = $(this).val();
-                if(url){
+                if (url) {
                     window.location = url;
                 }
                 return false;
             });
         });
-
     </script>
 </body>
 

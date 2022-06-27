@@ -25,6 +25,18 @@
                     @endforeach
                 </li>
             </ul>
+            <label for="amount">Sort price with</label>
+            <form>
+                <div id="slider-range"></div>
+
+                <input type="text" id="amount" readonly style="border:0; color:green; font-weight:bold;">
+                <input type="hidden" name="start_price" id="start_price">
+                <input type="hidden" name="end_price" id="end_price">
+
+                <hr>
+
+                <input type="submit" name="filter_price" value="Sort by price" class="btn btn-outline-success">
+            </form>
         </div>
 
         <div class="col-lg-9">
