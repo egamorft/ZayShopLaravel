@@ -4,12 +4,16 @@
 
 <div class="container-fluid">
     <div class="col-11 text-start">
-        <a target="_blank" href="{{URL::to('/print-bill/'.$details->order_code)}}" class="btn bg-gradient-dark mb-0">
-            <i class="material-icons text-sm">
-                print
-            </i>&nbsp;&nbsp;
-            Print bill
-        </a>
+        @foreach($order as $key => $or)
+            @if($or->order_status == 2)
+                <a target="_blank" href="{{URL::to('/print-bill/'.$details->order_code)}}" class="btn bg-gradient-dark mb-0">
+                    <i class="material-icons text-sm">
+                        print
+                    </i>&nbsp;&nbsp;
+                    Print bill
+                </a>
+            @endif
+        @endforeach
     </div>
 </div>
 <div class="container-fluid py-2">
@@ -360,9 +364,6 @@
                                                     <form class="input-group input-group-outline mb-3">
                                                         @csrf
                                                         <select class="form-control order_details">
-                                                            <option id="{{$or->order_id}}" value="1">
-                                                                --------Choose order status--------
-                                                            </option>
                                                             <option id="{{$or->order_id}}" value="2">
                                                                 Delivering
                                                             </option>
