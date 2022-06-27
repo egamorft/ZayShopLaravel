@@ -252,10 +252,11 @@ class HomeController extends Controller
         $subcategory = DB::table('tbl_subcategory')
             ->where('subcategory_status', '1')
                 ->orderBy('category_id', 'asc')->get();
-        $product = DB::table('tbl_product')
+        $product_search = DB::table('tbl_product')
             ->where('product_name', 'like', '%' . $keywords . '%')
-                ->get();
+                ->where('product_status', '1')  
+                    ->paginate(3);
         return view('pages.product.search')
-                    ->with(compact('category', 'subcategory', 'product'));
+                    ->with(compact('category', 'subcategory', 'product_search'));
     }
 }

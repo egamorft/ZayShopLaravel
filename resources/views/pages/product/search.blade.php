@@ -7,29 +7,21 @@
     <div class="row">
 
         <div class="col-lg-3">
-            <h1 class="h2 pb-4">
-                Categories
-            </h1>
+            <h1 class="h2 pb-4">Categories</h1>
             <ul class="list-unstyled templatemo-accordion">
                 <li class="pb-3">
-                    @foreach($subcategory as $key => $sub)
-                        @foreach($category as $key => $cate)
-                            @if($cate->category_id == $sub->category_id)
-                                <a class="collapsed d-flex justify-content-between h3 text-decoration-none" 
-                                    href="{{URL::to('/category/'.$cate->category_id)}}">
-                                    {{$cate->category_name}}
-                                    <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
-                                </a>
-                                <ul class="collapse show list-unstyled pl-3">
-                                    <li>
-                                        <a class="text-decoration-none" 
-                                            href="{{URL::to('/subcategory/'.$sub->subcategory_id)}}">
-                                            {{$sub->subcategory_name}}
-                                        </a>
-                                    </li>
-                                </ul>
-                            @endif
+                    @foreach($category as $key => $cate)
+                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="{{URL::to('/category/'.$cate->category_id)}}">
+                        {{$cate->category_name}}
+                        <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul class="collapse show list-unstyled pl-3">
+                        @foreach($subcategory as $key => $sub)
+                        @if($cate->category_id == $sub->category_id)
+                        <li><a class="text-decoration-none" href="{{URL::to('/subcategory/'.$sub->subcategory_id)}}">{{$sub->subcategory_name}}</a></li>
+                        @endif
                         @endforeach
+                    </ul>
                     @endforeach
                 </li>
             </ul>
@@ -39,7 +31,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2>
-                        Search result: 
+                        Search result:
                     </h2>
                 </div>
                 <div class="col-md-6 pb-4">
@@ -59,15 +51,14 @@
                 </div>
             </div>
             <div class="row">
-                @foreach($product as $key => $pro)
+                @foreach($product_search as $key => $pro)
                 <div class="col-md-4">
                     <form action="{{URL::to('/save-cart-home')}}" method="POST">
                         @csrf
                         <input type="hidden" name="productid_hidden" value="{{$pro->product_id}}" />
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" 
-                                    src="{{URL::to('/public/upload/product/'.$pro->product_image)}}">
+                                <img class="card-img rounded-0 img-fluid" src="{{URL::to('/public/upload/product/'.$pro->product_image)}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
                                         <li>
@@ -76,14 +67,12 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="btn btn-success text-white mt-2" 
-                                                href="{{URL::to('/product-details/'.$pro->product_id)}}">
+                                            <a class="btn btn-success text-white mt-2" href="{{URL::to('/product-details/'.$pro->product_id)}}">
                                                 <i class="far fa-eye"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <button type="submit" class="add-to-cart btn btn-success text-white mt-2" 
-                                                name="add-to-cart" data-id_product="{{$pro->product_id}}">
+                                            <button type="submit" class="add-to-cart btn btn-success text-white mt-2" name="add-to-cart" data-id_product="{{$pro->product_id}}">
                                                 <i class="fas fa-cart-plus"></i>
                                             </button>
                                         </li>
@@ -91,9 +80,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a href="{{URL::to('/product-details/'.$pro->product_id)}}" 
-                                    class="h3 text-decoration-none">
-                                        {{$pro->product_name}}
+                                <a href="{{URL::to('/product-details/'.$pro->product_id)}}" class="h3 text-decoration-none">
+                                    {{$pro->product_name}}
                                 </a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     <li class="pt-2">
@@ -122,7 +110,7 @@
                 </div>
                 @endforeach
             </div>
-            {!! $product->render('components.pagination')!!}
+            {!! $product_search->render('components.pagination')!!}
         </div>
 
     </div>
