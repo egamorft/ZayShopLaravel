@@ -12,21 +12,21 @@
                 <form action="{{URL::to('/register-account')}}" method="post">
                     @csrf
                     <div class="form-floating mb-3 mt-3">
-                        <input type="text" class="form-control" id="name" placeholder="Enter your name" name="account_name">
+                        <input type="text" class="form-control" id="name" placeholder="Enter your name" name="account_name" value="{{ old('account_name') }}">
                         <label for="name">Full name</label>
                         @error('account_name')
                         <span style="color: red">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-floating mb-3 mt-3">
-                        <input type="text" class="form-control" id="email" placeholder="Enter email" name="account_email">
+                        <input type="text" class="form-control" id="email" placeholder="Enter email" name="account_email" value="{{ old('account_email') }}">
                         <label for="email">Email</label>
                         @error('account_email')
                         <span style="color: red">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-floating mb-3 mt-3">
-                        <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="account_phone">
+                        <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="account_phone" value="{{ old('account_phone') }}">
                         <label for="phone">Phone</label>
                         @error('account_phone')
                         <span style="color: red">{{$message}}</span>

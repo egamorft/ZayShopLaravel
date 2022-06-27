@@ -29,7 +29,7 @@
                             <label class="form-label">
                                 Product Name
                             </label>
-                            <input name="product_name" type="text" class="form-control">
+                            <input name="product_name" type="text" class="form-control" value="{{ old('product_name') }}">
                         </div>
                         @error('product_name')
                             <span style="color: red">
@@ -40,7 +40,7 @@
                             <label class="form-label">
                                 Product Quantity
                             </label>
-                            <input name="product_quantity" type="text" class="form-control">
+                            <input name="product_quantity" type="text" class="form-control" value="{{ old('product_quantity') }}">
                         </div>
                         @error('product_quantity')
                             <span style="color: red">
@@ -51,7 +51,7 @@
                             <label class="form-label">
                                 Product Price
                             </label>
-                            <input name="product_price" type="text" class="form-control">
+                            <input name="product_price" type="text" class="form-control" value="{{ old('product_price') }}">
                         </div>
                         @error('product_price')
                             <span style="color: red">
@@ -73,14 +73,18 @@
                                 Product Description
                             </label>
                             <textarea name="product_desc" placeholder="Enter Product Description" 
-                                    class="form-control" id="ckeditorAdd" rows="8"></textarea>
+                                    class="form-control" id="ckeditorAdd" rows="8">
+                                {{ old('product_desc') }}
+                            </textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd">
                                 Product Content
                             </label>
                             <textarea name="product_content" placeholder="Enter Product Content" 
-                                    class="form-control" id="ckeditorAdd1" rows="8"></textarea>
+                                    class="form-control" id="ckeditorAdd1" rows="8">
+                                {{ old('product_content') }}
+                            </textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <select name="category" id="category" class="form-control choose category">
@@ -88,7 +92,7 @@
                                     Choose your category
                                 </option>
                                 @foreach($get_category as $key => $get_category)
-                                    <option value="{{$get_category->category_id}}">
+                                    <option value="{{$get_category->category_id}}" >
                                         {{$get_category->category_name}}
                                     </option>
                                 @endforeach

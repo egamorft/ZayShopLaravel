@@ -29,7 +29,7 @@
                             <label class="form-label">
                                 Coupon Name
                             </label>
-                            <input name="coupon_name" type="text" class="form-control">
+                            <input name="coupon_name" type="text" class="form-control" value="{{ old('coupon_name') }}">
                         </div>
                         @error('coupon_name')
                             <span style="color: red">
@@ -40,7 +40,7 @@
                             <label class="form-label">
                                 Coupon Code
                             </label>
-                            <input name="coupon_code" type="text" class="form-control">
+                            <input name="coupon_code" type="text" class="form-control" value="{{ old('coupon_code') }}">
                         </div>
                         @error('coupon_code')
                             <span style="color: red">
@@ -51,7 +51,7 @@
                             <label class="form-label">
                                 Coupon Time
                             </label>
-                            <input name="coupon_time" type="text" class="form-control">
+                            <input name="coupon_time" type="text" class="form-control" value="{{ old('coupon_time') }}">
                         </div>
                         @error('coupon_time')
                             <span style="color: red">
@@ -75,7 +75,7 @@
                             <label class="form-label">
                                 Enter % or number of sale
                             </label>
-                            <input name="coupon_number" type="text" class="form-control">
+                            <input name="coupon_number" type="text" class="form-control" value="{{ old('coupon_number') }}">
                         </div>
                         @error('coupon_number')
                             <span style="color: red">

@@ -29,7 +29,7 @@ class CategoryController extends Controller
 
         if ($data['category_name'] == null || $data['category_status'] == null) {
             Session::put('error', 'Add category fail');
-            return Redirect::to('add-category');
+            return Redirect::to('add-category')->withInput();
         } else {
             DB::table('tbl_category')->insert($data);
             Session::put('message', 'Add category');

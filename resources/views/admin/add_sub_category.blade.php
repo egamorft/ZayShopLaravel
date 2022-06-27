@@ -30,7 +30,7 @@
                             <label class="form-label">
                                 SubCategory Name
                             </label>
-                            <input name="subcategory_name" type="text" class="form-control">
+                            <input name="subcategory_name" type="text" class="form-control" value="{{ old('subcategory_name') }}">
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd">
@@ -38,6 +38,7 @@
                             </label>
                             <textarea name="subcategory_desc" placeholder="Enter SubCategory Description" 
                                     class="form-control" id="ckeditorAdd" rows="8">
+                                   {{ old('subcategory_desc') }}
                             </textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
@@ -47,7 +48,7 @@
                             <input class="form-control" list="category" name="category_id" id="category_id">
                             <datalist id="category">
                                 @foreach($get_category as $key => $get_category)
-                                    <option value="{{$get_category->category_id}}">{{$get_category->category_name}}
+                                    <option value="{{$get_category->category_id}}"> {{$get_category->category_name}}
                                 @endforeach
                             </datalist>
                         </div>

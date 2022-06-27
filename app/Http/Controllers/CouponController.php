@@ -39,11 +39,11 @@ class CouponController extends Controller
 
                 Session::save();
                 return redirect()->back()
-                    ->with('message', 'Add coupon successfully');
+                    ->withInput()->with('message', 'Add coupon successfully');
             }
         } else {
             return redirect()->back()
-                ->with('error', 'Add coupon fail, wrong coupon');
+                    ->withInput()->with('error', 'Add coupon fail, wrong coupon');
         }
     }
 

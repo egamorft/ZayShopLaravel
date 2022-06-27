@@ -70,7 +70,7 @@ class SubCategoryController extends Controller
                 Session::put('error', 'Please choose one category in the box');
             }
         }
-        return Redirect::to('add-sub-category');
+        return Redirect::to('add-sub-category')->withInput();
     }
     public function unactive_sub_category($subcategory_id)
     {

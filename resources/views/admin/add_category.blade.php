@@ -29,7 +29,7 @@
                             <label class="form-label">
                                 Category Name
                             </label>
-                            <input name="category_name" type="text" class="form-control">
+                            <input name="category_name" type="text" class="form-control" value="{{ old('category_name') }}">
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd">
@@ -37,7 +37,7 @@
                             </label>
                             <textarea name="category_desc" placeholder="Enter Category Description" 
                                 class="form-control" id="ckeditorAdd" rows="8">
-
+                                {{ old('category_desc') }}
                             </textarea>
                         </div>
                         <div class="form-check mb-3 ">

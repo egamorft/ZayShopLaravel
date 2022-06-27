@@ -12,6 +12,7 @@ use App\Rules\Captcha;
 use App\Slider;
 use Laravel\Socialite\Facades\Socialite;
 use Psy\CodeCleaner\FunctionContextPass;
+use Symfony\Component\Console\Input\Input;
 
 class HomeController extends Controller
 {
@@ -19,8 +20,8 @@ class HomeController extends Controller
     {
         $slider = Slider::where('slider_status', 1)
             ->orderBy('slider_id', 'desc')
-                ->take(4)
-                    ->get();
+            ->take(4)
+            ->get();
 
         return view('pages.public.home')->with(compact('slider'));
     }
@@ -34,19 +35,19 @@ class HomeController extends Controller
     {
         $category = DB::table('tbl_category')
             ->where('category_status', '1')
-                ->orderBy('category_id', 'asc')
-                    ->get();
+            ->orderBy('category_id', 'asc')
+            ->get();
         $subcategory = DB::table('tbl_subcategory')
             ->where('subcategory_status', '1')
-                ->orderBy('category_id', 'asc')
-                    ->get();
+            ->orderBy('category_id', 'asc')
+            ->get();
         $product = DB::table('tbl_product')
             ->where('product_status', '1')
-                ->orderBy('product_id', 'desc')
-                    ->paginate(3);
+            ->orderBy('product_id', 'desc')
+            ->paginate(3);
 
         return view('pages.public.shop')
-                ->with(compact('category', 'subcategory', 'product'));
+            ->with(compact('category', 'subcategory', 'product'));
     }
 
     public function contact()
@@ -65,14 +66,17 @@ class HomeController extends Controller
     public function login_account(Request $request)
     {
         $request->validate([
-            'account_email' => 'required|min:6|email',
+            'account_email' => 'required|min:6|email|exists:tbl_account,account_email',
             'account_password' => 'required|min:6'
+        ],
+        [
+            'account_email.exists' => 'This email has not been register'
         ]);
         $email = $request->account_email;
         $password = md5($request->account_password);
         $result = DB::table('tbl_account')
-                ->where('account_email', $email)
-                    ->where('account_password', $password)->first();
+            ->where('account_email', $email)
+            ->where('account_password', $password)->first();
 
         if ($result) {
 
@@ -80,33 +84,35 @@ class HomeController extends Controller
             Session::put('account_name', $result->account_name);
             Session::put('account_email', $result->account_email);
             Session::put('account_phone', $result->account_phone);
-            
-            return Redirect::to('/shop');
 
+            return Redirect::to('/shop');
         } else {
-            return redirect()->back()
-                        ->with('error', 'Wrong username or password');
+            return Redirect::back()
+                ->withInput()->with('error', 'Wrong username or password');
         }
     }
     public function register_account(Request $request)
     {
-        $request->validate([
+        $rule = $request->validate([
             'account_name' => 'required|min:6',
-            'account_email' => 'required|min:6|email',
+            'account_email' => 'required|min:6|email|unique:tbl_account,account_email',
             'account_phone' => 'required|numeric|digits:10',
             'account_password' => 'required|min:6',
             'account_cfpassword' => 'required|same:account_password',
             'g-recaptcha-response' => new Captcha(),
+        ],
+        [
+            'account_name.unique' => 'This email has already been taken'
         ]);
 
         $email = $request->account_email;
         $result = DB::table('tbl_account')
             ->where('account_email', $email)
-                ->first();
+            ->first();
 
         if ($result) {
             return redirect()->back()
-                        ->with('error', 'Email existed! Pls choose another email');
+                ->with('error', 'Email existed! Pls choose another email');
         } else {
 
             $data = array();
@@ -141,8 +147,8 @@ class HomeController extends Controller
         $users = Socialite::driver('google')->stateless()->user();
         // return $users->id;
         $check_email_existed = DB::table('tbl_account')
-                                ->where('account_email', $users->email)
-                                    ->first();
+            ->where('account_email', $users->email)
+            ->first();
 
         if ($check_email_existed) {
 
@@ -204,9 +210,9 @@ class HomeController extends Controller
     {
         $provider = Socialite::driver('facebook')->user();
         $account = Social::where('provider', 'facebook')
-                    ->where('provider_user_id', $provider->getId())
-                        ->first();
-        
+            ->where('provider_user_id', $provider->getId())
+            ->first();
+
         if ($account) {
             $account_name = Login::where('account_id', $account->user)->first();
             Session::put('account_name', $account_name->account_name);
@@ -248,15 +254,15 @@ class HomeController extends Controller
 
         $category = DB::table('tbl_category')
             ->where('category_status', '1')
-                ->orderBy('category_id', 'asc')->get();
+            ->orderBy('category_id', 'asc')->get();
         $subcategory = DB::table('tbl_subcategory')
             ->where('subcategory_status', '1')
-                ->orderBy('category_id', 'asc')->get();
+            ->orderBy('category_id', 'asc')->get();
         $product_search = DB::table('tbl_product')
             ->where('product_name', 'like', '%' . $keywords . '%')
-                ->where('product_status', '1')  
-                    ->paginate(3);
+            ->where('product_status', '1')
+            ->paginate(3);
         return view('pages.product.search')
-                    ->with(compact('category', 'subcategory', 'product_search'));
+            ->with(compact('category', 'subcategory', 'product_search'));
     }
 }

@@ -37,7 +37,7 @@ class ProductController extends Controller
                     ->get();
                 $output .= '<option value="">Choose your subcategory</option>';
                 foreach ($select_subcategory as $key => $sub) {
-                    $output .= '<option value="' . $sub->subcategory_id . '">
+                    $output .= '<option value="' . $sub->subcategory_id . '" >
                                     ' . $sub->subcategory_name . '
                                 </option>';
                 }
@@ -81,7 +81,7 @@ class ProductController extends Controller
         if ($data['category_id'] == null  || $data['subcategory_id'] == null) {
 
             Session::put('error', 'Choose category and subcategory');
-            return Redirect::to('/add-product');
+            return Redirect::to('/add-product')->withInput();
         } else {
 
             if ($get_image) {

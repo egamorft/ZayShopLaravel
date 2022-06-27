@@ -12,7 +12,7 @@
                 <form action="{{URL::to('/login-account')}}" method="post">
                     @csrf
                     <div class="form-floating mb-3 mt-3">
-                        <input type="text" class="form-control" id="email" placeholder="Enter your email" name="account_email">
+                        <input type="text" class="form-control" id="email" placeholder="Enter your email" name="account_email" value="{{ old('account_email') }}">
                         <label for="email">Email</label>
                         @error('account_email')
                         <span style="color: red">{{$message}}</span>
