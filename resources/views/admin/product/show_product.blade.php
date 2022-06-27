@@ -138,6 +138,7 @@
                 </div>
             </div>
             {!! $show_product->render('components.admin_paginate.admin_pagination')!!}
+
         </div>
     </div>
 

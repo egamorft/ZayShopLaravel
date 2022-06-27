@@ -10,25 +10,15 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    // public function AuthLogin()
-    // {
-    //     $admin_id = Session::get('admin_id');
-    //     if ($admin_id) {
-    //         return Redirect::to('admin.dashboard');
-    //     } else {
-    //         return Redirect::to('admin')->send();
-    //     }
-    // } 
-
     public function home()
     {
-        return view('admin.admin_login');
+        return view('admin.login.admin_login');
     }
 
     public function dashboard()
     {
         // $this->AuthLogin();
-        return view('admin.dashboard');
+        return view('admin.dashboard.dashboard');
     }
 
     public function login(Request $request)
