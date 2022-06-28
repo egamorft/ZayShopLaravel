@@ -74,6 +74,7 @@ class HomeController extends Controller
             $max_price = $_GET['end_price'];
             $product = Product::whereBetween('product_price', [$min_price, $max_price])
                 ->orderBy('product_id', 'asc')
+                ->where('product_status', '1')
                 ->paginate(3)->appends(request()->query());
         } else {
             $product = Product::orderBy('product_id', 'desc')
