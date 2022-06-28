@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="col-md-9 border-right">
-                    <form action="{{#}}" method="POST">
+                    <form action="#" method="POST">
                         <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">Profile Settings</h4>

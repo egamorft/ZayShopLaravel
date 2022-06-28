@@ -637,7 +637,7 @@ https://templatemo.com/tm-559-zay-shop
                                         $("#OrderBill").modal("toggle");
 
                                         $('#closeBill').click(function() {
-                                            window.location.href = "{{ URL::to('/contact')}}";
+                                            window.location.href = "{{ URL::to('/profile/order')}}";
                                         });
 
                                     }
