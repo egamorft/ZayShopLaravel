@@ -196,6 +196,8 @@ class HomeController extends Controller
 
             Session::put('account_name', $check_email_existed->account_name);
             Session::put('account_id', $check_email_existed->account_id);
+            Session::put('account_email', $check_email_existed->account_email);
+            Session::put('account_phone', $check_email_existed->account_phone);
 
             return redirect('/shop')->with('message', 'Successfully login');
         } else {

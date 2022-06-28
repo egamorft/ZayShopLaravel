@@ -164,7 +164,7 @@ https://templatemo.com/tm-559-zay-shop
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{URL::to('/profile/order')}}">
                                         Order History
                                     </a>
                                 </li>

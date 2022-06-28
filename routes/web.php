@@ -211,6 +211,8 @@ Route::post('/update-qty', 'OrderController@update_qty');
 
 //User manager
 
-Route::get('/profile/account', 'AccountController@account');
+Route::get('/profile/order', 'AccountController@order')->name('profile.order');
 
 Route::post('/complete-order', 'AccountController@complete_order');
+
+Route::get('/profile/account', 'AccountController@account')->name('profile.account');
