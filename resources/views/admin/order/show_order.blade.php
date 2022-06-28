@@ -67,10 +67,15 @@
 
                                             Delivering
 
-                                        @else
+                                        @elseif($od->order_status == 3)
 
                                             Cancel/ Pending
 
+                                        @elseif($od->order_status == 4)
+
+                                            <p style="color:green;" class="font-weight-bold mb-0">
+                                                Completed
+                                            </p>
                                         @endif
                                     </td>
                                     <td class="align-middle">

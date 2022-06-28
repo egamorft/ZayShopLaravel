@@ -12,4 +12,8 @@ class Order extends Model
     ];
     protected $primaryKey = 'order_id';
     protected $table = 'tbl_order';
+
+    public function orderdetails() {
+        return $this->hasMany('App\OrderDetails', 'order_code');
+    }
 }

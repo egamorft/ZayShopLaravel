@@ -208,3 +208,9 @@ Route::get('/del-fee', 'DeliveryController@del_fee');
 Route::post('/update-order-qty', 'OrderController@update_order_qty');
 
 Route::post('/update-qty', 'OrderController@update_qty');
+
+//User manager
+
+Route::get('/profile/account', 'AccountController@account');
+
+Route::post('/complete-order', 'AccountController@complete_order');

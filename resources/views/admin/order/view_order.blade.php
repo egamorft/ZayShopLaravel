@@ -5,14 +5,14 @@
 <div class="container-fluid">
     <div class="col-11 text-start">
         @foreach($order as $key => $or)
-            @if($or->order_status == 2)
-                <a target="_blank" href="{{URL::to('/print-bill/'.$details->order_code)}}" class="btn bg-gradient-dark mb-0">
-                    <i class="material-icons text-sm">
-                        print
-                    </i>&nbsp;&nbsp;
-                    Print bill
-                </a>
-            @endif
+        @if($or->order_status == 2)
+        <a target="_blank" href="{{URL::to('/print-bill/'.$details->order_code)}}" class="btn bg-gradient-dark mb-0">
+            <i class="material-icons text-sm">
+                print
+            </i>&nbsp;&nbsp;
+            Print bill
+        </a>
+        @endif
         @endforeach
     </div>
 </div>
@@ -137,17 +137,17 @@
                                     </td>
                                     <td>
                                         @if($shipping->shipping_method == 0)
-                                            <p class="font-weight-bold mb-0">
-                                                Paypal
-                                            </p>
+                                        <p class="font-weight-bold mb-0">
+                                            Paypal
+                                        </p>
                                         @elseif($shipping->shipping_method == 1)
-                                            <p class="font-weight-bold mb-0">
-                                                COD
-                                            </p>
+                                        <p class="font-weight-bold mb-0">
+                                            COD
+                                        </p>
                                         @else
-                                            <p class="font-weight-bold mb-0">
-                                                Unidentified
-                                            </p>
+                                        <p class="font-weight-bold mb-0">
+                                            Unidentified
+                                        </p>
                                         @endif
                                     </td>
                                 </tr>
@@ -204,15 +204,15 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $i = 0;
-                                    $total = 0;
+                                $i = 0;
+                                $total = 0;
                                 @endphp
                                 @foreach($order_details as $key => $details)
-                                    @php
-                                        $i++;
-                                        $subtotal = $details->product_price * $details->product_sales_quantity;
-                                        $total += $subtotal;
-                                    @endphp
+                                @php
+                                $i++;
+                                $subtotal = $details->product_price * $details->product_sales_quantity;
+                                $total += $subtotal;
+                                @endphp
                                 <tr class="color_qty_{{$details->product_id}}">
                                     <td>
                                         <div class="d-flex px-2 py-1">
@@ -253,25 +253,21 @@
                                     </td>
                                     <td>
                                         <p class="font-weight-bold mb-0">
-                                            <input {{ $order_status == 2 ?"disabled":'' }} 
-                                                type="number" class="order_qty_{{$details->product_id}}" 
-                                                    min="1" value="{{$details->product_sales_quantity}}" 
-                                                        name="product_sales_quantity">
+                                            <input {{ $order_status == 2 || $order_status == 4 ?"disabled":'' }} type="number" class="order_qty_{{$details->product_id}}" min="1" value="{{$details->product_sales_quantity}}" name="product_sales_quantity">
 
-                                            <input type="hidden" name="order_qty_storage" 
-                                                class="order_qty_storage_{{$details->product_id}}" 
-                                                    value="{{$details->product->product_quantity}}">
+                                            <input type="hidden" name="order_qty_storage" class="order_qty_storage_{{$details->product_id}}" value="{{$details->product->product_quantity}}">
 
-                                            <input type="hidden" name="order_code" 
-                                                class="order_code" value="{{$details->order_code}}">
+                                            <input type="hidden" name="order_code" class="order_code" value="{{$details->order_code}}">
 
-                                            <input type="hidden" name="order_product_id" 
-                                                class="order_product_id" value="{{$details->product_id}}">
-                                            @if($order_status != 2)
-                                                <button data-product_id="{{$details->product_id}}" 
-                                                    name="update_quantity_order" class="btn btn-success update_quantity_order">
-                                                    Update
-                                                </button>
+                                            <input type="hidden" name="order_product_id" class="order_product_id" value="{{$details->product_id}}">
+                                            @if($order_status == 2 || $order_status == 4 )
+                                            <button disabled data-product_id="{{$details->product_id}}" name="update_quantity_order" class="btn btn-dark update_quantity_order">
+                                                Update
+                                            </button>
+                                            @else
+                                            <button data-product_id="{{$details->product_id}}" name="update_quantity_order" class="btn btn-success update_quantity_order">
+                                                Update
+                                            </button>
                                             @endif
                                         </p>
                                     </td>
@@ -289,19 +285,19 @@
                                 @endforeach
                                 <tr>
                                     @php
-                                        $total_coupon = 0;
-                                        $tax = $total * 10 / 100;
+                                    $total_coupon = 0;
+                                    $tax = $total * 10 / 100;
                                     @endphp
                                     @if($coupon_condition)
-                                        @if($coupon_condition == 1)
-                                        @php
-                                            $total_coupon = $total - (($coupon_number/100) * $total) + $details->product_feeship + $tax
-                                        @endphp
-                                        @else
-                                            @php
-                                                $total_coupon = $total - $coupon_number + $details->product_feeship + $tax
-                                            @endphp
-                                        @endif
+                                    @if($coupon_condition == 1)
+                                    @php
+                                    $total_coupon = $total - (($coupon_number/100) * $total) + $details->product_feeship + $tax
+                                    @endphp
+                                    @else
+                                    @php
+                                    $total_coupon = $total - $coupon_number + $details->product_feeship + $tax
+                                    @endphp
+                                    @endif
                                     @endif
                                     <td></td>
                                     <td></td>
@@ -335,45 +331,52 @@
                                 <tr>
                                     <td colspan="2">
                                         @foreach($order as $key => $or)
-                                            @if($or->order_status==1)
-                                                <form class="input-group input-group-outline mb-3">
-                                                    @csrf
-                                                    <select class="form-control order_details">
-                                                        <option id="{{$or->order_id}}" value="1" selected>
-                                                            --------Choose order status--------
-                                                        </option>
-                                                        <option id="{{$or->order_id}}" value="2">
-                                                            Delivering
-                                                        </option>
-                                                    </select>
-                                                </form>
-                                                @elseif($or->order_status==2)
-                                                    <form class="input-group input-group-outline mb-3">
-                                                        @csrf
-                                                        <select class="form-control order_details">
-                                                            <option id="{{$or->order_id}}" value="2" selected>
-                                                                Delivering
-                                                            </option>
-                                                            <option id="{{$or->order_id}}" value="3">
-                                                                Cancel/ Pending order
-                                                            </option>
-                                                        </select>
-                                                    </form>
-                                                @else
+                                        @if($or->order_status==1)
+                                        <form class="input-group input-group-outline mb-3">
+                                            @csrf
+                                            <select class="form-control order_details">
+                                                <option id="{{$or->order_id}}" value="1" selected>
+                                                    --------Choose order status--------
+                                                </option>
+                                                <option id="{{$or->order_id}}" value="2">
+                                                    Delivering
+                                                </option>
+                                            </select>
+                                        </form>
+                                        @elseif($or->order_status==2)
+                                        <form class="input-group input-group-outline mb-3">
+                                            @csrf
+                                            <select class="form-control order_details">
+                                                <option id="{{$or->order_id}}" value="2" selected>
+                                                    Delivering
+                                                </option>
+                                                <option id="{{$or->order_id}}" value="3">
+                                                    Cancel/ Pending order
+                                                </option>
+                                            </select>
+                                        </form>
+                                        @elseif($or->order_status==3)
 
-                                                    <form class="input-group input-group-outline mb-3">
-                                                        @csrf
-                                                        <select class="form-control order_details">
-                                                            <option id="{{$or->order_id}}" value="2">
-                                                                Delivering
-                                                            </option>
-                                                            <option id="{{$or->order_id}}" value="3" selected>
-                                                                Cancel/ Pending order
-                                                            </option>
-                                                        </select>
-                                                    </form>
+                                        <form class="input-group input-group-outline mb-3">
+                                            @csrf
+                                            <select class="form-control order_details">
+                                                <option id="{{$or->order_id}}" value="2">
+                                                    Delivering
+                                                </option>
+                                                <option id="{{$or->order_id}}" value="3" selected>
+                                                    Cancel/ Pending order
+                                                </option>
+                                            </select>
+                                        </form>
+                                        @elseif($or->order_status==4)
 
-                                            @endif
+                                        <select disabled class="form-control order_details">
+                                            <option>
+                                                Completed
+                                            </option>
+                                        </select>
+
+                                        @endif
                                         @endforeach
                                     </td>
                                 </tr>

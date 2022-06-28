@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{('public/frontend/css/fontawesome.css')}}"> -->
     <!-- Load map styles -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    @yield('userDashboard')
     <!--
     
 TemplateMo 559 Zay Shop
@@ -158,13 +159,13 @@ https://templatemo.com/tm-559-zay-shop
                                     </h5>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{URL::to('/profile/account')}}">
                                         My profile
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        Change password
+                                        Order History
                                     </a>
                                 </li>
                                 <li>
@@ -548,9 +549,25 @@ https://templatemo.com/tm-559-zay-shop
     <script>
         $("#slider-range").slider({
             range: true,
-            min: {{$min_price}},
-            max: {{$max_price}},
-            values: [{{$min_price}}, {{$max_price}}],
+            min: {
+                {
+                    $min_price
+                }
+            },
+            max: {
+                {
+                    $max_price
+                }
+            },
+            values: [{
+                {
+                    $min_price
+                }
+            }, {
+                {
+                    $max_price
+                }
+            }],
             slide: function(event, ui) {
                 $("#amount_start").val(ui.values[0]).simpleMoneyFormat();
                 $("#amount_end").val(ui.values[1]).simpleMoneyFormat();
@@ -723,6 +740,50 @@ https://templatemo.com/tm-559-zay-shop
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.check_received').click(function() {
+                Swal.fire({
+                    title: 'Have you received the products?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, complete my order'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var order_code = $('.order_code').val();
+                        var _token = $('input[name="_token"]').val();
+                        $.ajax({
+                            url: "{{url('/complete-order')}}",
+                            method: 'POST',
+                            data: {
+                                _token: _token,
+                                order_code: order_code
+                            },
+                            success: function() {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Your order has been completed',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 1800);
+
+                            }
+                        });
+
+                    }
+                });
+
+            });
+        });
+    </script>
+
 </body>
 
 </html>
