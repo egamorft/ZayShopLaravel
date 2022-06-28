@@ -43,8 +43,8 @@ class HomeController extends Controller
             ->orderBy('category_id', 'asc')
             ->get();
 
-        $min_price = Product::min('product_price')->where('product_status', '1');
-        $max_price = Product::max('product_price')->where('product_status', '1');
+        $min_price = Product::where('product_status', '1')->min('product_price');
+        $max_price = Product::where('product_status', '1')->max('product_price');
 
         if (isset($_GET['sort_by'])) {
             $sort_by = $_GET['sort_by'];

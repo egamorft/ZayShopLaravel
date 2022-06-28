@@ -504,10 +504,6 @@ https://templatemo.com/tm-559-zay-shop
     <script src="{{asset('public/frontend/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/templatemo.js')}}"></script>
     <script src="{{asset('public/frontend/js/custom.js')}}"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.min.css"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.structure.min.css"></script> -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -515,6 +511,7 @@ https://templatemo.com/tm-559-zay-shop
     <!-- End Script -->
     <!-- Start Slider Script -->
     <script src="{{asset('public/frontend/js/slick.min.js')}}"></script>
+    <script src="{{asset('public/frontend/js/simple.money.format.js')}}"></script>
 
     <!-- <script>
         $('#carousel-related-product').slick({
@@ -553,16 +550,18 @@ https://templatemo.com/tm-559-zay-shop
             range: true,
             min: {{$min_price}},
             max: {{$max_price}},
-            step: 100000,
+            step: 1000000,
             values: [{{$min_price}}, {{$max_price}}],
             slide: function(event, ui) {
-                $("#amount").val("đ" + ui.values[0] + " - đ" + ui.values[1]);
+                $("#amount_start").val(ui.values[0] + " đ").simpleMoneyFormat();
+                $("#amount_end").val(ui.values[1] + " đ").simpleMoneyFormat();
+
                 $("#start_price").val(ui.values[0]);
                 $("#end_price").val(ui.values[1]);
             }
         });
-        $("#amount").val("đ" + $("#slider-range").slider("values", 0) +
-            " - đ" + $("#slider-range").slider("values", 1));
+        $("#amount_start").val($("#slider-range").slider("values", 0) + " đ").simpleMoneyFormat();
+        $("#amount_end").val($("#slider-range").slider("values", 1) + " đ").simpleMoneyFormat();
     </script>
     <script>
         $(document).ready(function() {

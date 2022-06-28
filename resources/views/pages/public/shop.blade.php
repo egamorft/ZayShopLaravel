@@ -29,7 +29,8 @@
             <form>
                 <div id="slider-range"></div>
 
-                <input type="text" id="amount" readonly style="border:0; color:green; font-weight:bold;">
+                <input type="text" id="amount_start" readonly style="border:0; color:green; font-weight:bold;">
+                <input type="text" id="amount_end" readonly style="border:0; color:green; font-weight:bold;">
                 <input type="hidden" name="start_price" id="start_price">
                 <input type="hidden" name="end_price" id="end_price">
 
