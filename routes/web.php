@@ -216,3 +216,5 @@ Route::get('/profile/order', 'AccountController@order')->name('profile.order');
 Route::post('/complete-order', 'AccountController@complete_order');
 
 Route::get('/profile/account', 'AccountController@account')->name('profile.account');
+
+Route::post('/save-profile', 'AccountController@save_profile');

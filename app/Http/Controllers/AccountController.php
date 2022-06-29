@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\Order;
 use App\OrderDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class AccountController extends Controller
@@ -31,5 +33,36 @@ class AccountController extends Controller
     public function account()
     {
         return view('pages.profile.user_profile');
+    }
+
+    public function save_profile(Request $request)
+    {
+        $request->validate(
+            [
+                'account_name' => 'required|min:6',
+                'account_email' => 'required|min:6|email|same:account_email_check',
+                'account_phone' => 'required|numeric|digits:10',
+            ],
+            [
+                'account_email.same' => 'You can not change your email'
+            ]
+        );
+
+        $data = $request->all();
+
+        $get_account = Account::where('account_id', Session::get('account_id'))->first();
+
+        $get_account->account_name = $data['account_name'];
+        $get_account->account_address = $data['account_address'];
+        $get_account->account_phone = $data['account_phone'];
+        $get_account->update();
+        Session::put('message', 'Change your infomation');
+        Session::forget('account_name');
+        Session::forget('account_address');
+        Session::forget('account_phone');
+        Session::put('account_name', $get_account->account_name);
+        Session::put('account_address', $get_account->account_address);
+        Session::put('account_phone', $get_account->account_phone);
+        return Redirect::back();
     }
 }

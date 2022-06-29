@@ -124,6 +124,7 @@ class HomeController extends Controller
             Session::put('account_name', $result->account_name);
             Session::put('account_email', $result->account_email);
             Session::put('account_phone', $result->account_phone);
+            Session::put('account_address', $result->account_address);
 
             return Redirect::to('/shop');
         } else {
@@ -133,7 +134,7 @@ class HomeController extends Controller
     }
     public function register_account(Request $request)
     {
-        $rule = $request->validate(
+        $request->validate(
             [
                 'account_name' => 'required|min:6',
                 'account_email' => 'required|min:6|email|unique:tbl_account,account_email',
@@ -143,7 +144,7 @@ class HomeController extends Controller
                 'g-recaptcha-response' => new Captcha(),
             ],
             [
-                'account_name.unique' => 'This email has already been taken'
+                'account_email.unique' => 'This email has already been taken'
             ]
         );
 

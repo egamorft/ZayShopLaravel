@@ -45,26 +45,42 @@
                     </div>
                 </div>
                 <div class="col-md-9 border-right">
-                    <form action="#" method="POST">
+                    <form action="{{URL::to('/save-profile')}}" method="POST">
+                        @csrf
                         <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">Profile Settings</h4>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12"><label class="labels">Full Name</label>
-                                    <input type="text" class="form-control" value="<?php echo Session::get('account_name') ?>">
+                                    <input name="account_name" type="text" class="form-control" value="<?php echo Session::get('account_name') ?>">
                                 </div>
-
+                                @error('account_name')
+                                <span style="color: red">{{$message}}</span>
+                                @enderror
+                                <input name="account_email_check" type="hidden" class="form-control" value="<?php echo Session::get('account_email') ?>">
                                 <div class="col-md-12"><label class="labels">Email</label>
-                                    <input type="text" class="form-control" value="<?php echo Session::get('account_email') ?> ">
+                                    <input readonly name="account_email" type="text" class="form-control" value="<?php echo Session::get('account_email') ?>">
+                                </div>
+                                @error('account_email')
+                                <span style="color: red">{{$message}}</span>
+                                @enderror
+
+                                <div class="col-md-12"><label class="labels">Address</label>
+                                    <input name="account_address" type="text" class="form-control" value="<?php echo Session::get('account_address') ?>">
                                 </div>
 
                                 <div class="col-md-12"><label class="labels">Phone Number</label>
-                                    <input type="text" class="form-control" value="<?php echo Session::get('account_phone') ?>">
+                                    <input name="account_phone" type="text" class="form-control" value="<?php echo Session::get('account_phone') ?>">
                                 </div>
+                                @error('account_phone')
+                                <span style="color: red">{{$message}}</span>
+                                @enderror
+
                             </div>
+
                             <div class="mt-5 text-center">
-                                <button class="btn btn-primary profile-button" type="button">Save Profile</button>
+                                <input class="btn btn-outline-success" type="submit" value="Save Profile">
                             </div>
                         </div>
                     </form>

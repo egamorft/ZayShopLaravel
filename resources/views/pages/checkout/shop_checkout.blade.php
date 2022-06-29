@@ -598,7 +598,7 @@ $orderDate = Carbon\Carbon::now();
                         <label for="shipping_email" class="form-label">
                             Email
                         </label>
-                        <input type="email" class="form-control shipping_email" 
+                        <input readonly type="email" class="form-control shipping_email" 
                             name="shipping_email" id="shipping_email" 
                                 value="{{Session::get('account_email')}}">
                     </div>
@@ -609,7 +609,7 @@ $orderDate = Carbon\Carbon::now();
                         </label>
                         <input type="text" class="form-control shipping_address" 
                             name="shipping_address" id="shipping_address" 
-                                placeholder="Where ur house?...">
+                                placeholder="Where ur house?..." value="{{Session::get('account_address')}}">
                     </div>
 
                     <div class="col-12">
@@ -630,8 +630,7 @@ $orderDate = Carbon\Carbon::now();
                         </span>
                         <textarea rows="5" type="text" class="form-control shipping_notes" 
                             name="shipping_notes" id="shipping_notes" 
-                                placeholder="Wanna note something for deliver man?...">
-                        </textarea>
+                                placeholder="Wanna note something for deliver man?..."></textarea>
                     </div>
                 </div>
                 @if(Session::get('fee'))
