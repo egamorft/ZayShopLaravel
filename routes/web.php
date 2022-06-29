@@ -58,6 +58,8 @@ Route::middleware('admin.login')->group(function () {
         Route::post('/filter-by-date', 'AdminController@filter_by_date');
 
         Route::post('/dashboard-filter', 'AdminController@dashboard_filter');
+
+        Route::post('/days-order', 'AdminController@days_order');
     //End Admin
 
     //Category Admin

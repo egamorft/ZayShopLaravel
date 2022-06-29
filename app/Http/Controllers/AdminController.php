@@ -76,13 +76,13 @@ class AdminController extends Controller
     {
         $data = $request->all();
 
-        $startThisMonth = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->format('d/m/Y');
-        $startLastMonth = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->format('d/m/Y');
-        $lastMonth = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->format('d/m/Y');
+        $startThisMonth = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+        $startLastMonth = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+        $lastMonth = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
 
-        $sub7days = Carbon::now('Asia/Ho_Chi_Minh')->subDays(7)->format('d/m/Y');
-        $sub365days = Carbon::now('Asia/Ho_Chi_Minh')->subYear()->format('d/m/Y');
-        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d/m/Y');
+        $sub7days = Carbon::now('Asia/Ho_Chi_Minh')->subDays(7)->toDateString();
+        $sub365days = Carbon::now('Asia/Ho_Chi_Minh')->subYear()->toDateString();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
         if ($data['dashboard_value'] == '7days') {
             $get = Statistic::whereBetween('order_date', [$sub7days, $now])->orderBy('order_date', 'asc')->get();
@@ -94,6 +94,24 @@ class AdminController extends Controller
             dump($sub365days);
             $get = Statistic::whereBetween('order_date', [$sub365days, $now])->orderBy('order_date', 'asc')->get();
         }
+
+        foreach ($get as $key => $val) {
+            $chart_data[] = array(
+                'period' => $val->order_date,
+                'order' => $val->total_order,
+                'sales' => $val->sales,
+                'profit' => $val->profit,
+                'quantity' => $val->quantity
+            );
+        }
+        echo $data = json_encode($chart_data);
+    }
+
+    public function days_order()
+    {
+        $sub30days = Carbon::now('Asia/Ho_Chi_Minh')->subDays(30)->toDateString();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        $get = Statistic::whereBetween('order_date', [$sub30days, $now])->orderBy('order_date', 'asc')->get();
 
         foreach ($get as $key => $val) {
             $chart_data[] = array(

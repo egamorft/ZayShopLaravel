@@ -344,21 +344,23 @@
     <script>
         $(function() {
             $("#datepicker1").datepicker({
-                dateFormat: 'dd/mm/yy'
+                dateFormat: 'yy-mm-dd'
             });
         });
 
         $(function() {
             $("#datepicker2").datepicker({
-                dateFormat: 'dd/mm/yy'
+                dateFormat: 'yy-mm-dd'
             });
         });
     </script>
 
     <script>
         $(document).ready(function() {
-            // chart30daysorder();
-            var chart = new Morris.Area({
+
+            chart30daysorder();
+
+            var chart = new Morris.Line({
 
                 element: 'chart',
                 //option chart
@@ -371,20 +373,21 @@
                 labels: ['Order', 'Sales', 'Profit', 'Quantity']
             });
 
-            // function chart30daysorder() {
-            //     var _token = $('input[name="_token"]').val();
-            //     $.ajax({
-            //         url: "{{URL('/days-order')}}",
-            //         method: "POST",
-            //         dataType: "JSON",
-            //         data: {
-            //             _token: _token
-            //         },
-            //         success: function(data) {
-            //             chart.setData(data);
-            //         }
-            //     });
-            // }
+            function chart30daysorder() {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{URL('/days-order')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        _token: _token
+                    },
+                    success: function(data) {
+                        chart.setData(data);
+                    }
+                });
+            }
+
             $('.dashboard-filter').change(function() {
                 var dashboard_value = $(this).val();
                 var _token = $('input[name="_token"]').val();
@@ -394,7 +397,7 @@
                     method: "POST",
                     dataType: "JSON",
                     data: {
-                        dashboard_value: dashboard_value, 
+                        dashboard_value: dashboard_value,
                         _token: _token
                     },
                     success: function(data) {

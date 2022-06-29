@@ -105,7 +105,7 @@
                         <select class="text-center form-control dashboard-filter">
                             <option>Choose type filter</option>
                             <option value="7days">7 last days</option>
-                            <option value="lastmonth">This month</option>
+                            <option value="lastmonth">Last month</option>
                             <option value="thismonth">This month</option>
                             <option value="last365days">Last 365 days</option>
                         </select>
@@ -122,22 +122,13 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
                         <div class="chart">
-                            <div id="chart" style="height: 170px;"></div>
+                            <div id="chart" style="height: 290px;"></div>
                         </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h6 class="mb-0 ">Website Views</h6>
-                    <p class="text-sm ">Last Campaign Performance</p>
-                    <hr class="dark horizontal">
-                    <div class="d-flex ">
-                        <i class="material-icons text-sm my-auto me-1">schedule</i>
-                        <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-6 mt-4 mb-4">
+        <!-- <div class="col-lg-4 col-md-6 mt-4 mb-4">
             <div class="card z-index-2  ">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                     <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
@@ -176,7 +167,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 @endsection
