@@ -52,8 +52,12 @@ Route::get('/logout', 'AdminController@logout');
 
 Route::middleware('admin.login')->group(function () {
 
-    //Admin
-    Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
+    //Admin dashboard
+        Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
+
+        Route::post('/filter-by-date', 'AdminController@filter_by_date');
+
+        Route::post('/dashboard-filter', 'AdminController@dashboard_filter');
     //End Admin
 
     //Category Admin

@@ -18,6 +18,7 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{asset('public/backend/css/material-dashboard.css?v=3.0.2')}}" rel="stylesheet" />
 </head>
@@ -49,8 +50,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link text-white 
-                        {{ Route::currentRouteNamed('dashboard') ? 'bg-gradient-primary' : '' }}" 
-                            href="{{URL::to('/dashboard')}}">
+                        {{ Route::currentRouteNamed('dashboard') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/dashboard')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 dashboard
@@ -63,8 +63,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white 
-                        {{ Route::currentRouteNamed('category') ? 'bg-gradient-primary' : '' }}" 
-                            href="{{URL::to('/show-category')}}">
+                        {{ Route::currentRouteNamed('category') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/show-category')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 table_view
@@ -77,8 +76,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white 
-                        {{ Route::currentRouteNamed('subcategory') ? 'bg-gradient-primary' : '' }}" 
-                            href="{{URL::to('/show-sub-category')}}">
+                        {{ Route::currentRouteNamed('subcategory') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/show-sub-category')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 receipt_long
@@ -91,8 +89,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white 
-                        {{ Route::currentRouteNamed('product') ? 'bg-gradient-primary' : '' }}" 
-                            href="{{URL::to('/show-product')}}">
+                        {{ Route::currentRouteNamed('product') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/show-product')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 view_in_ar
@@ -105,8 +102,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white 
-                        {{ Route::currentRouteNamed('coupon') ? 'bg-gradient-primary' : '' }}" 
-                            href="{{URL::to('/show-coupon')}}">
+                        {{ Route::currentRouteNamed('coupon') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/show-coupon')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 format_textdirection_r_to_l
@@ -119,8 +115,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white 
-                        {{ Route::currentRouteNamed('delivery') ? 'bg-gradient-primary' : '' }}" 
-                            href="{{URL::to('/delivery')}}">
+                        {{ Route::currentRouteNamed('delivery') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/delivery')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 local_shipping
@@ -133,8 +128,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white 
-                        {{ Route::currentRouteNamed('order') ? 'bg-gradient-primary' : '' }}" 
-                            href="{{URL::to('/order')}}">
+                        {{ Route::currentRouteNamed('order') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/order')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 list_alt
@@ -147,8 +141,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white 
-                        {{ Route::currentRouteNamed('slider') ? 'bg-gradient-primary' : '' }}" 
-                            href="{{URL::to('/slider')}}">
+                        {{ Route::currentRouteNamed('slider') ? 'bg-gradient-primary' : '' }}" href="{{URL::to('/slider')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 slideshow
@@ -193,8 +186,7 @@
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
-             id="navbarBlur" navbar-scroll="true">
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -275,23 +267,17 @@
                 </div>
                 <a href="javascript:void(0)" class="switch-trigger background-color">
                     <div class="badge-colors my-2 text-start">
-                        <span class="badge filter bg-gradient-primary active" data-color="primary"
-                            onclick="sidebarColor(this)">
+                        <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)">
                         </span>
-                        <span class="badge filter bg-gradient-dark" data-color="dark" 
-                            onclick="sidebarColor(this)">
+                        <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)">
                         </span>
-                        <span class="badge filter bg-gradient-info" data-color="info" 
-                            onclick="sidebarColor(this)">
+                        <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)">
                         </span>
-                        <span class="badge filter bg-gradient-success" data-color="success" 
-                            onclick="sidebarColor(this)">
+                        <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)">
                         </span>
-                        <span class="badge filter bg-gradient-warning" data-color="warning" 
-                            onclick="sidebarColor(this)">
+                        <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)">
                         </span>
-                        <span class="badge filter bg-gradient-danger" data-color="danger" 
-                            onclick="sidebarColor(this)">
+                        <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)">
                         </span>
                     </div>
                 </a>
@@ -305,16 +291,13 @@
                     </p>
                 </div>
                 <div class="d-flex">
-                    <button class="btn bg-gradient-dark px-3 mb-2 active" data-class="bg-gradient-dark" 
-                        onclick="sidebarType(this)">
+                    <button class="btn bg-gradient-dark px-3 mb-2 active" data-class="bg-gradient-dark" onclick="sidebarType(this)">
                         Dark
                     </button>
-                    <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-transparent" 
-                        onclick="sidebarType(this)">
+                    <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-transparent" onclick="sidebarType(this)">
                         Transparent
                     </button>
-                    <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-white" 
-                        onclick="sidebarType(this)">
+                    <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">
                         White
                     </button>
                 </div>
@@ -344,14 +327,105 @@
         </div>
     </div>
     <!--   Core JS Files   -->
-    <script src="{{asset('public/backend/js/core/popper.min.js')}}"></script>
+    <!-- <script src="{{asset('public/backend/js/core/popper.min.js')}}"></script> -->
     <script src="{{asset('public/frontend/js/sweetalert.js')}}"></script>
     <script src="{{asset('public/backend/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/smooth-scrollbar.min.js')}}"></script>
-    <script src="{{asset('public/backend/js/plugins/chartjs.min.js')}}"></script>
+    <!-- <script src="{{asset('public/backend/js/plugins/chartjs.min.js')}}"></script> -->
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+
+
+    <script>
+        $(function() {
+            $("#datepicker1").datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        });
+
+        $(function() {
+            $("#datepicker2").datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // chart30daysorder();
+            var chart = new Morris.Area({
+
+                element: 'chart',
+                //option chart
+                gridTextColor: 'black',
+                lineColors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', 'white'],
+                parsetime: false,
+                hideHover: 'auto',
+                xkey: 'period',
+                ykeys: ['order', 'sales', 'profit', 'quantity'],
+                labels: ['Order', 'Sales', 'Profit', 'Quantity']
+            });
+
+            // function chart30daysorder() {
+            //     var _token = $('input[name="_token"]').val();
+            //     $.ajax({
+            //         url: "{{URL('/days-order')}}",
+            //         method: "POST",
+            //         dataType: "JSON",
+            //         data: {
+            //             _token: _token
+            //         },
+            //         success: function(data) {
+            //             chart.setData(data);
+            //         }
+            //     });
+            // }
+            $('.dashboard-filter').change(function() {
+                var dashboard_value = $(this).val();
+                var _token = $('input[name="_token"]').val();
+
+                $.ajax({
+                    url: "{{URL('/dashboard-filter')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        dashboard_value: dashboard_value, 
+                        _token: _token
+                    },
+                    success: function(data) {
+                        chart.setData(data);
+                    }
+                });
+            });
+
+
+            $('#btn-dashboard-filter').click(function() {
+                var _token = $('input[name="_token"]').val();
+                var from_date = $('#datepicker1').val();
+                var to_date = $('#datepicker2').val();
+
+                $.ajax({
+                    url: "{{URL('/filter-by-date')}}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        from_date: from_date,
+                        to_date: to_date,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        chart.setData(data);
+                    }
+                });
+            });
+        });
+    </script>
+
     <script>
         function preview() {
             frame.src = URL.createObjectURL(event.target.files[0]);
