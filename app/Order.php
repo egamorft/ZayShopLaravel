@@ -16,4 +16,8 @@ class Order extends Model
     public function orderdetails() {
         return $this->hasMany('App\OrderDetails', 'order_code');
     }
+    public function shipping()
+    {
+        return $this->belongsTo('App\Shipping', 'shipping_id');
+    }
 }

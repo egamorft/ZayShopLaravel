@@ -14,12 +14,12 @@ class AccountController extends Controller
     public function order()
     {
         $account_id = Session::get('account_id');
-        $order = Order::where('account_id', $account_id)->get();
+        $order = Order::with('shipping')->where('account_id', $account_id)->get();
         $order_count = 0;
         foreach ($order as $key => $order) {
             $order_count++;
         }
-        $order_paginate = Order::where('account_id', $account_id)->orderBy('order_id', 'desc')->paginate(5);
+        $order_paginate = Order::with('shipping')->where('account_id', $account_id)->orderBy('order_id', 'desc')->paginate(5);
         return view('pages.profile.order_history')->with(compact('order_count', 'order_paginate'));
     }
 

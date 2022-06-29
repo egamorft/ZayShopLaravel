@@ -81,7 +81,9 @@
                             <div class="d-flex flex-column justify-content-between order-summary">
                                 <div class="d-flex align-items-center">
                                     <div class="text-uppercase">Order #{{$od->order_code}}</div>
+                                    @if($od->shipping->shipping_method == 1 )
                                     <div class="green-label ms-auto text-uppercase">cod</div>
+                                    @endif
                                 </div>
                                 <div class="fs-8">{{$od->created_at}}</div>
                             </div>
