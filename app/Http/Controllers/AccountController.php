@@ -65,4 +65,34 @@ class AccountController extends Controller
         Session::put('account_phone', $get_account->account_phone);
         return Redirect::back();
     }
+
+    public function change_password()
+    {
+        return view('pages.profile.chgpwd');
+    }
+
+    public function save_password(Request $request)
+    {
+        $request->validate(
+            [
+                'old_password' => 'required|min:6',
+                'new_password' => 'required|min:6|confirmed'
+            ]
+        );
+
+        $data = $request->all();
+
+        $get_account = Account::where('account_id', Session::get('account_id'))->first();
+
+        $get_old_password = $get_account->account_password;
+        if ($get_old_password == md5($data['old_password'])) {
+            $get_account->account_password = md5($data['new_password']);
+            $get_account->update();
+            Session::put('message', 'Change your password');
+            return Redirect::back();
+        } else {
+            Session::put('error', 'Old password is wrong');
+            return Redirect::back();
+        }
+    }
 }

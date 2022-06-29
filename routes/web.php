@@ -218,3 +218,7 @@ Route::post('/complete-order', 'AccountController@complete_order');
 Route::get('/profile/account', 'AccountController@account')->name('profile.account');
 
 Route::post('/save-profile', 'AccountController@save_profile');
+
+Route::get('/profile/chgpwd', 'AccountController@change_password')->name('profile.chgpwd');
+
+Route::post('/save-password', 'AccountController@save_password');

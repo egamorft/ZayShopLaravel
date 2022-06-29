@@ -58,39 +58,36 @@
                     </div>
                 </div>
                 <div class="col-md-9 border-right">
-                    <form action="{{URL::to('/save-profile')}}" method="POST">
+                    <form action="{{URL::to('/save-password')}}" method="POST">
                         @csrf
                         <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Profile Settings</h4>
+                                <h4 class="text-right">Password Settings</h4>
                             </div>
-                            <div class="row mt-3">
-                                <div class="col-md-12"><label class="labels">Full Name</label>
-                                    <input name="account_name" type="text" class="form-control" value="<?php echo Session::get('account_name') ?>">
-                                </div>
-                                @error('account_name')
+                            <div class="form-floating mb-3 mt-3">
+                                <input id="oldpassword" type="password" class="form-control" placeholder="Enter password" name="old_password">
+                                <label for="oldpassword">Old Password</label>
+                                @error('old_password')
                                 <span style="color: red">{{$message}}</span>
                                 @enderror
-                                <input name="account_email_check" type="hidden" class="form-control" value="<?php echo Session::get('account_email') ?>">
-                                <div class="col-md-12"><label class="labels">Email</label>
-                                    <input readonly name="account_email" type="text" class="form-control" value="<?php echo Session::get('account_email') ?>">
-                                </div>
-                                @error('account_email')
-                                <span style="color: red">{{$message}}</span>
-                                @enderror
-
-                                <div class="col-md-12"><label class="labels">Address</label>
-                                    <input name="account_address" type="text" class="form-control" value="<?php echo Session::get('account_address') ?>">
-                                </div>
-
-                                <div class="col-md-12"><label class="labels">Phone Number</label>
-                                    <input name="account_phone" type="text" class="form-control" value="<?php echo Session::get('account_phone') ?>">
-                                </div>
-                                @error('account_phone')
-                                <span style="color: red">{{$message}}</span>
-                                @enderror
-
                             </div>
+
+                            <div class="form-floating mb-3 mt-3">
+                                <input id="newpassword" type="password" class="form-control" placeholder="Enter password" name="new_password">
+                                <label for="newpassword">New Password</label>
+                                @error('new_password')
+                                <span style="color: red">{{$message}}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-floating mb-3 mt-3">
+                                <input id="confpassword" type="password" class="form-control" placeholder="Enter password" name="new_password_confirmation">
+                                <label for="confpassword">Confirm Password</label>
+                                @error('new_password_confirmation')
+                                <span style="color: red">{{$message}}</span>
+                                @enderror
+                            </div>
+
 
                             <div class="mt-5 text-center">
                                 <input class="btn btn-outline-success" type="submit" value="Save Profile">

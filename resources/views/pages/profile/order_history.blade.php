@@ -16,23 +16,36 @@
                 <div class="h4 text-white">Account</div>
                 <ul>
                     <li class="{{ Route::currentRouteNamed('profile.account') ? 'active' : '' }}"">
-                        <a href="{{URL::to('/profile/account')}}" class="text-decoration-none d-flex align-items-start">
-                            <div class="far fa-user pt-2 me-3"></div>
-                            <div class="d-flex flex-column">
-                                <div class="link">My Profile</div>
-                                <div class="link-desc">Change your profile</div>
-                            </div>
+                        <a href=" {{URL::to('/profile/account')}}" class="text-decoration-none d-flex align-items-start">
+                        <div class="far pt-2 me-3">
+                            <i class="fa-solid fa-user fa-xl"></i>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div class="link">My Profile</div>
+                            <div class="link-desc">Change your profile</div>
+                        </div>
+                        </a>
+                    </li>
+                    <li class="{{ Route::currentRouteNamed('profile.chgpwd') ? 'active' : '' }}"">
+                        <a href=" {{URL::to('/profile/chgpwd')}}" class="text-decoration-none d-flex align-items-start">
+                        <div class="fas pt-2 me-3">
+                            <i class="fa-solid fa-lock fa-xl"></i>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div class="link">Password</div>
+                            <div class="link-desc">Change your password</div>
+                        </div>
                         </a>
                     </li>
                     <li class="{{ Route::currentRouteNamed('profile.order') ? 'active' : '' }}"">
-                        <a href="{{URL::to('/profile/order')}}" class="text-decoration-none d-flex align-items-start">
-                            <div class="fas pt-2 me-3">
-                                <i class="fa-solid fa-box fa-xl"></i>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <div class="link">My Order</div>
-                                <div class="link-desc">View & Manage your orders</div>
-                            </div>
+                        <a href=" {{URL::to('/profile/order')}}" class="text-decoration-none d-flex align-items-start">
+                        <div class="fas pt-2 me-3">
+                            <i class="fa-solid fa-box fa-xl"></i>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div class="link">My Order</div>
+                            <div class="link-desc">View & Manage your orders</div>
+                        </div>
                         </a>
                     </li>
                 </ul>
