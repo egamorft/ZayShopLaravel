@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Statistic;
+use App\Visitors;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,9 +18,20 @@ class AdminController extends Controller
         return view('admin.login.admin_login');
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        // $this->AuthLogin();
+        $user_ip_address = $request->ip();
+        
+        //current online
+        $visitors_current = Visitors::where('ip_address', $user_ip_address)->get();
+        $visitors_count = $visitors_current->count();
+        if($visitors_count < 1){
+            $visitors = new Visitors();
+            $visitors->ip_address = $user_ip_address;
+            $visitors -> visitors_date = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+            $visitors->save();
+        }
+
         return view('admin.dashboard.dashboard');
     }
 
