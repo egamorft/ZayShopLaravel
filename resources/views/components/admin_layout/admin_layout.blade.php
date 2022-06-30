@@ -356,6 +356,25 @@
     </script>
 
     <script>
+        var donut = Morris.Donut({
+            element: 'donut',
+            resize: true,
+            colors: [
+                '#1EDFD6',
+                '#E88134',
+                '#B775E5',
+                '#EC4040'
+            ],
+            data: [
+                {label: "Product", value: <?php echo $product ?>},
+                {label: "Order", value: <?php echo $order ?>},
+                {label: "Customer", value: <?php echo $account ?>},
+                {label: "Coupon", value: <?php echo $coupon ?>},
+            ]
+        });
+    </script>
+
+    <script>
         $(document).ready(function() {
 
             chart30daysorder();
@@ -364,8 +383,8 @@
 
                 element: 'chart',
                 //option chart
-                gridTextColor: 'black',
-                lineColors: ['#819C79', '#fc8710', '#FF6541', '#A4ADD3', 'white'],
+                gridTextColor: 'white',
+                lineColors: ['#107321', '#033D68', '#248897', '#A4ADD3', 'white'],
                 parsetime: false,
                 hideHover: 'auto',
                 xkey: 'period',
