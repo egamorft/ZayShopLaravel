@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\Order;
 use App\OrderDetails;
+use App\Statistic;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -28,6 +30,23 @@ class AccountController extends Controller
         $data = $request->all();
         $order_code = $data['order_code'];
         Order::where('order_code', $order_code)->update(['order_status' => 4]);
+        $get_order = OrderDetails::where('order_code', $order_code)->get();
+        $today = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        $order_total = $get_order->count();
+        $quantity = 0;
+        $sales = 0;
+        foreach ($get_order as $key => $order) {
+            $quantity += $order->product_sales_quantity;
+            $sales += $order->product_price * $order->product_sales_quantity;
+        }
+        $profit = $sales * 70 / 100;
+        $statistic = new Statistic();
+        $statistic->order_date = $today;
+        $statistic->sales = $sales;
+        $statistic->profit = $profit;
+        $statistic->quantity = $quantity;
+        $statistic->total_order = $order_total;
+        $statistic->save();
     }
 
     public function account()
