@@ -549,25 +549,9 @@ https://templatemo.com/tm-559-zay-shop
     <script>
         $("#slider-range").slider({
             range: true,
-            min: {
-                {
-                    $min_price
-                }
-            },
-            max: {
-                {
-                    $max_price
-                }
-            },
-            values: [{
-                {
-                    $min_price
-                }
-            }, {
-                {
-                    $max_price
-                }
-            }],
+            min: {{$min_price}},
+            max: {{$max_price}},
+            values: [{{$min_price}}, {{$max_price}}],
             slide: function(event, ui) {
                 $("#amount_start").val(ui.values[0]).simpleMoneyFormat();
                 $("#amount_end").val(ui.values[1]).simpleMoneyFormat();

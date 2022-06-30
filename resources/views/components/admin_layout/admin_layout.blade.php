@@ -366,10 +366,10 @@
                 '#EC4040'
             ],
             data: [
-                {label: "Product", value: <?php echo $product ?>},
-                {label: "Order", value: <?php echo $order ?>},
-                {label: "Customer", value: <?php echo $account ?>},
-                {label: "Coupon", value: <?php echo $coupon ?>},
+                {label: "Product", value: <?php echo $product_donut ?>},
+                {label: "Order", value: <?php echo $order_donut ?>},
+                {label: "Customer", value: <?php echo $account_donut ?>},
+                {label: "Coupon", value: <?php echo $coupon_donut ?>},
             ]
         });
     </script>
