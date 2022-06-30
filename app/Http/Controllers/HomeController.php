@@ -11,12 +11,28 @@ use App\Product;
 use App\Social;
 use App\Rules\Captcha;
 use App\Slider;
+use App\Visitors;
+use Carbon\Carbon;
 use Laravel\Socialite\Facades\Socialite;
 use Psy\CodeCleaner\FunctionContextPass;
 use Symfony\Component\Console\Input\Input;
 
 class HomeController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $user_ip = $request->ip();
+        $today = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        $check_user_ip_today = Visitors::where('ip_address', $user_ip)->where('visitors_date', $today)->get();
+        $check_user_ip_today_count = $check_user_ip_today->count();
+        if($check_user_ip_today_count < 1){
+            $visitors = new Visitors();
+            $visitors->ip_address = $user_ip;
+            $visitors->visitors_date = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+            $visitors->save();
+        }
+    }
+    
     public function home()
     {
         $slider = Slider::where('slider_status', 1)
