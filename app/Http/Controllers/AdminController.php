@@ -21,18 +21,72 @@ class AdminController extends Controller
     public function dashboard(Request $request)
     {
         $user_ip_address = $request->ip();
-        
+
+        //Đầu tháng trước
+        $early_last_month = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+
+        //Cuối tháng trước
+        $end_of_last_month = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+
+        //Đầu tháng này
+        $early_this_month = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+
+        //1 năm trước
+        $oneyears = Carbon::now('Asia/Ho_Chi_Minh')->subYear()->toDateString();
+
+        //Đầu năm trước
+        $start_last_year = Carbon::now('Asia/Ho_Chi_Minh')->subYear()->startOfYear()->toDateString();
+
+        //Bây giờ
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+
+        //Đầu năm nay
+        $start_this_year = Carbon::now('Asia/Ho_Chi_Minh')->startOfYear()->toDateString();
+
+        //Hôm qua
+        $yesterday = Carbon::now('Asia/Ho_Chi_Minh')->subDay(1)->toDateString();
+
+        //total last month
+        $visitors_of_last_month = Visitors::whereBetween('visitors_date', [$early_last_month, $end_of_last_month])->get();
+        $visitors_of_last_month_count = $visitors_of_last_month->count();
+
+        //total this month
+        $visitors_of_this_month = Visitors::whereBetween('visitors_date', [$early_this_month, $now])->get();
+        $visitors_of_this_month_count = $visitors_of_this_month->count();
+
+        //total in now from start year
+        $visitors_of_this_year = Visitors::whereBetween('visitors_date', [$start_this_year, $now])->get();
+        $visitors_of_this_year_count = $visitors_of_this_year->count();
+
+        //total in today of last year from last year ( Cùng kỳ năm ngoái)
+        $visitors_of_last_year = Visitors::whereBetween('visitors_date', [$start_last_year, $oneyears])->get();
+        $visitors_of_last_year_count = $visitors_of_last_year->count();
+
+        //total visitors
+        $visitors = Visitors::all();
+        $visitors_total_count = $visitors->count();
+
         //current online
         $visitors_current = Visitors::where('ip_address', $user_ip_address)->get();
         $visitors_count = $visitors_current->count();
-        if($visitors_count < 1){
+        if ($visitors_count < 1) {
             $visitors = new Visitors();
             $visitors->ip_address = $user_ip_address;
-            $visitors -> visitors_date = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+            $visitors->visitors_date = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
             $visitors->save();
         }
 
-        return view('admin.dashboard.dashboard');
+        //Visitor online today
+        $visitors_now = Visitors::where('visitors_date', $now)->get();
+        $visitors_now_count = $visitors_now->count();
+
+        //Visitor online yesterday
+        $visitors_yesterday = Visitors::where('visitors_date', $yesterday)->get();
+        $visitors_yesterday_count = $visitors_yesterday->count();
+
+        return view('admin.dashboard.dashboard')->with(
+            compact('visitors_total_count', 'visitors_count', 'visitors_yesterday_count', 'visitors_now_count',
+            'visitors_of_last_month_count', 'visitors_of_this_month_count', 'visitors_of_this_year_count', 'visitors_of_last_year_count'));
     }
 
     public function login(Request $request)

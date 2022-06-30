@@ -5,17 +5,40 @@
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-header p-3 pt-2">
-                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="material-icons opacity-10">weekend</i>
+                    <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">transcribe</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-                        <h4 class="mb-0">$53k</h4>
+                        <p class="text-sm mb-0 text-capitalize">Current Online</p>
+                        <h4 class="mb-0">{{$visitors_now_count}}</h4>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than lask week</p>
+                    @php
+                    if($visitors_now_count > $visitors_yesterday_count){
+                        $increase = $visitors_now_count - $visitors_yesterday_count;
+                    }elseif($visitors_now_count < $visitors_yesterday_count){
+                        $increase = $visitors_yesterday_count - $visitors_now_count;
+                    }else{
+                        $increase = 0;
+                    }
+                    if($visitors_now_count != 0){
+                        $percentage_increase = $increase / $visitors_yesterday_count * 100;
+                    }
+                    else{
+                        $percentage_increase = $visitors_now_count;
+                    }
+                    @endphp
+                    @if($visitors_now_count != 0)
+                    @if($increase < 0)
+                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
+                    @else
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
+                    @endif
+                    @else
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than yesterday</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -23,33 +46,80 @@
             <div class="card">
                 <div class="card-header p-3 pt-2">
                     <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="material-icons opacity-10">person</i>
+                        <i class="material-icons opacity-10">co_present</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-                        <h4 class="mb-0">2,300</h4>
+                        <p class="text-sm mb-0 text-capitalize">This month visitors</p>
+                        <h4 class="mb-0">{{$visitors_of_this_month_count}}</h4>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than lask month</p>
+                    @php
+                    if($visitors_of_this_month_count > $visitors_of_last_month_count){
+                        $increase = $visitors_of_this_month_count - $visitors_of_last_month_count;
+                    }elseif($visitors_of_this_month_count < $visitors_of_last_month_count){
+                        $increase = $visitors_of_last_month_count - $visitors_of_this_month_count;
+                    }else{
+                        $increase = 0;
+                    }
+                    if($visitors_of_last_month_count != 0){
+                        $percentage_increase = $increase / $visitors_of_last_month_count * 100;
+                    }
+                    else{
+                        $percentage_increase = $visitors_of_this_month_count;
+                    }
+                    @endphp
+                    @if($visitors_of_last_month_count != 0)
+                    @if($increase < 0)
+                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-{{number_format($percentage_increase, 1)}}%</span> than last month</p>
+                    @else
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than last month</p>
+                    @endif
+                    @else
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than last month</p>
+                    @endif
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-header p-3 pt-2">
-                    <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
                         <i class="material-icons opacity-10">person</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">New Clients</p>
-                        <h4 class="mb-0">3,462</h4>
+                        <p class="text-sm mb-0 text-capitalize">This year visitors</p>
+                        <h4 class="mb-0">{{$visitors_of_this_year_count}}</h4>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday</p>
+                    @php
+                    if($visitors_of_this_year_count > $visitors_of_last_year_count){
+                        $increase = $visitors_of_this_year_count - $visitors_of_last_year_count;
+                    }elseif($visitors_of_this_year_count < $visitors_of_last_year_count){
+                        $increase = $visitors_of_last_year_count - $visitors_of_this_year_count;
+                    }else{
+                        $increase = 0;
+                    }
+                    if($visitors_of_last_year_count != 0){
+                        $percentage_increase = $increase / $visitors_of_last_year_count * 100;
+                    }
+                    else{
+                        $percentage_increase = $visitors_of_this_year_count;
+                    }
+                    @endphp
+                    @if($visitors_of_last_year_count != 0)
+                    @if($increase < 0)
+                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-{{number_format($percentage_increase, 1)}}%</span> than last year</p>
+                    @else
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than last year</p>
+                    @endif
+                    @else
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than last year</p>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -57,17 +127,19 @@
             <div class="card">
                 <div class="card-header p-3 pt-2">
                     <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="material-icons opacity-10">weekend</i>
+                        <i class="material-icons opacity-10">settings_accessibility</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Sales</p>
-                        <h4 class="mb-0">$103,430</h4>
+                        <p class="text-sm mb-0 text-capitalize">Total pages visitors</p>
+                        <h4 class="mb-0">{{$visitors_total_count}}</h4>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
                 </div>
+                <div class="card-footer p-3">
+                </div>
+                
             </div>
         </div>
     </div>
