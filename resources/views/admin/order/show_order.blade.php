@@ -15,7 +15,15 @@
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
+                        <div class="justified-content-left col-md-2 m-3">
+                            <div class="input-group input-group-outline">
+                                <label class="form-label">
+                                    Search your order code
+                                </label>
+                                <input type="text" id="myOrder" onkeyup="myFilterOrder()" class="form-control">
+                            </div>
+                        </div>
+                        <table class="table align-items-center mb-0" id="orderTable">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
@@ -59,23 +67,23 @@
                                     <td>
                                         @if($od->order_status == 1)
 
-                                            <p class="font-weight-bold mb-0">
-                                                Not handle
-                                            </p>
+                                        <p class="font-weight-bold mb-0">
+                                            Not handle
+                                        </p>
 
                                         @elseif($od->order_status == 2)
 
-                                            Delivering
+                                        Delivering
 
                                         @elseif($od->order_status == 3)
 
-                                            Cancel/ Pending
+                                        Cancel/ Pending
 
                                         @elseif($od->order_status == 4)
 
-                                            <p style="color:green;" class="font-weight-bold mb-0">
-                                                Completed
-                                            </p>
+                                        <p style="color:green;" class="font-weight-bold mb-0">
+                                            Completed
+                                        </p>
                                         @endif
                                     </td>
                                     <td class="align-middle">
@@ -86,9 +94,7 @@
                                         </a>
                                     </td>
                                     <td class="align-middle">
-                                        <a onclick="return confirm('Are you sure to delete?')" 
-                                            href="{{URL::to('/delete-order/'.$od->order_code)}}" 
-                                                class="font-weight-bold" data-toggle="tooltip">
+                                        <a onclick="return confirm('Are you sure to delete?')" href="{{URL::to('/delete-order/'.$od->order_code)}}" class="font-weight-bold" data-toggle="tooltip">
                                             <i class="material-icons" style="font-size: 30px;">
                                                 delete
                                             </i>
