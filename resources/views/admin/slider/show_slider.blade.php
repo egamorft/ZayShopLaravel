@@ -23,6 +23,34 @@
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
+                        <div class="container mt-3">
+                            <div class="d-flex justify-content-between">
+                                <div class="input-group input-group-outline m-3">
+                                    <label class="form-label">
+                                        Search your slider name
+                                    </label>
+                                    <input type="text" id="myOrder" onkeyup="myFilterOrder()" class="form-control">
+                                </div>
+                                <form class="input-group input-group-outline m-3">
+                                    @csrf
+                                    <select name="order_sort" id="order_sort" class="form-control">
+                                        <option value="{{Request::url()}}?sort_by=none">Sort ORDER DATE by</option>
+                                        <option value="{{Request::url()}}?sort_by=asc" {{Request::fullurl() == Request::url().'?sort_by=asc' ? "selected" : ""}}>Ascending</option>
+                                        <option value="{{Request::url()}}?sort_by=desc" {{Request::fullurl() == Request::url().'?sort_by=desc' ? "selected" : ""}}>Descending</option>
+                                    </select>
+                                </form>
+                                <form class="input-group input-group-outline m-3">
+                                    @csrf
+                                    <select name="order_filter" id="order_filter" class="form-control">
+                                        <option value="{{Request::url()}}?filter_with=none">Filter ORDER STATUS by</option>
+                                        <option value="{{Request::url()}}?filter_with=1" {{Request::fullurl() == Request::url().'?filter_with=1' ? "selected" : ""}}>Not handle</option>
+                                        <option value="{{Request::url()}}?filter_with=2" {{Request::fullurl() == Request::url().'?filter_with=2' ? "selected" : ""}}>Delivering</option>
+                                        <option value="{{Request::url()}}?filter_with=3" {{Request::fullurl() == Request::url().'?filter_with=3' ? "selected" : ""}}>Cancel/ Pending</option>
+                                        <option value="{{Request::url()}}?filter_with=4" {{Request::fullurl() == Request::url().'?filter_with=4' ? "selected" : ""}}>Complete</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
@@ -94,9 +122,7 @@
                                         </a>
                                     </td>
                                     <td class="align-middle">
-                                        <a onclick="return confirm('Are you sure to delete?')" 
-                                                href="{{URL::to('/delete-slider/'.$sli->slider_id)}}"
-                                                    class="font-weight-bold" data-toggle="tooltip">
+                                        <a onclick="return confirm('Are you sure to delete?')" href="{{URL::to('/delete-slider/'.$sli->slider_id)}}" class="font-weight-bold" data-toggle="tooltip">
                                             <i class="material-icons" style="font-size: 30px;">
                                                 delete
                                             </i>

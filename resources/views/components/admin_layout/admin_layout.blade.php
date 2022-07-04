@@ -711,11 +711,11 @@
     </script>
     <script>
         $(function(){
-            $('#myOrder').keyup(function() {
+            $('#myFilter').keyup(function() {
                 var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("myOrder");
+                input = document.getElementById("myFilter");
                 filter = input.value.toUpperCase();
-                table = document.getElementById("orderTable");
+                table = document.getElementById("filterTable");
                 tr = table.getElementsByTagName("tr");
                 for (i = 0; i < tr.length; i++) {
                     td = tr[i].getElementsByTagName("td")[1];

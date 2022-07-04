@@ -21,7 +21,7 @@
                                     <label class="form-label">
                                         Search your order code
                                     </label>
-                                    <input type="text" id="myOrder" onkeyup="myFilterOrder()" class="form-control">
+                                    <input type="text" id="myFilter" onkeyup="myFilter()" class="form-control">
                                 </div>
                                 <form class="input-group input-group-outline m-3">
                                     @csrf
@@ -43,7 +43,7 @@
                                 </form>
                             </div>
                         </div>
-                        <table class="table align-items-center mb-0" id="orderTable">
+                        <table class="table align-items-center mb-0" id="filterTable">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
