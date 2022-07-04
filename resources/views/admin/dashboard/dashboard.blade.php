@@ -16,26 +16,19 @@
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
                     @php
-                    if($visitors_now_count > $visitors_yesterday_count){
-                        $increase = $visitors_now_count - $visitors_yesterday_count;
-                    }elseif($visitors_now_count < $visitors_yesterday_count)
-                    { 
-                        $increase=$visitors_yesterday_count - $visitors_now_count; 
-                    }else{ 
-                        $increase=0; 
-                    } 
-                    if($visitors_yesterday_count !=0){ 
-                        $percentage_increase= $increase / $visitors_yesterday_count * 100; 
-                    } else{ 
-                        $percentage_increase=$visitors_now_count; 
-                    } 
-                    @endphp 
-                    @if($visitors_now_count !=0) 
+                        if($visitors_yesterday_count != 0){
+                            $increase = $visitors_now_count - $visitors_yesterday_count;
+                            $percentage_increase = $increase / $visitors_yesterday_count * 100;
+                        }else{
+                            $increase=0;
+                            $percentage_increase = $visitors_now_count;
+                        }
+                    @endphp
+
                     @if($increase < 0) 
-                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
-                    @else
+                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
+                    @elseif($increase > 0)
                         <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
-                    @endif
                     @else
                         <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than yesterday</p>
                     @endif
@@ -56,15 +49,23 @@
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
                     @php
-                    if($visitors_of_this_month_count > $visitors_of_last_month_count){
-                    $increase = $visitors_of_this_month_count - $visitors_of_last_month_count;
-                    }elseif($visitors_of_this_month_count < $visitors_of_last_month_count){ $increase=$visitors_of_last_month_count - $visitors_of_this_month_count; }else{ $increase=0; } if($visitors_of_last_month_count !=0){ $percentage_increase=$increase / $visitors_of_last_month_count * 100; } else{ $percentage_increase=$visitors_of_this_month_count; } @endphp @if($visitors_of_last_month_count !=0) @if($increase < 0) <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-{{number_format($percentage_increase, 1)}}%</span> than last month</p>
-                        @else
+                        if($visitors_of_last_month_count != 0){
+                            $increase = $visitors_of_this_month_count - $visitors_of_last_month_count;
+                            $percentage_increase = $increase / $visitors_of_last_month_count * 100;
+                        }else{
+                            $increase=0;
+                            $percentage_increase = $visitors_of_this_month_count;
+                        }
+                    @endphp
+
+                    @if($increase < 0) 
+                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> than last month</p>
+                    @elseif($increase > 0)
                         <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than last month</p>
-                        @endif
-                        @else
+                    @else
                         <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than last month</p>
-                        @endif
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -82,16 +83,22 @@
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
                     @php
-                    if($visitors_of_this_year_count > $visitors_of_last_year_count){
-                    $increase = $visitors_of_this_year_count - $visitors_of_last_year_count;
-                    }elseif($visitors_of_this_year_count < $visitors_of_last_year_count){ $increase=$visitors_of_last_year_count - $visitors_of_this_year_count; }else{ $increase=0; } if($visitors_of_last_year_count !=0){ $percentage_increase=$increase / $visitors_of_last_year_count * 100; } else{ $percentage_increase=$visitors_of_this_year_count; } @endphp @if($visitors_of_last_year_count !=0) @if($increase < 0) <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-{{number_format($percentage_increase, 1)}}%</span> than last year</p>
-                        @else
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than last year</p>
-                        @endif
-                        @else
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than last year</p>
-                        @endif
+                        if($visitors_of_last_year_count != 0){
+                            $increase = $visitors_of_this_year_count - $visitors_of_last_year_count;
+                            $percentage_increase = $increase / $visitors_of_last_year_count * 100;
+                        }else{
+                            $increase=0;
+                            $percentage_increase = $visitors_of_this_year_count;
+                        }
+                    @endphp
 
+                    @if($increase < 0) 
+                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> than last year</p>
+                    @elseif($increase > 0)
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than last year</p>
+                    @else
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than last year</p>
+                    @endif
                 </div>
             </div>
         </div>
