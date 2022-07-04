@@ -781,6 +781,36 @@
                     return false;
                 });
             });
+
+            $(document).ready(function() {
+                $('#product_sort').on('change', function() {
+                    var url = $(this).val();
+                    if (url) {
+                        window.location = url;
+                    }
+                    return false;
+                });
+            });
+
+            $(document).ready(function() {
+                $('#product_filter_category').on('change', function() {
+                    var url = $(this).val();
+                    if (url) {
+                        window.location = url;
+                    }
+                    return false;
+                });
+            });
+
+            $(document).ready(function() {
+                $('#product_filter_subcategory').on('change', function() {
+                    var url = $(this).val();
+                    if (url) {
+                        window.location = url;
+                    }
+                    return false;
+                });
+            });
     </script>
 </body>
 

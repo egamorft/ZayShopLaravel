@@ -12,13 +12,59 @@ class ProductController extends Controller
     //Admin Page
     public function show_product()
     {
-        $show_product = DB::table('tbl_product')
-            ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
-            ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
-            ->orderBy('tbl_product.product_id', 'desc')
-            ->paginate(4);
+        $get_category = DB::table('tbl_category')
+            ->where('category_status', '1')
+            ->get();
+        $get_subcategory = DB::table('tbl_subcategory')
+            ->where('subcategory_status', '1')
+            ->get();
 
-        $manager_product = view('admin.product.show_product')->with('show_product', $show_product);
+
+        if (isset($_GET['sort_by'])) {
+            $sort_by = $_GET['sort_by'];
+            if ($sort_by == 'asc') {
+                $show_product = DB::table('tbl_product')
+                ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                ->orderBy('tbl_product.product_price', 'asc')
+                ->paginate(4)->appends(request()->query());
+            } else if ($sort_by == 'desc') {
+                $show_product = DB::table('tbl_product')
+                ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                ->orderBy('tbl_product.product_price', 'desc')
+                ->paginate(4)->appends(request()->query());
+            } else {
+                $show_product = DB::table('tbl_product')
+                    ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                    ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                    ->orderBy('tbl_product.product_id', 'desc')
+                    ->paginate(4)->appends(request()->query());
+            }
+          } elseif (isset($_GET['filter_status_with'])) {
+            $filter_status_with = $_GET['filter_status_with'];
+            if ($filter_status_with == '1') {
+                $show_product = DB::table('tbl_product')
+                    ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                    ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                    ->where('tbl_product.product_status', '1')
+                    ->paginate(4)->appends(request()->query());
+            } else if ($filter_status_with == '0') {
+                $show_product = DB::table('tbl_product')
+                    ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                    ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                    ->where('tbl_product.product_status', '0')
+                    ->paginate(4)->appends(request()->query());
+          }
+        } else {
+            $show_product = DB::table('tbl_product')
+                ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                ->orderBy('tbl_product.product_id', 'desc')
+                ->paginate(4)->appends(request()->query());
+          }
+
+        $manager_product = view('admin.product.show_product')->with(compact('show_product', 'get_category', 'get_subcategory'));
         return view('components.admin_layout.admin_layout')->with('admin.show_product', $manager_product);
     }
 
