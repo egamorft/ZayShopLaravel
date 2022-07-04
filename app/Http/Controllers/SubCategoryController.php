@@ -13,15 +13,23 @@ class SubCategoryController extends Controller
     //Admin Page
     public function show_sub_category()
     {
-        $show_sub_category = DB::table('tbl_subcategory')
-            ->join(
-                'tbl_category',
-                'tbl_subcategory.category_id',
-                '=',
-                'tbl_category.category_id'
-            )
-            ->orderBy('subcategory_id', 'desc')
-            ->paginate(4);
+        if (isset($_GET['filter_with'])) {
+            $filter_with = $_GET['filter_with'];
+            if ($filter_with == '1') {
+                $show_sub_category = DB::table('tbl_subcategory')->join('tbl_category', 'tbl_subcategory.category_id', '=', 'tbl_category.category_id')
+                    ->where('subcategory_status', '1')->paginate(4)->appends(request()->query());
+            } else if ($filter_with == '0') {
+                $show_sub_category = DB::table('tbl_subcategory')->join('tbl_category', 'tbl_subcategory.category_id', '=', 'tbl_category.category_id')
+                    ->where('subcategory_status', '0')->paginate(4)->appends(request()->query());
+            } else {
+                $show_sub_category = DB::table('tbl_subcategory')->join('tbl_category', 'tbl_subcategory.category_id', '=', 'tbl_category.category_id')
+                    ->orderBy('subcategory_id', 'desc')->paginate(4)->appends(request()->query());
+            }
+        } else {
+            $show_sub_category = DB::table('tbl_subcategory')->join('tbl_category', 'tbl_subcategory.category_id', '=', 'tbl_category.category_id')
+                    ->orderBy('subcategory_id', 'desc')->paginate(4)->appends(request()->query());
+        }
+
 
         $manager_sub_category = view('admin.subcategory.show_sub_category')
             ->with('show_sub_category', $show_sub_category);

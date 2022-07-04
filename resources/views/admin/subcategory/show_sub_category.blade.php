@@ -23,7 +23,25 @@
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
+                        <div class="container mt-3">
+                            <div class="d-flex justify-content-between">
+                                <div class="input-group input-group-outline m-3">
+                                    <label class="form-label">
+                                            Search your subcategory name
+                                    </label>
+                                    <input type="text" id="myFilter" onkeyup="myFilter()" class="form-control">
+                                </div>
+                                <form class="input-group input-group-outline m-3">
+                                    @csrf
+                                    <select name="category_filter" id="category_filter" class="form-control">
+                                        <option value="{{Request::url()}}?filter_with=none">Filter SUBCATEGORY STATUS by</option>
+                                        <option value="{{Request::url()}}?filter_with=1" {{Request::fullurl() == Request::url().'?filter_with=1' ? "selected" : ""}}>Show</option>
+                                        <option value="{{Request::url()}}?filter_with=0" {{Request::fullurl() == Request::url().'?filter_with=0' ? "selected" : ""}}>Hide</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        <table class="table align-items-center mb-0" id="filterTable">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">

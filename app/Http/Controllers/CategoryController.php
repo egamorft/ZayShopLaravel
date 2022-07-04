@@ -12,9 +12,20 @@ class CategoryController extends Controller
 {
     public function show_category()
     {
-        $show_category = DB::table('tbl_category')->orderBy('category_id', 'desc')->paginate(4);
-        $manager_category = view('admin.category.show_category')->with('show_category', $show_category);
+        if (isset($_GET['filter_with'])) {
+            $filter_with = $_GET['filter_with'];
+            if ($filter_with == '1') {
+                $show_category = DB::table('tbl_category')->where('category_status', '1')->paginate(4)->appends(request()->query());
+            } else if ($filter_with == '0') {
+                $show_category = DB::table('tbl_category')->where('category_status', '0')->paginate(4)->appends(request()->query());
+            } else {
+                $show_category = DB::table('tbl_category')->orderBy('category_id', 'desc')->paginate(4)->appends(request()->query());
+            }
+        } else {
+            $show_category = DB::table('tbl_category')->orderBy('category_id', 'desc')->paginate(4)->appends(request()->query());
+        }
 
+        $manager_category = view('admin.category.show_category')->with('show_category', $show_category);
         return view('components.admin_layout.admin_layout')->with('admin.category.show_category', $manager_category);
     }
     public function add_category()

@@ -12,7 +12,18 @@ class SliderController extends Controller
     //Admin Page
     public function show_slider()
     {
-        $slider = Slider::orderBy('slider_id', 'desc')->paginate(2);
+        if (isset($_GET['filter_with'])) {
+            $filter_with = $_GET['filter_with'];
+            if ($filter_with == '1') {
+                $slider = Slider::where('slider_status', '1')->paginate(2)->appends(request()->query());
+            } else if ($filter_with == '0') {
+                $slider = Slider::where('slider_status', '0')->paginate(2)->appends(request()->query());
+            } else {
+                $slider = Slider::orderBy('slider_id', 'desc')->paginate(2)->appends(request()->query());
+            }
+        } else {
+            $slider = Slider::orderBy('slider_id', 'desc')->paginate(2)->appends(request()->query());
+        }
 
         return view('admin.slider.show_slider')->with('slider', $slider);
     }

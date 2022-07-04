@@ -751,6 +751,36 @@
                     return false;
                 });
             });
+
+            $(document).ready(function() {
+                $('#slider_filter').on('change', function() {
+                    var url = $(this).val();
+                    if (url) {
+                        window.location = url;
+                    }
+                    return false;
+                });
+            });
+
+            $(document).ready(function() {
+                $('#category_filter').on('change', function() {
+                    var url = $(this).val();
+                    if (url) {
+                        window.location = url;
+                    }
+                    return false;
+                });
+            });
+
+            $(document).ready(function() {
+                $('#subcategory_filter').on('change', function() {
+                    var url = $(this).val();
+                    if (url) {
+                        window.location = url;
+                    }
+                    return false;
+                });
+            });
     </script>
 </body>
 
