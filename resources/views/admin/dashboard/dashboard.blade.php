@@ -17,14 +17,28 @@
                 <div class="card-footer p-3">
                     @php
                     if($visitors_now_count > $visitors_yesterday_count){
-                    $increase = $visitors_now_count - $visitors_yesterday_count;
-                    }elseif($visitors_now_count < $visitors_yesterday_count){ $increase=$visitors_yesterday_count - $visitors_now_count; }else{ $increase=0; } if($visitors_now_count !=0){ $percentage_increase=$increase / $visitors_yesterday_count * 100; } else{ $percentage_increase=$visitors_now_count; } @endphp @if($visitors_now_count !=0) @if($increase < 0) <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
-                        @else
+                        $increase = $visitors_now_count - $visitors_yesterday_count;
+                    }elseif($visitors_now_count < $visitors_yesterday_count)
+                    { 
+                        $increase=$visitors_yesterday_count - $visitors_now_count; 
+                    }else{ 
+                        $increase=0; 
+                    } 
+                    if($visitors_yesterday_count !=0){ 
+                        $percentage_increase= $increase / $visitors_yesterday_count * 100; 
+                    } else{ 
+                        $percentage_increase=$visitors_now_count; 
+                    } 
+                    @endphp 
+                    @if($visitors_now_count !=0) 
+                    @if($increase < 0) 
+                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
+                    @else
                         <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
-                        @endif
-                        @else
+                    @endif
+                    @else
                         <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than yesterday</p>
-                        @endif
+                    @endif
                 </div>
             </div>
         </div>
