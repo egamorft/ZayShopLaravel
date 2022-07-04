@@ -18,8 +18,29 @@ class OrderController extends Controller
 {
   public function show_order()
   {
-    $order = Order::orderBy('order_status', 'asc')->orderBy('created_at', 'desc')->paginate(6);
-
+    if (isset($_GET['sort_by'])) {
+      $sort_by = $_GET['sort_by'];
+      if ($sort_by == 'asc') {
+        $order = Order::orderBy('created_at', 'asc')->paginate(6)->appends(request()->query());
+      } else if ($sort_by == 'desc') {
+        $order = Order::orderBy('created_at', 'desc')->paginate(6)->appends(request()->query());
+      } else {
+        $order = Order::orderBy('order_status', 'asc')->orderBy('created_at', 'desc')->paginate(6)->appends(request()->query());
+      }
+    } elseif (isset($_GET['filter_with'])) {
+      $filter_with = $_GET['filter_with'];
+      if ($filter_with == '1') {
+        $order = Order::where('order_status', '1')->paginate(6)->appends(request()->query());
+      } else if ($filter_with == '2') {
+        $order = Order::where('order_status', '2')->paginate(6)->appends(request()->query());
+      } else if ($filter_with == '3') {
+        $order = Order::where('order_status', '3')->paginate(6)->appends(request()->query());
+      } else if ($filter_with == '4') {
+        $order = Order::where('order_status', '4')->paginate(6)->appends(request()->query());
+      }
+    } else {
+      $order = Order::orderBy('order_status', 'asc')->orderBy('created_at', 'desc')->paginate(6)->appends(request()->query());
+    }
     return view('admin.order.show_order')->with(compact('order'));
   }
 
