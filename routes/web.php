@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -228,3 +229,6 @@ Route::post('/save-profile', 'AccountController@save_profile');
 Route::get('/profile/chgpwd', 'AccountController@change_password')->name('profile.chgpwd');
 
 Route::post('/save-password', 'AccountController@save_password');
+
+//Send mail
+Route::post('/send-mail-confirm-order', 'SendMailController@confirm_order');

@@ -603,25 +603,39 @@ https://templatemo.com/tm-559-zay-shop
                                         _token: _token
                                     },
                                     success: function() {
-                                        Swal.fire({
-                                            position: 'center',
-                                            icon: 'success',
-                                            title: 'Your order has been saved',
-                                            showConfirmButton: false,
-                                            timer: 1500
-                                        })
-                                        if (payment_select == 1) {
-                                            document.getElementById("shipping_method").innerHTML = 'COD';
-                                        } else if (payment_select == 2) {
-                                            document.getElementById("shipping_method").innerHTML = 'Paypal';
-                                        } else {
-                                            document.getElementById("shipping_method").innerHTML = 'Unidentified';
-                                        }
-                                        document.getElementById("shipping_address").innerHTML = shipping_address;
-                                        $("#OrderBill").modal("toggle");
+                                        $.ajax({
+                                            url: '{{url("/send-mail-confirm-order")}}',
+                                            method: 'POST',
+                                            data: {
+                                                shipping_email: shipping_email,
+                                                shipping_name: shipping_name,
+                                                shipping_address: shipping_address,
+                                                shipping_phone: shipping_phone,
+                                                shipping_notes: shipping_notes,
+                                                _token: _token
+                                            },
+                                            success: function() {
+                                                Swal.fire({
+                                                    position: 'center',
+                                                    icon: 'success',
+                                                    title: 'Your order has been saved',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                })
+                                                if (payment_select == 1) {
+                                                    document.getElementById("shipping_method").innerHTML = 'COD';
+                                                } else if (payment_select == 2) {
+                                                    document.getElementById("shipping_method").innerHTML = 'Paypal';
+                                                } else {
+                                                    document.getElementById("shipping_method").innerHTML = 'Unidentified';
+                                                }
+                                                document.getElementById("shipping_address").innerHTML = shipping_address;
+                                                $("#OrderBill").modal("toggle");
 
-                                        $('#closeBill').click(function() {
-                                            window.location.href = "{{ URL::to('/profile/order')}}";
+                                                $('#closeBill').click(function() {
+                                                    window.location.href = "{{ URL::to('/profile/order')}}";
+                                                });
+                                            }
                                         });
 
                                     }
