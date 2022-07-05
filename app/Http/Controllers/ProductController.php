@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -41,7 +42,7 @@ class ProductController extends Controller
                     ->orderBy('tbl_product.product_id', 'desc')
                     ->paginate(4)->appends(request()->query());
             }
-          } elseif (isset($_GET['filter_status_with'])) {
+        } elseif (isset($_GET['filter_status_with'])) {
             $filter_status_with = $_GET['filter_status_with'];
             if ($filter_status_with == '1') {
                 $show_product = DB::table('tbl_product')
@@ -55,8 +56,46 @@ class ProductController extends Controller
                     ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
                     ->where('tbl_product.product_status', '0')
                     ->paginate(4)->appends(request()->query());
-          }
-        } else {
+            }else{
+                $show_product = DB::table('tbl_product')
+                ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                ->orderBy('tbl_product.product_id', 'desc')
+                ->paginate(4)->appends(request()->query());
+            }
+        } elseif (isset($_GET['filter_category_with'])) {
+            $filter_category_with = $_GET['filter_category_with'];
+            if(is_numeric($filter_category_with)){
+                $show_product = DB::table('tbl_product')
+                ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                ->where('tbl_product.category_id', $filter_category_with)
+                ->paginate(4)->appends(request()->query());
+            }else{
+                $show_product = DB::table('tbl_product')
+                    ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                    ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                    ->orderBy('tbl_product.product_id', 'desc')
+                    ->paginate(4)->appends(request()->query());
+            }
+        } elseif (isset($_GET['filter_subcategory_with'])) {
+            $filter_subcategory_with = $_GET['filter_subcategory_with'];
+            if(is_numeric($filter_subcategory_with)){
+                $show_product = DB::table('tbl_product')
+                ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                ->where('tbl_product.subcategory_id', $filter_subcategory_with)
+                ->paginate(4)->appends(request()->query());
+            }else{
+                $show_product = DB::table('tbl_product')
+                    ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
+                    ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
+                    ->orderBy('tbl_product.product_id', 'desc')
+                    ->paginate(4)->appends(request()->query());
+
+            }
+        
+        }else {
             $show_product = DB::table('tbl_product')
                 ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
                 ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')

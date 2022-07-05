@@ -45,7 +45,7 @@
                                         <option value="{{Request::url()}}?filter_category_with=none">Filter CATEGORY by</option>
                                         @foreach($get_category as $key => $cate)
                                         <option value="{{Request::url()}}?filter_category_with={{$cate->category_id}}" 
-                                                        {{Request::fullurl() == Request::url().'?filter_category_with=$cate->category_id' ? "selected" : ""}}>{{$cate->category_name}}
+                                                        {{Request::fullurl() == Request::url().'?filter_category_with='.$cate->category_id ? "selected" : ""}}>{{$cate->category_name}}
                                         </option>
                                         @endforeach
                                     </select>
@@ -56,14 +56,14 @@
                                         <option value="{{Request::url()}}?filter_subcategory_with=none">Filter SUBCATEGORY by</option>
                                         @foreach($get_subcategory as $key => $subcate)
                                         <option value="{{Request::url()}}?filter_subcategory_with={{$subcate->subcategory_id}}" 
-                                                        {{Request::fullurl() == Request::url().'?filter_subcategory_with=$subcate->subcategory_id' ? "selected" : ""}}>{{$subcate->subcategory_name}}</option>
+                                                        {{Request::fullurl() == Request::url().'?filter_subcategory_with='.$subcate->subcategory_id ? "selected" : ""}}>{{$subcate->subcategory_name}}</option>
                                         @endforeach
                                     </select>
                                 </form>
                                 <form class="input-group input-group-outline m-3">
                                     @csrf
                                     <select name="product_filter_status" id="product_filter_status" class="form-control">
-                                        <option value="{{Request::url()}}?filter_status_with=none">Filter ORDER STATUS by</option>
+                                        <option value="{{Request::url()}}?filter_status_with=none">Filter PRODUCT STATUS by</option>
                                         <option value="{{Request::url()}}?filter_status_with=1" {{Request::fullurl() == Request::url().'?filter_status_with=1' ? "selected" : ""}}>Show</option>
                                         <option value="{{Request::url()}}?filter_status_with=0" {{Request::fullurl() == Request::url().'?filter_status_with=0' ? "selected" : ""}}>Hide</option>
                                     </select>
