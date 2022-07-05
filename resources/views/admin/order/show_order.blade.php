@@ -65,6 +65,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @if(!$order->isEmpty())
                                 @foreach($order as $key => $od)
                                 <tr>
                                     <td>
@@ -122,6 +123,15 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                            @else
+                            <td colspan="6">
+                                <center>
+                                    <h3>
+                                        Nothing here
+                                    </h3>
+                                </center>
+                            </td>
+                            @endif
                             </tbody>
                         </table>
                     </div>

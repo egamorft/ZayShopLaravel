@@ -43,21 +43,29 @@
                                     @csrf
                                     <select name="product_filter_category" id="product_filter_category" class="form-control">
                                         <option value="{{Request::url()}}?filter_category_with=none">Filter CATEGORY by</option>
+                                        @if(!$get_category->isEmpty())
                                         @foreach($get_category as $key => $cate)
                                         <option value="{{Request::url()}}?filter_category_with={{$cate->category_id}}" 
                                                         {{Request::fullurl() == Request::url().'?filter_category_with='.$cate->category_id ? "selected" : ""}}>{{$cate->category_name}}
                                         </option>
                                         @endforeach
+                                        @else
+                                        <option disabled>No category available</option>
+                                        @endif
                                     </select>
                                 </form>
                                 <form class="input-group input-group-outline m-3">
                                     @csrf
                                     <select name="product_filter_subcategory" id="product_filter_subcategory" class="form-control">
                                         <option value="{{Request::url()}}?filter_subcategory_with=none">Filter SUBCATEGORY by</option>
+                                        @if(!$get_subcategory->isEmpty())
                                         @foreach($get_subcategory as $key => $subcate)
                                         <option value="{{Request::url()}}?filter_subcategory_with={{$subcate->subcategory_id}}" 
                                                         {{Request::fullurl() == Request::url().'?filter_subcategory_with='.$subcate->subcategory_id ? "selected" : ""}}>{{$subcate->subcategory_name}}</option>
                                         @endforeach
+                                        @else
+                                        <option disabled>No subcategory available</option>
+                                        @endif
                                     </select>
                                 </form>
                                 <form class="input-group input-group-outline m-3">
@@ -102,6 +110,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if(!$show_product->isEmpty())
                                 @foreach($show_product as $key => $pro)
                                 <tr>
                                     <td>
@@ -179,6 +188,15 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @else
+                                <td colspan="8"> 
+                                    <center>
+                                        <h3>
+                                            Nothing here
+                                        </h3>
+                                    </center>
+                                </td>
+                                @endif
                             </tbody>
                         </table>
                     </div>
