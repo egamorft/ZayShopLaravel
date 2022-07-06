@@ -603,6 +603,13 @@ https://templatemo.com/tm-559-zay-shop
                                         _token: _token
                                     },
                                     success: function() {
+                                        Swal.fire({
+                                            position: 'center',
+                                            icon: 'success',
+                                            title: 'Your order has been saved',
+                                            showConfirmButton: false,
+                                            timer: 5000
+                                        })
                                         $.ajax({
                                             url: '{{url("/send-mail-confirm-order")}}',
                                             method: 'POST',
@@ -615,13 +622,6 @@ https://templatemo.com/tm-559-zay-shop
                                                 _token: _token
                                             },
                                             success: function() {
-                                                Swal.fire({
-                                                    position: 'center',
-                                                    icon: 'success',
-                                                    title: 'Your order has been saved',
-                                                    showConfirmButton: false,
-                                                    timer: 1500
-                                                })
                                                 if (payment_select == 1) {
                                                     document.getElementById("shipping_method").innerHTML = 'COD';
                                                 } else if (payment_select == 2) {
