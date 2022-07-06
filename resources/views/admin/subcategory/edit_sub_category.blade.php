@@ -4,6 +4,7 @@
 
 <div class="container">
     <div class="col-lg-11">
+    @if(!$edit_sub_category->isEmpty())
     @foreach($edit_sub_category as $key => $edit_value)
         <div class="card">
             <div class="card-header pb-0">
@@ -44,11 +45,15 @@
                             <!-- <label for="category_id" class="form-label">Choose your category from the list:</label> -->
                             <input class="form-control" list="category" name="category_id" id="category_id" value="{{$edit_value->category_id}}">
                             <datalist id="category">
+                            @if(!$get_category->isEmpty())
                                 @foreach($get_category as $key => $get_category)
                                     <option {{($edit_value->category_id == $get_category->category_id) ? 'selected' : ''}}
                                           value="{{$get_category->category_id}}">
                                             {{$get_category->category_name}}
                                 @endforeach
+                                @else
+                                <option disabled>No category available</option>
+                            @endif
                             </datalist>
                         </div>
                         <div class="text-center">
@@ -61,6 +66,13 @@
             </div>
         </div>
         @endforeach
+        @else
+        <center>
+            <h3>
+                Somthing went wrong
+            </h3>
+        </center>
+        @endif
     </div>
 </div>
 

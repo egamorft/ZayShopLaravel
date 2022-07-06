@@ -4,6 +4,7 @@
 
 <div class="container">
     <div class="col-lg-11">
+    @if(!$edit_category->isEmpty())
     @foreach($edit_category as $key => $edit_value)
         <div class="card">
             <div class="card-header pb-0">
@@ -50,6 +51,13 @@
             </div>
         </div>
         @endforeach
+        @else
+        <center>
+            <h3>
+                Nothing here
+            </h3>
+        </center>
+        @endif
     </div>
 </div>
 

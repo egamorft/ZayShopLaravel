@@ -61,6 +61,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @if(!$show_sub_category->isEmpty())
                                 @foreach($show_sub_category as $key => $sub)
                                 <tr>
                                     <td>
@@ -120,6 +121,15 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @else
+                                <td colspan="6">
+                                    <center>
+                                        <h3>
+                                            Nothing here
+                                        </h3>
+                                    </center>
+                                </td>
+                            @endif
                             </tbody>
                         </table>
                     </div>

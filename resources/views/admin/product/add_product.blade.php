@@ -91,11 +91,17 @@
                                 <option value="">
                                     Choose your category
                                 </option>
+                                @if(!$get_category->isEmpty())
                                 @foreach($get_category as $key => $get_category)
                                     <option value="{{$get_category->category_id}}" >
                                         {{$get_category->category_name}}
                                     </option>
                                 @endforeach
+                                @else
+                                <option disabled>
+                                    Something went wrong
+                                </option>
+                                @endif
                             </select>
                         </div>
                         <div class="input-group input-group-outline mb-3">

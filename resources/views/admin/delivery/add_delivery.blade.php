@@ -30,11 +30,15 @@
                                 <option value="">
                                     -----Choose your city-----
                                 </option>
+                                @if(!$city->isEmpty())
                                 @foreach($city as $key => $ci)
                                     <option value="{{$ci->matp}}">
                                         {{$ci->name_city}}
                                     </option>
                                 @endforeach
+                                @else
+                                <option disabled>Something went wrong</option>
+                                @endif
                             </select>
                         </div>
                         <div class="input-group input-group-outline mb-3">

@@ -49,6 +49,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @if(!$show_coupon->isEmpty())
                                 @foreach($show_coupon as $key => $cou)
                                 <tr>
                                     <td>
@@ -118,6 +119,15 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @else
+                                <td colspan="7">
+                                    <center>
+                                        <h3>
+                                            Nothing here
+                                        </h3>
+                                    </center>
+                                </td>
+                                @endif
                             </tbody>
                         </table>
                     </div>

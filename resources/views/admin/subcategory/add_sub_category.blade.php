@@ -47,9 +47,13 @@
                             </label>
                             <input class="form-control" list="category" name="category_id" id="category_id">
                             <datalist id="category">
+                            @if(!$get_category->isEmpty())
                                 @foreach($get_category as $key => $get_category)
                                     <option value="{{$get_category->category_id}}"> {{$get_category->category_name}}
                                 @endforeach
+                                @else
+                                <option disabled>No category available</option>
+                            @endif
                             </datalist>
                         </div>
                         <div class="form-check mb-3 ">

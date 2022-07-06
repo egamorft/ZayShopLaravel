@@ -58,6 +58,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(!$show_category->isEmpty())
                                     @foreach($show_category as $key => $cate)
                                     <tr>
                                         <td>
@@ -112,6 +113,15 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @else
+                                    <td colspan="5">
+                                        <center>
+                                            <h3>
+                                                Nothing here
+                                            </h3>
+                                        </center>
+                                    </td>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

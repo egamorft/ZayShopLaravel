@@ -4,6 +4,7 @@
 
 <div class="container">
     <div class="col-lg-11">
+    @if(!$edit_product->isEmpty())
         @foreach($edit_product as $key => $edit_value)
         <div class="card">
             <div class="card-header pb-0">
@@ -77,20 +78,28 @@
                                 <option value="">
                                     Choose your category
                                 </option>
+                                @if(!$get_category->isEmpty())
                                 @foreach($get_category as $key => $get_category)
                                     <option value="{{$get_category->category_id}}" 
                                         {{$get_category->category_id == $edit_value->category_id?'selected':''}}>
                                             {{$get_category->category_name}}
                                 @endforeach
+                                @else
+                                <option disabled>Something went wrong</option>
+                                @endif
                             </select>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <select name="subcategory" id="subcategory" class="form-control subcategory choose">
+                                @if(!$get_subcategory->isEmpty())
                                 @foreach($get_subcategory as $key => $get_subcategory)
                                     <option value="{{$get_subcategory->subcategory_id}}" 
                                         {{$get_subcategory->subcategory_id == $edit_value->subcategory_id?'selected':''}}>
                                             {{$get_subcategory->subcategory_name}}
                                 @endforeach
+                                @else
+                                <option disabled>Something went wrong</option>
+                                @endif
                             </select>
                         </div>
                         <div class="text-center">
@@ -103,6 +112,13 @@
             </div>
         </div>
         @endforeach
+        @else
+        <center>
+            <h3>
+                Something went wrong
+            </h3>
+        </center>
+        @endif
     </div>
 </div>
 
