@@ -25,6 +25,9 @@ class AdminController extends Controller
         //Đầu tháng trước
         $early_last_month = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
 
+        //Tầm này tháng trước
+        $now_last_month = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->toDateString();
+
         //Cuối tháng trước
         $end_of_last_month = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
 
@@ -47,7 +50,7 @@ class AdminController extends Controller
         $yesterday = Carbon::now('Asia/Ho_Chi_Minh')->subDay(1)->toDateString();
 
         //total last month
-        $visitors_of_last_month = Visitors::whereBetween('visitors_date', [$early_last_month, $end_of_last_month])->get();
+        $visitors_of_last_month = Visitors::whereBetween('visitors_date', [$early_last_month, $now_last_month])->get();
         $visitors_of_last_month_count = $visitors_of_last_month->count();
 
         //total this month
