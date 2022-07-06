@@ -7,10 +7,9 @@
     <div class="row">
 
         <div class="col-lg-3">
-            <h1 class="h2 pb-4">
-                Categories
-            </h1>
+            <h1 class="h2 pb-4">Categories</h1>
             <ul class="list-unstyled templatemo-accordion">
+                @if(!$category->isEmpty())
                 <li class="pb-3">
                     @foreach($category as $key => $cate)
                     <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="{{URL::to('/category/'.$cate->category_id)}}">
@@ -20,16 +19,17 @@
                     <ul class="collapse show list-unstyled pl-3">
                         @foreach($subcategory as $key => $sub)
                         @if($cate->category_id == $sub->category_id)
-                        <li>
-                            <a class="text-decoration-none" href="{{URL::to('/subcategory/'.$sub->subcategory_id)}}">
-                                {{$sub->subcategory_name}}
-                            </a>
-                        </li>
+                        <li><a class="text-decoration-none" href="{{URL::to('/subcategory/'.$sub->subcategory_id)}}">{{$sub->subcategory_name}}</a></li>
                         @endif
                         @endforeach
                     </ul>
                     @endforeach
                 </li>
+                @else
+                <li aria-disabled="true">
+                    No category available
+                </li>
+                @endif
             </ul>
         </div>
 
@@ -64,6 +64,7 @@
                 </div>
             </div>
             <div class="row">
+            @if(!$category_by_id->isEmpty())
                 @foreach($category_by_id as $key => $pro)
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
@@ -118,6 +119,13 @@
                     </div>
                 </div>
                 @endforeach
+                @else
+                <center>
+                    <h3>
+                        No product here
+                    </h3>
+                </center>
+            @endif
             </div>
             {!! $category_by_id->render('components.public_paginate.pagination')!!}
         </div>

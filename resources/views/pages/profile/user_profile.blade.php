@@ -51,6 +51,7 @@
                 </ul>
             </div>
         </div>
+        @if(Session::get('account_id'))
         <div class="col-lg-9 my-lg-0 my-1">
             <div id="main-content" class="bg-white border row">
                 <div class="col-md-3 border-right">
@@ -100,6 +101,17 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="col-lg-9 my-lg-0 my-1">
+            <center class="m-5">
+                <a class="nav-icon position-relative text-decoration-none text-dark" href="{{URL::to('/login')}}">
+                    You have to
+                    <i class="fa fa-fw fa-lock text-dark mr-3"></i>
+                    Login
+                </a>
+            </center>
+        </div>
+        @endif
     </div>
 
 </div>

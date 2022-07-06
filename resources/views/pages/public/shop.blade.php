@@ -9,6 +9,7 @@
         <div class="col-lg-3">
             <h1 class="h2 pb-4">Categories</h1>
             <ul class="list-unstyled templatemo-accordion">
+                @if(!$category->isEmpty())
                 <li class="pb-3">
                     @foreach($category as $key => $cate)
                     <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="{{URL::to('/category/'.$cate->category_id)}}">
@@ -24,6 +25,11 @@
                     </ul>
                     @endforeach
                 </li>
+                @else
+                <li aria-disabled="true">
+                    No category available
+                </li>
+                @endif
             </ul>
             <label for="amount">Sort price with</label>
             <form>
@@ -43,17 +49,6 @@
         <div class="col-lg-9">
             <div class="row">
                 <div class="col-md-6">
-                    <!-- <ul class="list-inline shop-top-menu pb-3 pt-1">
-                        <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Men's</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
-                        </li>
-                    </ul> -->
                 </div>
                 <div class="col-md-6 pb-4">
                     <form>
@@ -71,6 +66,7 @@
                 </div>
             </div>
             <div class="row">
+            @if(!$product->isEmpty())
                 @foreach($product as $key => $pro)
                 <div class="col-md-4">
                     <form action="{{URL::to('/save-cart-home')}}" method="POST">
@@ -115,6 +111,13 @@
                     </form>
                 </div>
                 @endforeach
+                @else
+                    <center>
+                        <h3>
+                            No product here
+                        </h3>
+                    </center>
+                @endif
             </div>
             {!! $product->render('components.public_paginate.pagination')!!}
         </div>

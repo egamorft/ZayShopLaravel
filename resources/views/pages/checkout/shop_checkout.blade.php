@@ -370,15 +370,19 @@ $orderDate = Carbon\Carbon::now();
         <h2>
             Your cart is still null
         </h2>
+        <hr style="width: 30%;">
         <a class="btn btn-success" href="{{URL::to('/shop')}}" role="button">
             Shopping now
         </a>
+        <hr style="width: 30%;">
         <h4>
             OR
         </h4>
+        <hr style="width: 30%;">
         <a class="btn btn-success" href="{{URL::to('/shop-cart')}}" role="button">
             Check your cart
         </a>
+        <hr style="width: 30%;">
     @else
     <div class="row g-5">
         <div class="col-md-5 col-lg-4 order-md-last">

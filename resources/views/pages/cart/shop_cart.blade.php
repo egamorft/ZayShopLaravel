@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                         <hr class="my-4">
-                                        @endforeach
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="col-lg-4 bg-grey">

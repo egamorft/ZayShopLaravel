@@ -184,7 +184,7 @@ https://templatemo.com/tm-559-zay-shop
                     } else {
                     ?>
                         <div class="dropdown">
-                            <a class="nav-icon position-relative text-decoration-none" href="login">
+                            <a class="nav-icon position-relative text-decoration-none" href="{{URL::to('/login')}}">
                                 <i class="fa fa-fw fa-lock text-dark mr-3"></i>
                                 Login
                             </a>

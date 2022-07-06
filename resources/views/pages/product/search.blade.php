@@ -5,10 +5,10 @@
 <!-- Start Content -->
 <div class="container py-5">
     <div class="row">
-
         <div class="col-lg-3">
             <h1 class="h2 pb-4">Categories</h1>
             <ul class="list-unstyled templatemo-accordion">
+                @if(!$category->isEmpty())
                 <li class="pb-3">
                     @foreach($category as $key => $cate)
                     <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="{{URL::to('/category/'.$cate->category_id)}}">
@@ -24,6 +24,11 @@
                     </ul>
                     @endforeach
                 </li>
+                @else
+                <li aria-disabled="true">
+                    No category available
+                </li>
+                @endif
             </ul>
         </div>
 
@@ -50,6 +55,7 @@
                 </div>
             </div>
             <div class="row">
+            @if(!$product_search->isEmpty())
                 @foreach($product_search as $key => $pro)
                 <div class="col-md-4">
                     <form action="{{URL::to('/save-cart-home')}}" method="POST">
@@ -108,6 +114,13 @@
                     </form>
                 </div>
                 @endforeach
+                @else
+                    <center>
+                        <h3>
+                            No result for "{{$_GET['keywords_submit']}}"
+                        </h3>
+                    </center>
+                @endif
             </div>
             {!! $product_search->render('components.public_paginate.pagination')!!}
         </div>

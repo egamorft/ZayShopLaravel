@@ -3,6 +3,7 @@
 @extends('components.alert.alert')
 
 <!-- Open Content -->
+@if(!$product_details->isEmpty())
 @foreach($product_details as $key => $pro)
 <section class="bg-light">
     <div class="container pb-5">
@@ -235,6 +236,8 @@
         </div>
 
         <!--Start Carousel Wrapper-->
+        
+    @if(!$related_product->isEmpty())
         <div class="container-fluid">
             <div class="row">
                 @foreach($related_product as $key => $relate)
@@ -266,10 +269,17 @@
                 @endforeach
             </div>
         </div>
-
+    @endif
 
     </div>
 </section>
+@else
+<center>
+    <h1 class="m-5">
+        Nothing here
+    </h1>
+</center>
+@endif
 <!-- End Article -->
 
 
