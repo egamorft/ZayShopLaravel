@@ -29,7 +29,7 @@
                     <input type="submit" value="Log In" class="btn btn-outline-success">
 
                 </form>
-                <span class="d-block text-left my-4 text-muted"> Don't have account? Register <a href="register"> Here</a></span>
+                <span class="d-block text-left my-4 text-muted"> Don't have account? Register <a class="text-decoration-none" href="{{URL::to('/register')}}"> Here</a></span>
                 <span class="d-block text-left my-4 text-muted"> or sign in with</span>
 
                 <div class="social-login">

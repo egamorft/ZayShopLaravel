@@ -58,7 +58,7 @@
                     <input type="submit" value="Sign In" class="btn btn-outline-success">
 
                 </form>
-                <span class="d-block text-left my-4 text-muted"> Already have account? <a href="login"> Log in now</a></span>
+                <span class="d-block text-left my-4 text-muted"> Already have account? <a class="text-decoration-none" href="{{URL::to('/login')}}"> Log in now</a></span>
 
             </div>
 
