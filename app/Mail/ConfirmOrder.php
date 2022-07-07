@@ -13,14 +13,17 @@ class ConfirmOrder extends Mailable
 {
     use Queueable, SerializesModels;
     public $shipping;
+    public $now;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($shipping)
+    public function __construct($shipping, $now)
     {
         $this->shipping = $shipping;
+        $this->now = $now;
+        // $this->content = $content;
     }
 
     /**

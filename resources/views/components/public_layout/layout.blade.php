@@ -589,7 +589,7 @@ https://templatemo.com/tm-559-zay-shop
                         if (order_fee) {
                             if (shipping_email && shipping_name && shipping_address && shipping_phone && payment_select) {
                                 $.ajax({
-                                    url: "{{url('/confirm-order')}}",
+                                    url: '{{url("/send-mail-confirm-order")}}',
                                     method: 'POST',
                                     data: {
                                         shipping_email: shipping_email,
@@ -597,11 +597,8 @@ https://templatemo.com/tm-559-zay-shop
                                         shipping_address: shipping_address,
                                         shipping_phone: shipping_phone,
                                         shipping_notes: shipping_notes,
-                                        payment_select: payment_select,
-                                        order_fee: order_fee,
-                                        order_coupon: order_coupon,
                                         _token: _token
-                                    },
+                                        },
                                     success: function() {
                                         Swal.fire({
                                             position: 'center',
@@ -611,7 +608,7 @@ https://templatemo.com/tm-559-zay-shop
                                             timer: 5000
                                         })
                                         $.ajax({
-                                            url: '{{url("/send-mail-confirm-order")}}',
+                                            url: "{{url('/confirm-order')}}",
                                             method: 'POST',
                                             data: {
                                                 shipping_email: shipping_email,
@@ -619,6 +616,9 @@ https://templatemo.com/tm-559-zay-shop
                                                 shipping_address: shipping_address,
                                                 shipping_phone: shipping_phone,
                                                 shipping_notes: shipping_notes,
+                                                payment_select: payment_select,
+                                                order_fee: order_fee,
+                                                order_coupon: order_coupon,
                                                 _token: _token
                                             },
                                             success: function() {
@@ -674,9 +674,6 @@ https://templatemo.com/tm-559-zay-shop
             var ma_id = $(this).val();
             var _token = $('input[name="_token"]').val();
             var result = '';
-            // alert(action);
-            // alert(matp);
-            // alert(_token);
             if (action == 'city') {
                 result = 'province';
             } else {
