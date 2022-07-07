@@ -598,18 +598,18 @@ https://templatemo.com/tm-559-zay-shop
                                         shipping_phone: shipping_phone,
                                         shipping_notes: shipping_notes,
                                         _token: _token
-                                        },
-                                        beforeSend: function(){
-                                            Swal.fire({
-                                                title: 'Please Wait !',
-                                                allowOutsideClick: false,
-                                                showConfirmButton: false,
-                                                didOpen: () => {
-                                                    Swal.showLoading()
-                                                },
-                                            });
+                                    },
+                                    beforeSend: function(){
+                                        Swal.fire({
+                                            title: 'Please Wait !',
+                                            allowOutsideClick: false,
+                                            showConfirmButton: false,
+                                            didOpen: () => {
+                                                Swal.showLoading()
+                                            },
+                                        });
 
-                                        },
+                                    },
                                     success: function() {
                                         Swal.fire({
                                             position: 'center',

@@ -232,3 +232,5 @@ Route::post('/save-password', 'AccountController@save_password');
 
 //Send mail
 Route::post('/send-mail-confirm-order', 'SendMailController@confirm_order');
+
+Route::post('/send-mail-delivery', 'SendMailController@confirm_delivery');

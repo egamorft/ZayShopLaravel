@@ -341,6 +341,9 @@
                                                 <option id="{{$or->order_id}}" value="2">
                                                     Delivering
                                                 </option>
+                                                <option id="{{$or->order_id}}" value="3">
+                                                    Cancel/ Pending order
+                                                </option>
                                             </select>
                                         </form>
                                         @elseif($or->order_status==2)

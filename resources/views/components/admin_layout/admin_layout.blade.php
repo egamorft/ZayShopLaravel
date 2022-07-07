@@ -610,6 +610,7 @@
             $("input[name='product_sales_quantity']").each(function() {
                 quantity.push($(this).val());
             });
+
             //lay id
             order_product_id = [];
             $("input[name='order_product_id']").each(function() {
@@ -636,26 +637,46 @@
                     }
                 }
                 if (j == 0) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Delivering this order',
-                        showConfirmButton: false,
-                        timer: 1800
-                    })
+                    $.ajax({
+                        url: '{{url("/send-mail-delivery")}}',
+                        method: 'POST',
+                        data: {
+                            order_id: order_id,
+                            _token: _token
+                        },
+                        beforeSend: function(){
+                            Swal.fire({
+                                title: 'Please Wait !',
+                                allowOutsideClick: false,
+                                showConfirmButton: false,
+                                 didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            });
+                        },
+                        success: function(){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Delivering this order',
+                                showConfirmButton: false,
+                                timer: 1800
+                            })
+                        }
+                    });
                 }
             } else if (order_status == 3) {
                 Swal.fire({
                     icon: 'success',
                     title: 'This order has been canceled',
                     showConfirmButton: false,
-                    timer: 1800
+                    timer: 4800
                 })
             } else {
                 Swal.fire({
                     icon: 'success',
                     title: 'Not handle yet',
                     showConfirmButton: false,
-                    timer: 1800
+                    timer: 4800
                 })
             }
             if (j == 0) {
@@ -672,7 +693,7 @@
                     success: function(data) {
                         setTimeout(function() { // wait for 2 secs(2)
                             location.reload(); // then reload the page.(3)
-                        }, 2000);
+                        }, 5000);
                     }
                 });
 
