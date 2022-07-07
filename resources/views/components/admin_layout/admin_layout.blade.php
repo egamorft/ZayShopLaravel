@@ -512,6 +512,7 @@
                             },
                             success: function(data) {
                                 fetch_delivery();
+                                location.reload();
                             },
                         });
                     } else {
