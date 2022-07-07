@@ -213,7 +213,7 @@
                                                                 <tr>
                                                                     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
 
-                                                                        <img align="center" border="0" src="{{URL::to('/public/upload/logo/logo.png')}}" alt="email icon" title="email icon" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 50%;max-width: 150px;" width="150" class="v-src-width v-src-max-width" />
+                                                                        <img align="center" border="0" src="https://ucarecdn.com/8c506a33-75bd-414d-a617-de9cba565eca/" alt="email icon" title="email icon" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 50%;max-width: 150px;" width="150" class="v-src-width v-src-max-width" />
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -345,7 +345,7 @@
                                                                 <tr>
                                                                     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
 
-                                                                        <img align="center" border="0" src="{{URL::to('/public/upload/product/'.$con->options->image)}}" alt="Model" title="Model" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 150px;" width="150" class="v-src-width v-src-max-width" />
+                                                                        <img align="center" border="0" src="{{URL::to('/public/upload/product/'.$con->options->image)}}" alt="{{$con->name}}" title="Model" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 150px;" width="150" class="v-src-width v-src-max-width" />
 
                                                                     </td>
                                                                 </tr>
@@ -624,6 +624,73 @@
                         </div>
                     </div>
 
+                    <!-- Coupon -->
+                    @if(Session::get('coupon'))
+                    <div class="u-row-container" style="padding: 0px;background-color: transparent">
+                        <div class="u-row no-stack" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
+                            <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
+                                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
+
+                                <!--[if (mso)|(IE)]><td align="center" width="299" style="background-color: #ffffff;width: 299px;padding: 0px;border-top: 1px solid #CCC;border-left: 1px solid #CCC;border-right: 0px solid transparent;border-bottom: 1px solid #CCC;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+                                <div class="u-col u-col-50" style="max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;">
+                                    <div style="background-color: #ffffff;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        <div style="padding: 0px;border-top: 1px solid #CCC;border-left: 1px solid #CCC;border-right: 0px solid transparent;border-bottom: 1px solid #CCC;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                            <!--<![endif]-->
+
+                                            <table style="font-family:'Rubik',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
+
+                                                            <h1 class="v-text-align v-font-size" style="margin: 0px; color: #4aba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
+                                                                <strong>Discount:</strong>
+                                                            </h1>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!--[if (!mso)&(!IE)]><!-->
+                                        </div>
+                                        <!--<![endif]-->
+                                    </div>
+                                </div>
+                                <!--[if (mso)|(IE)]></td><![endif]-->
+                                <!--[if (mso)|(IE)]><td align="center" width="299" style="background-color: #ffffff;width: 299px;padding: 0px;border-top: 1px solid #CCC;border-left: 0px solid transparent;border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+                                <div class="u-col u-col-50" style="max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;">
+                                    <div style="background-color: #ffffff;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        <div style="padding: 0px;border-top: 1px solid #CCC;border-left: 0px solid transparent;border-right: 1px solid #CCC;border-bottom: 1px solid #CCC;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                            <!--<![endif]-->
+
+                                            <table style="font-family:'Rubik',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
+
+                                                            <h1 class="v-text-align v-font-size" style="margin: 0px; color: #54ba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
+                                                                <strong>{{Cart::discount(0 , ',' , '.').' '.'đ'}}</strong>
+                                                            </h1>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!--[if (!mso)&(!IE)]><!-->
+                                        </div>
+                                        <!--<![endif]-->
+                                    </div>
+                                </div>
+                                <!--[if (mso)|(IE)]></td><![endif]-->
+                                <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
                     <!-- Total all -->
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
                         <div class="u-row no-stack" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
@@ -670,7 +737,7 @@
                                                         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
                                                             <?php
                                                                 $total_all = Cart::total(0, ',', '') + Session::get('fee');
-                                                             ?>
+                                                            ?>
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: #54ba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
                                                                 <strong>{{number_format($total_all, 0 , ',' , '.')}} đ</strong>
                                                             </h1>

@@ -599,13 +599,24 @@ https://templatemo.com/tm-559-zay-shop
                                         shipping_notes: shipping_notes,
                                         _token: _token
                                         },
+                                        beforeSend: function(){
+                                            Swal.fire({
+                                                title: 'Please Wait !',
+                                                allowOutsideClick: false,
+                                                showConfirmButton: false,
+                                                didOpen: () => {
+                                                    Swal.showLoading()
+                                                },
+                                            });
+
+                                        },
                                     success: function() {
                                         Swal.fire({
                                             position: 'center',
                                             icon: 'success',
                                             title: 'Your order has been saved',
                                             showConfirmButton: false,
-                                            timer: 5000
+                                            timer: 1500
                                         })
                                         $.ajax({
                                             url: "{{url('/confirm-order')}}",
