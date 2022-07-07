@@ -12,14 +12,14 @@
                 <form action="{{URL::to('/login-account')}}" method="post">
                     @csrf
                     <div class="form-floating mb-3 mt-3">
-                        <input type="text" class="form-control" id="email" placeholder="Enter your email" name="account_email" value="{{ old('account_email') }}">
+                        <input type="text" class="form-control @error('account_email')is-invalid @enderror" id="email" placeholder="Enter your email" name="account_email" value="{{ old('account_email') }}">
                         <label for="email">Email</label>
                         @error('account_email')
                         <span style="color: red">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-floating mb-3 mt-3">
-                        <input type="password" class="form-control" id="password" placeholder="Enter password" name="account_password">
+                        <input type="password" class="form-control @error('account_password')is-invalid @enderror" id="password" placeholder="Enter password" name="account_password">
                         <label for="password">Password</label>
                         @error('account_password')
                         <span style="color: red">{{$message}}</span>
