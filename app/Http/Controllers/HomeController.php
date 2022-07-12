@@ -193,7 +193,6 @@ class HomeController extends Controller
             $account_id = DB::table('tbl_account')->insertGetId($data);
 
             if ($account_id) {
-                Session::put('message', 'Email vertification has sent to you, check your email to login');
                 return redirect()->route('confirm-account', $data);
             } else {
                 Session::put('error', 'Error');
@@ -205,6 +204,9 @@ class HomeController extends Controller
     public function check_verify($verify_code){
         $check_verify_code = Account::where('verify_code', $verify_code)->first();
         if($check_verify_code){
+            DB::table('tbl_account')
+                ->where('verify_code', $verify_code)
+                ->update(['account_confirmation' => 1]);
             Session::put('message', 'Verify your account, now you can login');
             return Redirect::to('/login');
         }else{

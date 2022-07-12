@@ -11,6 +11,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class SendMailController extends Controller
 {
@@ -35,7 +36,11 @@ class SendMailController extends Controller
     public function confirm_account(Request $request){
         $data = $request->all();
         $email_to = $data['account_email'];
+        $name = $data['account_name'];
+        $phone = $data['account_phone'];
         $verify_code = $data['verify_code'];
-        Mail::to($email_to)->send(new ConfirmAccount($verify_code));
+        Mail::to($email_to)->send(new ConfirmAccount($verify_code, $name, $phone, $email_to));
+        Session::put('message', 'Email vertification has sent to you, check your email to login');
+        return Redirect::to('/register');
     }
 }

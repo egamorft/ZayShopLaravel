@@ -11,14 +11,20 @@ class ConfirmAccount extends Mailable
 {
     use Queueable, SerializesModels;
     public $verify_code;
+    public $name;
+    public $phone;
+    public $email_to;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($verify_code)
+    public function __construct($verify_code, $name, $phone, $email_to)
     {
         $this->verify_code = $verify_code;
+        $this->name = $name;
+        $this->phone = $phone;
+        $this->email_to = $email_to;
     }
 
     /**
