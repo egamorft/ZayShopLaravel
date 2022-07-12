@@ -338,13 +338,17 @@
     <script>
         $(function() {
             $("#datepicker1").datepicker({
-                dateFormat: 'yy-mm-dd'
+                dateFormat: 'yy-mm-dd',
+                yearRange: '2020:2030',
+                maxDate: new Date()
             });
         });
 
         $(function() {
             $("#datepicker2").datepicker({
-                dateFormat: 'yy-mm-dd'
+                dateFormat: 'yy-mm-dd',
+                yearRange: '2020:2030',
+                maxDate: new Date()
             });
         });
     </script>
@@ -425,19 +429,33 @@
                 var from_date = $('#datepicker1').val();
                 var to_date = $('#datepicker2').val();
 
-                $.ajax({
-                    url: "{{URL('/filter-by-date')}}",
-                    method: "POST",
-                    dataType: "JSON",
-                    data: {
-                        from_date: from_date,
-                        to_date: to_date,
-                        _token: _token
-                    },
-                    success: function(data) {
-                        chart.setData(data);
-                    }
-                });
+                if(from_date == '' || to_date == ''){
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'From date or End date is null'
+                    })
+                }else{
+                if(from_date <= to_date){
+                    $.ajax({
+                        url: "{{URL('/filter-by-date')}}",
+                        method: "POST",
+                        dataType: "JSON",
+                        data: {
+                            from_date: from_date,
+                            to_date: to_date,
+                            _token: _token
+                        },
+                        success: function(data) {
+                            chart.setData(data);
+                        }
+                    });
+                }else{
+                    Swal.fire({
+                        icon: 'question',
+                        title: 'From date is after End date?'
+                    })
+                }
+                }
             });
         });
     </script>
