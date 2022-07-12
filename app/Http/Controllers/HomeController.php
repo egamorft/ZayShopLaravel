@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -135,14 +136,21 @@ class HomeController extends Controller
             ->where('account_password', $password)->first();
 
         if ($result) {
+            if($result->account_confirmation == 1){
+                Session::put('account_id', $result->account_id);
+                Session::put('account_name', $result->account_name);
+                Session::put('account_email', $result->account_email);
+                Session::put('account_phone', $result->account_phone);
+                Session::put('account_address', $result->account_address);
 
-            Session::put('account_id', $result->account_id);
-            Session::put('account_name', $result->account_name);
-            Session::put('account_email', $result->account_email);
-            Session::put('account_phone', $result->account_phone);
-            Session::put('account_address', $result->account_address);
+                Session::put('message', 'Successfully login with '. $result->account_name);
+                return Redirect::to('/shop');
 
-            return Redirect::to('/shop');
+            }else{
+                return Redirect::back()
+                    ->withInput()->with('error', 'Your account have not confirm yet, check your email');
+
+            }
         } else {
             return Redirect::back()
                 ->withInput()->with('error', 'Wrong username or password');
@@ -183,7 +191,7 @@ class HomeController extends Controller
             $account_id = DB::table('tbl_account')->insertGetId($data);
 
             if ($account_id) {
-                Session::put('message', 'Successfully register your account, now you can login');
+                Session::put('message', 'Email vertification has sent to you, check your email to login');
                 return Redirect::to('/login');
             } else {
                 Session::put('error', 'Error');
@@ -220,7 +228,7 @@ class HomeController extends Controller
         } else {
 
             $authUser = $this->findOrCreateUser($users, 'google');
-            $account_name = Login::where('account_id', $authUser->user)->first();
+            $account_name = Account::where('account_id', $authUser->user)->first();
             Session::put('account_name', $account_name->account_name);
             Session::put('account_id', $account_name->account_id);
 
@@ -240,21 +248,22 @@ class HomeController extends Controller
             'provider' => strtoupper($provider)
         ]);
 
-        $orang = Login::where('account_email', $users->email)->first();
+        $orang = Account::where('account_email', $users->email)->first();
 
         if (!$orang) {
 
-            $orang = Login::create([
+            $orang = Account::create([
                 'account_name' => $users->name,
                 'account_email' => $users->email,
                 'account_password' => '',
-                'account_phone' => ''
+                'account_phone' => '',
+                'account_confirmation' => '1'
             ]);
         }
         $result->login()->associate($orang);
         $result->save();
 
-        $account_name = Login::where('account_id', $result->user)->first();
+        $account_name = Account::where('account_id', $result->user)->first();
         Session::put('account_name', $account_name->account_name);
         Session::put('account_id', $account_name->account_id);
 
@@ -275,7 +284,7 @@ class HomeController extends Controller
             ->first();
 
         if ($account) {
-            $account_name = Login::where('account_id', $account->user)->first();
+            $account_name = Account::where('account_id', $account->user)->first();
             Session::put('account_name', $account_name->account_name);
             Session::put('account_id', $account_name->account_id);
             return redirect('/shop')->with('message', 'Successfully login with facebook');
@@ -286,22 +295,23 @@ class HomeController extends Controller
                 'provider' => 'facebook'
             ]);
 
-            $orang = Login::where('account_email', $provider->getEmail())->first();
+            $orang = Account::where('account_email', $provider->getEmail())->first();
 
             if (!$orang) {
-                $orang = Login::create([
+                $orang = Account::create([
 
                     'account_name' => $provider->getName(),
                     'account_email' => $provider->getEmail(),
                     'account_password' => '',
-                    'account_phone' => ''
+                    'account_phone' => '',
+                    'account_confirmation' => '1'
 
                 ]);
             }
             $result->login()->associate($orang);
             $result->save();
 
-            $account_name = Login::where('account_id', $result->user)->first();
+            $account_name = Account::where('account_id', $result->user)->first();
 
             Session::put('account_name', $account_name->account_name);
             Session::put('account_id', $account_name->account_id);
