@@ -11,6 +11,7 @@ use App\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -110,7 +111,17 @@ class OrderController extends Controller
     $order->order_status = $data['order_status'];
     $order->save();
 
+    $details = OrderDetails::with('product')
+      ->where('order_code', $order->order_code)
+      ->first();
+      $coupon_code = $details->product_coupon;
+      $get_coupon_code = Coupon::where('coupon_code', $coupon_code)->first();
+
     if ($order->order_status == 2) {
+      $new_coupon_time = $get_coupon_code->coupon_time - 1;
+      DB::table('tbl_coupon')
+            ->where('coupon_code', $coupon_code)
+            ->update(['coupon_time' => $new_coupon_time]);
 
       foreach ($data['order_product_id'] as $key => $product_id) {
         $product = Product::find($product_id);
@@ -128,6 +139,11 @@ class OrderController extends Controller
         }
       }
     } elseif ($order->order_status != 2 && $order->order_status != 1) {
+      
+      $new_coupon_time = $get_coupon_code->coupon_time + 1;
+      DB::table('tbl_coupon')
+            ->where('coupon_code', $coupon_code)
+            ->update(['coupon_time' => $new_coupon_time]);
 
       foreach ($data['order_product_id'] as $key => $product_id) {
         $product = Product::find($product_id);
