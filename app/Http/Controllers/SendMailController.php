@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmAccount;
 use App\Mail\ConfirmDelivery;
 use App\Mail\ConfirmOrder;
 use App\Order;
@@ -29,5 +30,12 @@ class SendMailController extends Controller
         $shipping = Order::with('shipping')->where('shipping_id', $shipping_id)->first();
         $email_to = $shipping->shipping->shipping_email;
         Mail::to($email_to)->send(new ConfirmDelivery($order_code));
+    }
+
+    public function confirm_account(Request $request){
+        $data = $request->all();
+        $email_to = $data['account_email'];
+        $verify_code = $data['verify_code'];
+        Mail::to($email_to)->send(new ConfirmAccount($verify_code));
     }
 }

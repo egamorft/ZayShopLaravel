@@ -14,6 +14,7 @@ use App\Rules\Captcha;
 use App\Slider;
 use App\Visitors;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 use Psy\CodeCleaner\FunctionContextPass;
 use Symfony\Component\Console\Input\Input;
@@ -187,18 +188,31 @@ class HomeController extends Controller
             $data['account_phone'] = $request->account_phone;
             $data['account_email'] = $request->account_email;
             $data['account_password'] = md5($request->account_password);
+            $data['verify_code'] = md5(uniqid());
 
             $account_id = DB::table('tbl_account')->insertGetId($data);
 
             if ($account_id) {
                 Session::put('message', 'Email vertification has sent to you, check your email to login');
-                return Redirect::to('/login');
+                return redirect()->route('confirm-account', $data);
             } else {
                 Session::put('error', 'Error');
                 return Redirect::to('/register');
             }
         }
     }
+
+    public function check_verify($verify_code){
+        $check_verify_code = Account::where('verify_code', $verify_code)->first();
+        if($check_verify_code){
+            Session::put('message', 'Verify your account, now you can login');
+            return Redirect::to('/login');
+        }else{
+            Session::put('error', 'Error');
+            return Redirect::to('/register');
+        }
+    }
+
     public function logout_account()
     {
         Session::flush();

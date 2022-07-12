@@ -1,0 +1,1 @@
+<a href="{{URL::to('/check-verify/'.$verify_code)}}"></a>
