@@ -15,7 +15,11 @@ class AdminController extends Controller
 {
     public function home()
     {
-        return view('admin.login.admin_login');
+        if(Session::get('admin_id')){
+            return redirect()->back();
+        }else{
+            return view('admin.login.admin_login');
+        }
     }
 
     public function dashboard(Request $request)

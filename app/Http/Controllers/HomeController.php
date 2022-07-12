@@ -113,11 +113,19 @@ class HomeController extends Controller
 
     public function login()
     {
-        return view('pages.public.login');
+        if(Session::get('account_id')){
+            return redirect()->back();
+        }else{
+            return view('pages.public.login');
+        }
     }
     public function register()
     {
-        return view('pages.public.register');
+        if(Session::get('account_id')){
+            return redirect()->back();
+        }else{
+            return view('pages.public.register');
+        }
     }
     public function login_account(Request $request)
     {
