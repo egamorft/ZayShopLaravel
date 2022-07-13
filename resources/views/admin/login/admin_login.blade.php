@@ -58,7 +58,7 @@
                     <label class="form-label">
                       Email
                     </label>
-                    <input type="text" class="form-control" name="admin_email">
+                    <input type="text" class="form-control" name="admin_email" value="{{ old('admin_email') }}">
                   </div>
                   @error('admin_email')
                     <span style="color: red">
@@ -77,7 +77,7 @@
                     </span>
                   @enderror
                   <div class="form-check form-switch d-flex align-items-center mb-3">
-                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
                     <label class="form-check-label mb-0 ms-2" for="rememberMe">
                       Remember me
                     </label>

@@ -29,6 +29,9 @@
                     <input type="submit" value="Log In" class="btn btn-outline-success">
 
                 </form>
+                @if($errors->any())
+                <span class="d-block text-left my-4"> You forgot your password?<a class="text-decoration-none" href="{{URL::to('/reset-password')}}"> Reset now</a></span>
+                @endif
                 <span class="d-block text-left my-4 text-muted"> Don't have account? Register <a class="text-decoration-none" href="{{URL::to('/register')}}"> Here</a></span>
                 <span class="d-block text-left my-4 text-muted"> or sign in with</span>
 

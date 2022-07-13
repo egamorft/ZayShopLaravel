@@ -215,6 +215,9 @@ class HomeController extends Controller
             DB::table('tbl_account')
                 ->where('verify_code', $verify_code)
                 ->update(['account_confirmation' => 1]);
+            DB::table('tbl_account')
+                ->where('verify_code', $verify_code)
+                ->update(['verify_code' => null]);
             Session::put('message', 'Verify your account, now you can login');
             return Redirect::to('/login');
         }else{

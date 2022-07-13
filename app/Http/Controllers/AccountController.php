@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\Order;
 use App\OrderDetails;
+use App\Rules\Captcha;
 use App\Statistic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Svg\Tag\Rect;
 
 class AccountController extends Controller
 {
@@ -113,5 +116,63 @@ class AccountController extends Controller
             Session::put('error', 'Old password is wrong');
             return Redirect::back();
         }
+    }
+
+    public function reset_password()
+    {
+        return view('pages.profile.reset_password');
+    }
+
+    public function confirm_reset_password(Request $request)
+    {
+        $request->validate(
+            [
+                'account_email' => 'required|min:6|email|exists:tbl_account,account_email',
+                'g-recaptcha-response' => new Captcha(),
+            ],
+            [
+                'account_email.exists' => 'This email is not existed'
+            ]
+        );
+        $email = $request->account_email;
+        $verify_code = md5(uniqid());
+        $data = array();
+        $data['email'] = $email;
+        $data['verify_code'] = $verify_code;
+        DB::table('tbl_account')
+            ->where('account_email', $email)
+            ->update(['verify_code' => $verify_code]);
+        
+        return redirect()->route('verify-code-reset-password', $data);
+    }
+
+    public function check_reset_password($verify_code){
+        $check_verify_code = Account::where('verify_code', $verify_code)->first();
+        if($check_verify_code){
+            return view('pages.profile.set_new_password', compact('verify_code'));
+        }else{
+            Session::put('error', 'Error');
+            return Redirect::to('/register');
+        }
+    }
+
+    public function set_new_password(Request $request){
+        $data = $request->all();
+        $request->validate(
+            [
+                'account_password' => 'required|min:6',
+                'account_cfpassword' => 'required|same:account_password',
+                'g-recaptcha-response' => new Captcha(),
+            ]
+        );
+        $verify_code = $data['verify_code'];
+        $new_password = md5($data['account_password']);
+        DB::table('tbl_account')
+            ->where('verify_code', $verify_code)
+            ->update(['account_password' => $new_password, 'verify_code' => null]);
+
+        Session::put('message', 'Your password has been reset');
+        return Redirect::to('/login');
+
     }
 }

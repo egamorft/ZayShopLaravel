@@ -238,3 +238,13 @@ Route::post('/send-mail-delivery', 'SendMailController@confirm_delivery');
 Route::get('/confirm-account', 'SendMailController@confirm_account')->name('confirm-account');
 
 Route::get('/check-verify/{verify_code}', 'HomeController@check_verify');
+
+Route::get('/reset-password', 'AccountController@reset_password');
+
+Route::post('/confirm-reset-password', 'AccountController@confirm_reset_password');
+
+Route::get('/verify-code-reset-password', 'SendMailController@verify_code_reset_password')->name('verify-code-reset-password');
+
+Route::get('/check-reset-password/{verify_code}', 'AccountController@check_reset_password');
+
+Route::post('/set-new-password', 'AccountController@set_new_password');

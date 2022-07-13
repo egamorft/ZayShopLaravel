@@ -118,10 +118,13 @@ class OrderController extends Controller
       $get_coupon_code = Coupon::where('coupon_code', $coupon_code)->first();
 
     if ($order->order_status == 2) {
-      $new_coupon_time = $get_coupon_code->coupon_time - 1;
-      DB::table('tbl_coupon')
-            ->where('coupon_code', $coupon_code)
-            ->update(['coupon_time' => $new_coupon_time]);
+      if($get_coupon_code){
+        $new_coupon_time = $get_coupon_code->coupon_time - 1;
+
+        DB::table('tbl_coupon')
+              ->where('coupon_code', $coupon_code)
+              ->update(['coupon_time' => $new_coupon_time]);
+      }
 
       foreach ($data['order_product_id'] as $key => $product_id) {
         $product = Product::find($product_id);
@@ -140,10 +143,13 @@ class OrderController extends Controller
       }
     } elseif ($order->order_status != 2 && $order->order_status != 1) {
       
-      $new_coupon_time = $get_coupon_code->coupon_time + 1;
-      DB::table('tbl_coupon')
-            ->where('coupon_code', $coupon_code)
-            ->update(['coupon_time' => $new_coupon_time]);
+      if($get_coupon_code){
+        $new_coupon_time = $get_coupon_code->coupon_time + 1;
+
+        DB::table('tbl_coupon')
+              ->where('coupon_code', $coupon_code)
+              ->update(['coupon_time' => $new_coupon_time]);
+      }
 
       foreach ($data['order_product_id'] as $key => $product_id) {
         $product = Product::find($product_id);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ConfirmAccount;
 use App\Mail\ConfirmDelivery;
 use App\Mail\ConfirmOrder;
+use App\Mail\ConfirmResetPassword;
 use App\Order;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -42,5 +43,14 @@ class SendMailController extends Controller
         Mail::to($email_to)->send(new ConfirmAccount($verify_code, $name, $phone, $email_to));
         Session::put('message', 'Email vertification has sent to you, check your email to login');
         return Redirect::to('/register');
+    }
+
+    public function verify_code_reset_password(Request $request){
+        $data = $request->all();
+        $email_to = $data['email'];
+        $verify_code = $data['verify_code'];
+        Mail::to($email_to)->send(new ConfirmResetPassword($verify_code, $email_to));
+        Session::put('message', 'Check your email to reset your password');
+        return Redirect::to('/reset-password');
     }
 }
