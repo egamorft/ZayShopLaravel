@@ -327,7 +327,8 @@
         </div>
     </div>
     <!--   Core JS Files   -->
-    <!-- <script src="{{asset('public/backend/js/core/popper.min.js')}}"></script> -->
+    <!-- <script src="{{asset('public/backend/js/core/popper.min.js')}}"></script> --> 
+    <script src="{{url('public/js/app.js')}}"></script>
     <script src="{{asset('public/frontend/js/sweetalert.js')}}"></script>
     <script src="{{asset('public/backend/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/perfect-scrollbar.min.js')}}"></script>
