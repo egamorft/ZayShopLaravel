@@ -78,7 +78,7 @@ class AccountController extends Controller
         $get_account->account_address = $data['account_address'];
         $get_account->account_phone = $data['account_phone'];
         $get_account->update();
-        Session::put('message', 'Change your infomation');
+        Session::put('message', 'Change your information');
         Session::forget('account_name');
         Session::forget('account_address');
         Session::forget('account_phone');
