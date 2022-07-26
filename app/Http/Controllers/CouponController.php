@@ -80,14 +80,7 @@ class CouponController extends Controller
         $data['coupon_condition'] = $request->coupon_condition;
         $data['coupon_number'] = $request->coupon_number;
 
-        if ($data['coupon_condition'] == null) {
-            Session::put('error', 'Select coupon condition');
-            return Redirect::to('/add-coupon');
-        } else {
-            DB::table('tbl_coupon')->insert($data);
-            Session::put('message', 'Add coupon');
-            return Redirect::to('/show-coupon');
-        }
+        DB::table('tbl_coupon')->insert($data);
     }
 
     public function delete_coupon($coupon_id)

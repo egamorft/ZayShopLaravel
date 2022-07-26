@@ -1956,9 +1956,24 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this.errors = error.response.data.errors;
-        }
+        } // alert
 
-        console.log(error);
+
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Oops! Something went wrong"
+        }); // alert
       });
     },
     generateCode: function generateCode() {
