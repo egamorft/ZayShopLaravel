@@ -64,7 +64,11 @@ Route::middleware('admin.login')->group(function () {
     //End Admin
 
     //Category Admin
-    Route::get('/show-category', 'CategoryController@show_category')->name('category');
+    Route::get('/show-category', function () {
+        return view('admin.category.show_category');
+    })->name('category');
+
+    // Route::get('/show-category', 'CategoryController@show_category')->name('category');
 
     Route::get('/add-category', 'CategoryController@add_category');
 

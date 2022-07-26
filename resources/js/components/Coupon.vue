@@ -93,7 +93,7 @@
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
-                <tbody v-if="coupons">
+                <tbody v-if="coupons != ''">
                   <tr v-for="(coupon, index) in coupons" v-bind:key="index">
                     <td>
                       <div class="d-flex px-2 py-1">
@@ -288,7 +288,6 @@
               >
                 <label class="form-label"> Coupon Time </label>
                 <input
-                  name="coupon_time"
                   type="text"
                   class="form-control"
                   v-model="coupon.coupon_time"
