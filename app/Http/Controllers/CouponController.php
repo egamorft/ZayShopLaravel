@@ -84,7 +84,18 @@ class CouponController extends Controller
      */
     public function update(Request $request, Coupon $coupon)
     {
-        //
+        $request->validate([
+            'coupon_name' => 'required',
+            'coupon_code' => 'required',
+            'coupon_time' => 'required|numeric',
+            'coupon_number' => 'required|numeric'
+        ]);
+        $coupon->coupon_name = $request->coupon_name;
+        $coupon->coupon_code = $request->coupon_code;
+        $coupon->coupon_time = $request->coupon_time;
+        $coupon->coupon_number = $request->coupon_number;
+        $coupon->coupon_condition = $request->coupon_condition;
+        $coupon->save();
     }
 
     /**
@@ -133,7 +144,7 @@ class CouponController extends Controller
                     ->withInput()->with('error', 'Add coupon fail, wrong coupon');
         }
     }
-    
+
     public function unset_coupon()
     {
         $coupon = Session::get('coupon');

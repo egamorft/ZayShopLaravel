@@ -1924,88 +1924,23 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       edit: false,
       errors: {},
-      focus: false
+      focusCode: false,
+      focusAll: false
     };
   },
   created: function created() {
     this.fetchCoupons();
   },
   methods: {
-    saveCoupon: function saveCoupon() {
-      var _this = this;
-
-      var formData = new FormData();
-      formData.append("coupon_name", this.coupon.coupon_name);
-      formData.append("coupon_code", this.coupon.coupon_code);
-      formData.append("coupon_time", this.coupon.coupon_time);
-      formData.append("coupon_condition", this.coupon.coupon_condition);
-      formData.append("coupon_number", this.coupon.coupon_number);
-      axios.post("api/coupons", formData).then(function (response) {
-        // alert
-        var Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: function didOpen(toast) {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          }
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Add successfully"
-        }); // alert
-
-        _this.errors = "";
-        $("#staticBackdrop").modal("hide");
-
-        _this.fetchCoupons();
-      })["catch"](function (error) {
-        if (error.response.status == 422) {
-          _this.errors = error.response.data.errors;
-        } // alert
-
-
-        var Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: function didOpen(toast) {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          }
-        });
-        Toast.fire({
-          icon: "error",
-          title: "Oops! Something went wrong"
-        }); // alert
-      });
-    },
-    generateCode: function generateCode() {
-      this.focus = true;
-      this.coupon.coupon_code = Math.random().toString(36).slice(2).substring(0, 5).toUpperCase();
-    },
-    getCoupon: function getCoupon() {
-      var _this2 = this;
-
-      var URL = "http://localhost/shopZay/api/coupons";
-      axios.get(URL).then(function (res) {
-        _this2.coupons = res.data.data;
-      });
-    },
     fetchCoupons: function fetchCoupons(page_url) {
-      var _this3 = this;
+      var _this = this;
 
       var vm = this;
       page_url = page_url || "api/coupons";
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this3.coupons = res.data;
+        _this.coupons = res.data;
         vm.makePagination(res.meta, res.links);
       })["catch"](function (err) {
         return console.log(err);
@@ -2022,7 +1957,7 @@ __webpack_require__.r(__webpack_exports__);
       this.pagination = pagination;
     },
     deleteCoupons: function deleteCoupons(id) {
-      var _this4 = this;
+      var _this2 = this;
 
       Swal.fire({
         title: "Delete coupon #" + id + "?",
@@ -2043,17 +1978,151 @@ __webpack_require__.r(__webpack_exports__);
           axios["delete"]("api/coupons/" + id).then(function (res) {
             Swal.fire("Deleted!", "Coupon #" + id + " has been deleted.", "success");
 
-            _this4.fetchCoupons(_this4.pagination.path + "?page=" + _this4.pagination.current_page); // fetch keep pages
+            _this2.fetchCoupons(_this2.pagination.path + "?page=" + _this2.pagination.current_page); // fetch keep pages
 
           })["catch"](function (err) {
             return console.log(err);
           });
         }
       });
+    },
+    saveCoupon: function saveCoupon() {
+      var _this3 = this;
+
+      if (this.edit === false) {
+        //add coupon
+        var formData = new FormData();
+        formData.append("coupon_name", this.coupon.coupon_name);
+        formData.append("coupon_code", this.coupon.coupon_code);
+        formData.append("coupon_time", this.coupon.coupon_time);
+        formData.append("coupon_condition", this.coupon.coupon_condition);
+        formData.append("coupon_number", this.coupon.coupon_number);
+        axios.post("api/coupons", formData).then(function (response) {
+          // alert
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Add successfully"
+          }); // alert
+
+          _this3.errors = "";
+          $("#staticBackdrop").modal("hide");
+
+          _this3.fetchCoupons();
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            _this3.errors = error.response.data.errors;
+          } // alert
+
+
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong"
+          }); // alert
+        });
+      } else {
+        //edit coupon
+        axios.put("api/coupons/".concat(this.coupon.coupon_id), {
+          coupon_name: this.coupon.coupon_name,
+          coupon_time: this.coupon.coupon_time,
+          coupon_condition: this.coupon.coupon_condition,
+          coupon_number: this.coupon.coupon_number,
+          coupon_code: this.coupon.coupon_code
+        }).then(function (res) {
+          // alert
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Update successfully"
+          }); // alert
+
+          _this3.errors = "";
+          $("#staticBackdrop").modal("hide");
+
+          _this3.fetchCoupons(_this3.pagination.path + "?page=" + _this3.pagination.current_page); // fetch keep pages
+
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            _this3.errors = error.response.data.errors;
+          } // alert
+
+
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong"
+          }); // alert
+        });
+      }
+    },
+    generateCode: function generateCode() {
+      this.focusCode = true;
+      this.coupon.coupon_code = Math.random().toString(36).slice(2).substring(0, 5).toUpperCase();
+    },
+    editCoupon: function editCoupon(coupon) {
+      this.edit = true;
+      this.focusCode = true;
+      this.focusAll = true;
+      this.coupon.coupon_id = coupon.coupon_id;
+      this.coupon.coupon_name = coupon.coupon_name;
+      this.coupon.coupon_time = coupon.coupon_time;
+      this.coupon.coupon_condition = coupon.coupon_condition;
+      this.coupon.coupon_number = coupon.coupon_number;
+      this.coupon.coupon_code = coupon.coupon_code;
+      this.errors = "";
+    },
+    openAdd: function openAdd() {
+      this.edit = false;
+      this.focusCode = false;
+      this.focusAll = false;
+      this.coupon.coupon_id = "";
+      this.coupon.coupon_name = "";
+      this.coupon.coupon_time = "";
+      this.coupon.coupon_number = "";
+      this.coupon.coupon_code = "";
+      this.errors = "";
     }
-  },
-  mounted: function mounted() {
-    this.getCoupon();
   }
 });
 
@@ -2092,7 +2161,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.add_coupon();
+        return _vm.openAdd();
       }
     }
   }, [_c("i", {
@@ -2125,6 +2194,25 @@ var render = function render() {
     }, [_vm._v("\n                      Sale " + _vm._s(coupon.coupon_number) + "%\n                    ")])]) : _c("td", [_c("p", {
       staticClass: "font-weight-bold mb-0"
     }, [_vm._v("\n                      Sale\n                      " + _vm._s(_vm.number_format(coupon.coupon_number, ",", ".")) + " VND\n                    ")])]), _vm._v(" "), _c("td", {
+      staticClass: "align-middle"
+    }, [_c("a", {
+      staticClass: "font-weight-bold",
+      attrs: {
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#staticBackdrop",
+        "data-toggle": "tooltip"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.editCoupon(coupon);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "material-icons",
+      staticStyle: {
+        "font-size": "30px"
+      }
+    }, [_vm._v("\n                        edit\n                      ")])])]), _vm._v(" "), _c("td", {
       staticClass: "align-middle"
     }, [_c("a", {
       staticClass: "font-weight-bold",
@@ -2200,8 +2288,6 @@ var render = function render() {
       }
     }
   }, [_vm._v("›")])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "modal-dialog modal-dialog-centered"
-  }, [_c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "staticBackdrop",
@@ -2229,12 +2315,12 @@ var render = function render() {
     attrs: {
       id: "staticBackdropLabel"
     }
-  }, [_vm._v("\n                Coupon: #" + _vm._s(_vm.coupon.coupon_id) + "\n              ")]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n              Coupon: #" + _vm._s(_vm.coupon.coupon_id) + "\n            ")]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "input-group input-group-outline d-flex",
     "class": {
-      "focused is-focused": _vm.focus
+      "focused is-focused": _vm.focusCode
     }
   }, [_c("label", {
     staticClass: "form-label"
@@ -2263,7 +2349,7 @@ var render = function render() {
     staticStyle: {
       color: "red"
     }
-  }, [_vm._v("\n                " + _vm._s(_vm.errors.coupon_code[0]) + "\n              ")]) : _vm._e(), _vm._v(" "), _c("br"), _vm._v(" "), _c("input", {
+  }, [_vm._v("\n              " + _vm._s(_vm.errors.coupon_code[0]) + "\n            ")]) : _vm._e(), _vm._v(" "), _c("br"), _vm._v(" "), _c("input", {
     staticClass: "btn btn-success",
     attrs: {
       type: "button",
@@ -2275,7 +2361,10 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("div", {
-    staticClass: "input-group input-group-outline my-3"
+    staticClass: "input-group input-group-outline my-3",
+    "class": {
+      "focused is-focused": _vm.focusAll
+    }
   }, [_c("label", {
     staticClass: "form-label"
   }, [_vm._v(" Coupon Name ")]), _vm._v(" "), _c("input", {
@@ -2303,8 +2392,11 @@ var render = function render() {
     staticStyle: {
       color: "red"
     }
-  }, [_vm._v("\n                " + _vm._s(_vm.errors.coupon_name[0]) + "\n              ")]) : _vm._e(), _vm._v(" "), _c("div", {
-    staticClass: "input-group input-group-outline my-3"
+  }, [_vm._v("\n              " + _vm._s(_vm.errors.coupon_name[0]) + "\n            ")]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "input-group input-group-outline my-3",
+    "class": {
+      "focused is-focused": _vm.focusAll
+    }
   }, [_c("label", {
     staticClass: "form-label"
   }, [_vm._v(" Coupon Time ")]), _vm._v(" "), _c("input", {
@@ -2333,7 +2425,7 @@ var render = function render() {
     staticStyle: {
       color: "red"
     }
-  }, [_vm._v("\n                " + _vm._s(_vm.errors.coupon_time[0]) + "\n              ")]) : _vm._e(), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n              " + _vm._s(_vm.errors.coupon_time[0]) + "\n            ")]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "input-group input-group-outline mb-3"
   }, [_c("select", {
     directives: [{
@@ -2365,7 +2457,10 @@ var render = function render() {
       value: "2"
     }
   }, [_vm._v("Discount by money")])])]), _vm._v(" "), _c("div", {
-    staticClass: "input-group input-group-outline my-3"
+    staticClass: "input-group input-group-outline my-3",
+    "class": {
+      "focused is-focused": _vm.focusAll
+    }
   }, [_c("label", {
     staticClass: "form-label"
   }, [_vm._v(" Enter % or number of sale ")]), _vm._v(" "), _c("input", {
@@ -2393,7 +2488,7 @@ var render = function render() {
     staticStyle: {
       color: "red"
     }
-  }, [_vm._v("\n                " + _vm._s(_vm.errors.coupon_number[0]) + "\n              ")]) : _vm._e()]), _vm._v(" "), _vm._m(3)])])])])])]);
+  }, [_vm._v("\n              " + _vm._s(_vm.errors.coupon_number[0]) + "\n            ")]) : _vm._e()]), _vm._v(" "), _vm._m(3)])])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -2432,11 +2527,7 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("a", {
-    attrs: {
-      href: ""
-    }
-  }, [_c("i", {
+  return _c("a", [_c("i", {
     staticClass: "material-icons text-xl",
     attrs: {
       "data-bs-dismiss": "modal"
@@ -2454,7 +2545,7 @@ var staticRenderFns = [function () {
       type: "button",
       "data-bs-dismiss": "modal"
     }
-  }, [_vm._v("\n                Close\n              ")]), _vm._v(" "), _c("button", {
+  }, [_vm._v("\n              Close\n            ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-primary",
     attrs: {
       type: "submit"

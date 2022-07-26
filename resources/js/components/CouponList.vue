@@ -18,7 +18,7 @@
           </div>
           <div class="col-11 text-end">
             <button
-              @click="add_coupon()"
+              @click="openAdd()"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
               class="btn bg-gradient-dark mb-0"
@@ -136,6 +136,19 @@
                     </td>
                     <td class="align-middle">
                       <a
+                        @click="editCoupon(coupon)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
+                        class="font-weight-bold"
+                        data-toggle="tooltip"
+                      >
+                        <i class="material-icons" style="font-size: 30px">
+                          edit
+                        </i>
+                      </a>
+                    </td>
+                    <td class="align-middle">
+                      <a
                         @click="deleteCoupons(coupon.coupon_id)"
                         class="font-weight-bold"
                         data-toggle="tooltip"
@@ -211,106 +224,112 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal-dialog modal-dialog-centered">
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <form @submit.prevent="saveCoupon">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
-                  Coupon: #{{ coupon.coupon_id }}
-                </h5>
-                <a href="">
-                  <i class="material-icons text-xl" data-bs-dismiss="modal">close</i>
-                </a>
-              </div>
-              <div class="modal-body">
-                <div
-                  class="input-group input-group-outline d-flex"
-                  :class="{ 'focused is-focused': focus }"
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <form @submit.prevent="saveCoupon">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Coupon: #{{ coupon.coupon_id }}
+              </h5>
+              <a>
+                <i class="material-icons text-xl" data-bs-dismiss="modal"
+                  >close</i
                 >
-                  <label class="form-label"> Coupon Code </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="coupon.coupon_code"
-                  />
-                </div>
-                <span style="color: red" v-if="errors && errors.coupon_code">
-                  {{ errors.coupon_code[0] }}
-                </span>
-                <br />
-                <input
-                  @click="generateCode()"
-                  class="btn btn-success"
-                  type="button"
-                  value="Generate random code"
-                />
-                <div class="input-group input-group-outline my-3">
-                  <label class="form-label"> Coupon Name </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="coupon.coupon_name"
-                  />
-                </div>
-                <span style="color: red" v-if="errors && errors.coupon_name">
-                  {{ errors.coupon_name[0] }}
-                </span>
-                <div class="input-group input-group-outline my-3">
-                  <label class="form-label"> Coupon Time </label>
-                  <input
-                    name="coupon_time"
-                    type="text"
-                    class="form-control"
-                    v-model="coupon.coupon_time"
-                  />
-                </div>
-                <span style="color: red" v-if="errors && errors.coupon_time">
-                  {{ errors.coupon_time[0] }}
-                </span>
-                <div class="input-group input-group-outline mb-3">
-                  <select
-                    class="form-control"
-                    v-model="coupon.coupon_condition"
-                  >
-                    <option value="1" selected>Discount by percentage</option>
-                    <option value="2">Discount by money</option>
-                  </select>
-                </div>
-                <div class="input-group input-group-outline my-3">
-                  <label class="form-label"> Enter % or number of sale </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="coupon.coupon_number"
-                  />
-                </div>
-                <span style="color: red" v-if="errors && errors.coupon_number">
-                  {{ errors.coupon_number[0] }}
-                </span>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="submit" class="btn btn-primary">Save</button>
-              </div>
+              </a>
             </div>
-          </form>
-        </div>
+            <div class="modal-body">
+              <div
+                class="input-group input-group-outline d-flex"
+                :class="{ 'focused is-focused': focusCode }"
+              >
+                <label class="form-label"> Coupon Code </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="coupon.coupon_code"
+                />
+              </div>
+              <span style="color: red" v-if="errors && errors.coupon_code">
+                {{ errors.coupon_code[0] }}
+              </span>
+              <br />
+              <input
+                @click="generateCode()"
+                class="btn btn-success"
+                type="button"
+                value="Generate random code"
+              />
+              <div
+                class="input-group input-group-outline my-3"
+                :class="{ 'focused is-focused': focusAll }"
+              >
+                <label class="form-label"> Coupon Name </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="coupon.coupon_name"
+                />
+              </div>
+              <span style="color: red" v-if="errors && errors.coupon_name">
+                {{ errors.coupon_name[0] }}
+              </span>
+              <div
+                class="input-group input-group-outline my-3"
+                :class="{ 'focused is-focused': focusAll }"
+              >
+                <label class="form-label"> Coupon Time </label>
+                <input
+                  name="coupon_time"
+                  type="text"
+                  class="form-control"
+                  v-model="coupon.coupon_time"
+                />
+              </div>
+              <span style="color: red" v-if="errors && errors.coupon_time">
+                {{ errors.coupon_time[0] }}
+              </span>
+              <div class="input-group input-group-outline mb-3">
+                <select class="form-control" v-model="coupon.coupon_condition">
+                  <option value="1" selected>Discount by percentage</option>
+                  <option value="2">Discount by money</option>
+                </select>
+              </div>
+              <div
+                class="input-group input-group-outline my-3"
+                :class="{ 'focused is-focused': focusAll }"
+              >
+                <label class="form-label"> Enter % or number of sale </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="coupon.coupon_number"
+                />
+              </div>
+              <span style="color: red" v-if="errors && errors.coupon_number">
+                {{ errors.coupon_number[0] }}
+              </span>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <!-- End Modal -->
@@ -334,84 +353,14 @@ export default {
       pagination: {},
       edit: false,
       errors: {},
-      focus: false,
+      focusCode: false,
+      focusAll: false,
     };
   },
   created() {
     this.fetchCoupons();
   },
   methods: {
-    saveCoupon: function () {
-      let formData = new FormData();
-      formData.append("coupon_name", this.coupon.coupon_name);
-      formData.append("coupon_code", this.coupon.coupon_code);
-      formData.append("coupon_time", this.coupon.coupon_time);
-      formData.append("coupon_condition", this.coupon.coupon_condition);
-      formData.append("coupon_number", this.coupon.coupon_number);
-
-      axios
-        .post("api/coupons", formData)
-        .then((response) => {
-          // alert
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
-
-          Toast.fire({
-            icon: "success",
-            title: "Add successfully",
-          });
-          // alert
-          this.errors = "";
-          $("#staticBackdrop").modal("hide");
-          this.fetchCoupons();
-        })
-        .catch((error) => {
-          if (error.response.status == 422) {
-            this.errors = error.response.data.errors;
-          }
-          // alert
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
-
-          Toast.fire({
-            icon: "error",
-            title: "Oops! Something went wrong",
-          });
-          // alert
-        });
-    },
-    generateCode: function () {
-      this.focus = true;
-      this.coupon.coupon_code = Math.random()
-        .toString(36)
-        .slice(2)
-        .substring(0, 5)
-        .toUpperCase();
-    },
-    getCoupon() {
-      const URL = "http://localhost/shopZay/api/coupons";
-      axios.get(URL).then((res) => {
-        this.coupons = res.data.data;
-      });
-    },
     fetchCoupons: function (page_url) {
       let vm = this;
       page_url = page_url || "api/coupons";
@@ -466,9 +415,155 @@ export default {
         }
       });
     },
-  },
-  mounted() {
-    this.getCoupon();
+    saveCoupon: function () {
+      if (this.edit === false) {
+        //add coupon
+        let formData = new FormData();
+        formData.append("coupon_name", this.coupon.coupon_name);
+        formData.append("coupon_code", this.coupon.coupon_code);
+        formData.append("coupon_time", this.coupon.coupon_time);
+        formData.append("coupon_condition", this.coupon.coupon_condition);
+        formData.append("coupon_number", this.coupon.coupon_number);
+
+        axios
+          .post("api/coupons", formData)
+          .then((response) => {
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Add successfully",
+            });
+            // alert
+            this.errors = "";
+            $("#staticBackdrop").modal("hide");
+            this.fetchCoupons();
+          })
+          .catch((error) => {
+            if (error.response.status == 422) {
+              this.errors = error.response.data.errors;
+            }
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong",
+            });
+            // alert
+          });
+      } else {
+        //edit coupon
+        axios
+          .put(`api/coupons/${this.coupon.coupon_id}`, {
+            coupon_name: this.coupon.coupon_name,
+            coupon_time: this.coupon.coupon_time,
+            coupon_condition: this.coupon.coupon_condition,
+            coupon_number: this.coupon.coupon_number,
+            coupon_code: this.coupon.coupon_code,
+          })
+          .then((res) => {
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Update successfully",
+            });
+            // alert
+            this.errors = "";
+            $("#staticBackdrop").modal("hide");
+            this.fetchCoupons(
+              this.pagination.path + "?page=" + this.pagination.current_page
+            ); // fetch keep pages
+          })
+          .catch((error) => {
+            if (error.response.status == 422) {
+              this.errors = error.response.data.errors;
+            }
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong",
+            });
+            // alert
+          });
+      }
+    },
+    generateCode: function () {
+      this.focusCode = true;
+      this.coupon.coupon_code = Math.random()
+        .toString(36)
+        .slice(2)
+        .substring(0, 5)
+        .toUpperCase();
+    },
+    editCoupon: function (coupon) {
+      this.edit = true;
+      this.focusCode = true;
+      this.focusAll = true;
+      this.coupon.coupon_id = coupon.coupon_id;
+      this.coupon.coupon_name = coupon.coupon_name;
+      this.coupon.coupon_time = coupon.coupon_time;
+      this.coupon.coupon_condition = coupon.coupon_condition;
+      this.coupon.coupon_number = coupon.coupon_number;
+      this.coupon.coupon_code = coupon.coupon_code;
+      this.errors = "";
+    },
+    openAdd: function () {
+      this.edit = false;
+      this.focusCode = false;
+      this.focusAll = false;
+      this.coupon.coupon_id = "";
+      this.coupon.coupon_name = "";
+      this.coupon.coupon_time = "";
+      this.coupon.coupon_number = "";
+      this.coupon.coupon_code = "";
+      this.errors = "";
+    },
   },
 };
 </script>
