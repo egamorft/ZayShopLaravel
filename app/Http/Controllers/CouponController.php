@@ -2,15 +2,102 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use App\Coupon;
+use App\Http\Resources\CouponResource;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CouponController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return CouponResource::collection(Coupon::orderBy('coupon_id', 'desc')->paginate(5));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'coupon_name' => 'required',
+            'coupon_code' => 'required',
+            'coupon_time' => 'required|numeric',
+            'coupon_number' => 'required|numeric'
+        ]);
+        $coupon = new Coupon;
+        $coupon->coupon_name = $request->coupon_name;
+        $coupon->coupon_code = $request->coupon_code;
+        $coupon->coupon_time = $request->coupon_time;
+        $coupon->coupon_number = $request->coupon_number;
+        $coupon->coupon_condition = $request->coupon_condition;
+        $coupon->save();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $coupon
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Coupon $coupon)
+    {
+        return new CouponResource($coupon);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $coupon
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($coupon)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $coupon
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Coupon $coupon)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $coupon
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Coupon $coupon)
+    {
+        $coupon->delete();
+    }
+
     public function check_coupon(Request $request)
     {
         $data = $request->all();
@@ -46,53 +133,7 @@ class CouponController extends Controller
                     ->withInput()->with('error', 'Add coupon fail, wrong coupon');
         }
     }
-
-    public function show_coupon()
-    {
-        $show_coupon = DB::table('tbl_coupon')
-            ->orderBy('tbl_coupon.coupon_id', 'desc')
-                ->paginate(4);
-        $manager_coupon = view('admin.coupon.show_coupon')
-            ->with('show_coupon', $show_coupon);
-
-        return view('components.admin_layout.admin_layout')
-            ->with('admin.show_coupon', $manager_coupon);
-    }
-
-    public function add_coupon()
-    {
-        return view('admin.coupon.add_coupon');
-    }
-
-    public function save_coupon(Request $request)
-    {
-        $request->validate([
-            'coupon_name' => 'required',
-            'coupon_code' => 'required',
-            'coupon_time' => 'required|numeric',
-            'coupon_number' => 'required|numeric'
-        ]);
-
-        $data = array();
-        $data['coupon_name'] = $request->coupon_name;
-        $data['coupon_code'] = $request->coupon_code;
-        $data['coupon_time'] = $request->coupon_time;
-        $data['coupon_condition'] = $request->coupon_condition;
-        $data['coupon_number'] = $request->coupon_number;
-
-        DB::table('tbl_coupon')->insert($data);
-    }
-
-    public function delete_coupon($coupon_id)
-    {
-        DB::table('tbl_coupon')
-            ->where('coupon_id', $coupon_id)
-                ->delete();
-                
-        Session::put('message', 'Successfully delete coupon ' . $coupon_id);
-        return Redirect::to('/show-coupon');
-    }
-
+    
     public function unset_coupon()
     {
         $coupon = Session::get('coupon');

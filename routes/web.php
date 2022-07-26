@@ -120,7 +120,11 @@ Route::middleware('admin.login')->group(function () {
     //End Product Admin
 
     //Coupon Admin
-    Route::get('/show-coupon', 'CouponController@show_coupon')->name('coupon');
+    // Route::get('/show-coupon', 'CouponControllerr@show_coupon')->name('coupon');
+
+    Route::get('/show-coupon', function () {
+        return view('admin.coupon.show_coupon');
+    })->name('coupon');
 
     Route::get('/add-coupon', 'CouponController@add_coupon');
 
