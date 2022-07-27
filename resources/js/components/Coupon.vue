@@ -136,6 +136,7 @@
                     </td>
                     <td class="align-middle">
                       <a
+                        type="button"
                         @click="editCoupon(coupon)"
                         data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop"
@@ -149,6 +150,7 @@
                     </td>
                     <td class="align-middle">
                       <a
+                        type="button"
                         @click="deleteCoupons(coupon.coupon_id)"
                         class="font-weight-bold"
                         data-toggle="tooltip"
@@ -240,7 +242,7 @@
               <h5 class="modal-title" id="staticBackdropLabel">
                 Coupon: #{{ coupon.coupon_id }}
               </h5>
-              <a>
+              <a type="button">
                 <i class="material-icons text-xl" data-bs-dismiss="modal"
                   >close</i
                 >

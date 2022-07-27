@@ -104,7 +104,10 @@
                       class="align-middle text-center"
                       v-if="category.category_status == 1"
                     >
-                      <a @click="inactiveCategory()">
+                      <a
+                        type="button"
+                        @click="inactiveCategory(category.category_id)"
+                      >
                         <i
                           class="material-icons"
                           style="font-size: 40px; color: green"
@@ -115,7 +118,10 @@
                     </td>
 
                     <td class="align-middle text-center" v-else>
-                      <a @click="activeCategory()">
+                      <a
+                        type="button"
+                        @click="activeCategory(category.category_id)"
+                      >
                         <i
                           class="material-icons"
                           style="font-size: 40px; color: red"
@@ -126,7 +132,10 @@
                     </td>
                     <td class="align-middle">
                       <a
-                        @click="editCategory()"
+                        type="button"
+                        @click="editCategory(category)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
                         class="font-weight-bold"
                         data-toggle="tooltip"
                       >
@@ -137,6 +146,7 @@
                     </td>
                     <td class="align-middle">
                       <a
+                        type="button"
                         @click="deleteCategories(category.category_id)"
                         class="font-weight-bold"
                         data-toggle="tooltip"
@@ -228,32 +238,34 @@
               <h5 class="modal-title" id="staticBackdropLabel">
                 Category: #{{ category.category_id }}
               </h5>
-              <a>
+              <a type="button">
                 <i class="material-icons text-xl" data-bs-dismiss="modal"
                   >close</i
                 >
               </a>
             </div>
             <div class="modal-body">
-              <div class="input-group input-group-outline my-3">
+              <div
+                class="input-group input-group-outline my-3"
+                :class="{ 'focused is-focused': focusAll }"
+              >
                 <label class="form-label"> Category Name </label>
-                <input type="text" class="form-control" v-model="category.category_name" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="category.category_name"
+                />
               </div>
               <span style="color: red" v-if="errors && errors.category_name">
                 {{ errors.category_name[0] }}
               </span>
+              <br />
+              <label class="form-label"> Category Desc </label>
               <div class="input-group input-group-outline mb-3">
-                <label class="form-label" for="ckeditorAdd">
-                  Category Description
-                </label>
-                <textarea
-                  placeholder="Enter Category Description"
-                  class="form-control"
-                  id="ckeditorAdd"
-                  rows="8"
-                v-model="category.category_desc"
-                >
-                </textarea>
+                <ckeditor
+                  :editor="editor"
+                  v-model="category.category_desc"
+                ></ckeditor>
               </div>
               <span style="color: red" v-if="errors && errors.category_desc">
                 {{ errors.category_desc[0] }}
@@ -296,9 +308,11 @@
 </template>
 
 <script>
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
   data() {
     return {
+      editor: ClassicEditor,
       categories: [],
       category: {
         category_id: "",
@@ -363,13 +377,250 @@ export default {
                 "Category #" + id + " has been deleted.",
                 "success"
               );
-              this.fetchCoupons(
+              this.fetchCategories(
                 this.pagination.path + "?page=" + this.pagination.current_page
               ); // fetch keep pages
             })
             .catch((err) => console.log(err));
         }
       });
+    },
+    saveCategory: function () {
+      if (this.edit === false) {
+        //add category
+        let formData = new FormData();
+        formData.append("category_name", this.category.category_name);
+        formData.append("category_desc", this.category.category_desc);
+        formData.append("category_status", this.category.category_status);
+
+        axios
+          .post("api/categories", formData)
+          .then((response) => {
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Add successfully",
+            });
+            // alert
+            this.errors = "";
+            $("#staticBackdrop").modal("hide");
+            this.fetchCategories();
+          })
+          .catch((error) => {
+            if (error.response.status == 422) {
+              this.errors = error.response.data.errors;
+            }
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong",
+            });
+            // alert
+          });
+      } else {
+        //edit category
+        axios
+          .put(`api/categories/${this.category.category_id}`, {
+            category_name: this.category.category_name,
+            category_desc: this.category.category_desc,
+            category_status: this.category.category_status,
+          })
+          .then((res) => {
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Update successfully",
+            });
+            // alert
+            this.errors = "";
+            $("#staticBackdrop").modal("hide");
+            this.fetchCategories(
+              this.pagination.path + "?page=" + this.pagination.current_page
+            ); // fetch keep pages
+          })
+          .catch((error) => {
+            if (error.response.status == 422) {
+              this.errors = error.response.data.errors;
+            }
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong",
+            });
+            // alert
+          });
+      }
+    },
+    activeCategory: function (category_id) {
+      //active category
+      axios
+        .get(`api/categories/${category_id}/edit`)
+        .then((res) => {
+          // alert
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Active category " + category_id,
+          });
+          // alert
+          this.fetchCategories(
+            this.pagination.path + "?page=" + this.pagination.current_page
+          ); // fetch keep pages
+        })
+        .catch((error) => {
+          // alert
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong",
+          });
+          // alert
+        });
+    },
+    inactiveCategory: function (category_id) {
+      //active category
+      Swal.fire({
+        title: "Inactive category #" + category_id + " also inactive their subcategory and product!!",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, inactive it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .get(`api/categories/${category_id}/edit`)
+            .then((res) => {
+              // alert
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "success",
+                title: "Active category " + category_id,
+              });
+              // alert
+              this.fetchCategories(
+                this.pagination.path + "?page=" + this.pagination.current_page
+              ); // fetch keep pages
+            })
+            .catch((error) => {
+              // alert
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "error",
+                title: "Oops! Something went wrong",
+              });
+              // alert
+            });
+        }
+      });
+    },
+    editCategory: function (category) {
+      this.edit = true;
+      this.focusAll = true;
+      this.category.category_id = category.category_id;
+      this.category.category_name = category.category_name;
+      this.category.category_desc = category.category_desc;
+      this.category.category_status = category.category_status;
+      this.errors = "";
     },
     openAdd: function () {
       this.edit = false;
