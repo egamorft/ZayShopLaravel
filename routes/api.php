@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('coupons', 'CouponController');
 
 Route::resource('categories', 'CategoryController');
+
+Route::resource('subcategories', 'SubCategoryController');

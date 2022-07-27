@@ -70,21 +70,9 @@ Route::middleware('admin.login')->group(function () {
     // End Category Admin
 
     //SubCategory Admin
-    Route::get('/show-sub-category', 'SubCategoryController@show_sub_category')->name('subcategory');
-
-    Route::get('/add-sub-category', 'SubCategoryController@add_sub_category');
-
-    Route::post('/save-sub-category', 'SubCategoryController@save_sub_category');
-
-    Route::get('/unactive-sub-category/{subcategory_id}', 'SubCategoryController@unactive_sub_category');
-
-    Route::get('/active-sub-category/{subcategory_id}', 'SubCategoryController@active_sub_category');
-
-    Route::get('/edit-sub-category/{subcategory_id}', 'SubCategoryController@edit_sub_category');
-
-    Route::get('/delete-sub-category/{subcategory_id}', 'SubCategoryController@delete_sub_category');
-
-    Route::post('/update-sub-category/{subcategory_id}', 'SubCategoryController@update_sub_category');
+    Route::get('/show-sub-category', function () {
+        return view('admin.subcategory.show_sub_category');
+    })->name('subcategory');
     //End SubCategory Admin
 
     //Product Admin
