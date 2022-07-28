@@ -268,10 +268,18 @@
                 </div>
               </div>
               <center id="preview" v-if="!edit">
-                <img v-if="slider.slider_image" :src="slider.slider_image" width="500" />
+                <img
+                  v-if="slider.slider_image"
+                  :src="previewImage"
+                  width="500"
+                />
               </center>
               <center id="preview" v-else>
-                <img v-if="slider.slider_image" v-bind:src="'public/upload/slider/' + slider.slider_image" width="500" />
+                <img
+                  v-if="slider.slider_image"
+                  v-bind:src="'public/upload/slider/' + slider.slider_image"
+                  width="500"
+                />
               </center>
               <span style="color: red" v-if="errors && errors.slider_image">
                 {{ errors.slider_image[0] }}
@@ -333,6 +341,7 @@ export default {
   data() {
     return {
       editor: ClassicEditor,
+      previewImage: "",
       sliders: [],
       slider: {
         slider_id: "",
@@ -354,7 +363,9 @@ export default {
   methods: {
     onFileChange(e) {
       const file = e.target.files[0];
-      this.slider.slider_image = URL.createObjectURL(file);
+      this.previewImage = URL.createObjectURL(file);
+        var filename = this.$refs.fileUpload.value.replace(/^.*\\/, "");
+      this.slider.slider_image = filename;
     },
     fetchSliders: function (page_url) {
       let vm = this;
@@ -410,6 +421,124 @@ export default {
         }
       });
     },
+    saveSlider: function () {
+      if (this.edit === false) {
+        //add slider
+        let formData = new FormData();
+        formData.append("slider_name", this.slider.slider_name);
+        formData.append("slider_image", this.slider.slider_image);
+        formData.append("slider_desc", this.slider.slider_desc);
+        formData.append("slider_status", this.slider.slider_status);
+
+        axios
+          .post("api/sliders", formData,{headers: {
+                    'Content-Type': 'multipart/form-data'
+                }})
+          .then((response) => {
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Add successfully",
+            });
+            // alert
+            this.errors = "";
+            $("#staticBackdrop").modal("hide");
+            this.fetchSliders();
+          })
+          .catch((error) => {
+            if (error.response.status == 422) {
+              this.errors = error.response.data.errors;
+            }
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong",
+            });
+            // alert
+          });
+      } else {
+        //edit slider
+        axios
+          .put(`api/sliders/${this.slider.slider_id}`, {
+            slider_name: this.slider.slider_name,
+            slider_desc: this.slider.coupon_desc,
+            slider_image: this.slider.coupon_image,
+            coupon_status: this.slider.coupon_status,
+          })
+          .then((res) => {
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Update successfully",
+            });
+            // alert
+            this.errors = "";
+            $("#staticBackdrop").modal("hide");
+            this.fetchSliders(
+              this.pagination.path + "?page=" + this.pagination.current_page
+            ); // fetch keep pages
+          })
+          .catch((error) => {
+            if (error.response.status == 422) {
+              this.errors = error.response.data.errors;
+            }
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong",
+            });
+            // alert
+          });
+      }
+    },
     editSlider: function (slider) {
       this.edit = true;
       this.focusAll = true;
@@ -422,13 +551,13 @@ export default {
     },
     openAdd: function () {
       this.edit = false;
-      this.$refs.fileUpload.value=null;
+      this.$refs.fileUpload.value = null;
       this.focusAll = false;
       this.slider.slider_id = "";
       this.slider.slider_name = "";
       this.slider.slider_image = "";
       this.slider.slider_desc = "";
-      this.slider.slider_status = "";
+      this.slider.slider_status = "1";
       this.errors = "";
     },
   },

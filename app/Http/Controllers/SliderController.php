@@ -36,7 +36,26 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'slider_name' => 'required',
+            'slider_image' => 'required',
+            'slider_status' => 'required'
+        ]);
+        $slider = new Slider;
+        $slider->slider_name = $request->slider_name;
+        $slider->slider_desc = $request->slider_desc;
+        $slider->slider_status = $request->slider_status;
+        $get_image = $request->file('slider_image');
+        dump($get_image);
+        if ($get_image) {
+            $get_name_image = $get_image->getClientOriginalName();
+            $name_image = current(explode('.', $get_name_image));
+            $new_image = $name_image . rand(0, 99) . '.'
+                . $get_image->getClientOriginalExtension();
+            $get_image->move('public/upload/slider', $new_image);
+            $slider->slider_image = $new_image;
+            $slider->save();
+        }
     }
 
     /**

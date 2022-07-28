@@ -2500,6 +2500,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       editor: _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default.a,
+      previewImage: "",
       sliders: [],
       slider: {
         slider_id: "",
@@ -2521,7 +2522,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onFileChange: function onFileChange(e) {
       var file = e.target.files[0];
-      this.slider.slider_image = URL.createObjectURL(file);
+      this.previewImage = URL.createObjectURL(file);
+      var filename = this.$refs.fileUpload.value.replace(/^.*\\/, "");
+      this.slider.slider_image = filename;
     },
     fetchSliders: function fetchSliders(page_url) {
       var _this = this;
@@ -2577,6 +2580,118 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    saveSlider: function saveSlider() {
+      var _this3 = this;
+
+      if (this.edit === false) {
+        //add slider
+        var formData = new FormData();
+        formData.append("slider_name", this.slider.slider_name);
+        formData.append("slider_image", this.slider.slider_image);
+        formData.append("slider_desc", this.slider.slider_desc);
+        formData.append("slider_status", this.slider.slider_status);
+        axios.post("api/sliders", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (response) {
+          // alert
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Add successfully"
+          }); // alert
+
+          _this3.errors = "";
+          $("#staticBackdrop").modal("hide");
+
+          _this3.fetchSliders();
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            _this3.errors = error.response.data.errors;
+          } // alert
+
+
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong"
+          }); // alert
+        });
+      } else {
+        //edit slider
+        axios.put("api/sliders/".concat(this.slider.slider_id), {
+          slider_name: this.slider.slider_name,
+          slider_desc: this.slider.coupon_desc,
+          slider_image: this.slider.coupon_image,
+          coupon_status: this.slider.coupon_status
+        }).then(function (res) {
+          // alert
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Update successfully"
+          }); // alert
+
+          _this3.errors = "";
+          $("#staticBackdrop").modal("hide");
+
+          _this3.fetchSliders(_this3.pagination.path + "?page=" + _this3.pagination.current_page); // fetch keep pages
+
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            _this3.errors = error.response.data.errors;
+          } // alert
+
+
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong"
+          }); // alert
+        });
+      }
+    },
     editSlider: function editSlider(slider) {
       this.edit = true;
       this.focusAll = true;
@@ -2595,7 +2710,7 @@ __webpack_require__.r(__webpack_exports__);
       this.slider.slider_name = "";
       this.slider.slider_image = "";
       this.slider.slider_desc = "";
-      this.slider.slider_status = "";
+      this.slider.slider_status = "1";
       this.errors = "";
     }
   }
@@ -4041,7 +4156,7 @@ var render = function render() {
     }
   }, [_vm.slider.slider_image ? _c("img", {
     attrs: {
-      src: _vm.slider.slider_image,
+      src: _vm.previewImage,
       width: "500"
     }
   }) : _vm._e()]) : _c("center", {
