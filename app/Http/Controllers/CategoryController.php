@@ -17,7 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return CategoryResource::collection(Category::orderBy('category_id', 'desc')->paginate(4));
+        $all_category = Category::where('category_status', '1')->orderBy('category_id', 'asc')->pluck('category_id', 'category_name');
+        $category_paginate = Category::orderBy('category_id', 'desc')->paginate(4);
+        return CategoryResource::collection(['category' => $all_category, 'category_list' => $category_paginate]);
     }
 
     /**

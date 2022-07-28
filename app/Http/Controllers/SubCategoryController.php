@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\SubCategoryResource;
 use App\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SubCategoryController extends Controller
 {
@@ -36,13 +37,23 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'subcategory_name' => 'required|alpha',
+            'category_id' => 'required',
+            'subcategory_status' => 'required',
+        ]);
+        $subcategory = new SubCategory;
+        $subcategory->subcategory_name = $request->subcategory_name;
+        $subcategory->subcategory_desc = $request->subcategory_desc;
+        $subcategory->category_id = $request->category_id;
+        $subcategory->subcategory_status = $request->subcategory_status;
+        $subcategory->save();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $subcategory
      * @return \Illuminate\Http\Response
      */
     public function show(SubCategory $subcategory)
@@ -53,30 +64,47 @@ class SubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SubCategory $subcategory)
     {
-        //
+        if($subcategory->subcategory_status == 0){
+            $subcategory->subcategory_status = 1;
+        }else{
+            DB::table('tbl_product')
+            ->where('subcategory_id', $subcategory->subcategory_id)
+            ->update(['product_status' => 0]);
+            $subcategory->subcategory_status = 0;
+        }
+        $subcategory->save();
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SubCategory $subcategory)
     {
-        //
+        $request->validate([
+            'subcategory_name' => 'required|alpha',
+            'category_id' => 'required',
+            'subcategory_status' => 'required',
+        ]);
+        $subcategory->subcategory_name = $request->subcategory_name;
+        $subcategory->subcategory_desc = $request->subcategory_desc;
+        $subcategory->category_id = $request->category_id;
+        $subcategory->subcategory_status = $request->subcategory_status;
+        $subcategory->save();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $subcategory
      * @return \Illuminate\Http\Response
      */
     public function destroy(SubCategory $subcategory)

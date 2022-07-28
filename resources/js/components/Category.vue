@@ -337,18 +337,19 @@ export default {
       fetch(page_url)
         .then((res) => res.json())
         .then((res) => {
-          this.categories = res.data;
-          vm.makePagination(res.meta, res.links);
+          this.categories = res.data.category_list.data;
+          vm.makePagination(res.data.category_list, res.data.category_list);
         })
         .catch((err) => console.log(err));
     },
     makePagination: function (meta, links) {
+      console.log(links);
       let pagination = {
         current_page: meta.current_page,
         last_page: meta.last_page,
         path: meta.path,
-        next_page_url: links.next,
-        prev_page_url: links.prev,
+        next_page_url: links.next_page_url,
+        prev_page_url: links.prev_page_url,
       };
       this.pagination = pagination;
     },

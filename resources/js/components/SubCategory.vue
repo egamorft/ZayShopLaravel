@@ -110,8 +110,10 @@
                       </p>
                     </td>
                     <td>
-                      <p class="font-weight-bold mb-0">
-                        {{ subcategory.category_name }}
+                      <p class="font-weight-bold mb-0"
+                      v-for="(categoryId, categoryName) in categories"
+                      v-if="subcategory.category_id == categoryId">
+                      {{categoryName}}
                       </p>
                     </td>
 
@@ -259,7 +261,10 @@
               </a>
             </div>
             <div class="modal-body">
-              <div class="input-group input-group-outline my-3">
+              <div
+                class="input-group input-group-outline my-3"
+                :class="{ 'focused is-focused': focusAll }"
+              >
                 <label class="form-label"> SubCategory Name </label>
                 <input
                   type="text"
@@ -280,13 +285,22 @@
               </div>
               <span style="color: red" v-if="errors && errors.subcategory_desc">
                 {{ errors.subcategory_desc[0] }}
-              </span>
+              </span><br />
               <div class="input-group input-group-outline mb-3">
                 <select class="form-control" v-model="subcategory.category_id">
-                  <option disabled value="">Please select one</option>
-                  <option></option>
+                  <option disabled value="">Please select category</option>
+                  <option
+                    v-for="(categoryId, categoryName) in categories"
+                    v-bind:value="categoryId"
+                    v-model="subcategories.category_id"
+                  >
+                    {{ categoryName }}
+                  </option>
                 </select>
               </div>
+              <span style="color: red" v-if="errors && errors.category_id">
+                {{ errors.category_id[0] }}
+              </span>
               <div class="form-check mb-3">
                 <label for="show"> Show </label>
                 <input
@@ -325,7 +339,6 @@
 </template>
 
 <script>
-// import Category_list from "./Category.vue";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
   data() {
@@ -345,7 +358,7 @@ export default {
       edit: false,
       errors: {},
       focusAll: false,
-      getPageFetchAllCategories: 1,
+      getPageFetchAllCategories: "1",
     };
   },
   created() {
@@ -353,19 +366,15 @@ export default {
     this.fetchAllCategories();
   },
   methods: {
-    fetchAllCategories: function () {
-      let i = 1;
-      while (this.getPageFetchAllCategories >= i) {
-        fetch("api/categories?page=" + i)
-          .then((res) => res.json())
-          .then((res) => {
-            this.categories = res.data;
-            console.log(res);
-            this.getPageFetchAllCategories = res.meta.last_page;
-            i++;
-          })
-          .catch((err) => console.log(err));
-      }
+    fetchAllCategories: function (page_url) {
+      let vm = this;
+      page_url = page_url || "api/categories";
+      fetch(page_url)
+        .then((res) => res.json())
+        .then((res) => {
+          this.categories = res.data.category;
+        })
+        .catch((err) => console.log(err));
     },
     fetchSubCategories: function (page_url) {
       let vm = this;
@@ -387,6 +396,289 @@ export default {
         prev_page_url: links.prev,
       };
       this.pagination = pagination;
+    },
+    deleteSubCategories: function (id) {
+      Swal.fire({
+        title: "Delete subcategory #" + id + "?",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete("api/subcategories/" + id)
+            .then((res) => {
+              Swal.fire(
+                "Deleted!",
+                "SubCategory #" + id + " has been deleted.",
+                "success"
+              );
+              this.fetchSubCategories(
+                this.pagination.path + "?page=" + this.pagination.current_page
+              ); // fetch keep pages
+            })
+            .catch((err) => console.log(err));
+        }
+      });
+    },
+    saveSubCategory: function () {
+      if (this.edit === false) {
+        //add subcategory
+        let formData = new FormData();
+        formData.append("subcategory_name", this.subcategory.subcategory_name);
+        formData.append("subcategory_desc", this.subcategory.subcategory_desc);
+        formData.append("category_id", this.subcategory.category_id);
+        formData.append("subcategory_status", this.subcategory.subcategory_status);
+
+        axios
+          .post("api/subcategories", formData)
+          .then((response) => {
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Add successfully",
+            });
+            // alert
+            this.errors = "";
+            $("#staticBackdrop").modal("hide");
+            this.fetchSubCategories();
+          })
+          .catch((error) => {
+            if (error.response.status == 422) {
+              this.errors = error.response.data.errors;
+            }
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong",
+            });
+            // alert
+          });
+      } else {
+        //edit subcategory
+        axios
+          .put(`api/subcategories/${this.subcategory.subcategory_id}`, {
+            subcategory_name: this.subcategory.subcategory_name,
+            subcategory_desc: this.subcategory.subcategory_desc,
+            category_id: this.subcategory.category_id,
+            subcategory_status: this.subcategory.subcategory_status,
+          })
+          .then((res) => {
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Update successfully",
+            });
+            // alert
+            this.errors = "";
+            $("#staticBackdrop").modal("hide");
+            this.fetchSubCategories(
+              this.pagination.path + "?page=" + this.pagination.current_page
+            ); // fetch keep pages
+          })
+          .catch((error) => {
+            if (error.response.status == 422) {
+              this.errors = error.response.data.errors;
+            }
+            // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong",
+            });
+            // alert
+          });
+      }
+    },
+    activeSubCategory: function (subcategory_id) {
+      //active subcategory
+      axios
+        .get(`api/subcategories/${subcategory_id}/edit`)
+        .then((res) => {
+          // alert
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Active subcategory " + subcategory_id,
+          });
+          // alert
+          this.fetchSubCategories(
+            this.pagination.path + "?page=" + this.pagination.current_page
+          ); // fetch keep pages
+        })
+        .catch((error) => {
+          // alert
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong",
+          });
+          // alert
+        });
+    },
+    inactiveSubCategory: function (subcategory_id) {
+      //active subcategory
+      Swal.fire({
+        title: "Inactive subcategory #" + subcategory_id + " also inactive their product!!",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, inactive it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .get(`api/subcategories/${subcategory_id}/edit`)
+            .then((res) => {
+              // alert
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "success",
+                title: "Active subcategory " + subcategory_id,
+              });
+              // alert
+              this.fetchSubCategories(
+                this.pagination.path + "?page=" + this.pagination.current_page
+              ); // fetch keep pages
+            })
+            .catch((error) => {
+              // alert
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "error",
+                title: "Oops! Something went wrong",
+              });
+              // alert
+            });
+        }
+      });
+    },
+    editSubCategory: function (subcategory) {
+      this.edit = true;
+      this.focusAll = true;
+      this.subcategory.subcategory_id = subcategory.subcategory_id;
+      this.subcategory.subcategory_name = subcategory.subcategory_name;
+      this.subcategory.subcategory_desc = subcategory.subcategory_desc;
+      this.subcategory.category_id = subcategory.category_id;
+      this.subcategory.subcategory_status = subcategory.subcategory_status;
+      this.errors = "";
+    },
+    openAdd: function () {
+      this.edit = false;
+      this.focusAll = false;
+      this.subcategory.subcategory_id = "";
+      this.subcategory.subcategory_name = "";
+      this.subcategory.subcategory_desc = "";
+      this.subcategory.category_id = "";
+      this.subcategory.subcategory_status = "1";
+      this.errors = "";
     },
   },
 };
