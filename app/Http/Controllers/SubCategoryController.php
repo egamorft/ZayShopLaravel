@@ -111,4 +111,61 @@ class SubCategoryController extends Controller
     {
         $subcategory->delete();
     }
+
+
+    //public page
+    public function shop_subcategory(Request $request, $subcategory_id)
+    {
+        $category = DB::table('tbl_category')
+            ->where('category_status', '1')
+            ->orderBy('category_id', 'asc')
+            ->get();
+        $subcategory = DB::table('tbl_subcategory')
+            ->where('subcategory_status', '1')
+            ->orderBy('category_id', 'asc')
+            ->get();
+
+        if (isset($_GET['sort_by'])) {
+            $sort_by = $_GET['sort_by'];
+            if ($sort_by == 'asc') {
+                $subcategory_by_id = Product::with('subcategory')
+                    ->where('tbl_product.subcategory_id', $subcategory_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->orderBy('product_price', 'asc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'desc') {
+                $subcategory_by_id = Product::with('subcategory')
+                    ->where('tbl_product.subcategory_id', $subcategory_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->orderBy('product_price', 'desc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'atoz') {
+                $subcategory_by_id = Product::with('subcategory')
+                    ->where('tbl_product.subcategory_id', $subcategory_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->orderBy('product_name', 'asc')
+                    ->paginate(3)->appends(request()->query());
+            } else if ($sort_by == 'ztoa') {
+                $subcategory_by_id = Product::with('subcategory')
+                    ->where('tbl_product.subcategory_id', $subcategory_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->orderBy('product_name', 'desc')
+                    ->paginate(3)->appends(request()->query());
+            } else {
+                $subcategory_by_id = Product::with('subcategory')
+                    ->where('tbl_product.subcategory_id', $subcategory_id)
+                    ->where('tbl_product.product_status', 1)
+                    ->paginate(3)->appends(request()->query());
+            }
+        } else {
+            $subcategory_by_id = Product::with('subcategory')
+                ->where('tbl_product.subcategory_id', $subcategory_id)
+                ->where('tbl_product.product_status', 1)
+                ->paginate(3)->appends(request()->query());
+        }
+
+        return view('pages.subcategory.shop_subcategory')
+            ->with(compact('category', 'subcategory', 'subcategory_by_id'));
+    }
+    //end public page
 }
