@@ -120,7 +120,10 @@ Route::middleware('admin.login')->group(function () {
 
 
     //Slider Admin
-    Route::get('/slider', 'SliderController@show_slider')->name('slider');
+    Route::get('/slider', function () {
+        return view('admin.slider.show_slider');
+    })->name('slider');
+    // Route::get('/slider', 'SliderController@show_slider')->name('slider');
 
     Route::get('/add-slider', 'SliderController@add_slider');
 

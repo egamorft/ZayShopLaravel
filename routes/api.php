@@ -23,3 +23,5 @@ Route::resource('coupons', 'CouponController');
 Route::resource('categories', 'CategoryController');
 
 Route::resource('subcategories', 'SubCategoryController');
+
+Route::resource('sliders', 'SliderController');

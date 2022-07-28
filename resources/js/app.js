@@ -24,6 +24,7 @@ Vue.use(CKEditor);
 Vue.component('coupon', require('./components/Coupon.vue').default);
 Vue.component('category', require('./components/Category.vue').default);
 Vue.component('subcategory', require('./components/SubCategory.vue').default);
+Vue.component('slider', require('./components/Slider.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
