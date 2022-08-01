@@ -123,21 +123,6 @@ Route::middleware('admin.login')->group(function () {
     Route::get('/slider', function () {
         return view('admin.slider.show_slider');
     })->name('slider');
-    // Route::get('/slider', 'SliderController@show_slider')->name('slider');
-
-    Route::get('/add-slider', 'SliderController@add_slider');
-
-    Route::post('/save-slider', 'SliderController@save_slider');
-
-    Route::get('/unactive-slider/{slider_id}', 'SliderController@unactive_slider');
-
-    Route::get('/active-slider/{slider_id}', 'SliderController@active_slider');
-
-    Route::get('/edit-slider/{slider_id}', 'SliderController@edit_slider');
-
-    Route::post('/update-slider/{slider_id}', 'SliderController@update_slider');
-
-    Route::get('/delete-slider/{slider_id}', 'SliderController@delete_slider');
     //End Slider Admin
 });
 

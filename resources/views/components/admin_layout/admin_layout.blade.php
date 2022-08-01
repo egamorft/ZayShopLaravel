@@ -4,12 +4,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{csrf_token()}}">
-    <script>
-        window.Laravel = {
-            csrfToken: '{{csrf_token()}}'
-        }
-    </script>
+    @if (Route::currentRouteNamed('category') 
+            || Route::currentRouteNamed('subcategory') 
+            || Route::currentRouteNamed('coupon') 
+            || Route::currentRouteNamed('slider'))
+        <meta name="csrf-token" content="{{csrf_token()}}">
+        <script>
+            window.Laravel = {
+                csrfToken: '{{csrf_token()}}'
+            }
+        </script>
+    @endif
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('public/backend/images/apple-icon.png')}}">
     <link rel="icon" type="image/png" href="{{asset('public/backend/images/favicon.png')}}">
     <title>
@@ -36,7 +41,7 @@
             <i class="fas fa-times p-3 cursor-pointer text-white opacity-5
                  position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav">
             </i>
-            <a class="navbar-brand m-0" href="/admin2" target="_blank">
+            <a class="navbar-brand m-0" target="_blank">
                 <img src="{{asset('public/backend/images/logo-ct.png')}}" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold text-white">
                     Hello
@@ -164,7 +169,7 @@
                     </h6>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="./pages/profile.html">
+                    <a class="nav-link text-white ">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">
                                 person
@@ -333,14 +338,18 @@
     <script src="{{asset('public/backend/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/smooth-scrollbar.min.js')}}"></script>
-    <!-- <script src="{{asset('public/backend/js/plugins/chartjs.min.js')}}"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{asset('public/backend/js/material-dashboard.min.js?v=3.0.2')}}"></script>
 
+    @if(Route::currentRouteNamed('dashboard'))
     <script>
         $(function() {
             $("#datepicker1").datepicker({
@@ -465,7 +474,7 @@
             });
         });
     </script>
-
+    @endif
     <script>
         function preview() {
             frame.src = URL.createObjectURL(event.target.files[0]);
@@ -475,6 +484,8 @@
 
         }
     </script>
+
+    @if (Route::currentRouteNamed('delivery') )
     <script>
         $(document).ready(function() {
             fetch_delivery();
@@ -575,6 +586,7 @@
             });
         })
     </script>
+    @endif
     <script>
         $(document).ready(function() {
             $('.choose').change(function() {
@@ -613,10 +625,6 @@
                 console.error(error);
             });
     </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="{{asset('public/backend/js/material-dashboard.min.js?v=3.0.2')}}"></script>
     <script>
         $(document).ready(function() {
             window.setTimeout(function() {
@@ -790,36 +798,6 @@
 
             $(document).ready(function() {
                 $('#order_filter').on('change', function() {
-                    var url = $(this).val();
-                    if (url) {
-                        window.location = url;
-                    }
-                    return false;
-                });
-            });
-
-            $(document).ready(function() {
-                $('#slider_filter').on('change', function() {
-                    var url = $(this).val();
-                    if (url) {
-                        window.location = url;
-                    }
-                    return false;
-                });
-            });
-
-            $(document).ready(function() {
-                $('#category_filter').on('change', function() {
-                    var url = $(this).val();
-                    if (url) {
-                        window.location = url;
-                    }
-                    return false;
-                });
-            });
-
-            $(document).ready(function() {
-                $('#subcategory_filter').on('change', function() {
                     var url = $(this).val();
                     if (url) {
                         window.location = url;
