@@ -2206,7 +2206,7 @@ __webpack_require__.r(__webpack_exports__);
             });
             Toast.fire({
               icon: "success",
-              title: "Active category " + category_id
+              title: "Inactive category " + category_id
             }); // alert
 
             _this5.fetchCategories(_this5.pagination.path + "?page=" + _this5.pagination.current_page); // fetch keep pages
@@ -2701,6 +2701,110 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    activeSlider: function activeSlider(slider_id) {
+      var _this4 = this;
+
+      //active slider
+      axios.get("api/sliders/".concat(slider_id, "/edit")).then(function (res) {
+        // alert
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Active slider " + slider_id
+        }); // alert
+
+        _this4.fetchSliders(_this4.pagination.path + "?page=" + _this4.pagination.current_page); // fetch keep pages
+
+      })["catch"](function (error) {
+        // alert
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Oops! Something went wrong"
+        }); // alert
+      });
+    },
+    inactiveSlider: function inactiveSlider(slider_id) {
+      var _this5 = this;
+
+      //active slider
+      Swal.fire({
+        title: "Inactive slider #" + slider_id,
+        showClass: {
+          popup: "animate__animated animate__fadeInDown"
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp"
+        },
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, inactive it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.get("api/sliders/".concat(slider_id, "/edit")).then(function (res) {
+            // alert
+            var Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: function didOpen(toast) {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Inactive slider " + slider_id
+            }); // alert
+
+            _this5.fetchSliders(_this5.pagination.path + "?page=" + _this5.pagination.current_page); // fetch keep pages
+
+          })["catch"](function (error) {
+            // alert
+            var Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: function didOpen(toast) {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              }
+            });
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong"
+            }); // alert
+          });
+        }
+      });
+    },
     editSlider: function editSlider(slider) {
       this.edit = true;
       this.focusAll = true;
@@ -3021,7 +3125,7 @@ __webpack_require__.r(__webpack_exports__);
             });
             Toast.fire({
               icon: "success",
-              title: "Active subcategory " + subcategory_id
+              title: "Inactive subcategory " + subcategory_id
             }); // alert
 
             _this6.fetchSubCategories(_this6.pagination.path + "?page=" + _this6.pagination.current_page); // fetch keep pages

@@ -584,7 +584,7 @@ export default {
 
               Toast.fire({
                 icon: "success",
-                title: "Active category " + category_id,
+                title: "Inactive category " + category_id,
               });
               // alert
               this.fetchCategories(

@@ -546,6 +546,120 @@ export default {
           });
       }
     },
+    activeSlider: function (slider_id) {
+      //active slider
+      axios
+        .get(`api/sliders/${slider_id}/edit`)
+        .then((res) => {
+          // alert
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Active slider " + slider_id,
+          });
+          // alert
+          this.fetchSliders(
+            this.pagination.path + "?page=" + this.pagination.current_page
+          ); // fetch keep pages
+        })
+        .catch((error) => {
+          // alert
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong",
+          });
+          // alert
+        });
+    },
+    inactiveSlider: function (slider_id) {
+      //active slider
+      Swal.fire({
+        title: "Inactive slider #" + slider_id,
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, inactive it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .get(`api/sliders/${slider_id}/edit`)
+            .then((res) => {
+              // alert
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "success",
+                title: "Inactive slider " + slider_id,
+              });
+              // alert
+              this.fetchSliders(
+                this.pagination.path + "?page=" + this.pagination.current_page
+              ); // fetch keep pages
+            })
+            .catch((error) => {
+              // alert
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "error",
+                title: "Oops! Something went wrong",
+              });
+              // alert
+            });
+        }
+      });
+    },
     editSlider: function (slider) {
       this.edit = true;
       this.focusAll = true;

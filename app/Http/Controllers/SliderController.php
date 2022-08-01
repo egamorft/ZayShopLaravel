@@ -107,9 +107,14 @@ class SliderController extends Controller
      * @param  int  $slider
      * @return \Illuminate\Http\Response
      */
-    public function edit($slider)
+    public function edit(Slider $slider)
     {
-        //
+        if($slider->slider_status == 0){
+            $slider->slider_status = 1;
+        }else{
+            $slider->slider_status = 0;
+        }
+        $slider->save();
     }
 
     /**

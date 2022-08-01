@@ -630,7 +630,7 @@ export default {
 
               Toast.fire({
                 icon: "success",
-                title: "Active subcategory " + subcategory_id,
+                title: "Inactive subcategory " + subcategory_id,
               });
               // alert
               this.fetchSubCategories(
