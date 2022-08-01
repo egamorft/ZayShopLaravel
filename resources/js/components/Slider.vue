@@ -227,7 +227,7 @@
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg">
-        <form @submit.prevent="saveSlider">
+        <form @submit.prevent="saveSlider" enctype="multipart/form-data">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
@@ -276,10 +276,11 @@
               </center>
               <center id="preview" v-else>
                 <img
-                  v-if="slider.slider_image"
+                  v-if="!$refs.fileUpload.value"
                   v-bind:src="'public/upload/slider/' + slider.slider_image"
                   width="500"
                 />
+                <img v-else :src="previewImage" width="500" />
               </center>
               <span style="color: red" v-if="errors && errors.slider_image">
                 {{ errors.slider_image[0] }}
@@ -305,6 +306,7 @@
                   id="show"
                   value="1"
                   v-model="slider.slider_status"
+                  :checked="slider.slider_status == 1"
                 />
 
                 <label class="form-check-label" for="hide"> Hide </label>
@@ -314,6 +316,7 @@
                   id="hide"
                   value="0"
                   v-model="slider.slider_status"
+                  :checked="slider.slider_status == 0"
                 />
               </div>
             </div>
@@ -351,6 +354,7 @@ export default {
         slider_status: "",
       },
       slider_id: "",
+      old_slider_image: "",
       pagination: {},
       edit: false,
       errors: {},
@@ -364,8 +368,7 @@ export default {
     onFileChange(e) {
       const file = e.target.files[0];
       this.previewImage = URL.createObjectURL(file);
-        var filename = this.$refs.fileUpload.value.replace(/^.*\\/, "");
-      this.slider.slider_image = filename;
+      this.slider.slider_image = this.$refs.fileUpload.files[0];
     },
     fetchSliders: function (page_url) {
       let vm = this;
@@ -431,9 +434,11 @@ export default {
         formData.append("slider_status", this.slider.slider_status);
 
         axios
-          .post("api/sliders", formData,{headers: {
-                    'Content-Type': 'multipart/form-data'
-                }})
+          .post("api/sliders", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
           .then((response) => {
             // alert
             const Toast = Swal.mixin({
@@ -482,13 +487,15 @@ export default {
           });
       } else {
         //edit slider
+        let formData = new FormData();
+        formData.append("slider_id", this.slider.slider_id);
+        formData.append("slider_name", this.slider.slider_name);
+        formData.append("slider_desc", this.slider.slider_desc);
+        formData.append("slider_image", this.slider.slider_image);
+        formData.append("slider_status", this.slider.slider_status);
+        formData.append("old_slider_image", this.old_slider_image);
         axios
-          .put(`api/sliders/${this.slider.slider_id}`, {
-            slider_name: this.slider.slider_name,
-            slider_desc: this.slider.coupon_desc,
-            slider_image: this.slider.coupon_image,
-            coupon_status: this.slider.coupon_status,
-          })
+          .put(`api/sliders/${this.slider.slider_id}`, formData)
           .then((res) => {
             // alert
             const Toast = Swal.mixin({
@@ -547,6 +554,8 @@ export default {
       this.slider.slider_image = slider.slider_image;
       this.slider.slider_desc = slider.slider_desc;
       this.slider.slider_status = slider.slider_status;
+      this.old_slider_image = slider.slider_image;
+      this.$refs.fileUpload.value = "";
       this.errors = "";
     },
     openAdd: function () {
@@ -557,7 +566,8 @@ export default {
       this.slider.slider_name = "";
       this.slider.slider_image = "";
       this.slider.slider_desc = "";
-      this.slider.slider_status = "1";
+      this.slider.slider_status = 1;
+      this.old_slider_image = "";
       this.errors = "";
     },
   },

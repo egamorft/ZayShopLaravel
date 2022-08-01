@@ -2510,6 +2510,7 @@ __webpack_require__.r(__webpack_exports__);
         slider_status: ""
       },
       slider_id: "",
+      old_slider_image: "",
       pagination: {},
       edit: false,
       errors: {},
@@ -2523,8 +2524,7 @@ __webpack_require__.r(__webpack_exports__);
     onFileChange: function onFileChange(e) {
       var file = e.target.files[0];
       this.previewImage = URL.createObjectURL(file);
-      var filename = this.$refs.fileUpload.value.replace(/^.*\\/, "");
-      this.slider.slider_image = filename;
+      this.slider.slider_image = this.$refs.fileUpload.files[0];
     },
     fetchSliders: function fetchSliders(page_url) {
       var _this = this;
@@ -2592,7 +2592,7 @@ __webpack_require__.r(__webpack_exports__);
         formData.append("slider_status", this.slider.slider_status);
         axios.post("api/sliders", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            "Content-Type": "multipart/form-data"
           }
         }).then(function (response) {
           // alert
@@ -2640,12 +2640,21 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         //edit slider
-        axios.put("api/sliders/".concat(this.slider.slider_id), {
-          slider_name: this.slider.slider_name,
-          slider_desc: this.slider.coupon_desc,
-          slider_image: this.slider.coupon_image,
-          coupon_status: this.slider.coupon_status
-        }).then(function (res) {
+        var _formData = new FormData();
+
+        _formData.append("slider_id", this.slider.slider_id);
+
+        _formData.append("slider_name", this.slider.slider_name);
+
+        _formData.append("slider_desc", this.slider.slider_desc);
+
+        _formData.append("slider_image", this.slider.slider_image);
+
+        _formData.append("slider_status", this.slider.slider_status);
+
+        _formData.append("old_slider_image", this.old_slider_image);
+
+        axios.put("api/sliders/".concat(this.slider.slider_id), _formData).then(function (res) {
           // alert
           var Toast = Swal.mixin({
             toast: true,
@@ -2700,6 +2709,8 @@ __webpack_require__.r(__webpack_exports__);
       this.slider.slider_image = slider.slider_image;
       this.slider.slider_desc = slider.slider_desc;
       this.slider.slider_status = slider.slider_status;
+      this.old_slider_image = slider.slider_image;
+      this.$refs.fileUpload.value = "";
       this.errors = "";
     },
     openAdd: function openAdd() {
@@ -2710,7 +2721,8 @@ __webpack_require__.r(__webpack_exports__);
       this.slider.slider_name = "";
       this.slider.slider_image = "";
       this.slider.slider_desc = "";
-      this.slider.slider_status = "1";
+      this.slider.slider_status = 1;
+      this.old_slider_image = "";
       this.errors = "";
     }
   }
@@ -3892,6 +3904,8 @@ render._withStripped = true;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
@@ -4088,6 +4102,9 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "modal-dialog modal-lg"
   }, [_c("form", {
+    attrs: {
+      enctype: "multipart/form-data"
+    },
     on: {
       submit: function submit($event) {
         $event.preventDefault();
@@ -4163,12 +4180,17 @@ var render = function render() {
     attrs: {
       id: "preview"
     }
-  }, [_vm.slider.slider_image ? _c("img", {
+  }, [!_vm.$refs.fileUpload.value ? _c("img", {
     attrs: {
       src: "public/upload/slider/" + _vm.slider.slider_image,
       width: "500"
     }
-  }) : _vm._e()]), _vm._v(" "), _vm.errors && _vm.errors.slider_image ? _c("span", {
+  }) : _c("img", {
+    attrs: {
+      src: _vm.previewImage,
+      width: "500"
+    }
+  })]), _vm._v(" "), _vm.errors && _vm.errors.slider_image ? _c("span", {
     staticStyle: {
       color: "red"
     }
@@ -4214,9 +4236,9 @@ var render = function render() {
       id: "show",
       value: "1"
     },
-    domProps: {
-      checked: _vm._q(_vm.slider.slider_status, "1")
-    },
+    domProps: _defineProperty({
+      checked: _vm.slider.slider_status == 1
+    }, "checked", _vm._q(_vm.slider.slider_status, "1")),
     on: {
       change: function change($event) {
         return _vm.$set(_vm.slider, "slider_status", "1");
@@ -4240,9 +4262,9 @@ var render = function render() {
       id: "hide",
       value: "0"
     },
-    domProps: {
-      checked: _vm._q(_vm.slider.slider_status, "0")
-    },
+    domProps: _defineProperty({
+      checked: _vm.slider.slider_status == 0
+    }, "checked", _vm._q(_vm.slider.slider_status, "0")),
     on: {
       change: function change($event) {
         return _vm.$set(_vm.slider, "slider_status", "0");

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\SliderResource;
 use App\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
@@ -46,12 +48,11 @@ class SliderController extends Controller
         $slider->slider_desc = $request->slider_desc;
         $slider->slider_status = $request->slider_status;
         $get_image = $request->file('slider_image');
-        dump($get_image);
         if ($get_image) {
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.', $get_name_image));
-            $new_image = $name_image . rand(0, 99) . '.'
-                . $get_image->getClientOriginalExtension();
+            $new_image = $name_image . rand(0, 99)
+                . '.' . $get_image->getClientOriginalExtension();
             $get_image->move('public/upload/slider', $new_image);
             $slider->slider_image = $new_image;
             $slider->save();
@@ -87,9 +88,28 @@ class SliderController extends Controller
      * @param  int  $slider
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slider)
+    public function update(Request $request, Slider $slider)
     {
-        //
+        $request->validate([
+            'slider_name' => 'required',
+            'slider_status' => 'required'
+        ]);
+        $slider->slider_name = $request->slider_name;
+        $slider->slider_desc = $request->slider_desc;
+        $slider->slider_status = $request->slider_status;
+        $get_image = $request->file('slider_image');
+        dump($get_image);
+        if ($get_image) {
+            $get_name_image = $get_image->getClientOriginalName();
+            $name_image = current(explode('.', $get_name_image));
+            $new_image = $name_image . rand(0, 99)
+                . '.' . $get_image->getClientOriginalExtension();
+            // $get_image->move('public/upload/slider', $new_image);
+            // $slider->slider_image = $new_image;
+            // $slider->save();
+        } else {
+            // $slider->save();
+        }
     }
 
     /**
@@ -100,6 +120,6 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
-        // $slider->delete();
+        $slider->delete();
     }
 }
