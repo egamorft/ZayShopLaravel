@@ -2654,7 +2654,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _formData.append("old_slider_image", this.old_slider_image);
 
-        axios.put("api/sliders/".concat(this.slider.slider_id), _formData).then(function (res) {
+        axios.post("api/sliders/".concat(this.slider.slider_id, "/recreate"), _formData).then(function (res) {
           // alert
           var Toast = Swal.mixin({
             toast: true,

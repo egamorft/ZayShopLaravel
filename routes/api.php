@@ -24,4 +24,5 @@ Route::resource('categories', 'CategoryController');
 
 Route::resource('subcategories', 'SubCategoryController');
 
+Route::post('sliders/{slider}/recreate', 'SliderController@recreate')->name('sliders.recreate');
 Route::resource('sliders', 'SliderController');

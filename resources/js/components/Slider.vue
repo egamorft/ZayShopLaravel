@@ -495,7 +495,7 @@ export default {
         formData.append("slider_status", this.slider.slider_status);
         formData.append("old_slider_image", this.old_slider_image);
         axios
-          .put(`api/sliders/${this.slider.slider_id}`, formData)
+          .post(`api/sliders/${this.slider.slider_id}/recreate`, formData)
           .then((res) => {
             // alert
             const Toast = Swal.mixin({
