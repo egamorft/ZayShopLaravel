@@ -15,11 +15,13 @@ class TblOrderDetails extends Migration
     {
         Schema::create('tbl_order_details', function (Blueprint $table) {
             $table->id('order_details_id');
-            $table->integer('order_id');
+            $table->string('order_code', 50);
             $table->integer('product_id');
             $table->string('product_name');
-            $table->float('product_price');
+            $table->integer('product_price');
             $table->integer('product_sales_quantity');
+            $table->string('product_coupon', 50);
+            $table->string('product_feeship', 50);
             $table->timestamps();
         });
     }

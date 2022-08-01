@@ -333,7 +333,12 @@
     </div>
     <!--   Core JS Files   -->
     <!-- <script src="{{asset('public/backend/js/core/popper.min.js')}}"></script> --> 
+    @if (Route::currentRouteNamed('category') 
+            || Route::currentRouteNamed('subcategory') 
+            || Route::currentRouteNamed('coupon') 
+            || Route::currentRouteNamed('slider'))
     <script src="{{url('public/js/app.js')}}"></script>
+    @endif
     <script src="{{asset('public/frontend/js/sweetalert.js')}}"></script>
     <script src="{{asset('public/backend/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('public/backend/js/plugins/perfect-scrollbar.min.js')}}"></script>
@@ -348,6 +353,8 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('public/backend/js/material-dashboard.min.js?v=3.0.2')}}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+
 
     @if(Route::currentRouteNamed('dashboard'))
     <script>

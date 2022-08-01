@@ -17,7 +17,7 @@ class TblSlider extends Migration
             $table->id('slider_id');
             $table->string('slider_name');
             $table->string('slider_image');
-            $table->text('slider_desc');
+            $table->text('slider_desc')->nullable();
             $table->integer('slider_status');
             $table->timestamps();
         });

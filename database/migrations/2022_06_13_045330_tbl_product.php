@@ -18,9 +18,11 @@ class TblProduct extends Migration
             $table->integer('category_id');
             $table->integer('subcategory_id');
             $table->string('product_name');
-            $table->text('product_desc');
-            $table->text('product_content');
-            $table->string('product_price');
+            $table->string('product_quantity', 50);
+            $table->integer('product_sold')->nullable();
+            $table->text('product_desc')->nullable();
+            $table->text('product_content')->nullable();
+            $table->integer('product_price');
             $table->string('product_image');
             $table->integer('product_status');
             $table->timestamps();
