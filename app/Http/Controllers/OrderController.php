@@ -205,6 +205,15 @@ class OrderController extends Controller
     $order_details_product = OrderDetails::with('product')
       ->where('order_code', $checkout_code)
       ->get();
+    foreach ($order_details_product as $product) {
+      $coupon_code = $product->product_coupon;
+    }
+    if($coupon_code!="no"){
+      $coupon = Coupon::where('coupon_code', $coupon_code)->first();
+      $coupon_number = $coupon->coupon_number;
+    }else{
+      $coupon_number = 0;
+    }
     $output = '';
     $output .= '
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
@@ -311,6 +320,8 @@ class OrderController extends Controller
     ';
     }
     $tax = ($total * 10) / 100;
+    $discount = ($coupon_number * $total)/ 100;
+    $total_all = $total - $discount + $tax + $product->product_feeship;
     $output .= '
         </tbody>
           </table>
@@ -326,11 +337,15 @@ class OrderController extends Controller
                         <span class="text-black me-4">Tax(10%)</span>
                         ' . number_format($tax, 0, ',', '.') . 'đ
                     </li>
+                    <li class="text-muted ms-3 mt-2">
+                        <span class="text-black me-4">Coupon('.$coupon_number.'%)</span>
+                        ' . number_format($discount, 0, ',', '.') . 'đ
+                    </li>
                   </ul>
                   <p class="text-black float-start">
                       <span class="text-black me-3"> Total Amount</span>
                       <span style="font-size: 25px;">
-                          ' . number_format($total, 0, ',', '.') . ' VNĐ
+                          ' . number_format($total_all, 0, ',', '.') . ' VNĐ
                       </span></p>
                 </div>
               </div>
