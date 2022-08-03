@@ -16,8 +16,8 @@ class TblStatistic extends Migration
         Schema::create('tbl_statistic', function (Blueprint $table) {
             $table->id('statistic_id');
             $table->string('order_date');
-            $table->string('sale');
-            $table->string('profit');
+            $table->integer('sale');
+            $table->integer('profit');
             $table->integer('quantity');
             $table->integer('total_order');
             $table->timestamps();

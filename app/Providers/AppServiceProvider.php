@@ -32,10 +32,10 @@ class AppServiceProvider extends ServiceProvider
             $min_price = Product::where('product_status', '1')->min('product_price');
             $max_price = Product::where('product_status', '1')->max('product_price');
 
-            $product_donut = Product::all()->where('product_status', '1')->count();
-            $order_donut = Order::all()->count();
-            $coupon_donut = Coupon::all()->count();
-            $account_donut = Account::all()->count();
+            $product_donut = Product::where('product_status', '1')->count();
+            $order_donut = Order::count();
+            $coupon_donut = Coupon::count();
+            $account_donut = Account::count();
             $view->with(compact('product_donut', 'order_donut', 'coupon_donut', 'account_donut'));
         });
 

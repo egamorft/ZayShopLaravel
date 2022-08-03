@@ -287,6 +287,7 @@ class ProductController extends Controller
                 ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
                     ->where('tbl_product.product_id', $product_id)->get();
 
+        $category_id = '';
         foreach ($product_details as $key => $value) {
             $category_id = $value->category_id;
         }

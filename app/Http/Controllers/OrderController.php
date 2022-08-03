@@ -50,6 +50,8 @@ class OrderController extends Controller
     // $order_details = OrderDetails::where('order_code', $order_code)->get();
     $order = Order::where('order_code', $order_code)->get();
 
+    $account_id = '';
+    $shipping_id = '';
     foreach ($order as $key => $od) {
       $account_id = $od->account_id;
       $shipping_id = $od->shipping_id;
@@ -65,6 +67,7 @@ class OrderController extends Controller
       ->where('order_code', $order_code)
       ->get();
 
+    $product_coupon = '';
     foreach ($order_details as $key => $order_d) {
       $product_coupon = $order_d->product_coupon;
     }
@@ -191,6 +194,8 @@ class OrderController extends Controller
     $order_details = OrderDetails::where('order_code', $checkout_code)->get();
     $order = Order::where('order_code', $checkout_code)->get();
     $order_date = Order::where('order_code', $checkout_code)->first();
+    $account_id = '';
+    $shipping_id = '';
     foreach ($order as $key => $od) {
       $account_id = $od->account_id;
       $shipping_id = $od->shipping_id;

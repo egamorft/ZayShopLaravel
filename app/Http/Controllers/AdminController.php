@@ -52,7 +52,7 @@ class AdminController extends Controller
         $start_this_year = Carbon::now('Asia/Ho_Chi_Minh')->startOfYear()->toDateString();
 
         //Hôm qua
-        $yesterday = Carbon::now('Asia/Ho_Chi_Minh')->subDay(1)->toDateString();
+        $yesterday = Carbon::now('Asia/Ho_Chi_Minh')->subDay()->toDateString();
 
         //total last month
         $visitors_of_last_month = Visitors::whereBetween('visitors_date', [$early_last_month, $now_last_month])->get();
