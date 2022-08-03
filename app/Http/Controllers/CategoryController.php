@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\AdminCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Product;
 use Illuminate\Http\Request;
@@ -38,12 +39,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminCategoryRequest $request)
     {
-        $request->validate([
-            'category_name' => 'required|alpha',
-            'category_status' => 'required',
-        ]);
+        $request->except('_token');
         $category = new Category;
         $category->category_name = $request->category_name;
         $category->category_desc = $request->category_desc;
@@ -92,12 +90,9 @@ class CategoryController extends Controller
      * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(AdminCategoryRequest $request, Category $category)
     {
-        $request->validate([
-            'category_name' => 'required|alpha',
-            'category_status' => 'required',
-        ]);
+        $request->except('_token');
         $category->category_name = $request->category_name;
         $category->category_desc = $request->category_desc;
         $category->category_status = $request->category_status;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminProductRequest;
 use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -143,14 +144,9 @@ class ProductController extends Controller
         return view('admin.product.add_product')->with(compact('get_category', 'get_subcategory'));
     }
 
-    public function save_product(Request $request)
+    public function save_product(AdminProductRequest $request)
     {
-        $request->validate([
-            'product_name' => 'required',
-            'product_quantity' => 'required|numeric',
-            'product_price' => 'required|numeric',
-            'product_status' => 'required'
-        ]);
+        $request->except('_token');
 
         $data = array();
         $data['product_name'] = $request->product_name;
@@ -229,8 +225,9 @@ class ProductController extends Controller
         return view('components.admin_layout.admin_layout')->with('admin.edit_product', $manager_product);
     }
 
-    public function update_product(Request $request, $product_id)
+    public function update_product(AdminProductRequest $request, $product_id)
     {
+        $request->except('_token');
         $data = array();
         $data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;

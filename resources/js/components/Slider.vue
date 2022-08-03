@@ -661,8 +661,12 @@ export default {
       });
     },
     editSlider: function (slider) {
-      this.edit = true;
-      this.focusAll = true;
+      if(this.edit === false){
+        this.edit = true;
+      }
+      if(this.focusAll === false){
+        this.focusAll = true;
+      }
       this.slider.slider_id = slider.slider_id;
       this.slider.slider_name = slider.slider_name;
       this.slider.slider_image = slider.slider_image;
@@ -673,9 +677,13 @@ export default {
       this.errors = "";
     },
     openAdd: function () {
-      this.edit = false;
+      if(this.edit === true){
+        this.edit = false;
+      }
+      if(this.focusAll === true){
+        this.focusAll = false;
+      }
       this.$refs.fileUpload.value = null;
-      this.focusAll = false;
       this.slider.slider_id = "";
       this.slider.slider_name = "";
       this.slider.slider_image = "";

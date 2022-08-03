@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminLoginRequest;
 use App\Statistic;
 use App\Visitors;
 use Carbon\Carbon;
@@ -96,14 +97,11 @@ class AdminController extends Controller
             'visitors_of_last_month_count', 'visitors_of_this_month_count', 'visitors_of_this_year_count', 'visitors_of_last_year_count'));
     }
 
-    public function login(Request $request)
+    public function login(AdminLoginRequest $request)
     {
+        $request->except('_token');
         $admin_email = $request->admin_email;
         $admin_password = md5($request->admin_password);
-        $request->validate([
-            'admin_email' => 'required|min:8|email',
-            'admin_password' => 'required|min:6'
-        ]);
         $result = DB::table('tbl_admin')
             ->where('admin_email', $admin_email)
             ->where('admin_password', $admin_password)->first();

@@ -661,8 +661,12 @@ export default {
       });
     },
     editSubCategory: function (subcategory) {
-      this.edit = true;
-      this.focusAll = true;
+      if(this.edit === false){
+        this.edit = true;
+      }
+      if(this.focusAll === false){
+        this.focusAll = true;
+      }
       this.subcategory.subcategory_id = subcategory.subcategory_id;
       this.subcategory.subcategory_name = subcategory.subcategory_name;
       this.subcategory.subcategory_desc = subcategory.subcategory_desc;
@@ -671,8 +675,12 @@ export default {
       this.errors = "";
     },
     openAdd: function () {
-      this.edit = false;
-      this.focusAll = false;
+      if(this.edit === true){
+        this.edit = false;
+      }
+      if(this.focusAll === true){
+        this.focusAll = false;
+      }
       this.subcategory.subcategory_id = "";
       this.subcategory.subcategory_name = "";
       this.subcategory.subcategory_desc = "";

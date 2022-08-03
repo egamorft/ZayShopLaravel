@@ -2233,8 +2233,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editCategory: function editCategory(category) {
-      this.edit = true;
-      this.focusAll = true;
+      if (this.edit === false) {
+        this.edit = true;
+      }
+
+      if (this.focusAll === false) {
+        this.focusAll = true;
+      }
+
       this.category.category_id = category.category_id;
       this.category.category_name = category.category_name;
       this.category.category_desc = category.category_desc;
@@ -2242,8 +2248,14 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = "";
     },
     openAdd: function openAdd() {
-      this.edit = false;
-      this.focusAll = false;
+      if (this.edit === true) {
+        this.edit = false;
+      }
+
+      if (this.focusAll === true) {
+        this.focusAll = false;
+      }
+
       this.category.category_id = "";
       this.category.category_name = "";
       this.category.category_desc = "";
@@ -2453,13 +2465,25 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     generateCode: function generateCode() {
-      this.focusCode = true;
+      if (this.focusCode === false) {
+        this.focusCode = true;
+      }
+
       this.coupon.coupon_code = Math.random().toString(36).slice(2).substring(0, 5).toUpperCase();
     },
     editCoupon: function editCoupon(coupon) {
-      this.edit = true;
-      this.focusCode = true;
-      this.focusAll = true;
+      if (this.edit === false) {
+        this.edit = true;
+      }
+
+      if (this.focusCode === false) {
+        this.focusCode = true;
+      }
+
+      if (this.focusAll === false) {
+        this.focusAll = true;
+      }
+
       this.coupon.coupon_id = coupon.coupon_id;
       this.coupon.coupon_name = coupon.coupon_name;
       this.coupon.coupon_time = coupon.coupon_time;
@@ -2469,9 +2493,18 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = "";
     },
     openAdd: function openAdd() {
-      this.edit = false;
-      this.focusCode = false;
-      this.focusAll = false;
+      if (this.edit === true) {
+        this.edit = false;
+      }
+
+      if (this.focusCode === true) {
+        this.focusCode = false;
+      }
+
+      if (this.focusAll === true) {
+        this.focusAll = false;
+      }
+
       this.coupon.coupon_id = "";
       this.coupon.coupon_name = "";
       this.coupon.coupon_time = "";
@@ -2806,8 +2839,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editSlider: function editSlider(slider) {
-      this.edit = true;
-      this.focusAll = true;
+      if (this.edit === false) {
+        this.edit = true;
+      }
+
+      if (this.focusAll === false) {
+        this.focusAll = true;
+      }
+
       this.slider.slider_id = slider.slider_id;
       this.slider.slider_name = slider.slider_name;
       this.slider.slider_image = slider.slider_image;
@@ -2818,9 +2857,15 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = "";
     },
     openAdd: function openAdd() {
-      this.edit = false;
+      if (this.edit === true) {
+        this.edit = false;
+      }
+
+      if (this.focusAll === true) {
+        this.focusAll = false;
+      }
+
       this.$refs.fileUpload.value = null;
-      this.focusAll = false;
       this.slider.slider_id = "";
       this.slider.slider_name = "";
       this.slider.slider_image = "";
@@ -3152,8 +3197,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editSubCategory: function editSubCategory(subcategory) {
-      this.edit = true;
-      this.focusAll = true;
+      if (this.edit === false) {
+        this.edit = true;
+      }
+
+      if (this.focusAll === false) {
+        this.focusAll = true;
+      }
+
       this.subcategory.subcategory_id = subcategory.subcategory_id;
       this.subcategory.subcategory_name = subcategory.subcategory_name;
       this.subcategory.subcategory_desc = subcategory.subcategory_desc;
@@ -3162,8 +3213,14 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = "";
     },
     openAdd: function openAdd() {
-      this.edit = false;
-      this.focusAll = false;
+      if (this.edit === true) {
+        this.edit = false;
+      }
+
+      if (this.focusAll === true) {
+        this.focusAll = false;
+      }
+
       this.subcategory.subcategory_id = "";
       this.subcategory.subcategory_name = "";
       this.subcategory.subcategory_desc = "";

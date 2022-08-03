@@ -534,7 +534,9 @@ export default {
       }
     },
     generateCode: function () {
-      this.focusCode = true;
+      if (this.focusCode === false) {
+        this.focusCode = true;
+      }
       this.coupon.coupon_code = Math.random()
         .toString(36)
         .slice(2)
@@ -542,9 +544,15 @@ export default {
         .toUpperCase();
     },
     editCoupon: function (coupon) {
-      this.edit = true;
-      this.focusCode = true;
-      this.focusAll = true;
+      if (this.edit === false) {
+        this.edit = true;
+      }
+      if (this.focusCode === false) {
+        this.focusCode = true;
+      }
+      if(this.focusAll === false){
+        this.focusAll = true;
+      }
       this.coupon.coupon_id = coupon.coupon_id;
       this.coupon.coupon_name = coupon.coupon_name;
       this.coupon.coupon_time = coupon.coupon_time;
@@ -554,9 +562,15 @@ export default {
       this.errors = "";
     },
     openAdd: function () {
-      this.edit = false;
-      this.focusCode = false;
-      this.focusAll = false;
+      if(this.edit === true){
+        this.edit = false;
+      }
+      if(this.focusCode === true){
+        this.focusCode = false;
+      }
+      if(this.focusAll === true){
+        this.focusAll = false;
+      }
       this.coupon.coupon_id = "";
       this.coupon.coupon_name = "";
       this.coupon.coupon_time = "";

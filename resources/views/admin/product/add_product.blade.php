@@ -104,11 +104,21 @@
                                 @endif
                             </select>
                         </div>
+                        @error('category')
+                        <span style="color: red">
+                            {{$message}}
+                        </span>
+                        @enderror
                         <div class="input-group input-group-outline mb-3">
                             <select name="subcategory" id="subcategory" class="form-control subcategory choose">
 
                             </select>
                         </div>
+                        @error('subcategory')
+                        <span style="color: red">
+                            {{$message}}
+                        </span>
+                        @enderror
                         <div class="form-check mb-3 ">
                             <label class="form-check-label" for="show">
                                 Show

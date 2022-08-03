@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminSubCategoryRequest;
 use App\Http\Resources\SubCategoryResource;
+use App\Product;
 use App\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,13 +37,9 @@ class SubCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminSubCategoryRequest $request)
     {
-        $request->validate([
-            'subcategory_name' => 'required|alpha',
-            'category_id' => 'required',
-            'subcategory_status' => 'required',
-        ]);
+        $request->except('_token');
         $subcategory = new SubCategory;
         $subcategory->subcategory_name = $request->subcategory_name;
         $subcategory->subcategory_desc = $request->subcategory_desc;
@@ -87,13 +85,9 @@ class SubCategoryController extends Controller
      * @param  int  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubCategory $subcategory)
+    public function update(AdminSubCategoryRequest $request, SubCategory $subcategory)
     {
-        $request->validate([
-            'subcategory_name' => 'required|alpha',
-            'category_id' => 'required',
-            'subcategory_status' => 'required',
-        ]);
+        $request->except('_token');
         $subcategory->subcategory_name = $request->subcategory_name;
         $subcategory->subcategory_desc = $request->subcategory_desc;
         $subcategory->category_id = $request->category_id;

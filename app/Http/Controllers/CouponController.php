@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Coupon;
+use App\Http\Requests\AdminCouponRequest;
 use App\Http\Resources\CouponResource;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -36,14 +37,9 @@ class CouponController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminCouponRequest $request)
     {
-        $request->validate([
-            'coupon_name' => 'required',
-            'coupon_code' => 'required',
-            'coupon_time' => 'required|numeric',
-            'coupon_number' => 'required|numeric'
-        ]);
+        $request->except('_token');
         $coupon = new Coupon;
         $coupon->coupon_name = $request->coupon_name;
         $coupon->coupon_code = $request->coupon_code;
@@ -82,14 +78,9 @@ class CouponController extends Controller
      * @param  int  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Coupon $coupon)
+    public function update(AdminCouponRequest $request, Coupon $coupon)
     {
-        $request->validate([
-            'coupon_name' => 'required',
-            'coupon_code' => 'required',
-            'coupon_time' => 'required|numeric',
-            'coupon_number' => 'required|numeric'
-        ]);
+        $request->except('_token');
         $coupon->coupon_name = $request->coupon_name;
         $coupon->coupon_code = $request->coupon_code;
         $coupon->coupon_time = $request->coupon_time;

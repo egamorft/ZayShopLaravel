@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminSliderRequest;
 use App\Http\Resources\SliderResource;
 use App\Slider;
 use Illuminate\Http\Request;
@@ -67,13 +68,9 @@ class SliderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminSliderRequest $request)
     {
-        $request->validate([
-            'slider_name' => 'required',
-            'slider_image' => 'required',
-            'slider_status' => 'required'
-        ]);
+        $request->except('_token');
         $slider = new Slider;
         $slider->slider_name = $request->slider_name;
         $slider->slider_desc = $request->slider_desc;

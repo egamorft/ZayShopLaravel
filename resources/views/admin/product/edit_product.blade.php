@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="col-lg-11">
-    @if(!$edit_product->isEmpty())
+        @if(!$edit_product->isEmpty())
         @foreach($edit_product as $key => $edit_value)
         <div class="card">
             <div class="card-header pb-0">
@@ -27,24 +27,39 @@
                 <div class="col-md-7 container">
                     <form role="form" method="POST" action="{{URL::to('/update-product/'.$edit_value->product_id)}}" enctype="multipart/form-data">
                         @csrf
-                        <div class="input-group input-group-outline my-3">
+                        <div class="input-group input-group-outline my-3 focused is-focused">
                             <label class="form-label">
                                 Product Name
                             </label>
                             <input value="{{$edit_value->product_name}}" name="product_name" type="text" class="form-control">
                         </div>
-                        <div class="input-group input-group-outline my-3">
+                        @error('product_name')
+                        <span style="color: red">
+                            {{$message}}
+                        </span>
+                        @enderror
+                        <div class="input-group input-group-outline my-3 focused is-focused">
                             <label class="form-label">
                                 Product Quantity
                             </label>
                             <input value="{{$edit_value->product_quantity}}" name="product_quantity" type="text" class="form-control">
                         </div>
-                        <div class="input-group input-group-outline my-3">
+                        @error('product_quantity')
+                        <span style="color: red">
+                            {{$message}}
+                        </span>
+                        @enderror
+                        <div class="input-group input-group-outline my-3 focused is-focused">
                             <label class="form-label">
                                 Product Price
                             </label>
                             <input value="{{$edit_value->product_price}}" name="product_price" type="text" class="form-control">
                         </div>
+                        @error('product_price')
+                        <span style="color: red">
+                            {{$message}}
+                        </span>
+                        @enderror
                         <div class="input-group input-group-outline mb-3">
                             <div class="col-md-3">
                                 <span class="form-label">
@@ -54,7 +69,7 @@
                             <div class="col-md-9">
                                 <input name="product_image" type="file" class="form-control" id="productImage" onchange="preview()">
                             </div>
-                            
+
                             <img id="frame" src="../public/upload/product/{{$edit_value->product_image}}" width="200" alt="No image available" />
                         </div>
                         <div class="input-group input-group-outline mb-3">
@@ -62,7 +77,7 @@
                                 Product Description
                             </label>
                             <textarea name="product_desc" placeholder="Enter Product Description" class="form-control" id="ckeditorAdd" rows="8">
-                                {{$edit_value->product_desc}} 
+                            {{$edit_value->product_desc}}
                             </textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
@@ -70,7 +85,7 @@
                                 Product Content
                             </label>
                             <textarea name="product_content" placeholder="Enter Product Content" class="form-control" id="ckeditorAdd1" rows="8">
-                                {{$edit_value->product_content}}
+                            {{$edit_value->product_content}}
                             </textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
@@ -80,28 +95,36 @@
                                 </option>
                                 @if(!$get_category->isEmpty())
                                 @foreach($get_category as $key => $get_category)
-                                    <option value="{{$get_category->category_id}}" 
-                                        {{$get_category->category_id == $edit_value->category_id?'selected':''}}>
-                                            {{$get_category->category_name}}
-                                @endforeach
-                                @else
+                                <option value="{{$get_category->category_id}}" {{$get_category->category_id == $edit_value->category_id?'selected':''}}>
+                                    {{$get_category->category_name}}
+                                    @endforeach
+                                    @else
                                 <option disabled>Something went wrong</option>
                                 @endif
                             </select>
                         </div>
+                        @error('category')
+                        <span style="color: red">
+                            {{$message}}
+                        </span>
+                        @enderror
                         <div class="input-group input-group-outline mb-3">
                             <select name="subcategory" id="subcategory" class="form-control subcategory choose">
                                 @if(!$get_subcategory->isEmpty())
                                 @foreach($get_subcategory as $key => $get_subcategory)
-                                    <option value="{{$get_subcategory->subcategory_id}}" 
-                                        {{$get_subcategory->subcategory_id == $edit_value->subcategory_id?'selected':''}}>
-                                            {{$get_subcategory->subcategory_name}}
-                                @endforeach
-                                @else
+                                <option value="{{$get_subcategory->subcategory_id}}" {{$get_subcategory->subcategory_id == $edit_value->subcategory_id?'selected':''}}>
+                                    {{$get_subcategory->subcategory_name}}
+                                    @endforeach
+                                    @else
                                 <option disabled>Something went wrong</option>
                                 @endif
                             </select>
                         </div>
+                        @error('subcategory')
+                        <span style="color: red">
+                            {{$message}}
+                        </span>
+                        @enderror
                         <div class="text-center">
                             <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">
                                 Save product
