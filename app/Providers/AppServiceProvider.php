@@ -39,11 +39,11 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact('product_donut', 'order_donut', 'coupon_donut', 'account_donut'));
         });
 
-        view()->composer('pages.public.shop', function ($view) {
+        // view()->composer('pages.public.shop', function ($view) {
 
-            $min_price = Product::where('product_status', '1')->min('product_price');
-            $max_price = Product::where('product_status', '1')->max('product_price');
-            $view->with(compact('min_price', 'max_price'));
-        });
+        //     $min_price = Product::where('product_status', '1')->min('product_price');
+        //     $max_price = Product::where('product_status', '1')->max('product_price');
+        //     $view->with(compact('min_price', 'max_price'));
+        // });
     }
 }
