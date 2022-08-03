@@ -551,6 +551,7 @@ https://templatemo.com/tm-559-zay-shop
         });
     </script> -->
     <!-- End Slider Script -->
+    @if(Route::currentRouteNamed('shop'))
     <script>
         $("#slider-range").slider({
             range: true,
@@ -568,6 +569,7 @@ https://templatemo.com/tm-559-zay-shop
         $("#amount_start").val($("#slider-range").slider("values", 0)).simpleMoneyFormat();
         $("#amount_end").val($("#slider-range").slider("values", 1)).simpleMoneyFormat();
     </script>
+    @endif
     <script>
         $(document).ready(function() {
             $('.send_order').click(function() {

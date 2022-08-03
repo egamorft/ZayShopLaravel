@@ -353,7 +353,9 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('public/backend/js/material-dashboard.min.js?v=3.0.2')}}"></script>
+    @if (Route::currentRouteNamed('product') )
     <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+    @endif
 
 
     @if(Route::currentRouteNamed('dashboard'))
@@ -619,6 +621,8 @@
             });
         })
     </script>
+
+    @if (Route::currentRouteNamed('product') )
     <script type="text/javascript">
         ClassicEditor
             .create(document.querySelector('#ckeditorAdd'))
@@ -632,6 +636,7 @@
                 console.error(error);
             });
     </script>
+    @endif
     <script>
         $(document).ready(function() {
             window.setTimeout(function() {

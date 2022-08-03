@@ -22,7 +22,7 @@ Route::get('/about', 'HomeController@about');
 
 Route::get('/contact', 'HomeController@contact');
 
-Route::get('/shop', 'HomeController@shop');
+Route::get('/shop', 'HomeController@shop')->name('shop');
 
 Route::get('/login', 'HomeController@login');
 

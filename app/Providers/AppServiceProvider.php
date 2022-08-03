@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('*', function ($view) {
+        view()->composer('admin.dashboard.dashboard', function ($view) {
 
             $min_price = Product::where('product_status', '1')->min('product_price');
             $max_price = Product::where('product_status', '1')->max('product_price');
@@ -36,7 +36,14 @@ class AppServiceProvider extends ServiceProvider
             $order_donut = Order::all()->count();
             $coupon_donut = Coupon::all()->count();
             $account_donut = Account::all()->count();
-            $view->with(compact('min_price', 'max_price', 'product_donut', 'order_donut', 'coupon_donut', 'account_donut'));
+            $view->with(compact('product_donut', 'order_donut', 'coupon_donut', 'account_donut'));
+        });
+
+        view()->composer('pages.public.shop', function ($view) {
+
+            $min_price = Product::where('product_status', '1')->min('product_price');
+            $max_price = Product::where('product_status', '1')->max('product_price');
+            $view->with(compact('min_price', 'max_price'));
         });
     }
 }
