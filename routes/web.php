@@ -148,9 +148,11 @@ Route::post('/save-cart-home', 'CartController@save_cart_home');
 //Checkout
 Route::get('/check-out', 'CheckoutController@check_out');
 
-Route::post('/confirm-order', 'CheckoutController@confirm_order');
+Route::post('/confirm-order', 'CheckoutController@confirm_order')->name('confirm-order');
 
 Route::post('/momo-payment', 'CheckoutController@momo_payment');
+
+Route::get('/done-momo-payment', 'CheckoutController@done_momo_payment');
 //Coupon Home
 
 Route::post('/check-coupon', 'CouponController@check_coupon');

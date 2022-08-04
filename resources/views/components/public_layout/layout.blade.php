@@ -551,7 +551,6 @@ https://templatemo.com/tm-559-zay-shop
         });
     </script> -->
     <!-- End Slider Script -->
-
     <script>
         $('.payment_select').change(function() {
             const check_out = document.getElementById('check_out');
@@ -737,6 +736,7 @@ https://templatemo.com/tm-559-zay-shop
 
                                     },
                                     success: function(data) {
+                                        // console.log(data);
                                         location.replace(data);
                                     }
                                 });
