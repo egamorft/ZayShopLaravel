@@ -150,6 +150,7 @@ Route::get('/check-out', 'CheckoutController@check_out');
 
 Route::post('/confirm-order', 'CheckoutController@confirm_order');
 
+Route::post('/momo-payment', 'CheckoutController@momo_payment');
 //Coupon Home
 
 Route::post('/check-coupon', 'CouponController@check_coupon');

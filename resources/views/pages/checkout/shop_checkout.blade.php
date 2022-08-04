@@ -658,16 +658,25 @@ $orderDate = Carbon\Carbon::now();
 
                 <div class="my-3">
                     <div class="form-check">
-                        <input id="cod" name="payment_select" type="radio" class="form-check-input payment_select" value="1" checked>
+                        <input id="cod" name="payment_select" type="radio" class="form-check-input payment_select" value="1">
                         <label class="form-check-label" for="cod">
                             COD
+                        </label>
+                    </div>
+                </div>
+                <div class="my-3">
+                    <div class="form-check">
+                        <input type="hidden" class="total_momo" value="{{$total_all}}">
+                        <input id="momo" name="payment_select" type="radio" class="form-check-input payment_select" value="2">
+                        <label class="form-check-label" for="momo">
+                            MOMO
                         </label>
                     </div>
                 </div>
 
                 <hr class="my-4">
 
-                <input name="send_order" class="w-100 btn btn-danger btn-lg send_order" type="button" value="Continue to checkout">
+                <input id="check_out" name="send_order_cod" class="w-100 btn btn-danger btn-lg check_out_method" type="button" value="Continue to checkout">
             </form>
             <hr class="my-4">
         </div>

@@ -551,6 +551,18 @@ https://templatemo.com/tm-559-zay-shop
         });
     </script> -->
     <!-- End Slider Script -->
+
+    <script>
+        $('.payment_select').change(function() {
+            const check_out = document.getElementById('check_out');
+            if($(this).val() == 1){
+                check_out.name = 'cod';
+            }else if($(this).val() == 2){
+                check_out.name = 'momo';
+            }
+        })
+    </script>
+
     @if(Route::currentRouteNamed('shop'))
     <script>
         $("#slider-range").slider({
@@ -572,8 +584,113 @@ https://templatemo.com/tm-559-zay-shop
     @endif
     <script>
         $(document).ready(function() {
-            $('.send_order').click(function() {
-                Swal.fire({
+            $('#check_out').click(function() {
+                if($(this).attr('name') =='cod'){           //COD
+                    Swal.fire({
+                        title: 'Ready to submit your order?',
+                        text: "Check your information and your shopping cart carefully",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        cancelButtonColor: '#d33',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, submit now!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var shipping_email = $('.shipping_email').val();
+                            var shipping_name = $('.shipping_name').val();
+                            var shipping_address = $('.shipping_address').val();
+                            var shipping_phone = $('.shipping_phone').val();
+                            var shipping_notes = $('.shipping_notes').val();
+                            var payment_select = $('.payment_select').val();
+                            var order_fee = $('.order_fee').val();
+                            var order_coupon = $('.order_coupon').val();
+                            var _token = $('input[name="_token"]').val();
+
+                            if (order_fee) {
+                                if (shipping_email && shipping_name && shipping_address && shipping_phone && payment_select) {
+                                    $.ajax({
+                                        url: '{{url("/send-mail-confirm-order")}}',
+                                        method: 'POST',
+                                        data: {
+                                            shipping_email: shipping_email,
+                                            shipping_name: shipping_name,
+                                            shipping_address: shipping_address,
+                                            shipping_phone: shipping_phone,
+                                            shipping_notes: shipping_notes,
+                                            _token: _token
+                                        },
+                                        beforeSend: function(){
+                                            Swal.fire({
+                                                title: 'Please Wait !',
+                                                allowOutsideClick: false,
+                                                showConfirmButton: false,
+                                                didOpen: () => {
+                                                    Swal.showLoading()
+                                                },
+                                            });
+
+                                        },
+                                        success: function() {
+                                            Swal.fire({
+                                                position: 'center',
+                                                icon: 'success',
+                                                title: 'Your order has been saved',
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                            })
+                                            $.ajax({
+                                                url: "{{url('/confirm-order')}}",
+                                                method: 'POST',
+                                                data: {
+                                                    shipping_email: shipping_email,
+                                                    shipping_name: shipping_name,
+                                                    shipping_address: shipping_address,
+                                                    shipping_phone: shipping_phone,
+                                                    shipping_notes: shipping_notes,
+                                                    payment_select: payment_select,
+                                                    order_fee: order_fee,
+                                                    order_coupon: order_coupon,
+                                                    _token: _token
+                                                },
+                                                success: function() {
+                                                    if (payment_select == 1) {
+                                                        document.getElementById("shipping_method").innerHTML = 'COD';
+                                                    } else if (payment_select == 2) {
+                                                        document.getElementById("shipping_method").innerHTML = 'MOMO';
+                                                    } else {
+                                                        document.getElementById("shipping_method").innerHTML = 'Unidentified';
+                                                    }
+                                                    document.getElementById("shipping_address").innerHTML = shipping_address;
+                                                    $("#OrderBill").modal("toggle");
+
+                                                    $('#closeBill').click(function() {
+                                                        window.location.href = "{{ URL::to('/profile/order')}}";
+                                                    });
+                                                }
+                                            });
+
+                                        }
+                                    });
+                                } else {
+
+                                    Swal.fire(
+                                        'Oops!',
+                                        'Something went wrong!! Make sure you have fill all field',
+                                        'warning'
+                                    )
+                                }
+                            } else {
+                                Swal.fire(
+                                    'Oops!',
+                                    'Something went wrong!! Calculate your address delivery fee',
+                                    'warning'
+                                )
+                            }
+                        }
+                    });
+                    
+                }else if($(this).attr('name') =='momo'){    //MOMO
+                    Swal.fire({
                     title: 'Ready to submit your order?',
                     text: "Check your information and your shopping cart carefully",
                     icon: 'warning',
@@ -591,12 +708,13 @@ https://templatemo.com/tm-559-zay-shop
                         var payment_select = $('.payment_select').val();
                         var order_fee = $('.order_fee').val();
                         var order_coupon = $('.order_coupon').val();
+                        var total_momo = $('.total_momo').val();
                         var _token = $('input[name="_token"]').val();
 
                         if (order_fee) {
                             if (shipping_email && shipping_name && shipping_address && shipping_phone && payment_select) {
                                 $.ajax({
-                                    url: '{{url("/send-mail-confirm-order")}}',
+                                    url: '{{url("/momo-payment")}}',
                                     method: 'POST',
                                     data: {
                                         shipping_email: shipping_email,
@@ -604,11 +722,12 @@ https://templatemo.com/tm-559-zay-shop
                                         shipping_address: shipping_address,
                                         shipping_phone: shipping_phone,
                                         shipping_notes: shipping_notes,
+                                        total_momo: total_momo,
                                         _token: _token
                                     },
                                     beforeSend: function(){
                                         Swal.fire({
-                                            title: 'Please Wait !',
+                                            title: 'Doing your payment, please check it!',
                                             allowOutsideClick: false,
                                             showConfirmButton: false,
                                             didOpen: () => {
@@ -617,45 +736,8 @@ https://templatemo.com/tm-559-zay-shop
                                         });
 
                                     },
-                                    success: function() {
-                                        Swal.fire({
-                                            position: 'center',
-                                            icon: 'success',
-                                            title: 'Your order has been saved',
-                                            showConfirmButton: false,
-                                            timer: 1500
-                                        })
-                                        $.ajax({
-                                            url: "{{url('/confirm-order')}}",
-                                            method: 'POST',
-                                            data: {
-                                                shipping_email: shipping_email,
-                                                shipping_name: shipping_name,
-                                                shipping_address: shipping_address,
-                                                shipping_phone: shipping_phone,
-                                                shipping_notes: shipping_notes,
-                                                payment_select: payment_select,
-                                                order_fee: order_fee,
-                                                order_coupon: order_coupon,
-                                                _token: _token
-                                            },
-                                            success: function() {
-                                                if (payment_select == 1) {
-                                                    document.getElementById("shipping_method").innerHTML = 'COD';
-                                                } else if (payment_select == 2) {
-                                                    document.getElementById("shipping_method").innerHTML = 'Paypal';
-                                                } else {
-                                                    document.getElementById("shipping_method").innerHTML = 'Unidentified';
-                                                }
-                                                document.getElementById("shipping_address").innerHTML = shipping_address;
-                                                $("#OrderBill").modal("toggle");
-
-                                                $('#closeBill').click(function() {
-                                                    window.location.href = "{{ URL::to('/profile/order')}}";
-                                                });
-                                            }
-                                        });
-
+                                    success: function(data) {
+                                        location.replace(data);
                                     }
                                 });
                             } else {
@@ -675,6 +757,13 @@ https://templatemo.com/tm-559-zay-shop
                         }
                     }
                 });
+                }else{
+                    Swal.fire(
+                        'Oops!',
+                        'You have not choose your payment gateway',
+                        'warning'
+                    )
+                }
 
             });
         });
@@ -796,7 +885,6 @@ https://templatemo.com/tm-559-zay-shop
             });
         });
     </script>
-
 </body>
 
 </html>
