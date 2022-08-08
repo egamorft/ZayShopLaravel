@@ -136,13 +136,13 @@
                                         </p>
                                     </td>
                                     <td>
-                                        @if($shipping->shipping_method == 0)
-                                        <p class="font-weight-bold mb-0">
-                                            Paypal
-                                        </p>
-                                        @elseif($shipping->shipping_method == 1)
+                                        @if($shipping->shipping_method == 1)
                                         <p class="font-weight-bold mb-0">
                                             COD
+                                        </p>
+                                        @elseif($shipping->shipping_method == 2)
+                                        <p class="font-weight-bold mb-0">
+                                            MOMO
                                         </p>
                                         @else
                                         <p class="font-weight-bold mb-0">

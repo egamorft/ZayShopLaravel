@@ -200,6 +200,8 @@ Route::post('/send-mail-confirm-order', 'SendMailController@confirm_order');
 
 Route::post('/send-mail-delivery', 'SendMailController@confirm_delivery');
 
+Route::post('/send-mail-apology-cancel-order', 'SendMailController@send_mail_apology_cancel_order');
+
 Route::get('/confirm-account', 'SendMailController@confirm_account')->name('confirm-account');
 
 Route::get('/check-verify/{verify_code}', 'HomeController@check_verify');

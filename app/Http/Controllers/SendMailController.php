@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApologyDelivery;
 use App\Mail\ConfirmAccount;
 use App\Mail\ConfirmDelivery;
 use App\Mail\ConfirmOrder;
@@ -52,5 +53,16 @@ class SendMailController extends Controller
         Mail::to($email_to)->send(new ConfirmResetPassword($verify_code, $email_to));
         Session::put('message', 'Check your email to reset your password');
         return Redirect::to('/reset-password');
+    }
+
+    public function send_mail_apology_cancel_order(Request $request){
+        $data = $request->all();
+        $order_id = $data['order_id'];
+        $get_order = Order::where('order_id', $order_id)->first();
+        $order_code = $get_order->order_code;
+        $shipping_id = $get_order->shipping_id;
+        $shipping = Order::with('shipping')->where('shipping_id', $shipping_id)->first();
+        $email_to = $shipping->shipping->shipping_email;
+        Mail::to($email_to)->send(new ApologyDelivery($order_code));
     }
 }

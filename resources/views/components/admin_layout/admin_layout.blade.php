@@ -710,12 +710,32 @@
                     });
                 }
             } else if (order_status == 3) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'This order has been canceled',
-                    showConfirmButton: false,
-                    timer: 4800
-                })
+                $.ajax({
+                        url: '{{url("/send-mail-apology-cancel-order")}}',
+                        method: 'POST',
+                        data: {
+                            order_id: order_id,
+                            _token: _token
+                        },
+                        beforeSend: function(){
+                            Swal.fire({
+                                title: 'Please Wait !',
+                                allowOutsideClick: false,
+                                showConfirmButton: false,
+                                 didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            });
+                        },
+                        success: function(){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'This order has been canceled',
+                                showConfirmButton: false,
+                                timer: 4800
+                            })
+                        }
+                    });
             } else {
                 Swal.fire({
                     icon: 'success',

@@ -85,7 +85,7 @@
                                     @if($od->shipping->shipping_method == 1 )
                                     <div class="green-label ms-auto text-uppercase">cod</div>
                                     @elseif($od->shipping->shipping_method == 2)
-                                    <div class="green-label ms-auto text-uppercase">momo</div>
+                                    <div class="momo-label ms-auto text-uppercase">momo</div>
                                     @else
                                     <div class="green-label ms-auto text-uppercase">unidentified</div>
                                     @endif

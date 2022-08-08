@@ -164,6 +164,13 @@ nav ul li a .cart::after {
     padding: 0px 3px;
 }
 
+.order .momo-label {
+    background-color: #ad006c;
+    color: white;
+    font-size: 1rem;
+    padding: 0px 3px;
+}
+
 .order .green-label {
     background-color: #a8e9d0;
     color: #008357;
