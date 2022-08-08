@@ -620,7 +620,7 @@ $orderDate = Carbon\Carbon::now();
                         <label for="shipping_phone" class="form-label">
                             Phone
                         </label>
-                        <input type="text" class="form-control shipping_phone" 
+                        <input readonly type="text" class="form-control shipping_phone" 
                             name="shipping_phone" id="shipping_phone" 
                                 value="{{Session::get('account_phone')}}">
                     </div>
@@ -634,7 +634,7 @@ $orderDate = Carbon\Carbon::now();
                         </span>
                         <textarea rows="5" type="text" class="form-control shipping_notes" 
                             name="shipping_notes" id="shipping_notes" 
-                                placeholder="Wanna note something for deliver man?..."></textarea>
+                                placeholder="Wanna note something for delivery man?..."></textarea>
                     </div>
                 </div>
                 @if(Session::get('fee'))
@@ -664,6 +664,18 @@ $orderDate = Carbon\Carbon::now();
                         </label>
                     </div>
                 </div>
+                @if(session()->has('signature'))
+                <div class="my-3">
+                    <div class="form-check">
+                        <input id="momo" name="payment_select" type="radio" class="form-check-input payment_select" value="2" checked>
+                        <label class="form-check-label" for="momo">
+                            MOMO
+                        </label>
+                    </div>
+                </div>
+                @endif
+
+                @if(!session()->has('signature'))
                 <div class="my-3">
                     <div class="form-check">
                         <input type="hidden" class="total_momo" value="{{$total_all}}">
@@ -673,10 +685,15 @@ $orderDate = Carbon\Carbon::now();
                         </label>
                     </div>
                 </div>
+                @endif
 
                 <hr class="my-4">
-
+                @if(session()->has('signature'))
+                <input id="automate_check_out" name="automate_check_out" class="w-100 btn btn-danger btn-lg automate_check_out" type="button" value="Continue to checkout">
+                @endif
+                @if(!session()->has('signature'))
                 <input id="check_out" name="send_order_cod" class="w-100 btn btn-danger btn-lg check_out_method" type="button" value="Continue to checkout">
+                @endif
             </form>
             <hr class="my-4">
         </div>

@@ -152,7 +152,7 @@ Route::post('/confirm-order', 'CheckoutController@confirm_order')->name('confirm
 
 Route::post('/momo-payment', 'CheckoutController@momo_payment');
 
-Route::get('/done-momo-payment', 'CheckoutController@done_momo_payment');
+Route::post('/momo-payment-save-address', 'CheckoutController@momo_payment_save_address');
 //Coupon Home
 
 Route::post('/check-coupon', 'CouponController@check_coupon');

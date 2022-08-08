@@ -24,7 +24,8 @@ class CheckoutController extends Controller
                 Session::put('error', 'You just cancel your MOMO payment');
                 return Redirect::to('/check-out');
             }elseif (($_GET['resultCode'] == 0)) {
-                return Redirect::to('/check-out');
+                $signature = $_GET['signature'];
+                return Redirect::to('/check-out')->with('signature', $signature);
             }else{
                 Session::put('error', 'Something went wrong, please try another payment gate');
                 return Redirect::to('/check-out');
@@ -64,7 +65,7 @@ class CheckoutController extends Controller
 
         if ($check_account_address == null) {
             $account = $check_account;
-            $account->account_address = $data['shipping_address'];;
+            $account->account_address = $data['shipping_address'];
             $account->update();
             Session::put('account_address', $data['shipping_address']);
         }
@@ -156,7 +157,7 @@ class CheckoutController extends Controller
         $data = array(
             'partnerCode' => $partnerCode,
             'partnerName' => "Test",
-            "storeId" => "MomoTestStore",
+            "storeId" => "EgamorftStore",
             'requestId' => $requestId,
             'amount' => $amount,
             'orderId' => $orderId,
@@ -171,64 +172,22 @@ class CheckoutController extends Controller
         $result = $this->execPostRequest($endpoint, json_encode($data));
         $jsonResult = json_decode($result, true);  // decode json
         //Just a example, please check more in there
+        // dd($jsonResult);
         return $jsonResult['payUrl'];
     }
 
-    public function done_momo_payment(Request $request)
+    public function momo_payment_save_address(Request $request)
     {
         $account_id = Session::get('account_id');
-        dd($request);
-        $data = $request->all();
-        $shipping = new Shipping();
-        $shipping->shipping_name = $data['shipping_name'];
-        $shipping->shipping_email = $data['shipping_email'];
-        $shipping->shipping_phone = $data['shipping_phone'];
-        $shipping->shipping_address = $data['shipping_address'];
-        $shipping->shipping_notes = $data['shipping_notes'];
-        $shipping->shipping_method = $data['payment_select'];
-        $shipping->save();
 
         $check_account = Account::where('account_id', $account_id)->first();
         $check_account_address = $check_account->account_address;
 
         if ($check_account_address == null) {
-            $account = $check_account;
-            $account->account_address = $data['shipping_address'];;
-            $account->update();
-            Session::put('account_address', $data['shipping_address']);
+            $check_account->account_address = $request->shipping_address;
+            $check_account->update();
+            Session::put('account_address', $request->shipping_address);
         }
-
-        $checkout_code = substr(md5(microtime()), rand(0, 26), 5);
-        $shipping_id = $shipping->shipping_id;
-
-        $order = new Order();
-        $order->account_id = $account_id;
-        $order->shipping_id = $shipping_id;
-        $order->order_status = 1;
-        $order->order_code = strtoupper($checkout_code);
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $order->created_at = now();
-        $order->save();
-
-        if (Cart::count() != 0) {
-
-            foreach (Cart::content() as $key => $cart) {
-                $order_details = new OrderDetails();
-                $order_details->order_code = $checkout_code;
-                $order_details->product_id = $cart->id;
-                $order_details->product_name = $cart->name;
-                $order_details->product_price = $cart->price;
-                $order_details->product_sales_quantity = $cart->qty;
-                $order_details->product_coupon = $data['order_coupon'];
-                $order_details->product_feeship = $data['order_fee'];
-                $order_details->save();
-            }
-
-            Cart::destroy();
-            Session::forget('coupon');
-            Session::forget('fee');
-        }
-
-        return Redirect::to('/account/order');
     }
+
 }
