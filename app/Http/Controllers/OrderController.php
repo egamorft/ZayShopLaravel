@@ -49,62 +49,70 @@ class OrderController extends Controller
   {
     // $order_details = OrderDetails::where('order_code', $order_code)->get();
     $order = Order::where('order_code', $order_code)->get();
-
-    $account_id = '';
-    $shipping_id = '';
-    foreach ($order as $key => $od) {
-      $account_id = $od->account_id;
-      $shipping_id = $od->shipping_id;
-      $order_status = $od->order_status;
+    if($order->count() > 0){
+      $account_id = '';
+      $shipping_id = '';
+      foreach ($order as $key => $od) {
+        $account_id = $od->account_id;
+        $shipping_id = $od->shipping_id;
+        $order_status = $od->order_status;
+      }
+  
+      $account = Account::where('account_id', $account_id)->first();
+      $shipping = Shipping::where('shipping_id', $shipping_id)->first();
+      $details = OrderDetails::with('product')
+        ->where('order_code', $order_code)
+        ->first();
+      $order_details = OrderDetails::with('product')
+        ->where('order_code', $order_code)
+        ->get();
+  
+      $product_coupon = '';
+      foreach ($order_details as $key => $order_d) {
+        $product_coupon = $order_d->product_coupon;
+      }
+  
+      if ($product_coupon != 'no') {
+  
+        $coupon = Coupon::where('coupon_code', $product_coupon)->first();
+        $coupon_condition = $coupon->coupon_condition;
+        $coupon_number = $coupon->coupon_number;
+      } else {
+  
+        $coupon_condition = 2;
+        $coupon_number = 0;
+      }
+  
+      return view('admin.order.view_order')
+        ->with(compact(
+          'order_status',
+          'details',
+          'order_details',
+          'account',
+          'shipping',
+          'coupon_condition',
+          'coupon_number',
+          'order'
+        ));
+    }else{
+      abort(404);
     }
-
-    $account = Account::where('account_id', $account_id)->first();
-    $shipping = Shipping::where('shipping_id', $shipping_id)->first();
-    $details = OrderDetails::with('product')
-      ->where('order_code', $order_code)
-      ->first();
-    $order_details = OrderDetails::with('product')
-      ->where('order_code', $order_code)
-      ->get();
-
-    $product_coupon = '';
-    foreach ($order_details as $key => $order_d) {
-      $product_coupon = $order_d->product_coupon;
-    }
-
-    if ($product_coupon != 'no') {
-
-      $coupon = Coupon::where('coupon_code', $product_coupon)->first();
-      $coupon_condition = $coupon->coupon_condition;
-      $coupon_number = $coupon->coupon_number;
-    } else {
-
-      $coupon_condition = 2;
-      $coupon_number = 0;
-    }
-
-    return view('admin.order.view_order')
-      ->with(compact(
-        'order_status',
-        'details',
-        'order_details',
-        'account',
-        'shipping',
-        'coupon_condition',
-        'coupon_number',
-        'order'
-      ));
+    
   }
 
   public function delete_order($order_code)
   {
     $shipping_id = Order::where('order_code', $order_code)->first();
-    Order::where('order_code', $order_code)->delete();
-    OrderDetails::where('order_code', $order_code)->delete();
-    Shipping::where('shipping_id', $shipping_id->shipping_id)->delete();
-
-    Session::put('message', 'Successfully delete order ' . $order_code);
-    return Redirect::to('/order');
+    if($shipping_id->count() > 0){
+      Order::where('order_code', $order_code)->delete();
+      OrderDetails::where('order_code', $order_code)->delete();
+      Shipping::where('shipping_id', $shipping_id->shipping_id)->delete();
+  
+      Session::put('message', 'Successfully delete order ' . $order_code);
+      return Redirect::to('/order');
+    }else{
+      abort(404);
+    }
   }
 
   public function update_order_qty(Request $request)
