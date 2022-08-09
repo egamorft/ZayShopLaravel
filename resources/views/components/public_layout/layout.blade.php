@@ -46,16 +46,16 @@ https://templatemo.com/tm-559-zay-shop
                     </a>
                 </div>
                 <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored">
+                    <a class="text-light" href="https://fb.com/egamorft" target="_blank" rel="sponsored">
                         <i class="fab fa-facebook-f fa-sm fa-fw me-2"></i>
                     </a>
-                    <a class="text-light" href="https://www.instagram.com/" target="_blank">
+                    <a class="text-light" href="https://www.instagram.com/egamorft.blade.php" target="_blank">
                         <i class="fab fa-instagram fa-sm fa-fw me-2"></i>
                     </a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank">
+                    <a class="text-light" href="#" target="_blank">
                         <i class="fab fa-twitter fa-sm fa-fw me-2"></i>
                     </a>
-                    <a class="text-light" href="https://www.linkedin.com/" target="_blank">
+                    <a class="text-light" href="https://www.linkedin.com/in/tung-nguyen-b7ba49242" target="_blank">
                         <i class="fab fa-linkedin fa-sm fa-fw"></i>
                     </a>
                 </div>
@@ -448,22 +448,22 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="col-auto me-auto">
                     <ul class="list-inline text-left footer-icons">
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/egamorft">
                                 <i class="fab fa-facebook-f fa-lg fa-fw"></i>
                             </a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/egamorft.blade.php">
                                 <i class="fab fa-instagram fa-lg fa-fw"></i>
                             </a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/">
+                            <a class="text-light text-decoration-none" target="_blank" href="#">
                                 <i class="fab fa-twitter fa-lg fa-fw"></i>
                             </a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/in/tung-nguyen-b7ba49242">
                                 <i class="fab fa-linkedin fa-lg fa-fw"></i>
                             </a>
                         </li>
