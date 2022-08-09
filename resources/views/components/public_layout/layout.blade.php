@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Zay Shop</title>
+    <title>{{ __('public/layout.Zay Shop') }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -38,11 +38,11 @@ https://templatemo.com/tm-559-zay-shop
                 <div>
                     <i class="fa fa-envelope mx-2"></i>
                     <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">
-                        info@company.com
+                        tungnh3011.work@gmail.com
                     </a>
                     <i class="fa fa-phone mx-2"></i>
                     <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">
-                        010-020-0340
+                        0888736810
                     </a>
                 </div>
                 <div>
@@ -86,22 +86,22 @@ https://templatemo.com/tm-559-zay-shop
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{URL::to('/')}}">
-                                Home
+                                {{ __('public/layout.Home') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{URL::to('/about')}}">
-                                About
+                                {{ __('public/layout.About Us') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{URL::to('/shop')}}">
-                                Shop
+                                {{ __('public/layout.Shop') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{URL::to('/contact')}}">
-                                Contact
+                                {{ __('public/layout.Contact') }}
                             </a>
                         </li>
                     </ul>
@@ -115,7 +115,7 @@ https://templatemo.com/tm-559-zay-shop
                         </div>
                         <form action="{{URL::to('/search')}}" method="GET" class="modal-content modal-body border-0 p-0">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control" id="inputModalSearch" name="keywords_submit" placeholder="Search ...">
+                                <input type="text" class="form-control" id="inputModalSearch" name="keywords_submit" placeholder="{{ __('public/layout.Search') }} ...">
                                 <button type="submit" class="input-group-text bg-success text-light">
                                     <i class="fa fa-fw fa-search text-white"></i>
                                 </button>
@@ -126,14 +126,14 @@ https://templatemo.com/tm-559-zay-shop
                 <!-- Modal -->
 
                 <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                    <!-- <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                         <div class="input-group">
                             <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
                             <div class="input-group-text">
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
@@ -152,7 +152,7 @@ https://templatemo.com/tm-559-zay-shop
                         <div class="dropdown">
                             <a class="nav-icon position-relative text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#">
                                 <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                                Hello
+                                {{ __('public/layout.Hello') }}
                                 <?php
                                 echo $account_name
                                 ?>
@@ -160,27 +160,27 @@ https://templatemo.com/tm-559-zay-shop
                             <ul class="dropdown-menu">
                                 <li>
                                     <h5 class="dropdown-header">
-                                        Account action
+                                        {{ __('public/layout.Account action') }}
                                     </h5>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{URL::to('/profile/account')}}">
-                                        My profile
+                                        {{ __('public/layout.My profile') }}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{URL::to('/profile/order')}}">
-                                        Order History
+                                        {{ __('public/layout.Order History') }}
                                     </a>
                                 </li>
                                 <li>
                                     <h5 class="dropdown-header">
-                                        Logout
+                                        {{ __('public/layout.Logout') }}
                                     </h5>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{URL::to('/logout_account')}}">
-                                        Logout
+                                        {{ __('public/layout.Logout') }}
                                     </a>
                                 </li>
                             </ul>
@@ -191,7 +191,7 @@ https://templatemo.com/tm-559-zay-shop
                         <div class="dropdown">
                             <a class="nav-icon position-relative text-decoration-none" href="{{URL::to('/login')}}">
                                 <i class="fa fa-fw fa-lock text-dark mr-3"></i>
-                                Login
+                                {{ __('public/layout.Login') }}
                             </a>
                         </div>
                     <?php
@@ -211,10 +211,9 @@ https://templatemo.com/tm-559-zay-shop
         <div class="container my-4">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Our Brands</h1>
+                    <h1 class="h1">{{ __('public/layout.Our Brands') }}</h1>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        Lorem ipsum dolor sit amet.
+                    {{ __('public/layout.It is important to have a good customer, it is going to be successful, but that is how it is important to have a good customer.') }}
                     </p>
                 </div>
                 <div class="col-lg-9 m-auto tempaltemo-carousel">
@@ -365,42 +364,42 @@ https://templatemo.com/tm-559-zay-shop
 
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">
-                        Products
+                        {{ __('public/layout.Products') }}
                     </h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <a class="text-decoration-none" href="#">
-                                Luxury
+                                {{ __('public/layout.Luxury') }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="#">
-                                Sport Wear
+                                {{ __('public/layout.Sport Wear') }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="#">
-                                Men's Shoes
+                                {{ __("public/layout.Men's Shoes") }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="#">
-                                Women's Shoes
+                                {{ __("public/layout.Women's Shoes") }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="#">
-                                Popular Dress
+                                {{ __('public/layout.Popular Dress') }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="#">
-                                Gym Accessories
+                                {{ __('public/layout.Gym Accessories') }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="#">
-                                Sport Shoes
+                                {{ __('public/layout.Sport Shoes') }}
                             </a>
                         </li>
                     </ul>
@@ -408,32 +407,32 @@ https://templatemo.com/tm-559-zay-shop
 
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">
-                        Further Info
+                        {{ __('public/layout.Further Info') }}
                     </h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <a class="text-decoration-none" href="{{URL::to('/')}}">
-                                Home
+                                {{ __('public/layout.Home') }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="{{URL::to('/about')}}">
-                                About Us
+                                {{ __('public/layout.About Us') }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="{{URL::to('/contact')}}">
-                                Shop Locations
+                                {{ __('public/layout.Shop Locations') }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="#">
-                                FAQs
+                                {{ __('public/layout.FAQs') }}
                             </a>
                         </li>
                         <li>
                             <a class="text-decoration-none" href="{{URL::to('/contact')}}">
-                                Contact
+                                {{ __('public/layout.Contact') }}
                             </a>
                         </li>
                     </ul>
@@ -471,12 +470,12 @@ https://templatemo.com/tm-559-zay-shop
                 </div>
                 <div class="col-auto">
                     <label class="sr-only" for="subscribeEmail">
-                        Email address
+                            {{ __('public/layout.Email address') }}
                     </label>
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="{{ __('public/layout.Email address') }}">
                         <div class="input-group-text btn-success text-light">
-                            Subscribe
+                            {{ __('public/layout.Subscribe') }}
                         </div>
                     </div>
                 </div>
@@ -488,10 +487,10 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="row pt-2">
                     <div class="col-12">
                         <p class="text-left text-light">
-                            Copyright &copy; 2021 Company Name
-                            | Designed by
-                            <a rel="sponsored" href="https://templatemo.com" target="_blank">
-                                TemplateMo
+                            {{ __('public/layout.Copyright') }} &copy; 2022 Co-well asia
+                            | {{ __('public/layout.Designed by') }}
+                            <a rel="sponsored" href="https://facebook.com/egamorft" target="_blank">
+                                Egamorft
                             </a>
                         </p>
                     </div>

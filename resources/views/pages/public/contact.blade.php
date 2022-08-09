@@ -4,9 +4,9 @@
 <!-- Start Content Page -->
 <div class="container-fluid bg-light py-5">
     <div class="col-md-6 m-auto text-center">
-        <h1 class="h1">Contact Us</h1>
+        <h1 class="h1">{{ __('public/contact.Contact Us')}}</h1>
         <p>
-            We were here and will give you the best experience.
+            {{ __('public/contact.We were here and will give you the best experience.')}}
         </p>
     </div>
 </div>
@@ -44,25 +44,25 @@ integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0v
             <fieldset disabled="disabled">
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
-                        <label for="inputname">Name</label>
-                        <input type="text" class="form-control mt-1" id="name" name="name" placeholder="Name">
+                        <label for="inputname">{{ __('public/contact.Name')}}</label>
+                        <input type="text" class="form-control mt-1" id="name" name="name" placeholder="{{ __('public/contact.Name')}}">
                     </div>
                     <div class="form-group col-md-6 mb-3">
-                        <label for="inputemail">Email</label>
-                        <input type="email" class="form-control mt-1" id="email" name="email" placeholder="Email">
+                        <label for="inputemail">{{ __('public/contact.Email')}}</label>
+                        <input type="email" class="form-control mt-1" id="email" name="email" placeholder="{{ __('public/contact.Email')}}">
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="inputsubject">Subject</label>
-                    <input type="text" class="form-control mt-1" id="subject" name="subject" placeholder="Subject">
+                    <label for="inputsubject">{{ __('public/contact.Subject')}}</label>
+                    <input type="text" class="form-control mt-1" id="subject" name="subject" placeholder="{{ __('public/contact.Subject')}}">
                 </div>
                 <div class="mb-3">
-                    <label for="inputmessage">Message</label>
-                    <textarea class="form-control mt-1" id="message" name="message" placeholder="Message" rows="8"></textarea>
+                    <label for="inputmessage">{{ __('public/contact.Message')}}</label>
+                    <textarea class="form-control mt-1" id="message" name="message" placeholder="{{ __('public/contact.Message')}}" rows="8"></textarea>
                 </div>
                 <div class="row">
                     <div class="col text-end mt-2">
-                        <button type="submit" class="btn btn-success btn-lg px-3">Let’s Talk</button>
+                        <button type="submit" class="btn btn-success btn-lg px-3">{{ __('public/contact.Let’s Talk')}}</button>
                     </div>
                 </div>
             </fieldset>
