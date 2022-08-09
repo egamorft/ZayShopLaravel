@@ -1,0 +1,25 @@
+<?php
+return [
+    'Admin' => 'Admin',
+    'Dashboard' => 'Dashboard',
+    'Hello' => 'Hello',
+    'Category' => 'Category',
+    'SubCategory' => 'SubCategory',
+    'Product' => 'Product',
+    'Coupon' => 'Coupon',
+    'Delivery' => 'Delivery',
+    'Order' => 'Order',
+    'Slider' => 'Slider',
+    'Profile' => 'Profile',
+    'Log out' => 'Log out',
+    'Material UI Configurator' => 'Material UI Configurator',
+    'See our dashboard options.' => 'See our dashboard options.',
+    'Sidebar Colors' => 'Sidebar Colors',
+    'Sidenav Type' => 'Sidenav Type',
+    'Choose between 3 different sidenav types.' => 'Choose between 3 different sidenav types.',
+    'Dark' => 'Dark',
+    'Transparent' => 'Transparent',
+    'White' => 'White',
+    'Navbar Fixed' => 'Navbar Fixed',
+    'Light / Dark' => 'Light / Dark'
+];

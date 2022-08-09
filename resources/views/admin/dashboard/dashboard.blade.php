@@ -9,7 +9,7 @@
                         <i class="material-icons opacity-10">transcribe</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Current Online</p>
+                        <p class="text-sm mb-0 text-capitalize">{{ __('admin/dashboard.Current Online')}}</p>
                         <h4 class="mb-0">{{$visitors_now_count}}</h4>
                     </div>
                 </div>
@@ -26,11 +26,11 @@
                     @endphp
 
                     @if($increase < 0) 
-                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
+                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> {{ __('admin/dashboard.than yesterday')}}</p>
                     @elseif($increase > 0)
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than yesterday</p>
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> {{ __('admin/dashboard.than yesterday')}}</p>
                     @else
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than yesterday</p>
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> {{ __('admin/dashboard.than yesterday')}}</p>
                     @endif
                 </div>
             </div>
@@ -42,7 +42,7 @@
                         <i class="material-icons opacity-10">co_present</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">This month visitors</p>
+                        <p class="text-sm mb-0 text-capitalize">{{ __('admin/dashboard.This month visitors')}}</p>
                         <h4 class="mb-0">{{$visitors_of_this_month_count}}</h4>
                     </div>
                 </div>
@@ -59,11 +59,11 @@
                     @endphp
 
                     @if($increase < 0) 
-                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> than last month</p>
+                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> {{ __('admin/dashboard.than last month')}}</p>
                     @elseif($increase > 0)
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than last month</p>
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> {{ __('admin/dashboard.than last month')}}</p>
                     @else
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than last month</p>
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> {{ __('admin/dashboard.than last month')}}</p>
                     @endif
 
                 </div>
@@ -76,7 +76,7 @@
                         <i class="material-icons opacity-10">person</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">This year visitors</p>
+                        <p class="text-sm mb-0 text-capitalize">{{ __('admin/dashboard.This Year Visitors')}}</p>
                         <h4 class="mb-0">{{$visitors_of_this_year_count}}</h4>
                     </div>
                 </div>
@@ -93,11 +93,11 @@
                     @endphp
 
                     @if($increase < 0) 
-                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> than last year</p>
+                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">{{number_format($percentage_increase, 1)}}%</span> {{ __('admin/dashboard.than last year')}}</p>
                     @elseif($increase > 0)
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> than last year</p>
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{number_format($percentage_increase, 1)}}%</span> {{ __('admin/dashboard.than last year')}}</p>
                     @else
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> than last year</p>
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+{{$percentage_increase}}</span> {{ __('admin/dashboard.than last year')}}</p>
                     @endif
                 </div>
             </div>
@@ -109,7 +109,7 @@
                         <i class="material-icons opacity-10">settings_accessibility</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Total pages visitors</p>
+                        <p class="text-sm mb-0 text-capitalize">{{ __('admin/dashboard.Total Pages Visitors')}}</p>
                         <h4 class="mb-0">{{$visitors_total_count}}</h4>
                     </div>
                 </div>
@@ -125,40 +125,40 @@
     <div class="row mt-4 justify-content-md-center">
         <div class="col-md-6 mt-4 mb-4">
             <div class="card z-index-4 ">
-                <h6 class="text-capitalize ps-3 my-3">Sales statistic</h6>
+                <h6 class="text-capitalize ps-3 my-3">{{ __('admin/dashboard.Sales statistic')}}</h6>
                 <form action="" autocomplete="off">
                     @csrf
                     <div class="d-flex col-md-12">
                         <div class="input-group input-group-outline my-3 mx-3">
                             <label class="form-label">
-                                From date:
+                                {{ __('admin/dashboard.From date:')}}
                             </label>
                             <input id="datepicker1" type="text" class="form-control">
                         </div>
                         <div class="input-group input-group-outline my-3 mx-3">
                             <label class="form-label">
-                                End date:
+                                {{ __('admin/dashboard.End date:')}}
                             </label>
                             <input id="datepicker2" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="d-flex justify-content-center m-3">
-                        <input id="btn-dashboard-filter" type="button" class="btn btn-success" value="Filter">
+                        <input id="btn-dashboard-filter" type="button" class="btn btn-success" value="{{ __('admin/dashboard.Filter')}}">
                     </div>
                 </form>
             </div>
         </div>
         <div class="col-md-3 mt-4 mb-4">
             <div class="card z-index-4 ">
-                <h6 class="text-capitalize ps-3 my-3">Dashboard Filter</h6>
+                <h6 class="text-capitalize ps-3 my-3">{{ __('admin/dashboard.Dashboard Filter')}}</h6>
                 <div class="d-flex col-md-12">
                     <div class="input-group input-group-outline m-3">
                         <select class="text-center form-control dashboard-filter">
-                            <option>Choose type filter</option>
-                            <option value="7days">7 last days</option>
-                            <option value="lastmonth">Last month</option>
-                            <option value="thismonth">This month</option>
-                            <option value="last365days">Last 365 days</option>
+                            <option>{{ __('admin/dashboard.Choose type filter')}}</option>
+                            <option value="7days">{{ __('admin/dashboard.7 last days')}}</option>
+                            <option value="lastmonth">{{ __('admin/dashboard.Last month')}}</option>
+                            <option value="thismonth">{{ __('admin/dashboard.This month')}}</option>
+                            <option value="last365days">{{ __('admin/dashboard.Last 365 days')}}</option>
                         </select>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
     <div class="row justify-content-md-center">
         <div class="col-md-3 mt-4 mb-4">
             <div class="card z-index-4 ">
-                <h6 class="text-capitalize ps-3 my-3 text-center">Pages Statistic</h6>
+                <h6 class="text-capitalize ps-3 my-3 text-center">{{ __('admin/dashboard.Pages Statistic')}}</h6>
                 <div class="d-flex col-md-12" id="donut">
                 </div>
             </div>

@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-7">
                         <h6>
-                            Edit product: {{$edit_value->product_name}}
+                            {{ __('admin/product.Edit product:')}} {{$edit_value->product_name}}
                         </h6>
                     </div>
                     <div class="col-lg-6 col-5 my-auto text-end">
@@ -29,7 +29,7 @@
                         @csrf
                         <div class="input-group input-group-outline my-3 focused is-focused">
                             <label class="form-label">
-                                Product Name
+                                {{ __('admin/product.Product Name')}}
                             </label>
                             <input value="{{$edit_value->product_name}}" name="product_name" type="text" class="form-control">
                         </div>
@@ -40,7 +40,7 @@
                         @enderror
                         <div class="input-group input-group-outline my-3 focused is-focused">
                             <label class="form-label">
-                                Product Quantity
+                                {{ __('admin/product.Product Quantity')}}
                             </label>
                             <input value="{{$edit_value->product_quantity}}" name="product_quantity" type="text" class="form-control">
                         </div>
@@ -51,7 +51,7 @@
                         @enderror
                         <div class="input-group input-group-outline my-3 focused is-focused">
                             <label class="form-label">
-                                Product Price
+                                {{ __('admin/product.Product Price')}}
                             </label>
                             <input value="{{$edit_value->product_price}}" name="product_price" type="text" class="form-control">
                         </div>
@@ -63,7 +63,7 @@
                         <div class="input-group input-group-outline mb-3">
                             <div class="col-md-3">
                                 <span class="form-label">
-                                    Product Image
+                                    {{ __('admin/product.Product Image')}}
                                 </span>
                             </div>
                             <div class="col-md-9">
@@ -74,24 +74,22 @@
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd">
-                                Product Description
+                                {{ __('admin/product.Product Description')}}
                             </label>
-                            <textarea name="product_desc" placeholder="Enter Product Description" class="form-control" id="ckeditorAdd" rows="8">
-                            {{$edit_value->product_desc}}
-                            </textarea>
+                            <textarea name="product_desc" placeholder="{{ __('admin/product.Enter Product Description')}}" 
+                            class="form-control" id="ckeditorAdd" rows="8">{{$edit_value->product_desc}}</textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd1">
-                                Product Content
+                                {{ __('admin/product.Product Content')}}
                             </label>
-                            <textarea name="product_content" placeholder="Enter Product Content" class="form-control" id="ckeditorAdd1" rows="8">
-                            {{$edit_value->product_content}}
-                            </textarea>
+                            <textarea name="product_content" placeholder="{{ __('admin/product.Enter Product Content')}}" 
+                            class="form-control" id="ckeditorAdd1" rows="8">{{$edit_value->product_content}}</textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <select name="category" id="category" class="form-control choose category">
                                 <option value="">
-                                    Choose your category
+                                    {{ __('admin/product.Choose your category')}}
                                 </option>
                                 @if(!$get_category->isEmpty())
                                 @foreach($get_category as $key => $get_category)
@@ -99,7 +97,7 @@
                                     {{$get_category->category_name}}
                                     @endforeach
                                     @else
-                                <option disabled>Something went wrong</option>
+                                <option disabled>{{ __('admin/product.Something went wrong')}}</option>
                                 @endif
                             </select>
                         </div>
@@ -116,7 +114,7 @@
                                     {{$get_subcategory->subcategory_name}}
                                     @endforeach
                                     @else
-                                <option disabled>Something went wrong</option>
+                                <option disabled>{{ __('admin/product.Something went wrong')}}</option>
                                 @endif
                             </select>
                         </div>
@@ -127,7 +125,7 @@
                         @enderror
                         <div class="text-center">
                             <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">
-                                Save product
+                                {{ __('admin/product.Save product')}}
                             </button>
                         </div>
                     </form>

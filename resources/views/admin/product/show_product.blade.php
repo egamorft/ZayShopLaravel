@@ -9,7 +9,7 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">
-                            Product table
+                            {{ __('admin/product.Product table')}}
                         </h6>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <i class="material-icons text-sm">
                             add
                         </i>&nbsp;&nbsp;
-                        Add Product
+                        {{ __('admin/product.Add Product')}}
                     </a>
                 </div>
                 <div class="card-body px-0 pb-2">
@@ -27,22 +27,22 @@
                             <div class="d-flex justify-content-between">
                                 <div class="input-group input-group-outline m-3">
                                     <label class="form-label">
-                                        Search your product name
+                                        {{ __('admin/product.Search your product name')}}
                                     </label>
                                     <input type="text" id="myFilter" onkeyup="myFilter()" class="form-control">
                                 </div>
                                 <form class="input-group input-group-outline m-3">
                                     @csrf
                                     <select name="product_sort" id="product_sort" class="form-control">
-                                        <option value="{{Request::url()}}?sort_by=none">Sort PRODUCT PRICE by</option>
-                                        <option value="{{Request::url()}}?sort_by=asc" {{Request::fullurl() == Request::url().'?sort_by=asc' ? "selected" : ""}}>Ascending</option>
-                                        <option value="{{Request::url()}}?sort_by=desc" {{Request::fullurl() == Request::url().'?sort_by=desc' ? "selected" : ""}}>Descending</option>
+                                        <option value="{{Request::url()}}?sort_by=none">{{ __('admin/product.Sort PRODUCT PRICE by')}}</option>
+                                        <option value="{{Request::url()}}?sort_by=asc" {{Request::fullurl() == Request::url().'?sort_by=asc' ? "selected" : ""}}>{{ __('admin/product.Ascending')}}</option>
+                                        <option value="{{Request::url()}}?sort_by=desc" {{Request::fullurl() == Request::url().'?sort_by=desc' ? "selected" : ""}}>{{ __('admin/product.Descending')}}</option>
                                     </select>
                                 </form>
                                 <form class="input-group input-group-outline m-3">
                                     @csrf
                                     <select name="product_filter_category" id="product_filter_category" class="form-control">
-                                        <option value="{{Request::url()}}?filter_category_with=none">Filter CATEGORY by</option>
+                                        <option value="{{Request::url()}}?filter_category_with=none">{{ __('admin/product.Filter CATEGORY by')}}</option>
                                         @if(!$get_category->isEmpty())
                                         @foreach($get_category as $key => $cate)
                                         <option value="{{Request::url()}}?filter_category_with={{$cate->category_id}}" 
@@ -50,30 +50,30 @@
                                         </option>
                                         @endforeach
                                         @else
-                                        <option disabled>No category available</option>
+                                        <option disabled>{{ __('admin/product.No category available')}}</option>
                                         @endif
                                     </select>
                                 </form>
                                 <form class="input-group input-group-outline m-3">
                                     @csrf
                                     <select name="product_filter_subcategory" id="product_filter_subcategory" class="form-control">
-                                        <option value="{{Request::url()}}?filter_subcategory_with=none">Filter SUBCATEGORY by</option>
+                                        <option value="{{Request::url()}}?filter_subcategory_with=none">{{ __('admin/product.Filter SUBCATEGORY by')}}</option>
                                         @if(!$get_subcategory->isEmpty())
                                         @foreach($get_subcategory as $key => $subcate)
                                         <option value="{{Request::url()}}?filter_subcategory_with={{$subcate->subcategory_id}}" 
                                                         {{Request::fullurl() == Request::url().'?filter_subcategory_with='.$subcate->subcategory_id ? "selected" : ""}}>{{$subcate->subcategory_name}}</option>
                                         @endforeach
                                         @else
-                                        <option disabled>No subcategory available</option>
+                                        <option disabled>{{ __('admin/product.No subcategory available')}}</option>
                                         @endif
                                     </select>
                                 </form>
                                 <form class="input-group input-group-outline m-3">
                                     @csrf
                                     <select name="product_filter_status" id="product_filter_status" class="form-control">
-                                        <option value="{{Request::url()}}?filter_status_with=none">Filter PRODUCT STATUS by</option>
-                                        <option value="{{Request::url()}}?filter_status_with=1" {{Request::fullurl() == Request::url().'?filter_status_with=1' ? "selected" : ""}}>Show</option>
-                                        <option value="{{Request::url()}}?filter_status_with=0" {{Request::fullurl() == Request::url().'?filter_status_with=0' ? "selected" : ""}}>Hide</option>
+                                        <option value="{{Request::url()}}?filter_status_with=none">{{ __('admin/product.Filter PRODUCT STATUS by')}}</option>
+                                        <option value="{{Request::url()}}?filter_status_with=1" {{Request::fullurl() == Request::url().'?filter_status_with=1' ? "selected" : ""}}>{{ __('admin/product.Show')}}</option>
+                                        <option value="{{Request::url()}}?filter_status_with=0" {{Request::fullurl() == Request::url().'?filter_status_with=0' ? "selected" : ""}}>{{ __('admin/product.Hide')}}</option>
                                     </select>
                                 </form>
                             </div>
@@ -82,28 +82,28 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
-                                        ID
+                                        {{ __('admin/product.ID')}}
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                                        Product Name
+                                        {{ __('admin/product.Product Name')}}
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
-                                        Product Quantity
+                                        {{ __('admin/product.Product Quantity')}}
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7">
-                                        Product Price
+                                        {{ __('admin/product.Product Price')}}
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                                        Product Image
+                                        {{ __('admin/product.Product Image')}}
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                                        Category
+                                        {{ __('admin/product.Category')}}
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
-                                        Subcategory
+                                        {{ __('admin/product.Subcategory')}}
                                     </th>
                                     <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7">
-                                        Show/Hide
+                                        {{ __('admin/product.Show/Hide')}}
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                     <th class="text-secondary opacity-7"></th>
@@ -192,7 +192,7 @@
                                 <td colspan="8"> 
                                     <center>
                                         <h3>
-                                            Nothing here
+                                            {{ __('admin/product.Nothing here')}}
                                         </h3>
                                     </center>
                                 </td>

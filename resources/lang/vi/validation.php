@@ -180,4 +180,9 @@ return [
         'available'             => 'có sẵn',
         'size'                  => 'kích thước',
     ],
+
+    'attributes' => [
+        'admin_password' => 'mật khẩu của qtv',
+        'admin_email' => 'e-mail của qtv',
+    ],
 ];

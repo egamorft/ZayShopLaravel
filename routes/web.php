@@ -78,7 +78,7 @@ Route::middleware('admin.login')->group(function () {
     //Product Admin
     Route::get('/show-product', 'ProductController@show_product')->name('product');
 
-    Route::get('/add-product', 'ProductController@add_product');
+    Route::get('/add-product', 'ProductController@add_product')->name('add-product');
 
     Route::post('/select-category', 'ProductController@select_category');
 
@@ -88,7 +88,7 @@ Route::middleware('admin.login')->group(function () {
 
     Route::get('/active-product/{product_id}', 'ProductController@active_product');
 
-    Route::get('/edit-product/{product_id}', 'ProductController@edit_product');
+    Route::get('/edit-product/{product_id}', 'ProductController@edit_product')->name('edit-product');
 
     Route::post('/update-product/{product_id}', 'ProductController@update_product');
 

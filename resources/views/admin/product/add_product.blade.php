@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-7">
                         <h6>
-                            Add product
+                            {{ __('admin/product.Add product')}}
                         </h6>
                     </div>
                     <div class="col-lg-6 col-5 my-auto text-end">
@@ -27,7 +27,7 @@
                         @csrf
                         <div class="input-group input-group-outline my-3">
                             <label class="form-label">
-                                Product Name
+                                {{ __('admin/product.Product Name')}}
                             </label>
                             <input name="product_name" type="text" class="form-control" value="{{ old('product_name') }}">
                         </div>
@@ -38,7 +38,7 @@
                         @enderror
                         <div class="input-group input-group-outline my-3">
                             <label class="form-label">
-                                Product Quantity
+                                {{ __('admin/product.Product Quantity')}}
                             </label>
                             <input name="product_quantity" type="text" class="form-control" value="{{ old('product_quantity') }}">
                         </div>
@@ -49,7 +49,7 @@
                         @enderror
                         <div class="input-group input-group-outline my-3">
                             <label class="form-label">
-                                Product Price
+                                {{ __('admin/product.Product Price')}}
                             </label>
                             <input name="product_price" type="text" class="form-control" value="{{ old('product_price') }}">
                         </div>
@@ -61,7 +61,7 @@
                         <div class="input-group input-group-outline mb-3">
                             <div class="col-md-3">
                                 <span class="form-label">
-                                    Product Image
+                                    {{ __('admin/product.Product Image')}}
                                 </span>
                             </div>
                             <div class="col-md-9">
@@ -70,26 +70,24 @@
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd">
-                                Product Description
+                                {{ __('admin/product.Product Description')}}
                             </label>
-                            <textarea name="product_desc" placeholder="Enter Product Description" 
-                                    class="form-control" id="ckeditorAdd" rows="8">
-                                {{ old('product_desc') }}
-                            </textarea>
+                            <textarea name="product_desc" placeholder="{{ __('admin/product.Enter Product Description')}}" 
+                                    class="form-control" id="ckeditorAdd" 
+                                    rows="8">{{ old('product_desc') }}</textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd">
-                                Product Content
+                                {{ __('admin/product.Product Content')}}
                             </label>
-                            <textarea name="product_content" placeholder="Enter Product Content" 
-                                    class="form-control" id="ckeditorAdd1" rows="8">
-                                {{ old('product_content') }}
-                            </textarea>
+                            <textarea name="product_content" placeholder="{{ __('admin/product.Enter Product Content')}}" 
+                                    class="form-control" id="ckeditorAdd1" 
+                                    rows="8">{{ old('product_content') }}</textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <select name="category" id="category" class="form-control choose category">
                                 <option value="">
-                                    Choose your category
+                                    {{ __('admin/product.Choose your category')}}
                                 </option>
                                 @if(!$get_category->isEmpty())
                                 @foreach($get_category as $key => $get_category)
@@ -99,7 +97,7 @@
                                 @endforeach
                                 @else
                                 <option disabled>
-                                    Something went wrong
+                                    {{ __('admin/product.Something went wrong')}}
                                 </option>
                                 @endif
                             </select>
@@ -121,11 +119,11 @@
                         @enderror
                         <div class="form-check mb-3 ">
                             <label class="form-check-label" for="show">
-                                Show
+                                {{ __('admin/product.Show')}}
                             </label>
                             <input class="form-check-input" type="radio" name="product_status" id="show" value="1" checked>
                             <label class="form-check-label" for="hide">
-                                Hide
+                                {{ __('admin/product.Hide')}}
                             </label>
                             <input class="form-check-input" type="radio" name="product_status" id="hide" value="0">
                         </div>
@@ -136,7 +134,7 @@
                         @enderror
                         <div class="text-center">
                             <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">
-                                Add product
+                                {{ __('admin/product.Add product')}}
                             </button>
                         </div>
                     </form>

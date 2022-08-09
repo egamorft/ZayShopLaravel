@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -18,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('public/backend/images/apple-icon.png')}}">
     <link rel="icon" type="image/png" href="{{asset('public/backend/images/favicon.png')}}">
     <title>
-        Admin | Dashboard
+        {{ __('admin/layout.Admin') }} | {{ __('admin/layout.Dashboard') }}
     </title>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -44,7 +43,7 @@
             <a class="navbar-brand m-0" target="_blank">
                 <img src="{{asset('public/backend/images/logo-ct.png')}}" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold text-white">
-                    Hello
+                    {{ __('admin/layout.Hello') }}
                     <?php
 
                     $name = Session::get('admin_name');
@@ -68,7 +67,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Dashboard
+                            {{ __('admin/layout.Dashboard') }}
                         </span>
                     </a>
                 </li>
@@ -81,7 +80,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Category
+                            {{ __('admin/layout.Category') }}
                         </span>
                     </a>
                 </li>
@@ -94,7 +93,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            SubCategory
+                            {{ __('admin/layout.SubCategory') }}
                         </span>
                     </a>
                 </li>
@@ -107,7 +106,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Product
+                            {{ __('admin/layout.Product') }}
                         </span>
                     </a>
                 </li>
@@ -120,7 +119,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Coupon
+                            {{ __('admin/layout.Coupon') }}
                         </span>
                     </a>
                 </li>
@@ -133,7 +132,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Delivery
+                            {{ __('admin/layout.Delivery') }}
                         </span>
                     </a>
                 </li>
@@ -146,7 +145,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Order
+                            {{ __('admin/layout.Order') }}
                         </span>
                     </a>
                 </li>
@@ -159,7 +158,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Slider
+                            {{ __('admin/layout.Slider') }}
                         </span>
                     </a>
                 </li>
@@ -176,7 +175,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Profile
+                            {{ __('admin/layout.Profile') }}
                         </span>
                     </a>
                 </li>
@@ -188,7 +187,7 @@
                             </i>
                         </div>
                         <span class="nav-link-text ms-1">
-                            Log out
+                            {{ __('admin/layout.Log out') }}
                         </span>
                     </a>
                 </li>
@@ -247,10 +246,10 @@
             <div class="card-header pb-0 pt-3">
                 <div class="float-start">
                     <h5 class="mt-3 mb-0">
-                        Material UI Configurator
+                        {{ __('admin/layout.Material UI Configurator') }}
                     </h5>
                     <p>
-                        See our dashboard options.
+                        {{ __('admin/layout.See our dashboard options.') }}
                     </p>
                 </div>
                 <div class="float-end mt-4">
@@ -267,7 +266,7 @@
                 <!-- Sidebar Backgrounds -->
                 <div>
                     <h6 class="mb-0">
-                        Sidebar Colors
+                        {{ __('admin/layout.Sidebar Colors') }}
                     </h6>
                 </div>
                 <a href="javascript:void(0)" class="switch-trigger background-color">
@@ -289,21 +288,21 @@
                 <!-- Sidenav Type -->
                 <div class="mt-3">
                     <h6 class="mb-0">
-                        Sidenav Type
+                        {{ __('admin/layout.Sidenav Type') }}
                     </h6>
                     <p class="text-sm">
-                        Choose between 2 different sidenav types.
+                        {{ __('admin/layout.Choose between 3 different sidenav types.') }}
                     </p>
                 </div>
                 <div class="d-flex">
                     <button class="btn bg-gradient-dark px-3 mb-2 active" data-class="bg-gradient-dark" onclick="sidebarType(this)">
-                        Dark
+                        {{ __('admin/layout.Dark') }}
                     </button>
                     <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-transparent" onclick="sidebarType(this)">
-                        Transparent
+                        {{ __('admin/layout.Transparent') }}
                     </button>
                     <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">
-                        White
+                        {{ __('admin/layout.White') }}
                     </button>
                 </div>
                 <p class="text-sm d-xl-none d-block mt-2">
@@ -312,7 +311,7 @@
                 <!-- Navbar Fixed -->
                 <div class="mt-3 d-flex">
                     <h6 class="mb-0">
-                        Navbar Fixed
+                        {{ __('admin/layout.Navbar Fixed') }}
                     </h6>
                     <div class="form-check form-switch ps-0 ms-auto my-auto">
                         <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
@@ -321,7 +320,7 @@
                 <hr class="horizontal dark my-3">
                 <div class="mt-2 d-flex">
                     <h6 class="mb-0">
-                        Light / Dark
+                        {{ __('admin/layout.Light / Dark') }}
                     </h6>
                     <div class="form-check form-switch ps-0 ms-auto my-auto">
                         <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
@@ -353,7 +352,9 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('public/backend/js/material-dashboard.min.js?v=3.0.2')}}"></script>
-    @if (Route::currentRouteNamed('product') )
+    @if (Route::currentRouteNamed('product') 
+    || Route::currentRouteNamed('add-product') 
+    ||Route::currentRouteNamed('edit-product'))
     <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
     @endif
 
@@ -622,7 +623,9 @@
         })
     </script>
 
-    @if (Route::currentRouteNamed('product') )
+    @if (Route::currentRouteNamed('product') 
+    || Route::currentRouteNamed('add-product') 
+    ||Route::currentRouteNamed('edit-product'))
     <script type="text/javascript">
         ClassicEditor
             .create(document.querySelector('#ckeditorAdd'))

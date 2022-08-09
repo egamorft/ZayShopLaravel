@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="{{('public/backend/images/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{('public/backend/images/favicon.png')}}">
   <title>
-    Admin | ShopZay
+    {{ __('admin/login.Admin') }} | {{ __('admin/login.ShopZay') }}
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -35,7 +35,7 @@
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">
-                    Sign in
+                    {{ __('admin/login.Sign in') }}
                   </h4>
                   <div class="row mt-3">
                     <div class="col-2 text-center ms-auto">
@@ -56,7 +56,7 @@
                   @csrf
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">
-                      Email
+                    {{ __('admin/login.Email') }}
                     </label>
                     <input type="text" class="form-control" name="admin_email" value="{{ old('admin_email') }}">
                   </div>
@@ -67,7 +67,7 @@
                   @enderror
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">
-                      Password
+                    {{ __('admin/login.Password') }}
                     </label>
                     <input type="password" name="admin_password" class="form-control">
                   </div>
@@ -79,12 +79,12 @@
                   <div class="form-check form-switch d-flex align-items-center mb-3">
                     <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
                     <label class="form-check-label mb-0 ms-2" for="rememberMe">
-                      Remember me
+                      {{ __('admin/login.Remember me') }}
                     </label>
                   </div>
                   <div class="text-center">
                     <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">
-                      Log in
+                      {{ __('admin/login.Log in') }}
                     </button>
                   </div>
                 </form>
