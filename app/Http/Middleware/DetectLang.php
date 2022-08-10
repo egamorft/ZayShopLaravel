@@ -23,7 +23,7 @@ class DetectLang
             return $response->withCookie(cookie()->forever('lang', $lang));
         }else
         {
-            $lang = $request->cookie('lang', 'vi');
+            $lang = $request->cookie('lang', 'en');
             app()->setLocale($lang);
             return $next($request);
         }

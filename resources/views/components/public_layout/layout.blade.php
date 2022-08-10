@@ -48,8 +48,8 @@ https://templatemo.com/tm-559-zay-shop
                 
                 <div>
                 <select onchange="window.location.href = '?lang=' + this.value">
-                    <option value="en" {{Request::fullurl() == Request::url().'?lang=en' ? "selected" : ""}}>ENG</option>
-                    <option value="vi" {{Request::fullurl() == Request::url().'?lang=vi' ? "selected" : ""}}>VIE</option>
+                    <option value="en" {{ Cookie::get("lang") == "en" ? "selected" : "" }}>ENG</option>
+                    <option value="vi" {{ Cookie::get("lang") == "vi" ? "selected" : "" }}>VIE</option>
                 </select>
                     <a class="text-light" href="https://fb.com/egamorft" target="_blank" rel="sponsored">
                         <i class="fab fa-facebook-f fa-sm fa-fw me-2"></i>
