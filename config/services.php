@@ -41,5 +41,8 @@ return [
         'client_secret' => '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',
         'redirect' => 'http://localhost/shopZay/google/callback' 
     ],
+    'captcha' => [
+        'captcha_key' => env('CAPTCHA_KEY'),
+    ],
 
 ];
