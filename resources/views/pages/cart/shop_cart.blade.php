@@ -14,10 +14,10 @@
                                 <div class="p-5">
                                     <div class="d-flex justify-content-between align-items-center mb-5">
                                         <h1 class="fw-bold mb-0 text-black">
-                                            Zay Shopping Cart
+                                            {{ __('cart/cart.Zay Shopping Cart') }}
                                         </h1>
                                         <h6 class="mb-0 text-muted">
-                                            {{count(Cart::content())}} products
+                                            {{count(Cart::content())}} {{ __('cart/cart.products') }}
                                         </h6>
                                     </div>
                                     <?php
@@ -25,14 +25,14 @@
                                     ?>
                                     @if(count(Cart::content()) == 0)
                                     <h2>
-                                        Your cart is empty!
+                                        {{ __('cart/cart.Your cart is empty!') }}
                                     </h2>
                                     @else
                                     @foreach($content as $value)
                                     <hr class="my-4">
                                     @if($value->options->in_stock < $value->qty)
                                         <div class="alert alert-danger">
-                                            Product in stock is only {{$value->options->in_stock}} product left!! Please order less or pick another
+                                            {{ __('cart/cart.Product in stock is only') }} {{$value->options->in_stock}} {{ __('cart/cart.product left!! Please order less or pick another') }}
                                         </div>
                                     @endif
                                         <div class="row mb-4 d-flex justify-content-between align-items-center 
@@ -50,7 +50,7 @@
                                                     @csrf
                                                     <input min="1" name="cart_quantity" value="{{$value->qty}}" type="number" class="form-control form-control-sm" />
                                                     <input type="hidden" value="{{$value->rowId}}" name="rowId_cart">
-                                                    <button type="submit" value="Update" name="update_qty" class="btn btn-success"><i class="fa-solid fa-circle-check"></i></button>
+                                                    <button type="submit" value="{{ __('cart/cart.Update') }}" name="update_qty" class="btn btn-success"><i class="fa-solid fa-circle-check"></i></button>
                                                 </form>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3 offset-lg-1">
@@ -72,13 +72,13 @@
                             <div class="col-lg-4 bg-grey">
                                 <div class="p-5">
                                     <h3 class="fw-bold mb-5 mt-2 pt-1">
-                                        Summary
+                                        {{ __('cart/cart.Summary') }}
                                     </h3>
                                     <hr class="my-4">
 
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">
-                                            products {{count(Cart::content())}}
+                                            {{ __('cart/cart.products') }} {{count(Cart::content())}}
                                         </h5>
                                         <h5>
                                             {{Cart::pricetotal(0 , ',' , '.').' '.'VNĐ'}}
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">
-                                            Taxes
+                                            {{ __('cart/cart.Taxes') }}
                                         </h5>
                                         <h5>
                                             {{Cart::tax(0 , ',' , '.').' '.'VNĐ'}}
@@ -108,7 +108,7 @@
                                     @if($cou['coupon_condition']==1)
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">
-                                            Discount
+                                            {{ __('cart/cart.Discount') }}
                                             <span class="text-muted">
                                                 <?php
                                                 echo '( -' . $cou['coupon_number'] . '%)'
@@ -124,7 +124,7 @@
                                     @else
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">
-                                            Discount
+                                            {{ __('cart/cart.Discount') }}
                                         </h5>
                                         <h5>
                                             {{Cart::discount(0 , ',' , '.').' '.'VNĐ'}}
@@ -132,20 +132,20 @@
                                     </div>
                                     @endif
 
-                                    <h5 class="text-uppercase mb-3">Give code</h5>
+                                    <h5 class="text-uppercase mb-3">{{ __('cart/cart.Give code') }}</h5>
 
                                     <form class="card p-2" method="POST" action="{{URL::to('/check-coupon')}}">
                                         @csrf
                                         <div class="input-group">
                                             @if(Session::get('coupon') == null)
-                                            <input type="text" class="form-control" name="coupon" placeholder="Promo code" value="{{ old('coupon') }}">
+                                            <input type="text" class="form-control" name="coupon" placeholder="{{ __('cart/cart.Promo code') }}" value="{{ old('coupon') }}">
                                             <button type="submit" class="btn btn-danger check_coupon" name="check_coupon">
-                                                Add code
+                                                {{ __('cart/cart.Add code') }}
                                             </button>
                                             @else
-                                            <input disabled type="text" class="form-control" name="coupon" placeholder="Promo code" value="{{ old('coupon') }}">
+                                            <input disabled type="text" class="form-control" name="coupon" placeholder="{{ __('cart/cart.Promo code') }}" value="{{ old('coupon') }}">
                                             <button disabled type="submit" class="btn btn-dark check_coupon" name="check_coupon">
-                                                Add code
+                                                {{ __('cart/cart.Add code') }}
                                             </button>
                                             @endif
                                         </div>
@@ -155,7 +155,7 @@
 
                                     <div class="d-flex justify-content-between mb-5">
                                         <h5 class="text-uppercase">
-                                            Total price
+                                            {{ __('cart/cart.Total price') }}
                                         </h5>
                                         <h5>
                                             {{Cart::total(0 , ',' , '.').' '.'VNĐ'}}
@@ -163,16 +163,16 @@
                                     </div>
                                     @if(Session::get('account_id') != null)
                                     <a href="{{URL::to('/check-out')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">
-                                        Checkout
+                                        {{ __('cart/cart.Checkout') }}
                                     </a>
                                     @else
                                     <a href="{{URL::to('/login')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">
-                                        Checkout
+                                        {{ __('cart/cart.Checkout') }}
                                     </a>
                                     @endif
                                     @if(Session::get('coupon') != null)
                                     <a style="margin-left: 50px;" href="{{URL::to('/unset-coupon')}}" type="button" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">
-                                        Unset coupon
+                                        {{ __('cart/cart.Unset coupon') }}
                                     </a>
                                     @endif
                                 </div>
@@ -181,7 +181,7 @@
                             <h6 class="mb-0">
                                 <a href="{{URL::to('/shop')}}" class="btn btn-outline-success">
                                     <i class="fas fa-long-arrow-alt-left me-2"></i>
-                                    Shopping more
+                                    {{ __('cart/cart.Shopping more') }}
                                 </a>
                             </h6>
                             <hr class="my-4">

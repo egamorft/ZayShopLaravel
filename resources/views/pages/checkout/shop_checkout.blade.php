@@ -29,7 +29,7 @@ $orderDate = Carbon\Carbon::now();
 
                                 <a class="navbar-brand text-success logo h1 align-self-center" 
                                     href="{{URL::to('/')}}">
-                                    Zay Shop
+                                    {{ __('checkout/checkout.Zay Shop') }}
                                 </a>
 
 
@@ -38,7 +38,7 @@ $orderDate = Carbon\Carbon::now();
                             <div class="invoice p-5">
 
                                 <h5>
-                                    Your order is now Confirmed!
+                                    {{ __('checkout/checkout.Your order is now Confirmed!') }}
                                 </h5>
 
                                 <span class="font-weight-bold d-block mt-4">
@@ -48,7 +48,7 @@ $orderDate = Carbon\Carbon::now();
                                     ?>
                                 </span>
                                 <span>
-                                    You order has been confirmed and will coming to you as soon as possible!
+                                    {{ __('checkout/checkout.You order has been confirmed and will coming to you as soon as possible!') }}
                                 </span>
 
                                 <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
@@ -61,7 +61,7 @@ $orderDate = Carbon\Carbon::now();
                                                     <div class="py-2">
 
                                                         <span class="d-block text-muted">
-                                                            Order Date
+                                                            {{ __('checkout/checkout.Order Date') }}
                                                         </span>
                                                         <span> 
                                                             <?php 
@@ -76,7 +76,7 @@ $orderDate = Carbon\Carbon::now();
                                                     <div class="py-2">
 
                                                         <span class="d-block text-muted">
-                                                            Payment
+                                                            {{ __('checkout/checkout.Payment') }}
                                                         </span>
                                                         <span id="shipping_method"></span>
 
@@ -87,7 +87,7 @@ $orderDate = Carbon\Carbon::now();
                                                     <div class="py-2">
 
                                                         <span class="d-block text-muted">
-                                                            Shiping
+                                                            {{ __('checkout/checkout.Shipping') }}
                                                         </span>
                                                         <span>
                                                             <?php 
@@ -113,7 +113,7 @@ $orderDate = Carbon\Carbon::now();
                                                     <div class="py-2">
 
                                                         <span class="d-block text-muted">
-                                                            Address
+                                                            {{ __('checkout/checkout.Address') }}
                                                         </span>
                                                         <span id="shipping_address"></span>
 
@@ -153,7 +153,7 @@ $orderDate = Carbon\Carbon::now();
                                                     </span>
                                                     <div class="product-qty">
                                                         <small class="text-muted">
-                                                            Quantity:{{$con->qty}}
+                                                            {{ __('checkout/checkout.Quantity:') }}{{$con->qty}}
                                                         </small>
 
                                                     </div>
@@ -190,7 +190,7 @@ $orderDate = Carbon\Carbon::now();
                                                         <div class="text-left">
 
                                                             <span class="text-muted">
-                                                                Subtotal
+                                                                {{ __('checkout/checkout.Subtotal') }}
                                                             </span>
 
                                                         </div>
@@ -210,7 +210,7 @@ $orderDate = Carbon\Carbon::now();
                                                         <div class="text-left">
 
                                                             <span class="text-muted">
-                                                                Shipping Fee
+                                                                {{ __('checkout/checkout.Shipping Fee') }}
                                                             </span>
 
                                                         </div>
@@ -229,7 +229,7 @@ $orderDate = Carbon\Carbon::now();
                                                         <div class="text-left">
 
                                                             <span class="text-muted">
-                                                                Shipping Fee
+                                                                {{ __('checkout/checkout.Shipping Fee') }}
                                                             </span>
 
                                                         </div>
@@ -250,7 +250,7 @@ $orderDate = Carbon\Carbon::now();
                                                         <div class="text-left">
 
                                                             <span class="text-muted">
-                                                                Tax Fee
+                                                                {{ __('checkout/checkout.Tax Fee') }}
                                                             </span>
 
                                                         </div>
@@ -270,7 +270,7 @@ $orderDate = Carbon\Carbon::now();
                                                         <div class="text-left">
 
                                                             <span class="text-muted">
-                                                                Discount
+                                                                {{ __('checkout/checkout.Discount') }}
                                                             </span>
 
                                                         </div>
@@ -290,7 +290,7 @@ $orderDate = Carbon\Carbon::now();
                                                         <div class="text-left">
 
                                                             <span class="font-weight-bold">
-                                                                Subtotal
+                                                                {{ __('checkout/checkout.Subtotal') }}
                                                             </span>
 
                                                         </div>
@@ -316,13 +316,13 @@ $orderDate = Carbon\Carbon::now();
 
 
                                 <p>
-                                    We will be sending shipping confirmation email when the item shipped successfully!
+                                    {{ __('checkout/checkout.We will be sending shipping confirmation email when the item shipped successfully!') }}
                                 </p>
                                 <p class="font-weight-bold mb-0">
-                                    Thanks for shopping with us!
+                                    {{ __('checkout/checkout.Thanks for shopping with us!') }}
                                 </p>
                                 <span>
-                                    Zay Shop Team
+                                    {{ __('checkout/checkout.Zay Shop Team') }}
                                 </span>
 
 
@@ -335,9 +335,9 @@ $orderDate = Carbon\Carbon::now();
                             <div class="d-flex justify-content-between footer p-3">
 
                                 <span>
-                                    Need Help? visit our 
+                                     {{ __('checkout/checkout.Need Help? visit our') }}
                                     <a href="#"> 
-                                        help center
+                                        {{ __('checkout/checkout.help center') }}
                                     </a>
                                 </span>
                                 @php
@@ -363,24 +363,24 @@ $orderDate = Carbon\Carbon::now();
 <main class="container">
     <div class="py-5 text-center">
         <h2>
-            Checkout form
+            {{ __('checkout/checkout.Checkout form') }}
         </h2>
     </div>
     @if(Cart::count() == 0)
         <h2>
-            Your cart is still null
+            {{ __('checkout/checkout.Your cart is still null') }}
         </h2>
         <hr style="width: 30%;">
         <a class="btn btn-success" href="{{URL::to('/shop')}}" role="button">
-            Shopping now
+            {{ __('checkout/checkout.Shopping now') }}
         </a>
         <hr style="width: 30%;">
         <h4>
-            OR
+            {{ __('checkout/checkout.OR') }}
         </h4>
         <hr style="width: 30%;">
         <a class="btn btn-success" href="{{URL::to('/shop-cart')}}" role="button">
-            Check your cart
+            {{ __('checkout/checkout.Check your cart') }}
         </a>
         <hr style="width: 30%;">
     @else
@@ -394,11 +394,11 @@ $orderDate = Carbon\Carbon::now();
                     @csrf
                     <div class="col-md">
                         <label for="city" class="form-label">
-                            City
+                            {{ __('checkout/checkout.City') }}
                         </label>
                         <select name="city" id="city" class="form-control choose city">
                             <option value="">
-                                -----Choose your city-----
+                                -----{{ __('checkout/checkout.Choose your city') }}-----
                             </option>
                             @foreach($city as $key => $ci)
                                 <option value="{{$ci->matp}}">
@@ -410,34 +410,34 @@ $orderDate = Carbon\Carbon::now();
 
                     <div class="col-md">
                         <label for="state" class="form-label">
-                            Province
+                            {{ __('checkout/checkout.Province') }}
                         </label>
                         <select name="province" id="province" class="form-control province choose">
                             <option value="">
-                                -----Choose your province-----
+                                -----{{ __('checkout/checkout.Choose your province') }}-----
                             </option>
                         </select>
                     </div>
 
                     <div class="col-md">
                         <label for="state" class="form-label">
-                            Wards
+                            {{ __('checkout/checkout.Wards') }}
                         </label>
                         <select name="wards" id="wards" class="form-control wards">
                             <option value="">
-                                -----Choose your wards-----
+                                -----{{ __('checkout/checkout.Choose your wards') }}-----
                             </option>
                         </select>
                     </div>
                     <hr class="my-4">
                     @if(Session::get('fee'))
                         <div class="col-md">
-                            <input type="button" value="Calculate delivery" 
+                            <input type="button" value="{{ __('checkout/checkout.Calculate delivery') }}" 
                                 name="calculate_order" class="w-100 btn btn-dark btn-lg calculate_delivery">
                         </div>
                     @else
                         <div class="col-md">
-                            <input type="button" value="Calculate delivery" 
+                            <input type="button" value="{{ __('checkout/checkout.Calculate delivery') }}" 
                                 name="calculate_order" class="w-100 btn btn-primary btn-lg calculate_delivery">
                         </div>
                     @endif
@@ -448,7 +448,7 @@ $orderDate = Carbon\Carbon::now();
             </form>
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-primary">
-                    Check your cart
+                    {{ __('checkout/checkout.Check your cart') }}
                 </span>
                 <span class="badge bg-primary rounded-pill">
                     {{Cart::count()}}
@@ -472,7 +472,7 @@ $orderDate = Carbon\Carbon::now();
                 @endforeach
                 <li class="list-group-item d-flex justify-content-between">
                     <span>
-                        Sub Total
+                        {{ __('checkout/checkout.Sub Total') }}
                     </span>
                     <strong>
                         {{Cart::pricetotal(0 , ',' , '.').' '.'đ'}}
@@ -481,10 +481,10 @@ $orderDate = Carbon\Carbon::now();
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
                         <h6 class="my-0">
-                            Tax
+                            {{ __('checkout/checkout.Tax') }}
                         </h6>
                         <small>
-                            10% cart
+                            10% {{ __('checkout/checkout.cart') }}
                         </small>
                     </div>
                     <span class="text-danger">
@@ -497,7 +497,7 @@ $orderDate = Carbon\Carbon::now();
                             <li class="list-group-item d-flex justify-content-between bg-light">
                                 <div class="text-success">
                                     <h6 class="my-0">
-                                        Promo code
+                                        {{ __('checkout/checkout.Promo code') }}
                                     </h6>
                                     <small>
                                         <?php 
@@ -515,10 +515,10 @@ $orderDate = Carbon\Carbon::now();
                     <li class="list-group-item d-flex justify-content-between bg-light">
                         <div class="text-success">
                             <h6 class="my-0">
-                                Promo code
+                                {{ __('checkout/checkout.Promo code') }}
                             </h6>
                             <small>
-                                NONE
+                                {{ __('checkout/checkout.NONE') }}
                             </small>
                         </div>
                         <span class="text-success">
@@ -530,7 +530,7 @@ $orderDate = Carbon\Carbon::now();
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
                         <h6 class="my-0">
-                            Shipping fee
+                            {{ __('checkout/checkout.Shipping fee') }}
                         </h6>
                     </div>
 
@@ -540,7 +540,7 @@ $orderDate = Carbon\Carbon::now();
                 </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <p>
-                        Delete address here
+                        {{ __('checkout/checkout.Delete address here') }}
                     </p>
                     <a class="cart_quantity_delete" href="{{url('/del-fee')}}">
                         <i style="color: red; font-size:120% ;" class="fa fa-xmark"></i>
@@ -553,7 +553,7 @@ $orderDate = Carbon\Carbon::now();
                 ?>
                 <li class="list-group-item d-flex justify-content-between">
                     <span>
-                        Total
+                        {{ __('checkout/checkout.Total') }}
                     </span>
                     <strong>
                         {{number_format($total_after_shipping, 0 , ',' , '.')}} đ
@@ -563,7 +563,7 @@ $orderDate = Carbon\Carbon::now();
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
                         <h6 class="my-0">
-                            Shipping fee
+                            {{ __('checkout/checkout.Shipping fee') }}
                         </h6>
                     </div>
                     <span class="text-danger">
@@ -572,7 +572,7 @@ $orderDate = Carbon\Carbon::now();
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <span>
-                        Total
+                        {{ __('checkout/checkout.Total') }}
                     </span>
                     <strong>
                         {{Cart::total(0 , ',' , '.').' '.'đ'}}
@@ -584,14 +584,14 @@ $orderDate = Carbon\Carbon::now();
         </div>
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">
-                Billing address
+                {{ __('checkout/checkout.Billing address') }}
             </h4>
             <form method="POST" action="">
                 @csrf
                 <div class="row g-3">
                     <div class="col-sm-6">
                         <label for="shipping_name" class="form-label">
-                            Full name
+                            {{ __('checkout/checkout.Full name') }}
                         </label>
                         <input type="text" class="form-control shipping_name" 
                             name="shipping_name" id="shipping_name" 
@@ -600,7 +600,7 @@ $orderDate = Carbon\Carbon::now();
 
                     <div class="col-12">
                         <label for="shipping_email" class="form-label">
-                            Email
+                            {{ __('checkout/checkout.Email') }}
                         </label>
                         <input readonly type="email" class="form-control shipping_email" 
                             name="shipping_email" id="shipping_email" 
@@ -609,7 +609,7 @@ $orderDate = Carbon\Carbon::now();
 
                     <div class="col-12">
                         <label for="shipping_address" class="form-label">
-                            Address
+                            {{ __('checkout/checkout.Address') }}
                         </label>
                         <input type="text" class="form-control shipping_address" 
                             name="shipping_address" id="shipping_address" 
@@ -618,7 +618,7 @@ $orderDate = Carbon\Carbon::now();
 
                     <div class="col-12">
                         <label for="shipping_phone" class="form-label">
-                            Phone
+                            {{ __('checkout/checkout.Phone') }}
                         </label>
                         <input readonly type="text" class="form-control shipping_phone" 
                             name="shipping_phone" id="shipping_phone" 
@@ -627,14 +627,14 @@ $orderDate = Carbon\Carbon::now();
 
                     <div class="col-12">
                         <label for="shipping_notes" class="form-label">
-                            Delivery note
+                            {{ __('checkout/checkout.Delivery note') }}
                         </label>
                         <span class="text-muted">
-                            (Optional)
+                            {{ __('checkout/checkout.(Optional)') }}
                         </span>
                         <textarea rows="5" type="text" class="form-control shipping_notes" 
                             name="shipping_notes" id="shipping_notes" 
-                                placeholder="Wanna note something for delivery man?..."></textarea>
+                                placeholder="{{ __('checkout/checkout.Wanna note something for delivery man?...') }}"></textarea>
                     </div>
                 </div>
                 @if(Session::get('fee'))
@@ -653,7 +653,7 @@ $orderDate = Carbon\Carbon::now();
                 <hr class="my-4">
 
                 <h4 class="mb-3">
-                    Payment
+                    {{ __('checkout/checkout.Payment') }}
                 </h4>
 
                 <div class="my-3">
@@ -689,10 +689,10 @@ $orderDate = Carbon\Carbon::now();
 
                 <hr class="my-4">
                 @if(session()->has('signature'))
-                <input id="automate_check_out" name="automate_check_out" class="w-100 btn btn-danger btn-lg automate_check_out" type="button" value="Continue to checkout">
+                <input id="automate_check_out" name="automate_check_out" class="w-100 btn btn-danger btn-lg automate_check_out" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
                 @endif
                 @if(!session()->has('signature'))
-                <input id="check_out" name="send_order_cod" class="w-100 btn btn-danger btn-lg check_out_method" type="button" value="Continue to checkout">
+                <input id="check_out" name="send_order_cod" class="w-100 btn btn-danger btn-lg check_out_method" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
                 @endif
             </form>
             <hr class="my-4">

@@ -147,13 +147,13 @@
                             <i class="fa fa-star text-warning"></i>
                             <i class="fa fa-star text-warning"></i>
                             <span class="list-inline-item text-dark">
-                                Rating 5.0 | 36 Comments
+                                {{ __('public/shop.Rating') }} 5.0 | 36 {{ __('public/shop.Comments') }}
                             </span>
                         </p>
                         <ul class="list-inline">
                             <li class="list-inline-item">
                                 <h6>
-                                    Subcategory:
+                                    {{ __('public/shop.Subcategory:') }}
                                 </h6>
                             </li>
                             <li class="list-inline-item">
@@ -166,14 +166,14 @@
                         </ul>
 
                         <h6>
-                            Description:
+                            {{ __('public/shop.Description:') }}
                         </h6>
                         <p>
                             {!!$pro->product_desc!!}
                         </p>
 
                         <h6>
-                            Content:
+                            {{ __('public/shop.Content:') }}
                         </h6>
                         <ul class="list-unstyled pb-3">
                             <li>
@@ -182,7 +182,7 @@
                         </ul>
 
                         <h6>
-                            Product available in stock:
+                            {{ __('public/shop.Product available in stock:') }}
                         </h6>
                         <ul class="list-unstyled pb-3">
                             <li>
@@ -195,7 +195,7 @@
                                 <div class="col-auto">
                                     <div class="form-outline">
                                         <h6>
-                                            Quantity: 
+                                            {{ __('public/shop.Quantity:') }}
                                         </h6>
                                         <input type="number" id="qty" 
                                             name="qty" class="form-control" min="1" value="1"/>
@@ -209,7 +209,7 @@
                                 <div class="col d-grid">
                                     <button type="submit" class="btn btn-success btn-lg" 
                                         name="submit" value="addtocard">
-                                        Add To Cart
+                                        {{ __('public/shop.Add To Cart') }}
                                     </button>
                                 </div>
                                 <div class="col d-grid">
@@ -231,7 +231,7 @@
     <div class="container">
         <div class="row text-left p-2 pb-3">
             <h4>
-                Related Products
+                {{ __('public/shop.Related Products') }}
             </h4>
         </div>
 

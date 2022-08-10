@@ -6,7 +6,7 @@
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-3">
-            <h1 class="h2 pb-4">Categories</h1>
+            <h1 class="h2 pb-4">{{ __('public/shop.Categories') }}</h1>
             <ul class="list-unstyled templatemo-accordion">
                 @if(!$category->isEmpty())
                 <li class="pb-3">
@@ -26,7 +26,7 @@
                 </li>
                 @else
                 <li aria-disabled="true">
-                    No category available
+                    {{ __('public/shop.No category available') }}
                 </li>
                 @endif
             </ul>
@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2>
-                        Search result:
+                        {{ __('public/shop.Search result:') }}
                     </h2>
                 </div>
                 <div class="col-md-6 pb-4">
@@ -44,11 +44,11 @@
                         <div class="d-flex">
                             @csrf
                             <select name="sort" id="sort" class="form-control">
-                                <option value="{{Request::url()}}?sort_by=none">Featured</option>
-                                <option value="{{Request::url()}}?sort_by=desc" {{Request::fullurl() == Request::url().'?sort_by=desc' ? "selected" : ""}}>Descending</option>
-                                <option value="{{Request::url()}}?sort_by=asc" {{Request::fullurl() == Request::url().'?sort_by=asc' ? "selected" : ""}}>Ascending</option>
-                                <option value="{{Request::url()}}?sort_by=atoz" {{Request::fullurl() == Request::url().'?sort_by=atoz' ? "selected" : ""}}>A to Z</option>
-                                <option value="{{Request::url()}}?sort_by=ztoa" {{Request::fullurl() == Request::url().'?sort_by=ztoa' ? "selected" : ""}}>Z to A</option>
+                                <option value="{{Request::url()}}?sort_by=none">{{ __('public/shop.Sort product') }}</option>
+                                <option value="{{Request::url()}}?sort_by=desc" {{Request::fullurl() == Request::url().'?sort_by=desc' ? "selected" : ""}}>{{ __('public/shop.Descending') }}</option>
+                                <option value="{{Request::url()}}?sort_by=asc" {{Request::fullurl() == Request::url().'?sort_by=asc' ? "selected" : ""}}>{{ __('public/shop.Ascending') }}</option>
+                                <option value="{{Request::url()}}?sort_by=atoz" {{Request::fullurl() == Request::url().'?sort_by=atoz' ? "selected" : ""}}>{{ __('public/shop.A to Z') }}</option>
+                                <option value="{{Request::url()}}?sort_by=ztoa" {{Request::fullurl() == Request::url().'?sort_by=ztoa' ? "selected" : ""}}>{{ __('public/shop.Z to A') }}</option>
                             </select>
                         </div>
                     </form>
@@ -117,7 +117,7 @@
                 @else
                     <center>
                         <h3>
-                            No result for "{{$_GET['keywords_submit']}}"
+                            {{ __('public/shop.No result for') }} "{{$_GET['keywords_submit']}}"
                         </h3>
                     </center>
                 @endif

@@ -45,7 +45,12 @@ https://templatemo.com/tm-559-zay-shop
                         0888736810
                     </a>
                 </div>
+                
                 <div>
+                <select onchange="window.location.href = '?lang=' + this.value">
+                    <option value="en" {{Request::fullurl() == Request::url().'?lang=en' ? "selected" : ""}}>ENG</option>
+                    <option value="vi" {{Request::fullurl() == Request::url().'?lang=vi' ? "selected" : ""}}>VIE</option>
+                </select>
                     <a class="text-light" href="https://fb.com/egamorft" target="_blank" rel="sponsored">
                         <i class="fab fa-facebook-f fa-sm fa-fw me-2"></i>
                     </a>
@@ -999,6 +1004,21 @@ https://templatemo.com/tm-559-zay-shop
             });
         });
     </script>
+    <!-- <script>
+        $(document).ready(function() {
+            $('#langSelect').on('change', function() {
+                var url = window.location.href +'?lang=';
+                var lang = url + this.value;
+                var getUrl = new URL(lang);
+                var getLang =getUrl.searchParams.get("lang");
+                if(getLang != null){
+
+                }
+                console.log(getLang);
+                // window.location = lang;
+            });
+        });
+    </script> -->
 </body>
 
 </html>
