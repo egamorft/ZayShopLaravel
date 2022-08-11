@@ -185,22 +185,28 @@ class ProductController extends Controller
     }
     public function unactive_product($product_id)
     {
-        DB::table('tbl_product')
+        $unactive_result = DB::table('tbl_product')
             ->where('product_id', $product_id)
             ->update(['product_status' => 0]);
-
-        Session::put('message', 'Unactive product ' . $product_id);
-        return Redirect::to('/show-product');
+        if($unactive_result != 0){
+            Session::put('message', 'Unactive product ' . $product_id);
+            return Redirect::to('/show-product');
+        }else{
+            abort(404);
+        }
     }
 
     public function active_product($product_id)
     {
-        DB::table('tbl_product')
+        $active_result = DB::table('tbl_product')
             ->where('product_id', $product_id)
             ->update(['product_status' => 1]);
-
-        Session::put('message', 'Active product ' . $product_id);
-        return Redirect::to('/show-product');
+        if($active_result != 0){
+            Session::put('message', 'Active product ' . $product_id);
+            return Redirect::to('/show-product');
+        }else{
+            abort(404);
+        }
     }
 
     public function edit_product($product_id)
@@ -270,12 +276,15 @@ class ProductController extends Controller
 
     public function delete_product($product_id)
     {
-        DB::table('tbl_product')
+        $delete_result = DB::table('tbl_product')
             ->where('product_id', $product_id)
                 ->delete();
-
-        Session::put('message', 'Successfully delete product ' . $product_id);
-        return Redirect::to('/show-product');
+        if($delete_result != 0){
+            Session::put('message', 'Successfully delete product ' . $product_id);
+            return Redirect::to('/show-product');
+        }else{
+            abort(404);
+        }
     }
 
     //End Admin Page
@@ -285,7 +294,8 @@ class ProductController extends Controller
         $product_details = DB::table('tbl_product')
             ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
                 ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
-                    ->where('tbl_product.product_id', $product_id)->get();
+                    ->where('tbl_product.product_id', $product_id)
+                        ->where('product_status', 1)->get();
 
         $category_id = '';
         foreach ($product_details as $key => $value) {
@@ -296,9 +306,10 @@ class ProductController extends Controller
             ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
                 ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
                     ->where('tbl_category.category_id', $category_id)
-                        ->whereNotIn('tbl_product.product_id', [$product_id])
-                            ->take(4)
-                                ->get();
+                        ->where('product_status', 1)
+                            ->whereNotIn('tbl_product.product_id', [$product_id])
+                                ->take(4)
+                                    ->get();
 
         return view('pages.product.shop_details')
                 ->with(compact('product_details', 'related_product'));
