@@ -29,11 +29,11 @@
                     <input type="submit" value="{{ __('public/login.Log In') }}" class="btn btn-outline-success">
 
                 </form>
-                @if($errors->any())
+                @if($errors->any() || Session::get('error'))
                 <span class="d-block text-left my-4"> {{ __('public/login.You forgot your password?') }}<a class="text-decoration-none" href="{{URL::to('/reset-password')}}"> {{ __('public/login.Reset now') }}</a></span>
                 @endif
-                <span class="d-block text-left my-4 text-muted"> {{ __("public/login.Don't have account? Register") }} <a class="text-decoration-none" href="{{URL::to('/register')}}"> {{ __('public/login.Here') }}</a></span>
-                <span class="d-block text-left my-4 text-muted"> {{ __('public/login.or sign in with') }}</span>
+                <span class="d-block text-left my-4"> {{ __("public/login.Don't have account? Register") }} <a class="text-decoration-none" href="{{URL::to('/register')}}"> {{ __('public/login.Here') }}</a></span>
+                <span class="d-block text-left my-4"> {{ __('public/login.or sign in with') }}</span>
 
                 <div class="social-login">
                     <a href="{{URL::to('/login-facebook')}}" class="facebook">

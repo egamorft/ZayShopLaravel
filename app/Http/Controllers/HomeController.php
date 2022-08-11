@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Http\Requests\PublicLoginRequest;
+use App\Http\Requests\PublicRegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -127,17 +129,9 @@ class HomeController extends Controller
             return view('pages.public.register');
         }
     }
-    public function login_account(Request $request)
+    public function login_account(PublicLoginRequest $request)
     {
-        $request->validate(
-            [
-                'account_email' => 'required|min:6|email|exists:tbl_account,account_email',
-                'account_password' => 'required|min:6'
-            ],
-            [
-                'account_email.exists' => 'This email has not been register'
-            ]
-        );
+        $request->except('_token');
         $email = $request->account_email;
         $password = md5($request->account_password);
         $result = DB::table('tbl_account')
@@ -165,22 +159,9 @@ class HomeController extends Controller
                 ->withInput()->with('error', 'Wrong username or password');
         }
     }
-    public function register_account(Request $request)
+    public function register_account(PublicRegisterRequest $request)
     {
-        $request->validate(
-            [
-                'account_name' => 'required|min:6',
-                'account_email' => 'required|min:6|email|unique:tbl_account,account_email',
-                'account_phone' => 'required|numeric|digits:10',
-                'account_password' => 'required|min:6',
-                'account_cfpassword' => 'required|same:account_password',
-                'g-recaptcha-response' => new Captcha(),
-            ],
-            [
-                'account_email.unique' => 'This email has already been taken'
-            ]
-        );
-
+        $request->except('_token');
         $email = $request->account_email;
         $result = DB::table('tbl_account')
             ->where('account_email', $email)

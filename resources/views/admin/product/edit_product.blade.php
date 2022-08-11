@@ -31,7 +31,7 @@
                             <label class="form-label">
                                 {{ __('admin/product.Product Name')}}
                             </label>
-                            <input value="{{$edit_value->product_name}}" name="product_name" type="text" class="form-control">
+                            <input value="{{old('product_name', $edit_value->product_name)}}" name="product_name" type="text" class="form-control">
                         </div>
                         @error('product_name')
                         <span style="color: red">
@@ -42,7 +42,7 @@
                             <label class="form-label">
                                 {{ __('admin/product.Product Quantity')}}
                             </label>
-                            <input value="{{$edit_value->product_quantity}}" name="product_quantity" type="text" class="form-control">
+                            <input value="{{old('product_quantity',$edit_value->product_quantity)}}" name="product_quantity" type="text" class="form-control">
                         </div>
                         @error('product_quantity')
                         <span style="color: red">
@@ -53,7 +53,7 @@
                             <label class="form-label">
                                 {{ __('admin/product.Product Price')}}
                             </label>
-                            <input value="{{$edit_value->product_price}}" name="product_price" type="text" class="form-control">
+                            <input value="{{old('product_price', $edit_value->product_price)}}" name="product_price" type="text" class="form-control">
                         </div>
                         @error('product_price')
                         <span style="color: red">
@@ -77,14 +77,14 @@
                                 {{ __('admin/product.Product Description')}}
                             </label>
                             <textarea name="product_desc" placeholder="{{ __('admin/product.Enter Product Description')}}" 
-                            class="form-control" id="ckeditorAdd" rows="8">{{$edit_value->product_desc}}</textarea>
+                            class="form-control" id="ckeditorAdd" rows="8">{{old('product_desc', $edit_value->product_desc)}}</textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd1">
                                 {{ __('admin/product.Product Content')}}
                             </label>
                             <textarea name="product_content" placeholder="{{ __('admin/product.Enter Product Content')}}" 
-                            class="form-control" id="ckeditorAdd1" rows="8">{{$edit_value->product_content}}</textarea>
+                            class="form-control" id="ckeditorAdd1" rows="8">{{old('product_content', $edit_value->product_content)}}</textarea>
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <select name="category" id="category" class="form-control choose category">
