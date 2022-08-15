@@ -19,7 +19,8 @@ class OrderDetails extends Model
         return $this->belongsTo('App\Product', 'product_id');
     }
 
-    public function order(){
-        return $this->belongsTo('App\Order','order_code');
+    public function order()
+    {
+        return $this->belongsTo('App\Order', 'order_code');
     }
 }

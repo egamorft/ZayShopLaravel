@@ -68,16 +68,16 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        if($category->category_status == 0){
+        if ($category->category_status == 0) {
             $category->category_status = 1;
-        }else{
+        } else {
             DB::table('tbl_subcategory')
-            ->where('category_id', $category->category_id)
-            ->update(['subcategory_status' => 0]);
+                ->where('category_id', $category->category_id)
+                ->update(['subcategory_status' => 0]);
 
             DB::table('tbl_product')
-            ->where('category_id', $category->category_id)
-            ->update(['product_status' => 0]);
+                ->where('category_id', $category->category_id)
+                ->update(['product_status' => 0]);
             $category->category_status = 0;
         }
         $category->save();
@@ -109,7 +109,7 @@ class CategoryController extends Controller
     {
         $category->delete();
     }
-    
+
     //public page
 
     public function shop_category(Request $request, $category_id)

@@ -210,7 +210,7 @@
                                     if ($name) {
                                         echo  $name;
                                     }
-                                    ?>
+                    ?>
                                 </span>
                             </a>
                         </li>

@@ -15,14 +15,12 @@ class DetectLang
      */
     public function handle($request, Closure $next)
     {
-        if ($request->has('lang'))
-        {
+        if ($request->has('lang')) {
             $lang = $request->lang;
             app()->setLocale($lang);
             $response = $next($request);
             return $response->withCookie(cookie()->forever('lang', $lang));
-        }else
-        {
+        } else {
             $lang = $request->cookie('lang', 'en');
             app()->setLocale($lang);
             return $next($request);

@@ -49,7 +49,7 @@ class OrderController extends Controller
   {
     // $order_details = OrderDetails::where('order_code', $order_code)->get();
     $order = Order::where('order_code', $order_code)->get();
-    if($order->count() > 0){
+    if ($order->count() > 0) {
       $account_id = '';
       $shipping_id = '';
       foreach ($order as $key => $od) {
@@ -57,7 +57,7 @@ class OrderController extends Controller
         $shipping_id = $od->shipping_id;
         $order_status = $od->order_status;
       }
-  
+
       $account = Account::where('account_id', $account_id)->first();
       $shipping = Shipping::where('shipping_id', $shipping_id)->first();
       $details = OrderDetails::with('product')
@@ -66,23 +66,23 @@ class OrderController extends Controller
       $order_details = OrderDetails::with('product')
         ->where('order_code', $order_code)
         ->get();
-  
+
       $product_coupon = '';
       foreach ($order_details as $key => $order_d) {
         $product_coupon = $order_d->product_coupon;
       }
-  
+
       if ($product_coupon != 'no') {
-  
+
         $coupon = Coupon::where('coupon_code', $product_coupon)->first();
         $coupon_condition = $coupon->coupon_condition;
         $coupon_number = $coupon->coupon_number;
       } else {
-  
+
         $coupon_condition = 2;
         $coupon_number = 0;
       }
-  
+
       return view('admin.order.view_order')
         ->with(compact(
           'order_status',
@@ -94,23 +94,22 @@ class OrderController extends Controller
           'coupon_number',
           'order'
         ));
-    }else{
+    } else {
       abort(404);
     }
-    
   }
 
   public function delete_order($order_code)
   {
     $shipping_id = Order::where('order_code', $order_code)->first();
-    if($shipping_id->count() > 0){
+    if ($shipping_id->count() > 0) {
       Order::where('order_code', $order_code)->delete();
       OrderDetails::where('order_code', $order_code)->delete();
       Shipping::where('shipping_id', $shipping_id->shipping_id)->delete();
-  
+
       Session::put('message', 'Successfully delete order ' . $order_code);
       return Redirect::to('/order');
-    }else{
+    } else {
       abort(404);
     }
   }
@@ -125,16 +124,16 @@ class OrderController extends Controller
     $details = OrderDetails::with('product')
       ->where('order_code', $order->order_code)
       ->first();
-      $coupon_code = $details->product_coupon;
-      $get_coupon_code = Coupon::where('coupon_code', $coupon_code)->first();
+    $coupon_code = $details->product_coupon;
+    $get_coupon_code = Coupon::where('coupon_code', $coupon_code)->first();
 
     if ($order->order_status == 2) {
-      if($get_coupon_code){
+      if ($get_coupon_code) {
         $new_coupon_time = $get_coupon_code->coupon_time - 1;
 
         DB::table('tbl_coupon')
-              ->where('coupon_code', $coupon_code)
-              ->update(['coupon_time' => $new_coupon_time]);
+          ->where('coupon_code', $coupon_code)
+          ->update(['coupon_time' => $new_coupon_time]);
       }
 
       foreach ($data['order_product_id'] as $key => $product_id) {
@@ -153,13 +152,13 @@ class OrderController extends Controller
         }
       }
     } elseif ($order->order_status != 2 && $order->order_status != 1) {
-      
-      if($get_coupon_code){
+
+      if ($get_coupon_code) {
         $new_coupon_time = $get_coupon_code->coupon_time + 1;
 
         DB::table('tbl_coupon')
-              ->where('coupon_code', $coupon_code)
-              ->update(['coupon_time' => $new_coupon_time]);
+          ->where('coupon_code', $coupon_code)
+          ->update(['coupon_time' => $new_coupon_time]);
       }
 
       foreach ($data['order_product_id'] as $key => $product_id) {
@@ -216,10 +215,10 @@ class OrderController extends Controller
     foreach ($order_details_product as $product) {
       $coupon_code = $product->product_coupon;
     }
-    if($coupon_code!="no"){
+    if ($coupon_code != "no") {
       $coupon = Coupon::where('coupon_code', $coupon_code)->first();
       $coupon_number = $coupon->coupon_number;
-    }else{
+    } else {
       $coupon_number = 0;
     }
     $output = '';
@@ -328,7 +327,7 @@ class OrderController extends Controller
     ';
     }
     $tax = ($total * 10) / 100;
-    $discount = ($coupon_number * $total)/ 100;
+    $discount = ($coupon_number * $total) / 100;
     $total_all = $total - $discount + $tax + $product->product_feeship;
     $output .= '
         </tbody>
@@ -346,7 +345,7 @@ class OrderController extends Controller
                         ' . number_format($tax, 0, ',', '.') . 'đ
                     </li>
                     <li class="text-muted ms-3 mt-2">
-                        <span class="text-black me-4">Coupon('.$coupon_number.'%)</span>
+                        <span class="text-black me-4">Coupon(' . $coupon_number . '%)</span>
                         ' . number_format($discount, 0, ',', '.') . 'đ
                     </li>
                   </ul>

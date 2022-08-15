@@ -54,13 +54,13 @@ Route::get('/logout', 'AdminController@logout');
 Route::middleware('admin.login')->group(function () {
 
     //Admin dashboard
-        Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
+    Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 
-        Route::post('/filter-by-date', 'AdminController@filter_by_date');
+    Route::post('/filter-by-date', 'AdminController@filter_by_date');
 
-        Route::post('/dashboard-filter', 'AdminController@dashboard_filter');
+    Route::post('/dashboard-filter', 'AdminController@dashboard_filter');
 
-        Route::post('/days-order', 'AdminController@days_order');
+    Route::post('/days-order', 'AdminController@days_order');
     //End Admin
 
     //Category Admin
@@ -96,11 +96,11 @@ Route::middleware('admin.login')->group(function () {
     //End Product Admin
 
     //Coupon Admin
-    
+
     Route::get('/show-coupon', function () {
         return view('admin.coupon.show_coupon');
     })->name('coupon');
-    
+
     //End Coupon Admin
 
     //Delivery Admin

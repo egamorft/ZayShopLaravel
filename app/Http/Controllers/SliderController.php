@@ -106,9 +106,9 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
-        if($slider->slider_status == 0){
+        if ($slider->slider_status == 0) {
             $slider->slider_status = 1;
-        }else{
+        } else {
             $slider->slider_status = 0;
         }
         $slider->save();

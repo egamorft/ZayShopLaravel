@@ -9,7 +9,8 @@ use Illuminate\Queue\SerializesModels;
 
 class ConfirmAccount extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
     public $verify_code;
     public $name;
     public $phone;

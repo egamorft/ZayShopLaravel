@@ -17,14 +17,16 @@ use Illuminate\Support\Facades\Session;
 
 class SendMailController extends Controller
 {
-    public function confirm_order(Request $request){
+    public function confirm_order(Request $request)
+    {
         $data = $request->all();
         $now = Carbon::now('Asia/Ho_Chi_Minh')->toFormattedDateString();
         $email_to = $data['shipping_email'];
         Mail::to($email_to)->send(new ConfirmOrder($data, $now));
     }
 
-    public function confirm_delivery(Request $request){
+    public function confirm_delivery(Request $request)
+    {
         $data = $request->all();
         $order_id = $data['order_id'];
         $get_order = Order::where('order_id', $order_id)->first();
@@ -35,7 +37,8 @@ class SendMailController extends Controller
         Mail::to($email_to)->send(new ConfirmDelivery($order_code));
     }
 
-    public function confirm_account(Request $request){
+    public function confirm_account(Request $request)
+    {
         $data = $request->all();
         $email_to = $data['account_email'];
         $name = $data['account_name'];
@@ -46,7 +49,8 @@ class SendMailController extends Controller
         return Redirect::to('/register');
     }
 
-    public function verify_code_reset_password(Request $request){
+    public function verify_code_reset_password(Request $request)
+    {
         $data = $request->all();
         $email_to = $data['email'];
         $verify_code = $data['verify_code'];
@@ -55,7 +59,8 @@ class SendMailController extends Controller
         return Redirect::to('/reset-password');
     }
 
-    public function send_mail_apology_cancel_order(Request $request){
+    public function send_mail_apology_cancel_order(Request $request)
+    {
         $data = $request->all();
         $order_id = $data['order_id'];
         $get_order = Order::where('order_id', $order_id)->first();

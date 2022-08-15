@@ -142,21 +142,23 @@ class AccountController extends Controller
         DB::table('tbl_account')
             ->where('account_email', $email)
             ->update(['verify_code' => $verify_code]);
-        
+
         return redirect()->route('verify-code-reset-password', $data);
     }
 
-    public function check_reset_password($verify_code){
+    public function check_reset_password($verify_code)
+    {
         $check_verify_code = Account::where('verify_code', $verify_code)->first();
-        if($check_verify_code){
+        if ($check_verify_code) {
             return view('pages.profile.set_new_password', compact('verify_code'));
-        }else{
+        } else {
             Session::put('error', 'Error');
             return Redirect::to('/register');
         }
     }
 
-    public function set_new_password(Request $request){
+    public function set_new_password(Request $request)
+    {
         $data = $request->all();
         $request->validate(
             [
@@ -173,6 +175,5 @@ class AccountController extends Controller
 
         Session::put('message', 'Your password has been reset');
         return Redirect::to('/login');
-
     }
 }

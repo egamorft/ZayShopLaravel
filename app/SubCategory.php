@@ -13,7 +13,8 @@ class SubCategory extends Model
     protected $primaryKey = 'subcategory_id';
     protected $table = 'tbl_subcategory';
 
-    public function category(){
-        return $this->belongsTo('App\Category','category_id');
+    public function category()
+    {
+        return $this->belongsTo('App\Category', 'category_id');
     }
 }

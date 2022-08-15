@@ -67,12 +67,12 @@ class SubCategoryController extends Controller
      */
     public function edit(SubCategory $subcategory)
     {
-        if($subcategory->subcategory_status == 0){
+        if ($subcategory->subcategory_status == 0) {
             $subcategory->subcategory_status = 1;
-        }else{
+        } else {
             DB::table('tbl_product')
-            ->where('subcategory_id', $subcategory->subcategory_id)
-            ->update(['product_status' => 0]);
+                ->where('subcategory_id', $subcategory->subcategory_id)
+                ->update(['product_status' => 0]);
             $subcategory->subcategory_status = 0;
         }
         $subcategory->save();

@@ -116,7 +116,6 @@ class CouponController extends Controller
                         'coupon_number' => $coupon->coupon_number,
                     );
                     Session::put('coupon', $cou);
-
                 } else {
                     $cou[] = array(
                         'coupon_code' => $coupon->coupon_code,
@@ -132,7 +131,7 @@ class CouponController extends Controller
             }
         } else {
             return redirect()->back()
-                    ->withInput()->with('error', 'Add coupon fail, wrong coupon');
+                ->withInput()->with('error', 'Add coupon fail, wrong coupon');
         }
     }
 
@@ -146,7 +145,7 @@ class CouponController extends Controller
                     Cart::setGlobalDiscount(0);
                 }
             }
-            
+
             Session::forget('coupon');
             return redirect()->back()
                 ->with('message', 'Unset coupon');

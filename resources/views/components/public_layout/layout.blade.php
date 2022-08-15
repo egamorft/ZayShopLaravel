@@ -153,14 +153,14 @@ https://templatemo.com/tm-559-zay-shop
                     $account_id = Session::get('account_id');
                     $account_name = Session::get('account_name');
                     if ($account_id != null) {
-                    ?>
+                        ?>
                         <div class="dropdown">
                             <a class="nav-icon position-relative text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" href="#">
                                 <i class="fa fa-fw fa-user text-dark mr-3"></i>
                                 {{ __('public/layout.Hello') }}
                                 <?php
                                 echo $account_name
-                                ?>
+                        ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -192,7 +192,7 @@ https://templatemo.com/tm-559-zay-shop
                         </div>
                     <?php
                     } else {
-                    ?>
+                        ?>
                         <div class="dropdown">
                             <a class="nav-icon position-relative text-decoration-none" href="{{URL::to('/login')}}">
                                 <i class="fa fa-fw fa-lock text-dark mr-3"></i>

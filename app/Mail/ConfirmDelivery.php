@@ -9,7 +9,8 @@ use Illuminate\Queue\SerializesModels;
 
 class ConfirmDelivery extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
     public $order_code;
     /**
      * Create a new message instance.

@@ -28,7 +28,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('admin.dashboard.dashboard', function ($view) {
-
             $min_price = Product::where('product_status', '1')->min('product_price');
             $max_price = Product::where('product_status', '1')->max('product_price');
 

@@ -29,14 +29,14 @@ class HomeController extends Controller
         $today = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
         $check_user_ip_today = Visitors::where('ip_address', $user_ip)->where('visitors_date', $today)->get();
         $check_user_ip_today_count = $check_user_ip_today->count();
-        if($check_user_ip_today_count < 1){
+        if ($check_user_ip_today_count < 1) {
             $visitors = new Visitors();
             $visitors->ip_address = $user_ip;
             $visitors->visitors_date = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
             $visitors->save();
         }
     }
-    
+
     public function home()
     {
         $slider = Slider::where('slider_status', 1)
@@ -115,17 +115,17 @@ class HomeController extends Controller
 
     public function login()
     {
-        if(Session::get('account_id')){
+        if (Session::get('account_id')) {
             return redirect()->back();
-        }else{
+        } else {
             return view('pages.public.login');
         }
     }
     public function register()
     {
-        if(Session::get('account_id')){
+        if (Session::get('account_id')) {
             return redirect()->back();
-        }else{
+        } else {
             return view('pages.public.register');
         }
     }
@@ -139,20 +139,18 @@ class HomeController extends Controller
             ->where('account_password', $password)->first();
 
         if ($result) {
-            if($result->account_confirmation == 1){
+            if ($result->account_confirmation == 1) {
                 Session::put('account_id', $result->account_id);
                 Session::put('account_name', $result->account_name);
                 Session::put('account_email', $result->account_email);
                 Session::put('account_phone', $result->account_phone);
                 Session::put('account_address', $result->account_address);
 
-                Session::put('message', 'Successfully login with '. $result->account_name);
+                Session::put('message', 'Successfully login with ' . $result->account_name);
                 return Redirect::to('/shop');
-
-            }else{
+            } else {
                 return Redirect::back()
                     ->withInput()->with('error', 'Your account have not confirm yet, check your email');
-
             }
         } else {
             return Redirect::back()
@@ -190,9 +188,10 @@ class HomeController extends Controller
         }
     }
 
-    public function check_verify($verify_code){
+    public function check_verify($verify_code)
+    {
         $check_verify_code = Account::where('verify_code', $verify_code)->first();
-        if($check_verify_code){
+        if ($check_verify_code) {
             DB::table('tbl_account')
                 ->where('verify_code', $verify_code)
                 ->update(['account_confirmation' => 1]);
@@ -201,7 +200,7 @@ class HomeController extends Controller
                 ->update(['verify_code' => null]);
             Session::put('message', 'Verify your account, now you can login');
             return Redirect::to('/login');
-        }else{
+        } else {
             Session::put('error', 'Error');
             return Redirect::to('/register');
         }

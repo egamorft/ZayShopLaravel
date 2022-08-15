@@ -74,13 +74,13 @@ class DeliveryController extends Controller
 
         $check_matp = DB::table('tbl_feeship')
             ->where('fee_matp', $fee_ship->fee_matp)
-                ->first();
+            ->first();
         $check_maqh = DB::table('tbl_feeship')
             ->where('fee_maqh', $fee_ship->fee_maqh)
-                ->first();
+            ->first();
         $check_xaid = DB::table('tbl_feeship')
             ->where('fee_xaid', $fee_ship->fee_xaid)
-                ->first();
+            ->first();
 
         if ($check_matp == true && $check_maqh == true && $check_xaid == true) {
             Session::put('error', 'Dumplicate');
@@ -171,23 +171,22 @@ class DeliveryController extends Controller
 
             if ($data['action'] == "city") {
                 $select_province = Province::where('matp', $data['ma_id'])
-                                    ->orderby('maqh', 'asc')->get();
+                    ->orderby('maqh', 'asc')->get();
                 $output .= '<option>-------Choose province-------</option>';
 
                 foreach ($select_province as $key => $province) {
                     $output .= '<option value="' . $province->maqh . '">'
-                                 . $province->name_quanhuyen . '</option>';
+                        . $province->name_quanhuyen . '</option>';
                 }
-
             } else {
 
                 $select_wards = Wards::where('maqh', $data['ma_id'])
-                                    ->orderby('xaid', 'asc')->get();
+                    ->orderby('xaid', 'asc')->get();
                 $output .= '<option>-------Choose wards-------</option>';
 
                 foreach ($select_wards as $key => $ward) {
                     $output .= '<option value="' . $ward->xaid . '">'
-                                 . $ward->name_xaphuong . '</option>';
+                        . $ward->name_xaphuong . '</option>';
                 }
             }
             echo $output;

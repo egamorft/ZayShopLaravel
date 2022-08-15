@@ -23,10 +23,10 @@ class CheckoutController extends Controller
             if ($_GET['resultCode'] == 1006) {
                 Session::put('error', 'You just cancel your MOMO payment');
                 return Redirect::to('/check-out');
-            }elseif (($_GET['resultCode'] == 0)) {
+            } elseif (($_GET['resultCode'] == 0)) {
                 $signature = $_GET['signature'];
                 return Redirect::to('/check-out')->with('signature', $signature);
-            }else{
+            } else {
                 Session::put('error', 'Something went wrong, please try another payment gate');
                 return Redirect::to('/check-out');
             }
@@ -189,5 +189,4 @@ class CheckoutController extends Controller
             Session::put('account_address', $request->shipping_address);
         }
     }
-
 }

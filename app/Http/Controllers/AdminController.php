@@ -16,9 +16,9 @@ class AdminController extends Controller
 {
     public function home()
     {
-        if(Session::get('admin_id')){
+        if (Session::get('admin_id')) {
             return redirect()->back();
-        }else{
+        } else {
             return view('admin.login.admin_login');
         }
     }
@@ -93,8 +93,17 @@ class AdminController extends Controller
         $visitors_yesterday_count = $visitors_yesterday->count();
 
         return view('admin.dashboard.dashboard')->with(
-            compact('visitors_total_count', 'visitors_count', 'visitors_yesterday_count', 'visitors_now_count',
-            'visitors_of_last_month_count', 'visitors_of_this_month_count', 'visitors_of_this_year_count', 'visitors_of_last_year_count'));
+            compact(
+                'visitors_total_count',
+                'visitors_count',
+                'visitors_yesterday_count',
+                'visitors_now_count',
+                'visitors_of_last_month_count',
+                'visitors_of_this_month_count',
+                'visitors_of_this_year_count',
+                'visitors_of_last_year_count'
+            )
+        );
     }
 
     public function login(AdminLoginRequest $request)
