@@ -89,23 +89,35 @@ $orderDate = Carbon\Carbon::now();
                                                         <span class="d-block text-muted">
                                                             {{ __('checkout/checkout.Shipping') }}
                                                         </span>
+                                                        @if (Session::get('city'))
                                                         <span>
                                                             <?php 
                                                                 echo Session::get('city'); 
                                                             ?>
                                                         </span>
+                                                        @else
+                                                        <span id="shipping_city"></span>
+                                                        @endif
                                                     </br>
+                                                        @if (Session::get('province'))
                                                         <span>
                                                             <?php 
                                                                 echo Session::get('province');
                                                             ?>
                                                         </span>
+                                                        @else
+                                                        <span id="shipping_province"></span>
+                                                        @endif
                                                     </br>
+                                                        @if (Session::get('ward'))
                                                         <span>
                                                             <?php 
                                                                 echo Session::get('ward'); 
                                                             ?>
                                                         </span>
+                                                        @else
+                                                        <span id="shipping_ward"></span>
+                                                        @endif
 
                                                     </div>
                                                 </td>
@@ -688,12 +700,39 @@ $orderDate = Carbon\Carbon::now();
                 @endif
 
                 <hr class="my-4">
+                @if(session()->has('status'))
+                <input id="automate_check_out_paypal" name="automate_check_out_paypal" class="w-100 btn btn-danger btn-lg automate_check_out_paypal" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
+                @endif
                 @if(session()->has('signature'))
                 <input id="automate_check_out" name="automate_check_out" class="w-100 btn btn-danger btn-lg automate_check_out" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
                 @endif
-                @if(!session()->has('signature'))
+                @if(!session()->has('signature') && !session()->has('status'))
                 <input id="check_out" name="send_order_cod" class="w-100 btn btn-danger btn-lg check_out_method" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
                 @endif
+                <hr class="my-4">
+                @php
+                    $total_usd = $total_all/23000;
+                @endphp
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="https://banhxegiatot.com/wp-content/uploads/2021/04/2887b4_3d2a6145f5534541be0340302a614812_mv2.gif" alt="">
+                        </div>
+                        <div class="col-6">
+                            <center>
+                                <h4>
+                                    Free ship with Paypal
+                                </h4>
+                            </center>
+                            <div id="smart-button-container">
+                            <div style="text-align: center;">
+                                <div id="paypal-button-container"></div>
+                                <input type="hidden" id="total_usd" value="{{round($total_usd, 2)}}">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
             <hr class="my-4">
         </div>

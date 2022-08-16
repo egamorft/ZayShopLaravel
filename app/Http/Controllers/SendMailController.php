@@ -22,7 +22,8 @@ class SendMailController extends Controller
         $data = $request->all();
         $now = Carbon::now('Asia/Ho_Chi_Minh')->toFormattedDateString();
         $email_to = $data['shipping_email'];
-        Mail::to($email_to)->send(new ConfirmOrder($data, $now));
+        $fee = $data['order_fee'];
+        Mail::to($email_to)->send(new ConfirmOrder($data, $now, $fee));
     }
 
     public function confirm_delivery(Request $request)

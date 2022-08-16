@@ -11,7 +11,7 @@ return [
     'Address' => 'Địa chỉ',
     'Subtotal' => 'Tạm tính',
     'Shipping Fee' => 'Giá giao hàng',
-    'Tax Fee' => 'Phí vận chuyển',
+    'Tax Fee' => 'Thuế',
     'Discount' => 'Giảm giá',
     'We will be sending shipping confirmation email when the item shipped successfully!' => 'Chúng tôi sẽ gửi xác nhận giao hàng qua e-mail của bạn khi nào đơn hàng đã được giao thành công!',
     'Thanks for shopping with us!' => 'Cảm ơn đã mua hàng với chúng tôi!',

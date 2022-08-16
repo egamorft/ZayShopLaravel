@@ -518,43 +518,120 @@ https://templatemo.com/tm-559-zay-shop
     <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <!-- End Script -->
-    <!-- Start Slider Script -->
     <script src="{{asset('public/frontend/js/slick.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/simple.money.format.js')}}"></script>
+    
+    @if(Route::currentRouteNamed('check-out'))
+            <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
+            <script>
+                function initPayPalButton() {
+                    var total_usd = document.getElementById("total_usd").value;
+                paypal.Buttons({
+                    style: {
+                    shape: 'pill',
+                    color: 'gold',
+                    layout: 'vertical',
+                    label: 'checkout',
+                    
+                    },
 
-    <!-- <script>
-        $('#carousel-related-product').slick({
-            infinite: true,
-            arrows: false,
-            slidesToShow: 4,
-            slidesToScroll: 3,
-            dots: true,
-            responsive: [{
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3
+                    createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{"amount":{"currency_code":"USD","value":total_usd}}]
+                    });
+                    },
+
+                    onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(orderData) {
+                        // Full available details
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                        // Show a success message within this page, e.g.
+                        // const element = document.getElementById('paypal-button-container');
+                        // element.innerHTML = '';
+                        // actions.redirect('http://localhost/shopZay/check-out?status='+orderData.status);
+                        var shipping_notes = $('.shipping_notes').val();
+                        var order_coupon = $('.order_coupon').val();
+                        var _token = $('input[name="_token"]').val();
+                        $.ajax({
+                            url: '{{url("/send-mail-confirm-order")}}',
+                            method: 'POST',
+                            data: {
+                                shipping_email: orderData.payer.email_address,
+                                shipping_name: orderData.payer.name.given_name + " "+ orderData.payer.name.surname,
+                                shipping_address: orderData.payer.address.address_line_1,
+                                shipping_phone: orderData.payer.phone.phone_number.national_number,
+                                order_fee: 0,
+                                shipping_notes: shipping_notes,
+                                _token: _token
+                            },
+                            beforeSend: function(){
+                                Swal.fire({
+                                    title: 'Please Wait !',
+                                    allowOutsideClick: false,
+                                    showConfirmButton: false,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                    },
+                                });
+
+                            },
+                            success: function() {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Your order has been saved',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                $.ajax({
+                                    url: "{{url('/confirm-order')}}",
+                                    method: 'POST',
+                                    data: {
+                                        shipping_email: orderData.payer.email_address,
+                                        shipping_name: orderData.payer.name.given_name + " "+ orderData.payer.name.surname,
+                                        shipping_address: orderData.payer.address.address_line_1,
+                                        shipping_phone: orderData.payer.phone.phone_number.national_number,
+                                        shipping_notes: shipping_notes,
+                                        payment_select: 3,
+                                        order_fee: 0,
+                                        order_coupon: order_coupon,
+                                        _token: _token
+                                    },
+                                    success: function() {
+                                        document.getElementById("shipping_method").innerHTML = 'PAYPAL';
+                                        document.getElementById("shipping_address").innerHTML = orderData.payer.address.address_line_1;
+                                        document.getElementById("shipping_city").innerHTML = orderData.payer.address.country_code;
+                                        document.getElementById("shipping_province").innerHTML = orderData.payer.address.admin_area_1;
+                                        document.getElementById("shipping_ward").innerHTML = orderData.payer.address.admin_area_2;
+                                        $("#OrderBill").modal("toggle");
+
+                                        $('#closeBill').click(function() {
+                                            window.location.href = "{{ URL::to('/profile/order')}}";
+                                        });
+                                    }
+                                });
+
+                            }
+                        });
+                        // Or go to another URL:  actions.redirect('thank_you.html');
+                        
+                    });
+                    },
+
+                    onError: function(err) {
+                        Swal.fire(
+                            'Oops!',
+                            'Try again!!',
+                            'warning'
+                        )
                     }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 3
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 3
-                    }
+                }).render('#paypal-button-container');
                 }
-            ]
-        });
-    </script> -->
-    <!-- End Slider Script -->
+                initPayPalButton();
+            </script>
+    @endif
+   
     <script>
         $('.payment_select').change(function() {
             const check_out = document.getElementById('check_out');
@@ -908,6 +985,14 @@ https://templatemo.com/tm-559-zay-shop
         </script>
     @endif 
 
+    @if(session()->has('status'))
+        <script type="text/javascript">
+            window.onload = function(){
+                document.getElementById('automate_check_out_paypal').click();
+                }
+        </script>
+    @endif 
+
     <script>
         $(document).ready(function() {
             $('#automate_check_out').click(function() {
@@ -1004,21 +1089,6 @@ https://templatemo.com/tm-559-zay-shop
             });
         });
     </script>
-    <!-- <script>
-        $(document).ready(function() {
-            $('#langSelect').on('change', function() {
-                var url = window.location.href +'?lang=';
-                var lang = url + this.value;
-                var getUrl = new URL(lang);
-                var getLang =getUrl.searchParams.get("lang");
-                if(getLang != null){
-
-                }
-                console.log(getLang);
-                // window.location = lang;
-            });
-        });
-    </script> -->
 </body>
 
 </html>

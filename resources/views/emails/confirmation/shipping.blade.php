@@ -605,7 +605,7 @@
                                                         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
 
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: red; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
-                                                                <strong>{{number_format(Session::get('fee'), 0 , ',' , '.')}} đ</strong>
+                                                                <strong>{{number_format($fee, 0 , ',' , '.')}} đ</strong>
                                                             </h1>
 
                                                         </td>
@@ -736,7 +736,7 @@
                                                     <tr>
                                                         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
                                                             <?php
-                                                                $total_all = Cart::total(0, ',', '') + Session::get('fee');
+                                                                $total_all = Cart::total(0, ',', '') + $fee;
                                                             ?>
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: #54ba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
                                                                 <strong>{{number_format($total_all, 0 , ',' , '.')}} đ</strong>
