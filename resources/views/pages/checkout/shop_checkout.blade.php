@@ -156,7 +156,7 @@ $total_usd = 0;
                                             <tr>
                                                 <td width="20%">
 
-                                                    <img src="{{URL::to('/public/upload/product/'.$con->options->image)}}" 
+                                                    <img src="{{URL::to('/storage/app/public/products/'.$con->options->image)}}" 
                                                         width="90px">
 
                                                 </td>
