@@ -697,6 +697,7 @@ https://templatemo.com/tm-559-zay-shop
                                             shipping_address: shipping_address,
                                             shipping_phone: shipping_phone,
                                             shipping_notes: shipping_notes,
+                                            order_fee: order_fee,
                                             _token: _token
                                         },
                                         beforeSend: function(){
@@ -1017,6 +1018,7 @@ https://templatemo.com/tm-559-zay-shop
                                 shipping_address: shipping_address,
                                 shipping_phone: shipping_phone,
                                 shipping_notes: shipping_notes,
+                                order_fee: order_fee,
                                 _token: _token
                             },
                             beforeSend: function(){

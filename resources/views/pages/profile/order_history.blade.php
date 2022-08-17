@@ -86,6 +86,8 @@
                                     <div class="green-label ms-auto text-uppercase">cod</div>
                                     @elseif($od->shipping->shipping_method == 2)
                                     <div class="momo-label ms-auto text-uppercase">momo</div>
+                                    @elseif($od->shipping->shipping_method == 3)
+                                    <div class="paypal-label ms-auto text-uppercase">paypal</div>
                                     @else
                                     <div class="green-label ms-auto text-uppercase">{{ __('profile/OrderHistory.unidentified') }}</div>
                                     @endif

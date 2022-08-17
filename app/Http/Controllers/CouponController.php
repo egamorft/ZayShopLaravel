@@ -105,7 +105,7 @@ class CouponController extends Controller
         $data = $request->all();
         $coupon = Coupon::where('coupon_code', $data['coupon'])->first();
         if ($coupon) {
-            $count_coupon = $coupon->count();
+            $count_coupon = $coupon->coupon_time;
             if ($count_coupon > 0) {
                 $coupon_session = Session::get('coupon');
 
@@ -121,6 +121,7 @@ class CouponController extends Controller
                         'coupon_code' => $coupon->coupon_code,
                         'coupon_condition' => $coupon->coupon_condition,
                         'coupon_number' => $coupon->coupon_number,
+                        'coupon_time' => $coupon->coupon_time,
                     );
                     Session::put('coupon', $cou);
                 }
@@ -128,6 +129,9 @@ class CouponController extends Controller
                 Session::save();
                 return redirect()->back()
                     ->withInput()->with('message', 'Add coupon successfully');
+            }else{
+                return redirect()->back()
+                    ->withInput()->with('error', 'This coupon is expired');
             }
         } else {
             return redirect()->back()

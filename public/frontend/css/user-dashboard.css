@@ -171,6 +171,13 @@ nav ul li a .cart::after {
     padding: 0px 3px;
 }
 
+.order .paypal-label {
+    background-color: #009be1;
+    color: #001f6b;
+    font-size: 1rem;
+    padding: 0px 3px;
+}
+
 .order .green-label {
     background-color: #a8e9d0;
     color: #008357;

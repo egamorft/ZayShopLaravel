@@ -144,6 +144,10 @@
                                         <p class="font-weight-bold mb-0">
                                             MOMO
                                         </p>
+                                        @elseif($shipping->shipping_method == 3)
+                                        <p class="font-weight-bold mb-0">
+                                            PAYPAL
+                                        </p>
                                         @else
                                         <p class="font-weight-bold mb-0">
                                             Unidentified

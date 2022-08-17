@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\City;
+use App\Coupon;
 use App\Feeship;
 use App\Order;
 use App\OrderDetails;
@@ -31,7 +32,7 @@ class CheckoutController extends Controller
                 return Redirect::to('/check-out');
             }
         }
-        if(isset($_GET['status'])){
+        if (isset($_GET['status'])) {
             if ($_GET['status'] == 'COMPLETED') {
                 $status = $_GET['status'];
                 return Redirect::to('/check-out')->with('status', $status);
@@ -43,7 +44,6 @@ class CheckoutController extends Controller
         $content = Cart::content();
         $i = 0;
         foreach ($content as $item) {
-
             if ($item->options->in_stock < $item->qty) {
                 $i++;
                 Session::put('error', 'Quantity in stock is not enough');
@@ -57,7 +57,6 @@ class CheckoutController extends Controller
 
     public function confirm_order(Request $request)
     {
-        dd($request->all());
         $account_id = Session::get('account_id');
 
         $data = $request->all();
@@ -92,8 +91,13 @@ class CheckoutController extends Controller
         $order->created_at = now();
         $order->save();
 
-        if (Cart::count() != 0) {
+        if (Session::get('coupon')) {
+            $coupon = Coupon::where('coupon_code', Session::get('coupon'))->first();
+            $coupon->coupon_time = $coupon->coupon_time - 1;
+            $coupon->update();
+        }
 
+        if (Cart::count() != 0) {
             foreach (Cart::content() as $key => $cart) {
                 $order_details = new OrderDetails();
                 $order_details->order_code = $checkout_code;

@@ -410,6 +410,7 @@ $total_usd = 0;
                         <label for="city" class="form-label">
                             {{ __('checkout/checkout.City') }}
                         </label>
+                        <strong style="color: red;">*</strong>
                         <select name="city" id="city" class="form-control choose city">
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your city') }}-----
@@ -426,6 +427,7 @@ $total_usd = 0;
                         <label for="state" class="form-label">
                             {{ __('checkout/checkout.Province') }}
                         </label>
+                        <strong style="color: red;">*</strong>
                         <select name="province" id="province" class="form-control province choose">
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your province') }}-----
@@ -437,6 +439,7 @@ $total_usd = 0;
                         <label for="state" class="form-label">
                             {{ __('checkout/checkout.Wards') }}
                         </label>
+                        <strong style="color: red;">*</strong>
                         <select name="wards" id="wards" class="form-control wards">
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your wards') }}-----
@@ -607,6 +610,7 @@ $total_usd = 0;
                         <label for="shipping_name" class="form-label">
                             {{ __('checkout/checkout.Full name') }}
                         </label>
+                        <strong style="color: red;">*</strong>
                         <input type="text" class="form-control shipping_name" 
                             name="shipping_name" id="shipping_name" 
                                 value="{{Session::get('account_name')}}">
@@ -616,6 +620,7 @@ $total_usd = 0;
                         <label for="shipping_email" class="form-label">
                             {{ __('checkout/checkout.Email') }}
                         </label>
+                        <strong style="color: red;">*</strong>
                         <input readonly type="email" class="form-control shipping_email" 
                             name="shipping_email" id="shipping_email" 
                                 value="{{Session::get('account_email')}}">
@@ -625,6 +630,7 @@ $total_usd = 0;
                         <label for="shipping_address" class="form-label">
                             {{ __('checkout/checkout.Address') }}
                         </label>
+                        <strong style="color: red;">*</strong>
                         <input type="text" class="form-control shipping_address" 
                             name="shipping_address" id="shipping_address" 
                                 placeholder="Where ur house?..." value="{{Session::get('account_address')}}">
@@ -634,6 +640,7 @@ $total_usd = 0;
                         <label for="shipping_phone" class="form-label">
                             {{ __('checkout/checkout.Phone') }}
                         </label>
+                        <strong style="color: red;">*</strong>
                         <input readonly type="text" class="form-control shipping_phone" 
                             name="shipping_phone" id="shipping_phone" 
                                 value="{{Session::get('account_phone')}}">
@@ -663,7 +670,13 @@ $total_usd = 0;
                 @else
                     <input type="hidden" name="order_coupon" class="order_coupon" value="no">
                 @endif
-
+                </br>
+                <h6 style="color: red;">
+                <strong>
+                    * Note:
+                </strong>
+                <span>If you choose paypal as a payment gate, those red "*" above would be saved follow your paypal information</span>
+                </h6>
                 <hr class="my-4">
 
                 <h4 class="mb-3">
