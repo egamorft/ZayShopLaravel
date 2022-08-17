@@ -25,6 +25,7 @@ class AdminProductRequest extends FormRequest
     {
         return [
             'product_name' => 'required',
+            'product_image' => 'required',
             'product_quantity' => 'required|numeric',
             'product_price' => 'required|numeric',
             'product_status' => 'required',

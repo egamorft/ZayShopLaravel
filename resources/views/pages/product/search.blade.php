@@ -63,7 +63,7 @@
                         <input type="hidden" name="productid_hidden" value="{{$pro->product_id}}" />
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" src="{{URL::to('/public/upload/product/'.$pro->product_image)}}">
+                                <img class="card-img rounded-0 img-fluid" src="{{URL::to('/storage/app/public/products/'.$pro->product_image)}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
                                         <li>

@@ -11,7 +11,7 @@
             <div class="col-lg-5 mt-5">
                 <div class="card mb-3">
                     <img class="card-img img-fluid" 
-                        src="{{URL::to('/public/upload/product/'.$pro->product_image)}}" 
+                        src="{{URL::to('/storage/app/public/products/'.$pro->product_image)}}" 
                             alt="Card image cap" id="product-detail">
                 </div>
                 <div class="row">
@@ -37,7 +37,7 @@
                                     <div class="col-4">
                                         <a href="#">
                                             <img class="card-img img-fluid" 
-                                                src="{{URL::to('/public/upload/product/'.$pro->product_image)}}" 
+                                                src="{{URL::to('/storage/app/public/products/'.$pro->product_image)}}" 
                                                     alt="Product Image 1">
                                         </a>
                                     </div>

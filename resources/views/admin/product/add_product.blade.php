@@ -68,6 +68,11 @@
                                 <input name="product_image" type="file" class="form-control">
                             </div>
                         </div>
+                        @error('product_image')
+                            <span style="color: red">
+                                {{$message}}
+                            </span>
+                        @enderror
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd">
                                 {{ __('admin/product.Product Description')}}

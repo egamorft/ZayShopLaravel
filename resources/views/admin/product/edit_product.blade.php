@@ -69,8 +69,8 @@
                             <div class="col-md-9">
                                 <input name="product_image" type="file" class="form-control" id="productImage" onchange="preview()">
                             </div>
-
-                            <img id="frame" src="../public/upload/product/{{$edit_value->product_image}}" width="200" alt="No image available" />
+                            <input type="hidden" name="old_image" value="{{$edit_value->product_image}}">
+                            <img id="frame" src="../storage/app/public/products//{{$edit_value->product_image}}" width="200" alt="No image available" />
                         </div>
                         <div class="input-group input-group-outline mb-3">
                             <label class="form-label" for="ckeditorAdd">

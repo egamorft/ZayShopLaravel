@@ -43,9 +43,16 @@ return [
 
     'disks' => [
 
+        'product' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/products'),
+            'throw' => false,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
+            'throw' => false,
         ],
 
         'public' => [
@@ -79,7 +86,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('products') => storage_path('app/public/products'),
     ],
 
 ];

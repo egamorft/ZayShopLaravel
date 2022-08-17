@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminProductRequest;
+use App\Product;
 use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -21,7 +23,6 @@ class ProductController extends Controller
             ->where('subcategory_status', '1')
             ->get();
 
-
         if (isset($_GET['sort_by'])) {
             $sort_by = $_GET['sort_by'];
             if ($sort_by == 'asc') {
@@ -30,7 +31,7 @@ class ProductController extends Controller
                     ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
                     ->orderBy('tbl_product.product_price', 'asc')
                     ->paginate(4)->appends(request()->query());
-            } else if ($sort_by == 'desc') {
+            } elseif ($sort_by == 'desc') {
                 $show_product = DB::table('tbl_product')
                     ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
                     ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
@@ -51,7 +52,7 @@ class ProductController extends Controller
                     ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
                     ->where('tbl_product.product_status', '1')
                     ->paginate(4)->appends(request()->query());
-            } else if ($filter_status_with == '0') {
+            } elseif ($filter_status_with == '0') {
                 $show_product = DB::table('tbl_product')
                     ->join('tbl_category', 'tbl_category.category_id', '=', 'tbl_product.category_id')
                     ->join('tbl_subcategory', 'tbl_subcategory.subcategory_id', '=', 'tbl_product.subcategory_id')
@@ -145,7 +146,6 @@ class ProductController extends Controller
     public function save_product(AdminProductRequest $request)
     {
         $request->except('_token');
-
         $data = array();
         $data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
@@ -158,25 +158,18 @@ class ProductController extends Controller
         $get_image = $request->file('product_image');
 
         if ($data['category_id'] == null  || $data['subcategory_id'] == null) {
-
             Session::put('error', 'Choose category and subcategory');
             return Redirect::to('/add-product')->withInput();
         } else {
-
             if ($get_image) {
                 $get_name_image = $get_image->getClientOriginalName();
                 $name_image = current(explode('.', $get_name_image));
                 $new_image = $name_image . rand(0, 99)
                     . '.' . $get_image->getClientOriginalExtension();
-                $get_image->move('public/upload/product', $new_image);
+                $get_image->move('storage/app/public/products', $new_image);
                 $data['product_image'] = $new_image;
                 DB::table('tbl_product')->insert($data);
                 Session::put('message', 'Add product');
-                return Redirect::to('/show-product');
-            } else {
-                $data['product_image'] = '';
-                DB::table('tbl_product')->insert($data);
-                Session::put('message', 'Add product without image');
                 return Redirect::to('/show-product');
             }
         }
@@ -229,9 +222,8 @@ class ProductController extends Controller
         return view('components.admin_layout.admin_layout')->with('admin.edit_product', $manager_product);
     }
 
-    public function update_product(AdminProductRequest $request, $product_id)
+    public function update_product(Request $request, $product_id)
     {
-        $request->except('_token');
         $data = array();
         $data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
@@ -243,17 +235,17 @@ class ProductController extends Controller
         $get_image = $request->file('product_image');
 
         if ($data['category_id'] == null  || $data['subcategory_id'] == null) {
-
             Session::put('error', 'Choose category and subcategory');
             return Redirect::to('/edit-product' . '/' . $product_id);
         } else {
-
             if ($get_image) {
+                $old_file_path = 'storage/app/public/products/' . $request->old_image;
+                unlink($old_file_path);
                 $get_name_image = $get_image->getClientOriginalName();
                 $name_image = current(explode('.', $get_name_image));
                 $new_image = $name_image . rand(0, 99) . '.' .
                     $get_image->getClientOriginalExtension();
-                $get_image->move('public/upload/product', $new_image);
+                $get_image->move('storage/app/public/products', $new_image);
                 $data['product_image'] = $new_image;
                 DB::table('tbl_product')
                     ->where('product_id', $product_id)
@@ -274,6 +266,10 @@ class ProductController extends Controller
 
     public function delete_product($product_id)
     {
+        $product = Product::find($product_id);
+        $product_image = $product->product_image;
+        $old_file_path = 'storage/app/public/products/' . $product_image;
+        unlink($old_file_path);
         $delete_result = DB::table('tbl_product')
             ->where('product_id', $product_id)
             ->delete();

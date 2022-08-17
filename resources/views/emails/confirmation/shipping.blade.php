@@ -345,7 +345,7 @@
                                                                 <tr>
                                                                     <td class="v-text-align" style="padding-right: 0px;padding-left: 0px;" align="center">
 
-                                                                        <img align="center" border="0" src="{{URL::to('/public/upload/product/'.$con->options->image)}}" alt="{{$con->name}}" title="Model" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 150px;" width="150" class="v-src-width v-src-max-width" />
+                                                                        <img align="center" border="0" src="{{URL::to('/storage/app/public/products/'.$con->options->image)}}" alt="{{$con->name}}" title="Model" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 150px;" width="150" class="v-src-width v-src-max-width" />
 
                                                                     </td>
                                                                 </tr>

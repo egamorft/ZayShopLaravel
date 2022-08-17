@@ -137,7 +137,7 @@
                                     </td>
                                     <td>
                                         <p class="font-weight-bold mb-0">
-                                            <img src="public/upload/product/{{$pro->product_image}}" height="130" width="130" alt="No image available">
+                                            <img src="{{ asset('storage/app/public/products/'.$pro->product_image) }}" height="130" width="130" alt="No image available">
                                         </p>
                                     </td>
                                     <td>
