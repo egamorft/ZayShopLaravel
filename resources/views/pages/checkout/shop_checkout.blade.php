@@ -12,6 +12,8 @@ $total_all = Cart::total(0, ',', '') + Session::get('fee');
 
 $orderDate = Carbon\Carbon::now();
 
+$total_usd = 0;
+
 ?>
 <div class="modal fade" id="OrderBill" data-bs-backdrop="static" 
     data-bs-keyboard="false" tabindex="-1" 
@@ -710,9 +712,17 @@ $orderDate = Carbon\Carbon::now();
                 <input id="check_out" name="send_order_cod" class="w-100 btn btn-danger btn-lg check_out_method" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
                 @endif
                 <hr class="my-4">
-                @php
-                    $total_usd = $total_all/23000;
-                @endphp
+
+                @if(Session::get('fee'))
+                    @php
+                        $total_usd = ($total_all - Session::get('fee'))/23000;
+                    @endphp
+                @else
+                    @php
+                        $total_usd = $total_all/23000;
+                    @endphp
+                @endif
+
                 <div class="container">
                     <div class="row">
                         <div class="col-6">

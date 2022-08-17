@@ -57,6 +57,7 @@ class CheckoutController extends Controller
 
     public function confirm_order(Request $request)
     {
+        dd($request->all());
         $account_id = Session::get('account_id');
 
         $data = $request->all();
