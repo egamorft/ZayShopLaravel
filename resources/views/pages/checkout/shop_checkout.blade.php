@@ -36,6 +36,9 @@ $total_usd = 0;
 
 
                             </div>
+                            <center>
+                                <img src="https://media2.giphy.com/media/a0h7sAqON67nO/giphy.gif" alt="">
+                            </center>
                             <h3 class="text-left logo p-2 px-5" id="countdown"></h3>
                             <div class="invoice p-5">
 
@@ -715,13 +718,10 @@ $total_usd = 0;
                 @endif
 
                 <hr class="my-4">
-                @if(session()->has('status'))
-                <input id="automate_check_out_paypal" name="automate_check_out_paypal" class="w-100 btn btn-danger btn-lg automate_check_out_paypal" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
-                @endif
                 @if(session()->has('signature'))
                 <input id="automate_check_out" name="automate_check_out" class="w-100 btn btn-danger btn-lg automate_check_out" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
                 @endif
-                @if(!session()->has('signature') && !session()->has('status'))
+                @if(!session()->has('signature'))
                 <input id="check_out" name="send_order_cod" class="w-100 btn btn-danger btn-lg check_out_method" type="button" value="{{ __('checkout/checkout.Continue to checkout') }}">
                 @endif
                 <hr class="my-4">

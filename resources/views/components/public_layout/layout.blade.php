@@ -599,11 +599,23 @@ https://templatemo.com/tm-559-zay-shop
                                         _token: _token
                                     },
                                     success: function() {
+                                        var shipping_address = document.getElementById("shipping_address");
+                                        var shipping_city = document.getElementById("shipping_city");
+                                        var shipping_province = document.getElementById("shipping_province");
+                                        var shipping_ward = document.getElementById("shipping_ward");
                                         document.getElementById("shipping_method").innerHTML = 'PAYPAL';
-                                        document.getElementById("shipping_address").innerHTML = orderData.payer.address.address_line_1;
-                                        document.getElementById("shipping_city").innerHTML = orderData.payer.address.country_code;
-                                        document.getElementById("shipping_province").innerHTML = orderData.payer.address.admin_area_1;
-                                        document.getElementById("shipping_ward").innerHTML = orderData.payer.address.admin_area_2;
+                                        if(typeof(shipping_address) != 'undefined' && shipping_address != null){
+                                            shipping_address.innerHTML = orderData.payer.address.address_line_1;
+                                        }
+                                        if(typeof(shipping_city) != 'undefined' && shipping_city != null){
+                                            shipping_city.innerHTML = orderData.payer.address.country_code;
+                                        }
+                                        if(typeof(shipping_province) != 'undefined' && shipping_province != null){
+                                            shipping_province.innerHTML = orderData.payer.address.admin_area_1;
+                                        }
+                                        if(typeof(shipping_ward) != 'undefined' && shipping_ward != null){
+                                            shipping_ward.innerHTML = orderData.payer.address.admin_area_2;
+                                        }
                                         $("#OrderBill").modal("toggle");
 
                                         $('#closeBill').click(function() {
@@ -899,12 +911,7 @@ https://templatemo.com/tm-559-zay-shop
                 var maqh = $('.province').val();
                 var xaid = $('.wards').val();
                 var _token = $('input[name="_token"]').val();
-                if (matp == "" || maqh == "" || xaid == "") {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Please choose your place'
-                    })
-                } else {
+                if (!isNaN(parseInt(matp)) && !isNaN(parseInt(maqh)) && !isNaN(parseInt(xaid))) {
                     $.ajax({
                         url: '{{url("/calculate-fee")}}',
                         method: 'POST',
@@ -918,6 +925,11 @@ https://templatemo.com/tm-559-zay-shop
                             location.reload();
                         }
                     });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Please choose your place'
+                    })
                 }
             });
         });
@@ -982,14 +994,6 @@ https://templatemo.com/tm-559-zay-shop
         <script type="text/javascript">
             window.onload = function(){
                 document.getElementById('automate_check_out').click();
-                }
-        </script>
-    @endif 
-
-    @if(session()->has('status'))
-        <script type="text/javascript">
-            window.onload = function(){
-                document.getElementById('automate_check_out_paypal').click();
                 }
         </script>
     @endif 

@@ -32,15 +32,6 @@ class CheckoutController extends Controller
                 return Redirect::to('/check-out');
             }
         }
-        if (isset($_GET['status'])) {
-            if ($_GET['status'] == 'COMPLETED') {
-                $status = $_GET['status'];
-                return Redirect::to('/check-out')->with('status', $status);
-            } else {
-                Session::put('error', 'Something went wrong, please try another payment gate');
-                return Redirect::to('/check-out');
-            }
-        }
         $content = Cart::content();
         $i = 0;
         foreach ($content as $item) {
