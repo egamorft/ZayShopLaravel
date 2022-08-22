@@ -405,8 +405,7 @@
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: #2cba2a; line-height: 140%; text-align: left; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
                                                                 Price: <strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                                                     <?php
-                                                                    $subtotal = $con->price * $con->qty;
-                                                                    echo number_format($subtotal, 0, ',', '.') . ' ' . 'đ';
+                                                                    echo number_format($con->price, 0, ',', '.') . ' ' . 'đ';
                                                                     ?>
                                                                 </strong>
                                                             </h1>
@@ -475,7 +474,7 @@
                                                         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
 
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: #54ba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
-                                                                <strong>{{Cart::pricetotal(0 , ',' , '.').' '.'VNĐ'}}</strong>
+                                                                <strong>{{Cart::pricetotal(0 , ',' , '.').' '.'đ'}}</strong>
                                                             </h1>
 
                                                         </td>
@@ -540,7 +539,12 @@
                                                         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
 
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: red; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
-                                                                <strong>{{Cart::tax(0 , ',' , '.').' '.'VNĐ'}}</strong>
+                                                                <strong>
+                                                                    <?php 
+                                                                        $tax = Cart::pricetotal(0, ',', '') * 10  /100;
+                                                                    ?>
+                                                                    {{number_format($tax, 0 , ',' , '.')}}
+                                                                </strong>
                                                             </h1>
 
                                                         </td>
@@ -671,7 +675,16 @@
                                                         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
 
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: #54ba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
-                                                                <strong>{{Cart::discount(0 , ',' , '.').' '.'đ'}}</strong>
+                                                                <?php
+                                                                    if(Session::get('coupon')){
+                                                                        foreach(Session::get('coupon') as $key => $cou){
+                                                                            $money_discount = Cart::pricetotal(0, ',', '') * $cou['coupon_number']/100;
+                                                                        }
+                                                                    }else{
+                                                                        $money_discount = 0;
+                                                                    }
+                                                                ?>
+                                                                <strong>{{number_format($money_discount, 0 , ',' , '.')}} đ</strong>
                                                             </h1>
 
                                                         </td>
@@ -735,9 +748,9 @@
                                                 <tbody>
                                                     <tr>
                                                         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
-                                                            <?php
-                                                                $total_all = Cart::total(0, ',', '') + $fee;
-                                                            ?>
+                                                        <?php
+                                                            $total_all = Cart::pricetotal(0, ',', '') - $money_discount + $tax + $fee;
+                                                        ?>
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: #54ba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
                                                                 <strong>{{number_format($total_all, 0 , ',' , '.')}} đ</strong>
                                                             </h1>
