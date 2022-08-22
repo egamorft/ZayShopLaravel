@@ -140,13 +140,23 @@ class AdminController extends Controller
 
         $get = Statistic::whereBetween('order_date', [$from_date, $to_date])->orderBy('order_date', 'asc')->get();
 
-        foreach ($get as $key => $val) {
+        if($get->count() > 0){
+            foreach ($get as $key => $val) {
+                $chart_data[] = array(
+                    'period' => $val->order_date,
+                    'order' => $val->total_order,
+                    'sales' => $val->sales,
+                    'profit' => $val->profit,
+                    'quantity' => $val->quantity
+                );
+            }
+        }else{
             $chart_data[] = array(
-                'period' => $val->order_date,
-                'order' => $val->total_order,
-                'sales' => $val->sales,
-                'profit' => $val->profit,
-                'quantity' => $val->quantity
+                'period' => "No data found",
+                'order' => 0,
+                'sales' => 0,
+                'profit' => 0,
+                'quantity' => 0
             );
         }
         echo $data = json_encode($chart_data);
@@ -171,17 +181,26 @@ class AdminController extends Controller
         } elseif ($data['dashboard_value'] == 'thismonth') {
             $get = Statistic::whereBetween('order_date', [$startThisMonth, $now])->orderBy('order_date', 'asc')->get();
         } else {
-            dump($sub365days);
             $get = Statistic::whereBetween('order_date', [$sub365days, $now])->orderBy('order_date', 'asc')->get();
         }
 
-        foreach ($get as $key => $val) {
+        if($get->count() > 0){
+            foreach ($get as $key => $val) {
+                $chart_data[] = array(
+                    'period' => $val->order_date,
+                    'order' => $val->total_order,
+                    'sales' => $val->sales,
+                    'profit' => $val->profit,
+                    'quantity' => $val->quantity
+                );
+            }
+        }else{
             $chart_data[] = array(
-                'period' => $val->order_date,
-                'order' => $val->total_order,
-                'sales' => $val->sales,
-                'profit' => $val->profit,
-                'quantity' => $val->quantity
+                'period' => "No data found",
+                'order' => 0,
+                'sales' => 0,
+                'profit' => 0,
+                'quantity' => 0
             );
         }
         echo $data = json_encode($chart_data);
@@ -193,13 +212,23 @@ class AdminController extends Controller
         $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
         $get = Statistic::whereBetween('order_date', [$sub30days, $now])->orderBy('order_date', 'asc')->get();
 
-        foreach ($get as $key => $val) {
+        if($get->count() > 0){
+            foreach ($get as $key => $val) {
+                $chart_data[] = array(
+                    'period' => $val->order_date,
+                    'order' => $val->total_order,
+                    'sales' => $val->sales,
+                    'profit' => $val->profit,
+                    'quantity' => $val->quantity
+                );
+            }
+        }else{
             $chart_data[] = array(
-                'period' => $val->order_date,
-                'order' => $val->total_order,
-                'sales' => $val->sales,
-                'profit' => $val->profit,
-                'quantity' => $val->quantity
+                'period' => "No data found",
+                'order' => 0,
+                'sales' => 0,
+                'profit' => 0,
+                'quantity' => 0
             );
         }
         echo $data = json_encode($chart_data);

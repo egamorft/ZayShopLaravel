@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2022 at 06:10 AM
+-- Generation Time: Aug 19, 2022 at 12:07 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -39,6 +39,19 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `manufacturers`
+--
+
+CREATE TABLE `manufacturers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -66,7 +79,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2022_06_16_021655_tbl_order', 5),
 (17, '2022_06_16_021719_tbl_order_details', 5),
 (18, '2022_06_21_014533_tbl_slider', 6),
-(19, '2022_06_29_042040_tbl_statistic', 7);
+(19, '2022_06_29_042040_tbl_statistic', 7),
+(20, '2020_05_19_110646_create_categories_table', 8),
+(21, '2020_05_20_114255_create_products_table', 8),
+(22, '2020_06_06_212117_create_manufacturers_table', 8),
+(23, '2020_06_06_212742_add_relationship_field_to_products_table', 8);
 
 -- --------------------------------------------------------
 
@@ -83,6 +100,23 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `manufacturer_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_account`
 --
 
@@ -93,6 +127,8 @@ CREATE TABLE `tbl_account` (
   `account_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `account_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `account_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_confirmation` tinyint(1) NOT NULL DEFAULT 0,
+  `verify_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -101,11 +137,13 @@ CREATE TABLE `tbl_account` (
 -- Dumping data for table `tbl_account`
 --
 
-INSERT INTO `tbl_account` (`account_id`, `account_name`, `account_email`, `account_password`, `account_phone`, `account_address`, `created_at`, `updated_at`) VALUES
-(1, 'Huy Tùng', 'huytung.htbn@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0888736810', 'Số 13, ngõ 29/27 đường Võ Chí Công, quận Cầu Giấy, thành phố Hà Nội', NULL, NULL),
-(2, 'Not Tùng', 'tungnh3011.work@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0888736810', 'Check change address', NULL, NULL),
-(3, 'Huy Tùng', 'vandersar2001@gmail.com', '', '', NULL, NULL, NULL),
-(6, 'Nguyễn Huy Tùng', 'tungnhhe150305@fpt.edu.vn', 'e10adc3949ba59abbe56e057f20f883e', '0345143135', 'Hòa Lạc City', NULL, NULL);
+INSERT INTO `tbl_account` (`account_id`, `account_name`, `account_email`, `account_password`, `account_phone`, `account_address`, `account_confirmation`, `verify_code`, `created_at`, `updated_at`) VALUES
+(1, 'Huy Tùng', 'huytung.htbn@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0888736810', 'Số 13, ngõ 29/27 đường Võ Chí Công, quận Cầu Giấy, thành phố Hà Nội', 0, NULL, NULL, NULL),
+(2, 'Not Tùng', 'tungnh3011.work@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0888736810', 'Check change address', 1, NULL, NULL, NULL),
+(3, 'Huy Tùng', 'vandersar2001@gmail.com', '', '', NULL, 1, NULL, NULL, NULL),
+(6, 'Uk t ten tung', 'tungnhhe150305@fpt.edu.vn', 'e10adc3949ba59abbe56e057f20f883e', '0888736810', NULL, 1, NULL, NULL, NULL),
+(21, 'Tùng Tùng', 'tungtungtung@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0129812889', 'Đoán xem', 1, NULL, NULL, NULL),
+(22, 'Nam ngu', 'namplhe153292@fpt.edu.vn', 'e10adc3949ba59abbe56e057f20f883e', '0886868686', 'Khum biet', 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -154,7 +192,8 @@ INSERT INTO `tbl_category` (`category_id`, `category_name`, `category_desc`, `ca
 (2, 'Clothess', '<p>Quan ao cac thu</p>', 1, NULL, NULL),
 (3, 'Food', '<p>Food to eat</p>', 1, NULL, NULL),
 (4, 'Car', '<p>Car to drive with 2 tires</p>', 1, NULL, NULL),
-(5, 'Bike', '<p>Bike with 2 tires</p>', 0, NULL, NULL);
+(8, 'Bike', '<p>Bicycle</p>', 0, NULL, NULL),
+(9, 'Checker', NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -178,8 +217,8 @@ CREATE TABLE `tbl_coupon` (
 --
 
 INSERT INTO `tbl_coupon` (`coupon_id`, `coupon_name`, `coupon_time`, `coupon_condition`, `coupon_number`, `coupon_code`, `created_at`, `updated_at`) VALUES
-(1, 'Summer time sale', 20, 1, 20, 'SM2022', NULL, NULL),
-(3, 'Giam gia 2/9', 10, 1, 50, 'HEHE123', NULL, NULL);
+(1, 'Summer time sale', 19, 1, 20, 'SM2022', NULL, NULL),
+(3, 'Giam gia 2/9', 5, 1, 50, 'HEHE123', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -203,7 +242,11 @@ INSERT INTO `tbl_feeship` (`fee_id`, `fee_matp`, `fee_maqh`, `fee_xaid`, `fee_fe
 (1, 1, 5, 160, '20000'),
 (3, 11, 96, 3161, '123000'),
 (5, 1, 5, 157, '20000'),
-(6, 1, 5, 163, '10000');
+(6, 1, 5, 163, '10000'),
+(8, 11, 98, 3232, '500000'),
+(9, 22, 204, 7051, '70000'),
+(10, 8, 72, 2245, '80000'),
+(11, 12, 111, 3610, '80000');
 
 -- --------------------------------------------------------
 
@@ -226,19 +269,46 @@ CREATE TABLE `tbl_order` (
 --
 
 INSERT INTO `tbl_order` (`order_id`, `account_id`, `shipping_id`, `order_status`, `order_code`, `created_at`, `updated_at`) VALUES
-(3, 2, 4, 1, '7B904', '2022-06-16 04:28:29', NULL),
+(3, 2, 4, 4, '7B904', '2022-06-16 04:28:29', NULL),
 (4, 2, 5, 3, 'ABE0A', '2022-06-16 04:30:53', NULL),
 (45, 2, 46, 1, 'ECE9A', '2022-06-22 10:21:01', NULL),
 (46, 2, 47, 1, '1C447', '2022-06-22 10:21:48', NULL),
 (47, 1, 48, 2, '0B75F', '2022-06-22 10:26:41', NULL),
-(48, 2, 49, 3, '59E01', '2022-06-23 03:09:12', NULL),
+(48, 2, 49, 4, '59E01', '2022-06-23 03:09:12', NULL),
 (49, 2, 50, 4, 'D1B62', '2022-06-27 06:20:20', NULL),
 (50, 2, 51, 4, 'C6F42', '2022-06-27 09:01:50', NULL),
 (51, 1, 52, 2, '791A1', '2022-06-29 01:51:56', NULL),
 (52, 1, 56, 2, '611CA', '2022-06-29 02:04:55', NULL),
 (63, 1, 67, 4, '678B9', '2022-07-04 04:45:31', NULL),
-(64, 6, 68, 1, 'E7244', '2022-07-06 03:49:01', NULL),
-(65, 6, 69, 1, '12D59', '2022-07-06 03:53:03', NULL);
+(65, 6, 69, 1, '12D59', '2022-07-06 03:53:03', NULL),
+(66, 1, 70, 2, '9465A', '2022-07-07 03:40:00', NULL),
+(67, 6, 71, 4, 'EA42B', '2022-07-07 03:59:55', NULL),
+(68, 6, 72, 1, '4C4B3', '2022-07-07 06:10:22', NULL),
+(69, 6, 73, 1, '61B2A', '2022-07-07 06:13:31', NULL),
+(70, 6, 74, 2, '89EEF', '2022-07-07 06:27:39', NULL),
+(71, 6, 75, 2, '55631', '2022-07-07 06:36:56', NULL),
+(72, 6, 76, 2, 'DD7F7', '2022-07-07 06:44:58', NULL),
+(73, 6, 77, 2, '62633', '2022-07-07 06:45:43', NULL),
+(75, 2, 79, 2, '76299', '2022-08-03 07:16:01', NULL),
+(76, 2, 80, 1, '94C2F', '2022-08-08 07:30:58', NULL),
+(77, 2, 81, 1, '3DCF3', '2022-08-08 07:41:27', NULL),
+(78, 2, 82, 1, 'B3C5D', '2022-08-08 07:47:03', NULL),
+(79, 2, 83, 1, 'A85F1', '2022-08-08 07:50:02', NULL),
+(80, 2, 84, 3, 'DFAB8', '2022-08-08 07:53:02', NULL),
+(81, 21, 85, 3, 'DD71C', '2022-08-08 08:03:05', NULL),
+(82, 21, 86, 3, '2838C', '2022-08-08 08:14:19', NULL),
+(83, 22, 87, 2, 'BA2B1', '2022-08-08 09:17:47', NULL),
+(84, 2, 88, 1, '1534D', '2022-08-10 07:59:55', NULL),
+(94, 2, 98, 1, '9C1D6', '2022-08-17 06:48:22', NULL),
+(95, 2, 99, 1, 'D186E', '2022-08-17 07:15:24', NULL),
+(96, 2, 100, 1, 'D6F66', '2022-08-17 07:17:00', NULL),
+(97, 2, 101, 1, '4D34D', '2022-08-17 09:07:49', NULL),
+(98, 2, 102, 1, '83A55', '2022-08-17 09:30:59', NULL),
+(99, 2, 103, 1, 'EF31D', '2022-08-17 09:31:57', NULL),
+(100, 2, 104, 1, 'D73D7', '2022-08-17 09:35:36', NULL),
+(101, 2, 105, 1, 'BC911', '2022-08-17 09:37:46', NULL),
+(102, 2, 106, 1, '72EB8', '2022-08-17 09:40:30', NULL),
+(103, 2, 107, 1, '3EF7A', '2022-08-17 09:50:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -280,7 +350,7 @@ INSERT INTO `tbl_order_details` (`order_details_id`, `order_code`, `product_id`,
 (100, '0b75f', 11, 'Monitor', 4990000, 1, 'HEHE123', '50000', NULL, NULL),
 (101, '0b75f', 9, 'Fishing rod', 200000, 1, 'HEHE123', '50000', NULL, NULL),
 (102, '59e01', 11, 'Monitor', 4990000, 1, 'SM2022', '50000', NULL, NULL),
-(103, '59e01', 10, 'Fishing bait', 9000, 4, 'SM2022', '50000', NULL, NULL),
+(103, '59e01', 10, 'Fishing bait', 9000, 1, 'SM2022', '50000', NULL, NULL),
 (104, '59e01', 9, 'Fishing rod', 200000, 1, 'SM2022', '50000', NULL, NULL),
 (105, 'd1b62', 11, 'Monitor', 4990000, 1, 'SM2022', '50000', NULL, NULL),
 (106, 'd1b62', 10, 'Fishing bait', 9000, 2, 'SM2022', '50000', NULL, NULL),
@@ -298,12 +368,55 @@ INSERT INTO `tbl_order_details` (`order_details_id`, `order_code`, `product_id`,
 (132, '678b9', 11, 'Monitor', 4990000, 1, 'no', '50000', NULL, NULL),
 (133, '678b9', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
 (134, '678b9', 9, 'Fishing rod', 200000, 1, 'no', '50000', NULL, NULL),
-(135, 'e7244', 6, 'Luxury car', 99000000, 1, 'SM2022', '50000', NULL, NULL),
-(136, 'e7244', 7, 'Fishing', 100000, 1, 'SM2022', '50000', NULL, NULL),
-(137, 'e7244', 8, 'Clothes', 499000, 1, 'SM2022', '50000', NULL, NULL),
 (138, '12d59', 11, 'Monitor', 4990000, 1, 'no', '50000', NULL, NULL),
 (139, '12d59', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
-(140, '12d59', 9, 'Fishing rod', 200000, 1, 'no', '50000', NULL, NULL);
+(140, '12d59', 9, 'Fishing rod', 200000, 1, 'no', '50000', NULL, NULL),
+(141, '9465a', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(142, '9465a', 11, 'Monitor', 4990000, 1, 'no', '50000', NULL, NULL),
+(143, '9465a', 9, 'Fishing rod', 200000, 1, 'no', '50000', NULL, NULL),
+(144, 'ea42b', 11, 'Monitor', 4990000, 1, 'no', '50000', NULL, NULL),
+(145, 'ea42b', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(146, 'ea42b', 9, 'Fishing rod', 200000, 1, 'no', '50000', NULL, NULL),
+(147, '4c4b3', 6, 'Luxury car', 99000000, 1, 'SM2022', '50000', NULL, NULL),
+(148, '4c4b3', 7, 'Fishing', 100000, 1, 'SM2022', '50000', NULL, NULL),
+(149, '4c4b3', 8, 'Clothes', 499000, 1, 'SM2022', '50000', NULL, NULL),
+(150, '61b2a', 6, 'Luxury car', 99000000, 1, 'HEHE123', '50000', NULL, NULL),
+(151, '61b2a', 5, 'Computer', 9990000, 2, 'HEHE123', '50000', NULL, NULL),
+(152, '89eef', 11, 'Monitor', 4990000, 1, 'no', '50000', NULL, NULL),
+(153, '89eef', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(154, '89eef', 9, 'Fishing rod', 200000, 1, 'no', '50000', NULL, NULL),
+(155, '55631', 11, 'Monitor', 4990000, 1, 'no', '50000', NULL, NULL),
+(156, '55631', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(157, 'dd7f7', 11, 'Monitor', 4990000, 1, 'HEHE123', '50000', NULL, NULL),
+(158, 'dd7f7', 10, 'Fishing bait', 9000, 1, 'HEHE123', '50000', NULL, NULL),
+(159, 'dd7f7', 9, 'Fishing rod', 200000, 1, 'HEHE123', '50000', NULL, NULL),
+(160, '62633', 11, 'Monitor', 4990000, 1, 'no', '50000', NULL, NULL),
+(161, '62633', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(162, '62633', 9, 'Fishing rod', 200000, 1, 'no', '50000', NULL, NULL),
+(166, '76299', 11, 'Monitor', 4990000, 1, 'HEHE123', '50000', NULL, NULL),
+(167, '94c2f', 7, 'Fishing', 100000, 1, 'HEHE123', '50000', NULL, NULL),
+(168, '3dcf3', 10, 'Fishing bait', 9000, 1, 'HEHE123', '50000', NULL, NULL),
+(169, 'b3c5d', 10, 'Fishing bait', 9000, 1, 'no', '20000', NULL, NULL),
+(170, 'a85f1', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(171, 'dfab8', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(172, 'dd71c', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(173, '2838c', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(174, 'ba2b1', 11, 'Monitor', 4990000, 1, 'HEHE123', '50000', NULL, NULL),
+(175, 'ba2b1', 10, 'Fishing bait', 9000, 1, 'HEHE123', '50000', NULL, NULL),
+(176, '1534d', 11, 'Monitor', 4990000, 1, 'no', '50000', NULL, NULL),
+(186, '9c1d6', 10, 'Fishing bait', 9000, 1, 'HEHE123', '0', NULL, NULL),
+(187, '9c1d6', 9, 'Fishing rod', 200000, 1, 'HEHE123', '0', NULL, NULL),
+(188, 'd186e', 10, 'Fishing bait', 9000, 1, 'HEHE123', '50000', NULL, NULL),
+(189, 'd6f66', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(190, '4d34d', 10, 'Fishing bait', 9000, 1, 'no', '50000', NULL, NULL),
+(191, '83a55', 10, 'Fishing bait', 9000, 1, 'HEHE123', '50000', NULL, NULL),
+(192, '83a55', 9, 'Fishing rod', 200000, 1, 'HEHE123', '50000', NULL, NULL),
+(193, '83a55', 11, 'Monitor', 4990000, 1, 'HEHE123', '50000', NULL, NULL),
+(194, 'ef31d', 9, 'Fishing rod', 200000, 1, 'no', '50000', NULL, NULL),
+(195, 'd73d7', 11, 'Monitor', 4990000, 1, 'no', '0', NULL, NULL),
+(196, 'bc911', 10, 'Fishing bait', 9000, 1, 'no', '0', NULL, NULL),
+(197, '72eb8', 10, 'Fishing bait', 9000, 1, 'no', '0', NULL, NULL),
+(198, '3ef7a', 10, 'Fishing bait', 9000, 1, 'no', '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -334,12 +447,12 @@ CREATE TABLE `tbl_product` (
 INSERT INTO `tbl_product` (`product_id`, `category_id`, `subcategory_id`, `product_name`, `product_quantity`, `product_sold`, `product_desc`, `product_content`, `product_price`, `product_image`, `product_status`, `created_at`, `updated_at`) VALUES
 (3, 1, 3, 'USB', '10', 0, '<p>USB</p>', '<p>USB</p>', 90000, 'download22.jpg', 0, NULL, NULL),
 (5, 1, 1, 'Computer', '20', 0, '<p>this is computer</p>', '<p>computer</p>', 9990000, 'compu90.jpg', 1, NULL, NULL),
-(6, 4, 4, 'Luxury car', '9', 0, '<p>lexus car</p>', '<p>lexus</p>', 99000000, 'lexus89.jpg', 1, NULL, NULL),
-(7, 3, 2, 'Fishing', '52', 2, '<p>hehe</p>', '<p>hehe</p>', 100000, '4206da66a0e5deca9115d19a4bc0c63f59.webp', 1, NULL, NULL),
-(8, 2, 6, 'Clothes', '78', 7, NULL, NULL, 499000, 'clothes89.png', 1, NULL, NULL),
-(9, 3, 2, 'Fishing rod', '24', 8, '<p>Luxury rod</p>', '<p>Rod make fishing easier</p>', 200000, 'rod31.png', 1, NULL, NULL),
-(10, 3, 2, 'Fishing bait', '2', 39, '<p>Bait fish to the rod</p>', '<p>Fish stupid eat bait</p>', 9000, 'bait84.png', 1, NULL, NULL),
-(11, 1, 1, 'Monitor', '19', 6, '<p>mornitor</p>', '<p>screen</p>', 4990000, 'monitor24.png', 1, NULL, NULL);
+(6, 4, 4, 'Luxury car', '8', 1, '<p>lexus car</p>', '<p>lexus</p>', 99000000, 'lexus89.jpg', 1, NULL, NULL),
+(7, 3, 2, 'Fishing', '56', -2, '<p>hehe</p>', '<p>hehe</p>', 100000, '4206da66a0e5deca9115d19a4bc0c63f59.webp', 1, NULL, NULL),
+(8, 2, 6, 'Clothes', '81', 4, NULL, NULL, 499000, 'clothes89.png', 1, NULL, NULL),
+(9, 3, 2, 'Fishing rod', '21', 11, '<p>Luxury rod</p>', '<p>Rod make fishing easier</p>', 200000, 'rod31.png', 1, NULL, NULL),
+(10, 3, 2, 'Fishing bait', '11', 40, '<p>Bait fish to the rod</p>', '<p>Fish stupid eat bait</p>', 9000, 'bait84.png', 1, NULL, NULL),
+(11, 1, 1, 'Monitor', '14', 11, '<p>mornitor</p>', '<p>screen</p>', 4990000, 'monitor24.png', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1110,8 +1223,35 @@ INSERT INTO `tbl_shipping` (`shipping_id`, `shipping_name`, `shipping_address`, 
 (55, 'Huy Tùng', 'Số 13, ngõ 29/27 đường Võ Chí Công, quận Cầu Giấy, thành phố Hà Nội', '0345143135', 'huytung.htbn@gmail.com', 'nope', 1, NULL, NULL),
 (56, 'Huy Tùng', 'Số 13, ngõ 29/27 đường Võ Chí Công, quận Cầu Giấy, thành phố Hà Nội', '0345143135', 'huytung.htbn@gmail.com', NULL, 1, NULL, NULL),
 (67, 'Huy Tùng', 'Số 13, ngõ 29/27 đường Võ Chí Công, quận Cầu Giấy, thành phố Hà Nội', '0888736810', 'huytung.htbn@gmail.com', 'Test final', 1, NULL, NULL),
-(68, 'Nguyễn Huy Tùng', 'Hòa Lạc City', '0345143135', 'tungnhhe150305@fpt.edu.vn', 'Đừng để hàng rơi', 1, NULL, NULL),
-(69, 'Nguyễn Huy Tùng', 'Hòa Lạc City', '0345143135', 'tungnhhe150305@fpt.edu.vn', 'Oi troi oii', 1, NULL, NULL);
+(69, 'Nguyễn Huy Tùng', 'Hòa Lạc City', '0345143135', 'tungnhhe150305@fpt.edu.vn', 'Oi troi oii', 1, NULL, NULL),
+(70, 'Huy Tùng', 'Số 13, ngõ 29/27 đường Võ Chí Công, quận Cầu Giấy, thành phố Hà Nội', '0888736810', 'huytung.htbn@gmail.com', NULL, 1, NULL, NULL),
+(71, 'Nguyễn Huy Tùng', 'Hòa Lạc City', '0345143135', 'tungnhhe150305@fpt.edu.vn', NULL, 1, NULL, NULL),
+(72, 'Nguyễn Huy Tùng', 'Hola city', '0345143135', 'tungnhhe150305@fpt.edu.vn', NULL, 1, NULL, NULL),
+(73, 'Nguyễn Huy Tùng', 'Hola city', '0345143135', 'tungnhhe150305@fpt.edu.vn', NULL, 1, NULL, NULL),
+(74, 'Nguyễn Huy Tùng', 'Hihi', '0345143135', 'tungnhhe150305@fpt.edu.vn', NULL, 1, NULL, NULL),
+(75, 'Nguyễn Huy Tùng', 'Hola city', '0345143135', 'tungnhhe150305@fpt.edu.vn', 'check loading', 1, NULL, NULL),
+(76, 'Nguyễn Huy Tùng', 'Hola city', '0345143135', 'tungnhhe150305@fpt.edu.vn', NULL, 1, NULL, NULL),
+(77, 'Nguyễn Huy Tùng', 'Hola city', '0345143135', 'tungnhhe150305@fpt.edu.vn', NULL, 1, NULL, NULL),
+(79, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(80, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(81, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(82, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(83, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(84, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 2, NULL, NULL),
+(85, 'Tùng Tùng', '111', '01298128891', 'tungtungtung@gmail.com', NULL, 2, NULL, NULL),
+(86, 'Tùng Tùng', 'Đoán xem', '0129812889', 'tungtungtung@gmail.com', NULL, 2, NULL, NULL),
+(87, 'Nam ngu', 'Khum biet', '0886868686', 'namplhe153292@fpt.edu.vn', 'HEEHE', 1, NULL, NULL),
+(88, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(98, 'Huy Tùng', '1 Main St', '4088038780', 'egamorft@business.example.com', NULL, 3, NULL, NULL),
+(99, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 2, NULL, NULL),
+(100, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(101, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(102, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(103, 'Not Tùng', 'Check change address', '0888736810', 'tungnh3011.work@gmail.com', NULL, 1, NULL, NULL),
+(104, 'Huy Tùng', '1 Main St', '4088038780', 'egamorft@business.example.com', NULL, 3, NULL, NULL),
+(105, 'Huy Tùng', '1 Main St', '4088038780', 'egamorft@business.example.com', NULL, 3, NULL, NULL),
+(106, 'Huy Tùng', '1 Main St', '4088038780', 'egamorft@business.example.com', NULL, 3, NULL, NULL),
+(107, 'Huy Tùng', '1 Main St', '4088038780', 'egamorft@business.example.com', NULL, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1134,7 +1274,7 @@ CREATE TABLE `tbl_slider` (
 --
 
 INSERT INTO `tbl_slider` (`slider_id`, `slider_name`, `slider_image`, `slider_desc`, `slider_status`, `created_at`, `updated_at`) VALUES
-(3, 'Slider 1', 'b0b78b6c2975d535b663bfb942b56df395.jpg', '<p>Just slider 1</p>', 1, NULL, NULL),
+(3, 'Slider 11', 'b0b78b6c2975d535b663bfb942b56df395.jpg', '<p>Just slider 1</p>', 1, NULL, NULL),
 (4, 'Slider 2', 'b6c9173bd58f62f49eb550635a5e259f16.jpg', '<p>Slider 2</p>', 1, NULL, NULL),
 (5, 'Slider 3', '34d9aa618f832510ce7290b4f183484a-shop-online-slider-template29.jpg', '<p><strong>Shopping online right now</strong></p>', 1, NULL, NULL);
 
@@ -1167,8 +1307,8 @@ INSERT INTO `tbl_social` (`user_id`, `provider_user_id`, `provider`, `user`) VAL
 CREATE TABLE `tbl_statistic` (
   `statistic_id` bigint(20) UNSIGNED NOT NULL,
   `order_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sales` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `profit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sales` int(11) NOT NULL,
+  `profit` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `total_order` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1180,78 +1320,82 @@ CREATE TABLE `tbl_statistic` (
 --
 
 INSERT INTO `tbl_statistic` (`statistic_id`, `order_date`, `sales`, `profit`, `quantity`, `total_order`, `created_at`, `updated_at`) VALUES
-(1, '2022-06-30', '20000000', '7000000', 90, 10, NULL, NULL),
-(2, '2022-06-29', '68000000', '9000000', 60, 8, NULL, NULL),
-(3, '2022-06-28', '30000000', '3000000', 45, 7, NULL, NULL),
-(4, '2022-06-27', '45000000', '3800000', 30, 9, NULL, NULL),
-(5, '2022-06-26', '30000000', '1500000', 15, 12, NULL, NULL),
-(6, '2022-06-25', '8000000', '700000', 65, 30, NULL, NULL),
-(7, '2022-06-24', '28000000', '23000000', 32, 20, NULL, NULL),
-(8, '2022-06-23', '25000000', '20000000', 7, 6, NULL, NULL),
-(9, '2022-06-22', '36000000', '28000000', 40, 15, NULL, NULL),
-(10, '2022-06-21', '50000000', '13000000', 89, 19, NULL, NULL),
-(11, '2022-06-20', '20000000', '15000000', 63, 11, NULL, NULL),
-(12, '2022-06-19', '25000000', '16000000', 94, 14, NULL, NULL),
-(13, '2022-06-18', '32000000', '17000000', 16, 10, NULL, NULL),
-(14, '2022-06-17', '33000000', '19000000', 14, 5, NULL, NULL),
-(15, '2022-06-16', '36000000', '18000000', 22, 12, NULL, NULL),
-(16, '2022-06-15', '34000000', '20000000', 33, 20, NULL, NULL),
-(17, '2022-06-14', '25000000', '16000000', 94, 14, NULL, NULL),
-(18, '2022-06-13', '12000000', '7000000', 16, 10, NULL, NULL),
-(19, '2022-06-12', '63000000', '19000000', 14, 5, NULL, NULL),
-(20, '2022-06-11', '66000000', '18000000', 22, 12, NULL, NULL),
-(21, '2022-06-10', '74000000', '20000000', 33, 20, NULL, NULL),
-(22, '2022-06-09', '63000000', '19000000', 14, 5, NULL, NULL),
-(23, '2022-06-08', '66000000', '18000000', 23, 12, NULL, NULL),
-(24, '2022-06-07', '74000000', '20000000', 32, 20, NULL, NULL),
-(25, '2022-06-06', '63000000', '19000000', 14, 5, NULL, NULL),
-(26, '2022-06-05', '66000000', '18000000', 23, 12, NULL, NULL),
-(27, '2022-06-04', '74000000', '20000000', 33, 20, NULL, NULL),
-(28, '2022-06-03', '66000000', '18000000', 23, 12, NULL, NULL),
-(29, '2022-06-02', '74000000', '20000000', 10, 20, NULL, NULL),
-(30, '2022-06-01', '63000000', '19000000', 14, 5, NULL, NULL),
-(31, '2022-05-31', '66000000', '18000000', 23, 12, NULL, NULL),
-(32, '2022-05-30', '74000000', '20000000', 15, 20, NULL, NULL),
-(33, '2022-05-29', '66000000', '18000000', 23, 12, NULL, NULL),
-(34, '2022-05-28', '74000000', '20000000', 30, 22, NULL, NULL),
-(35, '2022-05-27', '66000000', '18000000', 23, 12, NULL, NULL),
-(36, '2022-05-26', '74000000', '20000000', 32, 20, NULL, NULL),
-(37, '2022-05-25', '63000000', '19000000', 14, 5, NULL, NULL),
-(38, '2022-05-24', '66000000', '18000000', 23, 12, NULL, NULL),
-(39, '2022-05-23', '74000000', '20000000', 32, 20, NULL, NULL),
-(40, '2022-05-22', '63000000', '19000000', 14, 5, NULL, NULL),
-(41, '2022-05-21', '66000000', '18000000', 23, 12, NULL, NULL),
-(42, '2022-05-20', '74000000', '20000000', 15, 20, NULL, NULL),
-(43, '2022-05-19', '66000000', '18000000', 23, 12, NULL, NULL),
-(44, '2022-05-18', '74000000', '20000000', 30, 22, NULL, NULL),
-(45, '2022-05-17', '66000000', '18000000', 23, 12, NULL, NULL),
-(46, '2022-05-16', '74000000', '20000000', 32, 20, NULL, NULL),
-(47, '2022-05-15', '63000000', '19000000', 14, 5, NULL, NULL),
-(48, '2022-05-14', '66000000', '18000000', 23, 12, NULL, NULL),
-(49, '2022-05-13', '74000000', '20000000', 32, 20, NULL, NULL),
-(50, '2022-05-12', '63000000', '19000000', 14, 5, NULL, NULL),
-(51, '2022-05-11', '66000000', '18000000', 23, 12, NULL, NULL),
-(52, '2022-05-10', '74000000', '20000000', 15, 20, NULL, NULL),
-(53, '2022-05-09', '66000000', '18000000', 23, 12, NULL, NULL),
-(54, '2022-05-08', '74000000', '20000000', 30, 22, NULL, NULL),
-(55, '2022-05-07', '66000000', '18000000', 23, 12, NULL, NULL),
-(56, '2022-05-06', '74000000', '20000000', 32, 20, NULL, NULL),
-(57, '2022-05-05', '63000000', '19000000', 14, 5, NULL, NULL),
-(58, '2022-05-04', '66000000', '18000000', 23, 12, NULL, NULL),
-(59, '2022-05-03', '74000000', '20000000', 32, 20, NULL, NULL),
-(60, '2022-05-02', '63000000', '19000000', 14, 5, NULL, NULL),
-(61, '2022-05-01', '66000000', '18000000', 23, 12, NULL, NULL),
-(62, '2022-04-30', '74000000', '20000000', 15, 20, NULL, NULL),
-(63, '2022-04-29', '66000000', '18000000', 23, 12, NULL, NULL),
-(64, '2022-04-28', '74000000', '20000000', 30, 22, NULL, NULL),
-(65, '2022-04-27', '66000000', '18000000', 23, 12, NULL, NULL),
-(66, '2022-04-26', '74000000', '20000000', 32, 20, NULL, NULL),
-(67, '2022-04-25', '63000000', '19000000', 14, 5, NULL, NULL),
-(68, '2022-04-24', '66000000', '18000000', 23, 12, NULL, NULL),
-(69, '2022-04-23', '74000000', '20000000', 32, 20, NULL, NULL),
-(71, '2022-06-30', '5208000', '3645600', 4, 3, NULL, NULL),
-(72, '2022-06-30', '5208000', '3645600', 4, 3, NULL, NULL),
-(73, '2022-07-04', '5199000', '3639300', 3, 3, NULL, NULL);
+(1, '2022-06-30', 20000000, 7000000, 90, 10, NULL, NULL),
+(2, '2022-06-29', 68000000, 9000000, 60, 8, NULL, NULL),
+(3, '2022-06-28', 30000000, 3000000, 45, 7, NULL, NULL),
+(4, '2022-06-27', 45000000, 3800000, 30, 9, NULL, NULL),
+(5, '2022-06-26', 30000000, 1500000, 15, 12, NULL, NULL),
+(6, '2022-06-25', 8000000, 700000, 65, 30, NULL, NULL),
+(7, '2022-06-24', 28000000, 23000000, 32, 20, NULL, NULL),
+(8, '2022-06-23', 25000000, 20000000, 7, 6, NULL, NULL),
+(9, '2022-06-22', 36000000, 28000000, 40, 15, NULL, NULL),
+(10, '2022-06-21', 50000000, 13000000, 89, 19, NULL, NULL),
+(11, '2022-06-20', 20000000, 15000000, 63, 11, NULL, NULL),
+(12, '2022-06-19', 25000000, 16000000, 94, 14, NULL, NULL),
+(13, '2022-06-18', 32000000, 17000000, 16, 10, NULL, NULL),
+(14, '2022-06-17', 33000000, 19000000, 14, 5, NULL, NULL),
+(15, '2022-06-16', 36000000, 18000000, 22, 12, NULL, NULL),
+(16, '2022-06-15', 34000000, 20000000, 33, 20, NULL, NULL),
+(17, '2022-06-14', 25000000, 16000000, 94, 14, NULL, NULL),
+(18, '2022-06-13', 12000000, 7000000, 16, 10, NULL, NULL),
+(19, '2022-06-12', 63000000, 19000000, 14, 5, NULL, NULL),
+(20, '2022-06-11', 66000000, 18000000, 22, 12, NULL, NULL),
+(21, '2022-06-10', 74000000, 20000000, 33, 20, NULL, NULL),
+(22, '2022-06-09', 63000000, 19000000, 14, 5, NULL, NULL),
+(23, '2022-06-08', 66000000, 18000000, 23, 12, NULL, NULL),
+(24, '2022-06-07', 74000000, 20000000, 32, 20, NULL, NULL),
+(25, '2022-06-06', 63000000, 19000000, 14, 5, NULL, NULL),
+(26, '2022-06-05', 66000000, 18000000, 23, 12, NULL, NULL),
+(27, '2022-06-04', 74000000, 20000000, 33, 20, NULL, NULL),
+(28, '2022-06-03', 66000000, 18000000, 23, 12, NULL, NULL),
+(29, '2022-06-02', 74000000, 20000000, 10, 20, NULL, NULL),
+(30, '2022-06-01', 63000000, 19000000, 14, 5, NULL, NULL),
+(31, '2022-05-31', 66000000, 18000000, 23, 12, NULL, NULL),
+(32, '2022-05-30', 74000000, 20000000, 15, 20, NULL, NULL),
+(33, '2022-05-29', 66000000, 18000000, 23, 12, NULL, NULL),
+(34, '2022-05-28', 74000000, 20000000, 30, 22, NULL, NULL),
+(35, '2022-05-27', 66000000, 18000000, 23, 12, NULL, NULL),
+(36, '2022-05-26', 74000000, 20000000, 32, 20, NULL, NULL),
+(37, '2022-05-25', 63000000, 19000000, 14, 5, NULL, NULL),
+(38, '2022-05-24', 66000000, 18000000, 23, 12, NULL, NULL),
+(39, '2022-05-23', 74000000, 20000000, 32, 20, NULL, NULL),
+(40, '2022-05-22', 63000000, 19000000, 14, 5, NULL, NULL),
+(41, '2022-05-21', 66000000, 18000000, 23, 12, NULL, NULL),
+(42, '2022-05-20', 74000000, 20000000, 15, 20, NULL, NULL),
+(43, '2022-05-19', 66000000, 18000000, 23, 12, NULL, NULL),
+(44, '2022-05-18', 74000000, 20000000, 30, 22, NULL, NULL),
+(45, '2022-05-17', 66000000, 18000000, 23, 12, NULL, NULL),
+(46, '2022-05-16', 74000000, 20000000, 32, 20, NULL, NULL),
+(47, '2022-05-15', 63000000, 19000000, 14, 5, NULL, NULL),
+(48, '2022-05-14', 66000000, 18000000, 23, 12, NULL, NULL),
+(49, '2022-05-13', 74000000, 20000000, 32, 20, NULL, NULL),
+(50, '2022-05-12', 63000000, 19000000, 14, 5, NULL, NULL),
+(51, '2022-05-11', 66000000, 18000000, 23, 12, NULL, NULL),
+(52, '2022-05-10', 74000000, 20000000, 15, 20, NULL, NULL),
+(53, '2022-05-09', 66000000, 18000000, 23, 12, NULL, NULL),
+(54, '2022-05-08', 74000000, 20000000, 30, 22, NULL, NULL),
+(55, '2022-05-07', 66000000, 18000000, 23, 12, NULL, NULL),
+(56, '2022-05-06', 74000000, 20000000, 32, 20, NULL, NULL),
+(57, '2022-05-05', 63000000, 19000000, 14, 5, NULL, NULL),
+(58, '2022-05-04', 66000000, 18000000, 23, 12, NULL, NULL),
+(59, '2022-05-03', 74000000, 20000000, 32, 20, NULL, NULL),
+(60, '2022-05-02', 63000000, 19000000, 14, 5, NULL, NULL),
+(61, '2022-05-01', 66000000, 18000000, 23, 12, NULL, NULL),
+(62, '2022-04-30', 74000000, 20000000, 15, 20, NULL, NULL),
+(63, '2022-04-29', 66000000, 18000000, 23, 12, NULL, NULL),
+(64, '2022-04-28', 74000000, 20000000, 30, 22, NULL, NULL),
+(65, '2022-04-27', 66000000, 18000000, 23, 12, NULL, NULL),
+(66, '2022-04-26', 74000000, 20000000, 32, 20, NULL, NULL),
+(67, '2022-04-25', 63000000, 19000000, 14, 5, NULL, NULL),
+(68, '2022-04-24', 66000000, 18000000, 23, 12, NULL, NULL),
+(69, '2022-04-23', 74000000, 20000000, 32, 20, NULL, NULL),
+(71, '2022-06-30', 5208000, 3645600, 4, 3, NULL, NULL),
+(72, '2022-06-30', 5208000, 3645600, 4, 3, NULL, NULL),
+(73, '2022-07-04', 5199000, 3639300, 3, 3, NULL, NULL),
+(74, '2022-07-06', 99599000, 69719300, 3, 3, NULL, NULL),
+(75, '2022-07-07', 5199000, 3639300, 3, 3, NULL, NULL),
+(76, '2022-07-19', 5199000, 3639300, 3, 3, NULL, NULL),
+(77, '2022-08-03', 2306000, 1614200, 10, 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1719,7 +1863,36 @@ INSERT INTO `tbl_visitors` (`visitors_id`, `ip_address`, `visitors_date`) VALUES
 (342, '115.113.12.11', '2022-06-30'),
 (343, '::1', '2022-07-04'),
 (344, '::1', '2022-07-05'),
-(345, '::1', '2022-07-06');
+(345, '::1', '2022-07-06'),
+(346, '::1', '2022-07-07'),
+(347, '::1', '2022-07-11'),
+(348, '::1', '2022-07-12'),
+(349, '127.0.0.1', '2022-07-12'),
+(350, '::1', '2022-07-13'),
+(351, '::1', '2022-07-14'),
+(352, '::1', '2022-07-19'),
+(353, '::1', '2022-07-25'),
+(354, '::1', '2022-07-26'),
+(355, '127.0.0.1', '2022-07-26'),
+(356, '::1', '2022-07-27'),
+(357, '127.0.0.1', '2022-07-27'),
+(358, '::1', '2022-07-28'),
+(359, '::1', '2022-08-01'),
+(360, '127.0.0.1', '2022-08-01'),
+(361, '::1', '2022-08-02'),
+(362, '::1', '2022-08-03'),
+(363, '127.0.0.1', '2022-08-03'),
+(364, '::1', '2022-08-04'),
+(365, '::1', '2022-08-08'),
+(366, '::1', '2022-08-09'),
+(367, '::1', '2022-08-10'),
+(368, '::1', '2022-08-11'),
+(369, '::1', '2022-08-15'),
+(370, '::1', '2022-08-16'),
+(371, '::1', '2022-08-17'),
+(372, '::1', '2022-08-17'),
+(373, '::1', '2022-08-19'),
+(374, '127.0.0.1', '2022-08-19');
 
 -- --------------------------------------------------------
 
@@ -12928,6 +13101,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'ADMIN', 'admin@gmail.com', NULL, 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -12935,6 +13115,12 @@ CREATE TABLE `users` (
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `manufacturers`
+--
+ALTER TABLE `manufacturers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -12948,6 +13134,14 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `products_category_id_foreign` (`category_id`),
+  ADD KEY `products_manufacturer_id_foreign` (`manufacturer_id`);
 
 --
 -- Indexes for table `tbl_account`
@@ -13069,16 +13263,28 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `manufacturers`
+--
+ALTER TABLE `manufacturers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_account`
 --
 ALTER TABLE `tbl_account`
-  MODIFY `account_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `account_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tbl_admin`
@@ -13090,79 +13296,90 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_category`
 --
 ALTER TABLE `tbl_category`
-  MODIFY `category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_coupon`
 --
 ALTER TABLE `tbl_coupon`
-  MODIFY `coupon_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `coupon_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tbl_feeship`
 --
 ALTER TABLE `tbl_feeship`
-  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_order`
 --
 ALTER TABLE `tbl_order`
-  MODIFY `order_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `order_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_details`
 --
 ALTER TABLE `tbl_order_details`
-  MODIFY `order_details_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `order_details_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
 
 --
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `product_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `product_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `tbl_shipping`
 --
 ALTER TABLE `tbl_shipping`
-  MODIFY `shipping_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `shipping_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `tbl_slider`
 --
 ALTER TABLE `tbl_slider`
-  MODIFY `slider_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `slider_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_social`
 --
 ALTER TABLE `tbl_social`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_statistic`
 --
 ALTER TABLE `tbl_statistic`
-  MODIFY `statistic_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `statistic_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `tbl_subcategory`
 --
 ALTER TABLE `tbl_subcategory`
-  MODIFY `subcategory_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `subcategory_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbl_visitors`
 --
 ALTER TABLE `tbl_visitors`
-  MODIFY `visitors_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=346;
+  MODIFY `visitors_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=375;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `products_manufacturer_id_foreign` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturers` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

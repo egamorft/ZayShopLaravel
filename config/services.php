@@ -31,9 +31,9 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '508433067730596', //client face của bạn
-        'client_secret' => '32d6dc4d7a38e20848ca243923bf53ba', //client app service face của bạn
-        'redirect' => 'http://localhost/shopZay/callback' //callback trả về
+        'client_id' => '508433067730596', 
+        'client_secret' => '32d6dc4d7a38e20848ca243923bf53ba', 
+        'redirect' => 'http://localhost/shopZay/callback' 
     ],
 
     'google' => [

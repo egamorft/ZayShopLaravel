@@ -426,6 +426,23 @@
                     },
                     success: function(data) {
                         chart.setData(data);
+                    },
+                    error: function (error) {
+                        if(error.status == 500){
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'No data found',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }else{
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Something went wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
                     }
                 });
             }
@@ -444,6 +461,23 @@
                     },
                     success: function(data) {
                         chart.setData(data);
+                    },
+                    error: function (error) {
+                        if(error.status == 500){
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'No data found',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }else{
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Something went wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
                     }
                 });
             });
