@@ -89,7 +89,10 @@
                                             {{ __('cart/cart.Taxes') }}
                                         </h5>
                                         <h5>
-                                            {{Cart::tax(0 , ',' , '.').' '.'VNĐ'}}
+                                            <?php
+                                            $tax = Cart::pricetotal(0, ',', '') * 10 / 100;
+                                            ?>
+                                            {{number_format($tax, 0 , ',' , '.')}} VNĐ
                                         </h5>
                                     </div>
                                     @if(Session::get('coupon'))
@@ -116,7 +119,10 @@
                                             </span>
                                         </h5>
                                         <h5>
-                                            {{Cart::discount(0 , ',' , '.').' '.'VNĐ'}}
+                                            <?php
+                                                $money_discount = Cart::pricetotal(0, ',', '') * $cou['coupon_number']/100;
+                                            ?>
+                                            {{number_format($money_discount, 0 , ',' , '.')}} VNĐ
                                         </h5>
                                     </div>
                                     @endif
@@ -127,7 +133,10 @@
                                             {{ __('cart/cart.Discount') }}
                                         </h5>
                                         <h5>
-                                            {{Cart::discount(0 , ',' , '.').' '.'VNĐ'}}
+                                            <?php
+                                                $money_discount = 0;
+                                            ?>
+                                            {{number_format($money_discount, 0 , ',' , '.')}} VNĐ
                                         </h5>
                                     </div>
                                     @endif
@@ -158,7 +167,10 @@
                                             {{ __('cart/cart.Total price') }}
                                         </h5>
                                         <h5>
-                                            {{Cart::total(0 , ',' , '.').' '.'VNĐ'}}
+                                            <?php
+                                                $total_all = Cart::pricetotal(0, ',', '') - $money_discount + $tax;
+                                            ?>
+                                            {{number_format($total_all, 0 , ',' , '.')}} VNĐ
                                         </h5>
                                     </div>
                                     @if(Session::get('account_id') != null)

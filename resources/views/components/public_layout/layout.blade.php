@@ -616,6 +616,12 @@ https://templatemo.com/tm-559-zay-shop
                                         if(typeof(shipping_ward) != 'undefined' && shipping_ward != null){
                                             shipping_ward.innerHTML = orderData.payer.address.admin_area_2;
                                         }
+
+                                        var paid = document.getElementById("paid");
+                                        if (paid.style.display === "none") {
+                                            paid.style.display = "block"
+                                        }
+
                                         $("#OrderBill").modal("toggle");
 
                                         $('#closeBill').click(function() {
@@ -993,6 +999,10 @@ https://templatemo.com/tm-559-zay-shop
     @if(session()->has('signature'))
         <script type="text/javascript">
             window.onload = function(){
+                var paid = document.getElementById("paid");
+                if (paid.style.display === "none") {
+                    paid.style.display = "block"
+                }
                 document.getElementById('automate_check_out').click();
                 }
         </script>

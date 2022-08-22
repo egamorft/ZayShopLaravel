@@ -114,6 +114,7 @@ class CouponController extends Controller
                         'coupon_code' => $coupon->coupon_code,
                         'coupon_condition' => $coupon->coupon_condition,
                         'coupon_number' => $coupon->coupon_number,
+                        'coupon_time' => $coupon->coupon_time,
                     );
                     Session::put('coupon', $cou);
                 } else {
