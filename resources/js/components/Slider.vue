@@ -91,7 +91,7 @@
                       <p class="font-weight-bold mb-0">
                         <img
                           v-bind:src="
-                            'public/upload/slider/' + slider.slider_image
+                            'storage/app/public/sliders/' + slider.slider_image
                           "
                           width="45%"
                           alt="No image available"
@@ -277,7 +277,7 @@
               <center id="preview" v-else>
                 <img
                   v-if="!$refs.fileUpload.value"
-                  v-bind:src="'public/upload/slider/' + slider.slider_image"
+                  v-bind:src="'storage/app/public/sliders/' + slider.slider_image"
                   width="500"
                 />
                 <img v-else :src="previewImage" width="500" />

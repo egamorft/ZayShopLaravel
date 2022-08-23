@@ -48,14 +48,13 @@ class SliderController extends Controller
         $slider->slider_status = $request->slider_status;
         $get_image = $request->file('slider_image');
         if ($get_image) {
+            $old_file_path = 'storage/app/public/sliders/' . $request->old_slider_image;
+            unlink($old_file_path);
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.', $get_name_image));
-            $new_image = $name_image . rand(0, 99)
-                . '.' . $get_image->getClientOriginalExtension();
-            $old_image_name = $request->old_slider_image;
-            $old_file_path = public_path('upload/slider/' . $old_image_name);
-            unlink($old_file_path);
-            $get_image->move('public/upload/slider', $new_image);
+            $new_image = $name_image . rand(0, 99) . '.' . 
+                $get_image->getClientOriginalExtension();
+            $get_image->move('storage/app/public/sliders', $new_image);
             $slider->slider_image = $new_image;
             $slider->save();
         } else {
@@ -81,7 +80,7 @@ class SliderController extends Controller
             $name_image = current(explode('.', $get_name_image));
             $new_image = $name_image . rand(0, 99)
                 . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('public/upload/slider', $new_image);
+            $get_image->move('storage/app/public/sliders', $new_image);
             $slider->slider_image = $new_image;
             $slider->save();
         }
@@ -133,10 +132,10 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
-        $slider = Slider::find($slider->slider_id);
         $slider_name = $slider->slider_image;
-        $slider_path = public_path('upload/slider/' . $slider_name);
+        $slider_path = 'storage/app/public/sliders/' . $slider_name;
         unlink($slider_path);
+        $slider = Slider::find($slider->slider_id);
         $slider->delete();
     }
 }

@@ -4116,7 +4116,7 @@ var render = function render() {
       staticClass: "font-weight-bold mb-0"
     }, [_c("img", {
       attrs: {
-        src: "public/upload/slider/" + slider.slider_image,
+        src: "storage/app/public/sliders/" + slider.slider_image,
         width: "45%",
         alt: "No image available"
       }
@@ -4343,7 +4343,7 @@ var render = function render() {
     }
   }, [!_vm.$refs.fileUpload.value ? _c("img", {
     attrs: {
-      src: "public/upload/slider/" + _vm.slider.slider_image,
+      src: "storage/app/public/sliders/" + _vm.slider.slider_image,
       width: "500"
     }
   }) : _c("img", {
