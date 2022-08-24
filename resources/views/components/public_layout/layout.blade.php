@@ -648,7 +648,7 @@ https://templatemo.com/tm-559-zay-shop
                     }
                 }).render('#paypal-button-container');
                 }else{
-                    document.getElementById("paypalfield").innerHTML = "<h4>Choose your city first</h4>"
+                    document.getElementById("paypalfield").innerHTML = "<h3>Choose your city for paypal payment</h3>"
                 }
             }
             </script>

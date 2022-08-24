@@ -104,6 +104,9 @@ class CheckoutController extends Controller
             Cart::destroy();
             Session::forget('coupon');
             Session::forget('fee');
+            Session::forget('city');
+            Session::forget('province');
+            Session::forget('ward');
         }
     }
 
