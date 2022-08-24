@@ -128,9 +128,7 @@ class DeliveryController extends Controller
     public function del_fee()
     {
         Session::forget('fee');
-        Session::forget('city');
-        Session::forget('province');
-        Session::forget('ward');
+        Session::forget('address');
 
         return redirect()->back()->with('message', 'Delete old address');
     }
@@ -144,10 +142,9 @@ class DeliveryController extends Controller
         $city = City::find($city_id);
         $province = Province::find($province_id);
         $ward = Wards::find($ward_id);
-        Session::put('city', $city ? $city->name_city : '');
-        Session::put('province', $province ? $province->name_quanhuyen : '');
-        Session::put('ward', $ward ? $ward->name_xaphuong : '');
-
+        Session::put('address', ['city' => $city->name_city, 
+                                'province' => $province->name_quanhuyen,
+                                'ward' => $ward->name_xaphuong]);
         if ($data['matp']) {
 
             $feeship = Feeship::where('fee_matp', $data['matp'])

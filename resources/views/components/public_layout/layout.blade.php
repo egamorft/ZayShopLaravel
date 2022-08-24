@@ -601,7 +601,7 @@ https://templatemo.com/tm-559-zay-shop
                                         _token: _token
                                     },
                                     success: function() {
-                                        var shipping_address = document.getElementById("shipping_address");
+                                        var shipping_address = document.getElementById("shipping_address_field");
                                         var shipping_city = document.getElementById("shipping_city");
                                         var shipping_province = document.getElementById("shipping_province");
                                         var shipping_ward = document.getElementById("shipping_ward");
@@ -763,7 +763,7 @@ https://templatemo.com/tm-559-zay-shop
                                                     } else {
                                                         document.getElementById("shipping_method").innerHTML = 'Unidentified';
                                                     }
-                                                    document.getElementById("shipping_address").innerHTML = shipping_address;
+                                                    document.getElementById("shipping_address_field").innerHTML = shipping_address;
                                                     $("#OrderBill").modal("toggle");
 
                                                     $('#closeBill').click(function() {
@@ -1080,7 +1080,7 @@ https://templatemo.com/tm-559-zay-shop
                                         } else {
                                             document.getElementById("shipping_method").innerHTML = 'Unidentified';
                                         }
-                                        document.getElementById("shipping_address").innerHTML = shipping_address;
+                                        document.getElementById("shipping_address_field").innerHTML = shipping_address;
                                         $("#OrderBill").modal("toggle");
 
                                         $('#closeBill').click(function() {

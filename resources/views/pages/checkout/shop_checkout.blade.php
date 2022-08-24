@@ -44,9 +44,9 @@ $total_usd = 0;
         <div class="col-md-5 col-lg-4 order-md-last">
 
             <form>
-                @if(Session::get('fee') || Session::get('ward'))
+                @if(Session::get('fee') || Session::get('address'))
                 <fieldset disabled id="fieldset">
-                    @endif
+                @endif
                     @csrf
                     <div class="col-md">
                         <label for="city" class="form-label">
@@ -54,8 +54,8 @@ $total_usd = 0;
                         </label>
                         <strong style="color: red;">*</strong>
                         <select name="city" id="city" class="form-control choose city">
-                            @if(Session::get('city'))
-                            <option>{{Session::get('city')}}</option>
+                            @if(Session::get('address'))
+                            <option>{{ Session::get('address')['city'] }}</option>
                             @endif
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your city') }}-----
@@ -74,8 +74,8 @@ $total_usd = 0;
                         </label>
                         <strong style="color: red;">*</strong>
                         <select name="province" id="province" class="form-control province choose">
-                            @if(Session::get('province'))
-                            <option>{{Session::get('province')}}</option>
+                            @if(Session::get('address'))
+                            <option>{{ Session::get('address')['province'] }}</option>
                             @endif
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your province') }}-----
@@ -89,8 +89,8 @@ $total_usd = 0;
                         </label>
                         <strong style="color: red;">*</strong>
                         <select name="wards" id="wards" class="form-control wards">
-                            @if(Session::get('ward'))
-                            <option>{{Session::get('ward')}}</option>
+                            @if(Session::get('address'))
+                            <option>{{ Session::get('address')['ward'] }}</option>
                             @endif
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your wards') }}-----
@@ -200,7 +200,7 @@ $total_usd = 0;
                         </span>
                     </li>
                 @endif
-                @if(Session::get('fee') || Session::get('ward'))
+                @if(Session::get('fee') || Session::get('address'))
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
                         <h6 class="my-0">
@@ -500,30 +500,30 @@ $total_usd = 0;
                                                         <span class="d-block text-muted">
                                                             {{ __('checkout/checkout.Shipping') }}
                                                         </span>
-                                                        @if (Session::get('city'))
+                                                        @if (Session::get('address'))
                                                         <span>
                                                             <?php 
-                                                                echo Session::get('city'); 
+                                                                echo Session::get('address')['city']; 
                                                             ?>
                                                         </span>
                                                         @else
                                                         <span id="shipping_city"></span>
                                                         @endif
                                                     </br>
-                                                        @if (Session::get('province'))
+                                                        @if (Session::get('address'))
                                                         <span>
                                                             <?php 
-                                                                echo Session::get('province');
+                                                                echo Session::get('address')['province'];
                                                             ?>
                                                         </span>
                                                         @else
                                                         <span id="shipping_province"></span>
                                                         @endif
                                                     </br>
-                                                        @if (Session::get('ward'))
+                                                        @if (Session::get('address'))
                                                         <span>
                                                             <?php 
-                                                                echo Session::get('ward'); 
+                                                                echo Session::get('address')['ward']; 
                                                             ?>
                                                         </span>
                                                         @else
@@ -538,7 +538,7 @@ $total_usd = 0;
                                                         <span class="d-block text-muted">
                                                             {{ __('checkout/checkout.Address') }}
                                                         </span>
-                                                        <span id="shipping_address"></span>
+                                                        <span id="shipping_address_field"></span>
 
                                                     </div>
                                                 </td>
