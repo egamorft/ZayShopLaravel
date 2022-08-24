@@ -245,7 +245,7 @@
                     <div class="card rounded-0">
                         <a href="{{URL::to('/product-details/'.$relate->product_id)}}">
                             <img class="card-img rounded-0 img-fluid" 
-                                src="{{URL::to('/public/upload/product/'.$relate->product_image)}}">
+                                src="{{URL::to('/storage/app/public/products/'.$relate->product_image)}}">
                         </a>
                     </div>
                     <div class="card-body">

@@ -137,9 +137,13 @@ class DeliveryController extends Controller
     public function calculate_fee(Request $request)
     {
         $data = $request->all();
-        $city = City::find($data['matp']);
-        $province = Province::find($data['maqh']);
-        $ward = Wards::find($data['xaid']);
+        $city_id = sprintf("%02d", $data['matp']);
+        $province_id = sprintf("%03d", $data['maqh']);
+        $ward_id = sprintf("%05d", $data['xaid']);
+
+        $city = City::find($city_id);
+        $province = Province::find($province_id);
+        $ward = Wards::find($ward_id);
         Session::put('city', $city ? $city->name_city : '');
         Session::put('province', $province ? $province->name_quanhuyen : '');
         Session::put('ward', $ward ? $ward->name_xaphuong : '');

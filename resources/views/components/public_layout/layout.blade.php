@@ -524,9 +524,11 @@ https://templatemo.com/tm-559-zay-shop
     @if(Route::currentRouteNamed('check-out'))
             <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
             <script>
+                initPayPalButton();
                 function initPayPalButton() {
+                if(document.getElementById("fieldset") != null){
                     var total_usd = document.getElementById("total_usd").value;
-                paypal.Buttons({
+                    paypal.Buttons({
                     style: {
                     shape: 'pill',
                     color: 'gold',
@@ -645,8 +647,10 @@ https://templatemo.com/tm-559-zay-shop
                         )
                     }
                 }).render('#paypal-button-container');
+                }else{
+                    document.getElementById("paypalfield").innerHTML = "<h4>Choose your city first</h4>"
                 }
-                initPayPalButton();
+            }
             </script>
     @endif
    

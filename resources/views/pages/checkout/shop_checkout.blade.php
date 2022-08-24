@@ -44,8 +44,8 @@ $total_usd = 0;
         <div class="col-md-5 col-lg-4 order-md-last">
 
             <form>
-                @if(Session::get('fee'))
-                <fieldset disabled>
+                @if(Session::get('fee') || Session::get('ward'))
+                <fieldset disabled id="fieldset">
                     @endif
                     @csrf
                     <div class="col-md">
@@ -54,6 +54,9 @@ $total_usd = 0;
                         </label>
                         <strong style="color: red;">*</strong>
                         <select name="city" id="city" class="form-control choose city">
+                            @if(Session::get('city'))
+                            <option>{{Session::get('city')}}</option>
+                            @endif
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your city') }}-----
                             </option>
@@ -71,6 +74,9 @@ $total_usd = 0;
                         </label>
                         <strong style="color: red;">*</strong>
                         <select name="province" id="province" class="form-control province choose">
+                            @if(Session::get('province'))
+                            <option>{{Session::get('province')}}</option>
+                            @endif
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your province') }}-----
                             </option>
@@ -83,6 +89,9 @@ $total_usd = 0;
                         </label>
                         <strong style="color: red;">*</strong>
                         <select name="wards" id="wards" class="form-control wards">
+                            @if(Session::get('ward'))
+                            <option>{{Session::get('ward')}}</option>
+                            @endif
                             <option value="">
                                 -----{{ __('checkout/checkout.Choose your wards') }}-----
                             </option>
@@ -191,7 +200,7 @@ $total_usd = 0;
                         </span>
                     </li>
                 @endif
-                @if(Session::get('fee'))
+                @if(Session::get('fee') || Session::get('ward'))
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
                         <h6 class="my-0">
@@ -391,7 +400,7 @@ $total_usd = 0;
                         </div>
                         <div class="col-6">
                             <center>
-                                <h4>
+                                <h4 id="paypalfield">
                                     Free ship with Paypal
                                 </h4>
                             </center>

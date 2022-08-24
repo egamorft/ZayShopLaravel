@@ -676,12 +676,11 @@
 
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: #54ba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
                                                                 <?php
+                                                                    $money_discount = 0;
                                                                     if(Session::get('coupon')){
                                                                         foreach(Session::get('coupon') as $key => $cou){
                                                                             $money_discount = Cart::pricetotal(0, ',', '') * $cou['coupon_number']/100;
                                                                         }
-                                                                    }else{
-                                                                        $money_discount = 0;
                                                                     }
                                                                 ?>
                                                                 <strong>{{number_format($money_discount, 0 , ',' , '.')}} đ</strong>
@@ -749,6 +748,9 @@
                                                     <tr>
                                                         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px;font-family:'Rubik',sans-serif;" align="left">
                                                         <?php
+                                                            if(!Session::get('coupon')){
+                                                                $money_discount = 0;
+                                                            }
                                                             $total_all = Cart::pricetotal(0, ',', '') - $money_discount + $tax + $fee;
                                                         ?>
                                                             <h1 class="v-text-align v-font-size" style="margin: 0px; color: #54ba2a; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Rubik',sans-serif; font-size: 18px;">
