@@ -14,6 +14,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use App\Imports\ExcelImport;
+use App\Exports\ExcelExport;
+use Excel;
+
 
 class OrderController extends Controller
 {
@@ -363,5 +367,11 @@ class OrderController extends Controller
       </div>';
 
     return $output;
+  }
+
+  public function import_csv(Request $request){
+    $path = $request->file('file')->getRealPath();
+    Excel::import(new ExcelImport, $path);
+    return back();
   }
 }

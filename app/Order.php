@@ -21,4 +21,7 @@ class Order extends Model
     {
         return $this->belongsTo('App\Shipping', 'shipping_id');
     }
+    public function account(){
+        return $this->belongsTo('App\Account', 'account_id');
+    }
 }

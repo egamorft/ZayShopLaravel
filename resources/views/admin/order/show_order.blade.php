@@ -1,6 +1,55 @@
 @extends('components.admin_layout.admin_layout')
 @section('admin_content')
 @extends('components.alert.alert')
+<!--CSV data -->
+<div class="container-fluid">
+    <div class="d-flex justify-content-between">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn bg-gradient-dark mb-0" data-bs-toggle="modal" data-bs-target="#import">
+            <i class="material-icons text-sm">
+                publish
+            </i>&nbsp;&nbsp;
+            Import CSV
+        </button>
+        
+        <form action="{{URL('export-csv')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <button type="submit" class="btn bg-gradient-dark mb-0" name="export_csv">
+                <i class="material-icons text-sm">
+                    download
+                </i>&nbsp;&nbsp;
+                Export CSV
+            </button>
+        </form>
+    </div>
+</div>
+<!--CSV data -->
+
+
+<!-- Import -->
+    <form action="{{URL('import-csv')}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal fade" id="import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Import excel file</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-outline mb-3">
+                        <input type="file" class="form-control" name="file" accept=".xlsx"></br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" name="import_csv">Submit</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<!-- Import -->
 
 <div class="container-fluid py-4">
     <div class="row">
