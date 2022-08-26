@@ -230,6 +230,7 @@ class HomeController extends Controller
             Session::put('account_id', $check_email_existed->account_id);
             Session::put('account_email', $check_email_existed->account_email);
             Session::put('account_phone', $check_email_existed->account_phone);
+            Session::put('account_address', $check_email_existed->account_address);
 
             return redirect('/shop')->with('message', 'Successfully login');
         } else {
@@ -289,10 +290,12 @@ class HomeController extends Controller
         $account = Social::where('provider', 'facebook')
             ->where('provider_user_id', $provider->getId())
             ->first();
-
         if ($account) {
             $account_name = Account::where('account_id', $account->user)->first();
             Session::put('account_name', $account_name->account_name);
+            Session::put('account_email', $account_name->account_email);
+            Session::put('account_address', $account_name->account_address);
+            Session::put('account_phone', $account_name->account_phone);
             Session::put('account_id', $account_name->account_id);
             return redirect('/shop')->with('message', 'Successfully login with facebook');
         } else {

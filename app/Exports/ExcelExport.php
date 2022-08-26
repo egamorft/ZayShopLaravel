@@ -8,12 +8,14 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class ExcelExport implements
@@ -24,7 +26,8 @@ class ExcelExport implements
     WithEvents,
     FromQuery,
     WithDrawings,
-    WithCustomStartCell
+    WithCustomStartCell,
+    WithColumnFormatting
 {
     use Exportable;
     /**
@@ -41,12 +44,19 @@ class ExcelExport implements
         return Order::query()->with('account');
     }
 
+    public function columnFormats(): array
+    {
+        return [
+            'C' => NumberFormat::FORMAT_TEXT,
+        ];
+    }
+
     public function map($order): array
     {
         return [
             $order->order_id,
             $order->account->account_name,
-            $order->order_code,
+            '"' . $order->order_code . '"',
             $order->created_at
         ];
     }

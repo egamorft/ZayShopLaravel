@@ -42,6 +42,8 @@ class OrderController extends Controller
         $order = Order::where('order_status', '3')->paginate(6)->appends(request()->query());
       } else if ($filter_with == '4') {
         $order = Order::where('order_status', '4')->paginate(6)->appends(request()->query());
+      }else{
+        $order = Order::orderBy('order_status', 'asc')->orderBy('created_at', 'desc')->paginate(6)->appends(request()->query());
       }
     } else {
       $order = Order::orderBy('order_status', 'asc')->orderBy('created_at', 'desc')->paginate(6)->appends(request()->query());
