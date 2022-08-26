@@ -65,47 +65,20 @@
         @if(Session::get('account_id'))
         <div class="col-lg-9 my-lg-0 my-1">
             <div id="main-content" class="bg-white border row">
-                <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                <div class="col-md-12 border-right">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-right">My address</h5>
+                        <button class="btn btn-outline-success">Add new address</button>
                     </div>
-                </div>
-                <div class="col-md-9 border-right">
-                    <form action="{{URL::to('/save-password')}}" method="POST">
-                        @csrf
-                        <div class="p-3 py-5">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">{{ __('profile/Chgpwd.Password Settings') }}</h4>
-                            </div>
-                            <div class="form-floating mb-3 mt-3">
-                                <input id="oldpassword" type="password" class="form-control" placeholder="Enter password" name="old_password">
-                                <label for="oldpassword">{{ __('profile/Chgpwd.Old Password') }}</label>
-                                @error('old_password')
-                                <span style="color: red">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-floating mb-3 mt-3">
-                                <input id="newpassword" type="password" class="form-control" placeholder="Enter password" name="new_password">
-                                <label for="newpassword">{{ __('profile/Chgpwd.New Password') }}</label>
-                                @error('new_password')
-                                <span style="color: red">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-floating mb-3 mt-3">
-                                <input id="confpassword" type="password" class="form-control" placeholder="Enter password" name="new_password_confirmation">
-                                <label for="confpassword">{{ __('profile/Chgpwd.Confirm Password') }}</label>
-                                @error('new_password_confirmation')
-                                <span style="color: red">{{$message}}</span>
-                                @enderror
-                            </div>
-
-
-                            <div class="mt-5 text-center">
-                                <input class="btn btn-outline-success" type="submit" value="{{ __('profile/Chgpwd.Save Profile') }}">
-                            </div>
-                        </div>
-                    </form>
+                    <hr class="mb-2">
+                    <h5>Address list</h5>
+                    @forelse ($address_list as $key => $address)
+                    <div class="d-flex my-4 flex-wrap">
+                        {{$address->city_address->name_city}}, {{$address->province_address->name_quanhuyen}}
+                    </div>
+                    @empty
+                    <h4>You are not yet add your address</h4>
+                    @endforelse
                 </div>
             </div>
         </div>

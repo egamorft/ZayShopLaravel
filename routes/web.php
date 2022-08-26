@@ -117,13 +117,15 @@ Route::middleware('admin.login')->group(function () {
     Route::get('/delete-order/{order_code}', 'OrderController@delete_order');
     //End Order Admin
 
-
-
     //Slider Admin
     Route::get('/slider', function () {
         return view('admin.slider.show_slider');
     })->name('slider');
     //End Slider Admin
+
+    //Order & Excel
+    Route::post('/export-csv','OrderExportController@export');
+    Route::post('/import-csv','OrderController@import_csv');
 });
 
 
@@ -195,6 +197,8 @@ Route::get('/profile/chgpwd', 'AccountController@change_password')->name('profil
 
 Route::post('/save-password', 'AccountController@save_password');
 
+Route::get('/profile/address', 'AccountController@change_address')->name('profile.address');
+
 //Send mail
 Route::post('/send-mail-confirm-order', 'SendMailController@confirm_order');
 
@@ -215,7 +219,3 @@ Route::get('/verify-code-reset-password', 'SendMailController@verify_code_reset_
 Route::get('/check-reset-password/{verify_code}', 'AccountController@check_reset_password');
 
 Route::post('/set-new-password', 'AccountController@set_new_password');
-
-//Order & Excel
-Route::post('/export-csv','OrderExportController@export');
-Route::post('/import-csv','OrderController@import_csv');

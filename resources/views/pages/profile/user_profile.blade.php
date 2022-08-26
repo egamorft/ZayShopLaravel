@@ -15,36 +15,47 @@
             <div id="sidebar" class="bg-green">
                 <div class="h4 text-white">{{ __('profile/UserProfile.Account') }}</div>
                 <ul>
-                    <li class="{{ Route::currentRouteNamed('profile.account') ? 'active' : '' }}"">
+                    <li class="{{ Route::currentRouteNamed('profile.account') ? 'active' : '' }}">
                         <a href=" {{URL::to('/profile/account')}}" class="text-decoration-none d-flex align-items-start">
                         <div class="far pt-2 me-3">
                             <i class="fa-solid fa-user fa-xl"></i>
                         </div>
                         <div class="d-flex flex-column">
-                            <div class="link">{{ __('profile/UserProfile.My Profile') }}</div>
-                            <div class="link-desc">{{ __('profile/UserProfile.Change your profile') }}</div>
+                            <div class="link">{{ __('profile/Chgpwd.My Profile') }}</div>
+                            <div class="link-desc">{{ __('profile/Chgpwd.Change your profile') }}</div>
                         </div>
                         </a>
                     </li>
-                    <li class="{{ Route::currentRouteNamed('profile.chgpwd') ? 'active' : '' }}"">
+                    <li class="{{ Route::currentRouteNamed('profile.chgpwd') ? 'active' : '' }}">
                         <a href=" {{URL::to('/profile/chgpwd')}}" class="text-decoration-none d-flex align-items-start">
                         <div class="fas pt-2 me-3">
                             <i class="fa-solid fa-lock fa-xl"></i>
                         </div>
                         <div class="d-flex flex-column">
-                            <div class="link">{{ __('profile/UserProfile.Password') }}</div>
-                            <div class="link-desc">{{ __('profile/UserProfile.Change your password') }}</div>
+                            <div class="link">{{ __('profile/Chgpwd.Password') }}</div>
+                            <div class="link-desc">{{ __('profile/Chgpwd.Change your password') }}</div>
                         </div>
                         </a>
                     </li>
-                    <li class="{{ Route::currentRouteNamed('profile.order') ? 'active' : '' }}"">
+                    <li class="{{ Route::currentRouteNamed('profile.address') ? 'active' : '' }}">
+                        <a href=" {{URL::to('/profile/address')}}" class="text-decoration-none d-flex align-items-start">
+                        <div class="fas pt-2 me-3">
+                            <i class="fa-solid fa-address-card fa-xl"></i>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div class="link">Address</div>
+                            <div class="link-desc">Change your address</div>
+                        </div>
+                        </a>
+                    </li>
+                    <li class="{{ Route::currentRouteNamed('profile.order') ? 'active' : '' }}">
                         <a href=" {{URL::to('/profile/order')}}" class="text-decoration-none d-flex align-items-start">
                         <div class="fas pt-2 me-3">
                             <i class="fa-solid fa-box fa-xl"></i>
                         </div>
                         <div class="d-flex flex-column">
-                            <div class="link">{{ __('profile/UserProfile.My Order') }}</div>
-                            <div class="link-desc">{{ __('profile/UserProfile.View & Manage your orders') }}</div>
+                            <div class="link">{{ __('profile/Chgpwd.My Order') }}</div>
+                            <div class="link-desc">{{ __('profile/Chgpwd.View & Manage your orders') }}</div>
                         </div>
                         </a>
                     </li>

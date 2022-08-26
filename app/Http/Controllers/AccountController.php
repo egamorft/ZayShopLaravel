@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Address;
 use App\Order;
 use App\OrderDetails;
 use App\Rules\Captcha;
@@ -175,5 +176,19 @@ class AccountController extends Controller
 
         Session::put('message', 'Your password has been reset');
         return Redirect::to('/login');
+    }
+
+    public function change_address()
+    {
+        $account_id = Session::get('account_id');
+        $address_list = Address::with('city_address')
+                            ->with('province_address')
+                                ->with('ward_address')
+                                    ->where('account_id', $account_id)
+                                        ->orderBy('is_default', 'desc')
+                                        ->orderBy('city', 'asc')
+                                        ->get();
+        dd($address_list);
+        return view('pages.profile.address')->with(compact('address_list'));
     }
 }
