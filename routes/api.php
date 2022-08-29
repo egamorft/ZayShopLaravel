@@ -29,3 +29,9 @@ Route::post('sliders/{slider}/recreate', 'SliderController@recreate')->name('sli
 Route::resource('sliders', 'SliderController');
 
 Route::resource('address', 'AddressController');
+
+Route::resource('city', 'CityController');
+
+Route::resource('province', 'ProvinceController');
+
+Route::resource('ward', 'WardController');

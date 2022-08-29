@@ -63,21 +63,9 @@
             </div>
         </div>
         @if(Session::get('account_id'))
-        <div class="col-lg-9 my-lg-0 my-1">
-            <div id="main-content" class="bg-white border row">
-                <div class="col-md-12 border-right">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="text-right">My address</h5>
-                        <button class="btn btn-outline-success">Add new address</button>
-                    </div>
-                    <hr class="mb-2">
-                    <h5>Address list</h5>
-                    <div id="vue">
-                        <profile_address></profile_address>
-                    </div>
-                </div>
+            <div id="vue" class="col-lg-9 my-lg-0 my-1">
+                <profile_address></profile_address>
             </div>
-        </div>
         @else
         <div class="col-lg-9 my-lg-0 my-1">
             <center class="m-5">

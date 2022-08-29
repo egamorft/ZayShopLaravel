@@ -1945,35 +1945,213 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      cities: [],
+      provinces: [],
+      wards: [],
       addresses: [],
       address: {
         address_id: "",
-        account_id: "",
         specific_address: "",
         address_type: "",
-        is_default: "",
-        coupon_code: ""
+        is_default: false,
+        city: "",
+        province: "",
+        ward: ""
       },
       edit: false,
-      errors: {},
-      focusCode: false,
-      focusAll: false
+      errors: {}
     };
   },
   created: function created() {
     this.fetchAddresses();
   },
   methods: {
-    fetchAddresses: function fetchAddresses(page_url) {
+    fetchCity: function fetchCity(page_url) {
       var _this = this;
+
+      page_url = page_url || "../api/city";
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.cities = res.data;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    fetchAddresses: function fetchAddresses(page_url) {
+      var _this2 = this;
 
       page_url = page_url || "../api/address";
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.addresses = res.data;
+        _this2.addresses = res.data;
       })["catch"](function (err) {
         return console.log(err);
+      });
+    },
+    onChangeCity: function onChangeCity(event) {
+      var _this3 = this;
+
+      axios.get("../api/province/".concat(event.target.value)).then(function (res) {
+        _this3.provinces = res.data.data;
+      })["catch"](function (error) {
+        // alert
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Oops! Something went wrong"
+        }); // alert
+      });
+    },
+    onChangeProvince: function onChangeProvince(event) {
+      var _this4 = this;
+
+      axios.get("../api/ward/".concat(event.target.value)).then(function (res) {
+        _this4.wards = res.data.data;
+      })["catch"](function (error) {
+        // alert
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Oops! Something went wrong"
+        }); // alert
+      });
+    },
+    openAdd: function openAdd() {
+      this.fetchCity();
+
+      if (this.edit === true) {
+        this.edit = false;
+      }
+
+      this.address.address_id = "";
+      this.address.address_type = "1";
+      this.address.city = "";
+      this.address.is_default = false;
+      this.address.province = "";
+      this.address.ward = "";
+      this.address.specific_address = "";
+      this.errors = "";
+    },
+    saveAddress: function saveAddress() {
+      var _this5 = this;
+
+      if (this.edit === false) {
+        //add address
+        var formData = new FormData();
+        formData.append("city", this.address.city);
+        formData.append("province", this.address.province);
+        formData.append("ward", this.address.ward);
+        formData.append("specific_address", this.address.specific_address);
+        formData.append("address_type", this.address.address_type);
+        formData.append("is_default", this.address.is_default);
+        axios.post("../api/address", formData).then(function (response) {
+          // alert
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Add successfully"
+          }); // alert
+
+          _this5.errors = "";
+          $("#staticBackdrop").modal("hide");
+
+          _this5.fetchAddresses();
+        })["catch"](function (error) {
+          if (error.response.status == 422) {
+            _this5.errors = error.response.data.errors;
+          } // alert
+
+
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong"
+          }); // alert
+        });
+      } else {}
+    },
+    setAsDefault: function setAsDefault(address_id) {
+      var _this6 = this;
+
+      axios.get("../api/address/".concat(address_id, "/edit")).then(function (res) {
+        // alert
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Set address as default"
+        }); // alert
+
+        _this6.fetchAddresses();
+      })["catch"](function (error) {
+        console.log(error); // alert
+
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Oops! Something went wrong"
+        }); // alert
       });
     }
   }
@@ -3296,13 +3474,306 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm.addresses != "" ? _c("div", [_vm._l(_vm.addresses, function (address, index) {
+  return _c("div", {
+    staticClass: "bg-white border row",
+    attrs: {
+      id: "main-content"
+    }
+  }, [_c("div", {
+    staticClass: "col-md-12 border-right"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-between align-items-center mb-3"
+  }, [_c("h5", {
+    staticClass: "text-right"
+  }, [_vm._v("My address")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-success",
+    attrs: {
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#staticBackdrop"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.openAdd();
+      }
+    }
+  }, [_vm._v("\n        Add new address\n      ")])]), _vm._v(" "), _c("hr", {
+    staticClass: "mb-2"
+  }), _vm._v(" "), _c("h5", [_vm._v("Address list")]), _vm._v(" "), _vm.addresses != "" ? _c("div", [_c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "staticBackdrop",
+      "data-bs-backdrop": "static",
+      "data-bs-keyboard": "false",
+      tabindex: "-1",
+      "aria-labelledby": "staticBackdropLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog"
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.saveAddress.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "staticBackdropLabel"
+    }
+  }, [_vm._v("\n                  Address: #" + _vm._s(_vm.address.address_id) + "\n                ")]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("div", {
+    staticClass: "input-group input-group-outline mb-3"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.city,
+      expression: "address.city"
+    }],
+    staticClass: "form-control",
+    "class": {
+      " is-invalid": _vm.errors.city
+    },
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+
+        _vm.$set(_vm.address, "city", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }, function ($event) {
+        return _vm.onChangeCity($event);
+      }]
+    }
+  }, [_c("option", {
+    attrs: {
+      disabled: "",
+      value: ""
+    }
+  }, [_vm._v("Select your city")]), _vm._v(" "), _vm._l(_vm.cities, function (city) {
+    return _c("option", {
+      domProps: {
+        value: city.matp
+      }
+    }, [_vm._v("\n                      " + _vm._s(city.name_city) + "\n                    ")]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "input-group input-group-outline mb-3"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.province,
+      expression: "address.province"
+    }],
+    staticClass: "form-control",
+    "class": {
+      " is-invalid": _vm.errors.province
+    },
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+
+        _vm.$set(_vm.address, "province", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }, function ($event) {
+        return _vm.onChangeProvince($event);
+      }]
+    }
+  }, [_c("option", {
+    attrs: {
+      disabled: "",
+      value: ""
+    }
+  }, [_vm._v("Select your province")]), _vm._v(" "), _vm._l(_vm.provinces, function (province) {
+    return _c("option", {
+      domProps: {
+        value: province.maqh
+      }
+    }, [_vm._v("\n                      " + _vm._s(province.name_quanhuyen) + "\n                    ")]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "input-group input-group-outline mb-3"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.ward,
+      expression: "address.ward"
+    }],
+    staticClass: "form-control",
+    "class": {
+      " is-invalid": _vm.errors.ward
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+
+        _vm.$set(_vm.address, "ward", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      disabled: "",
+      value: ""
+    }
+  }, [_vm._v("Select your ward")]), _vm._v(" "), _vm._l(_vm.wards, function (ward) {
+    return _c("option", {
+      domProps: {
+        value: ward.xaid
+      }
+    }, [_vm._v("\n                      " + _vm._s(ward.name_xaphuong) + "\n                    ")]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "input-group input-group-outline my-3"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.specific_address,
+      expression: "address.specific_address"
+    }],
+    staticClass: "form-control",
+    "class": {
+      " is-invalid": _vm.errors.specific_address
+    },
+    attrs: {
+      placeholder: "Specific address",
+      type: "text"
+    },
+    domProps: {
+      value: _vm.address.specific_address
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.address, "specific_address", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", [_vm._v("Address type:")]), _vm._v(" "), _c("div", {
+    staticClass: "form-check mb-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.address_type,
+      expression: "address.address_type"
+    }],
+    staticClass: "btn-check",
+    attrs: {
+      type: "radio",
+      id: "success-outlined",
+      value: "1"
+    },
+    domProps: {
+      checked: _vm._q(_vm.address.address_type, "1")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.address, "address_type", "1");
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "btn btn-outline-success",
+    attrs: {
+      "for": "success-outlined"
+    }
+  }, [_vm._v("Home")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.address_type,
+      expression: "address.address_type"
+    }],
+    staticClass: "btn-check",
+    attrs: {
+      type: "radio",
+      id: "danger-outlined",
+      value: "2"
+    },
+    domProps: {
+      checked: _vm._q(_vm.address.address_type, "2")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.address, "address_type", "2");
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "btn btn-outline-success",
+    attrs: {
+      "for": "danger-outlined"
+    }
+  }, [_vm._v("Office")])]), _vm._v(" "), _vm.errors && _vm.errors.address_type ? _c("span", {
+    staticStyle: {
+      color: "red"
+    }
+  }, [_vm._v("\n                  " + _vm._s(_vm.errors.address_type[0]) + "\n                ")]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "form-check form-switch"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.is_default,
+      expression: "address.is_default"
+    }],
+    staticClass: "form-check-input",
+    attrs: {
+      type: "checkbox",
+      id: "flexSwitchCheckChecked"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.address.is_default) ? _vm._i(_vm.address.is_default, null) > -1 : _vm.address.is_default
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.address.is_default,
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
+
+        if (Array.isArray($$a)) {
+          var $$v = null,
+              $$i = _vm._i($$a, $$v);
+
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.address, "is_default", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.address, "is_default", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.address, "is_default", $$c);
+        }
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "form-check-label",
+    attrs: {
+      "for": "flexSwitchCheckChecked"
+    }
+  }, [_vm._v("Set as default address")])])]), _vm._v(" "), _vm._m(1)])])])]), _vm._v(" "), _vm._l(_vm.addresses, function (address, index) {
     return _c("div", {
       key: index,
       staticClass: "d-flex my-4 flex-wrap justify-content-between"
     }, [_c("div", {
       staticClass: "p-2"
-    }, [_c("div", [_vm._v("\n        " + _vm._s(address.specific_address) + "\n      ")]), _vm._v(" "), _c("div", [_vm._v("\n        " + _vm._s(address.ward_address.name_xaphuong) + ",\n        " + _vm._s(address.province_address.name_quanhuyen) + ",\n        " + _vm._s(address.city_address.name_city) + "\n      ")]), _vm._v(" "), address.is_default == true ? _c("div", {
+    }, [_c("div", [_vm._v("\n            " + _vm._s(address.specific_address) + "\n          ")]), _vm._v(" "), _c("div", [_vm._v("\n            " + _vm._s(address.ward_address.name_xaphuong) + ",\n            " + _vm._s(address.province_address.name_quanhuyen) + ",\n            " + _vm._s(address.city_address.name_city) + "\n          ")]), _vm._v(" "), address.is_default == true ? _c("div", {
       staticClass: "d-flex my-4 flex-wrap"
     }, [_c("div", {
       attrs: {
@@ -3333,19 +3804,56 @@ var render = function render() {
         type: "button",
         href: ""
       }
-    }, [_vm._v("\n          Set as default\n        ")]) : _c("button", {
+    }, [_vm._v("\n              Set as default\n            ")]) : _c("button", {
       staticClass: "btn btn-outline-success",
       attrs: {
         type: "button",
         href: ""
+      },
+      on: {
+        click: function click($event) {
+          return _vm.setAsDefault(address.address_id);
+        }
       }
-    }, [_vm._v("\n          Set as default\n        ")])])])]);
+    }, [_vm._v("\n              Set as default\n            ")])])])]);
   }), _vm._v(" "), _c("hr")], 2) : _c("div", {
     staticClass: "p-2"
-  }, [_vm._v("You have no address yet")]);
+  }, [_vm._v("You have no address yet")])])]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("a", {
+    attrs: {
+      type: "button"
+    }
+  }, [_c("i", {
+    staticClass: "fa-solid fa-x",
+    attrs: {
+      "data-bs-dismiss": "modal"
+    }
+  })]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal"
+    }
+  }, [_vm._v("\n                  Close\n                ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Save")])]);
+}];
 render._withStripped = true;
 
 

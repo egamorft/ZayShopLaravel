@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Http\Requests\AddressRequest;
 use App\Http\Resources\AddressResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -42,31 +43,64 @@ class AddressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddressRequest $request)
     {
-        //
+        $account_id = Session::get('account_id');
+        $request->except('_token');
+        $address = new Address();
+        $address->account_id = $account_id;
+        $address->city = $request->city;
+        $address->province = $request->province;
+        $address->ward = $request->ward;
+        $address->specific_address = $request->specific_address;
+        $address->address_type = $request->address_type;
+        if ($request->is_default == true) {
+            $address->is_default = 1;
+            $is_default_address = Address::where('is_default', 1)->get();
+            if ($is_default_address->count() > 0) {
+                foreach ($is_default_address as $default) {
+                    $default->is_default = 0;
+                    $default->save();
+                }
+            }
+        } else {
+            $address->is_default = 0;
+        }
+        $address->save();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $address
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Address $address)
     {
-        //
+        return new AddressResource($address);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $address
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Address $address)
     {
-        //
+        if ($address->is_default == 0) {
+            $address->is_default == 1;
+            $is_default_address = Address::where('is_default', 1)->get();
+            if ($is_default_address->count() > 0) {
+                foreach ($is_default_address as $default) {
+                    $default->is_default = 0;
+                    $default->save();
+                }
+            }
+        } else {
+            $address->is_default == 0;
+        }
+        $address->save();
     }
 
     /**
