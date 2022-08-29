@@ -52,7 +52,6 @@ Route::post('/admin-login', 'AdminController@login');
 Route::get('/logout', 'AdminController@logout');
 
 Route::middleware('admin.login')->group(function () {
-
     //Admin dashboard
     Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 
@@ -124,8 +123,8 @@ Route::middleware('admin.login')->group(function () {
     //End Slider Admin
 
     //Order & Excel
-    Route::post('/export-csv','OrderExportController@export');
-    Route::post('/import-csv','OrderController@import_csv');
+    Route::post('/export-csv', 'OrderExportController@export');
+    Route::post('/import-csv', 'OrderController@import_csv');
 });
 
 
@@ -196,8 +195,12 @@ Route::post('/save-profile', 'AccountController@save_profile');
 Route::get('/profile/chgpwd', 'AccountController@change_password')->name('profile.chgpwd');
 
 Route::post('/save-password', 'AccountController@save_password');
+//Coupon Admin
 
-Route::get('/profile/address', 'AccountController@change_address')->name('profile.address');
+//End Coupon Admin
+Route::get('/profile/address', function () {
+    return view('pages.profile.address');
+})->name('profile.address');
 
 //Send mail
 Route::post('/send-mail-confirm-order', 'SendMailController@confirm_order');

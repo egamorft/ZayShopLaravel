@@ -188,7 +188,7 @@ class AccountController extends Controller
                                         ->orderBy('is_default', 'desc')
                                         ->orderBy('city', 'asc')
                                         ->get();
-        dd($address_list);
+        // dd($address_list);
         return view('pages.profile.address')->with(compact('address_list'));
     }
 }

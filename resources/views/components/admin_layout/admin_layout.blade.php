@@ -590,7 +590,7 @@
                                 fee_ship: fee_ship
                             },
                             success: function(data) {
-                                fetch_delivery();
+                                // fetch_delivery();
                                 location.reload();
                             },
                         });

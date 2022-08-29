@@ -25,6 +25,6 @@ class Address extends Model
 
     public function ward_address()
     {
-        return $this->hasOne(Wards::class, 'xaid', 'ward');
+        return $this->hasOne('App\Wards', 'xaid', 'ward');
     }
 }

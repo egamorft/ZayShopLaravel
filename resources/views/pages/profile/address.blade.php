@@ -72,13 +72,9 @@
                     </div>
                     <hr class="mb-2">
                     <h5>Address list</h5>
-                    @forelse ($address_list as $key => $address)
-                    <div class="d-flex my-4 flex-wrap">
-                        {{$address->city_address->name_city}}, {{$address->province_address->name_quanhuyen}}
+                    <div id="vue">
+                        <profile_address></profile_address>
                     </div>
-                    @empty
-                    <h4>You are not yet add your address</h4>
-                    @endforelse
                 </div>
             </div>
         </div>

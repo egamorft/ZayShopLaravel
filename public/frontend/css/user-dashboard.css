@@ -352,3 +352,11 @@ nav ul li a .cart::after {
         padding: 10px;
     }
 }
+
+#default{
+    display: block;
+    background-color: #008357;
+    color: white;
+    font-size: 1rem;
+    padding: 0px 3px;
+}
