@@ -3569,6 +3569,50 @@ __webpack_require__.r(__webpack_exports__);
       this.address.is_default = address.is_default;
       this.address.specific_address = address.specific_address;
       this.errors = "";
+    },
+    deleteAddress: function deleteAddress(id) {
+      var _this9 = this;
+
+      Swal.fire({
+        title: "Delete address #" + id + " ?",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown"
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp"
+        },
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios["delete"]("../api/address/" + id).then(function (res) {
+            // alert
+            var Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: function didOpen(toast) {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Delete address #" + id + "successfully"
+            }); // alert
+
+            _this9.fetchAddresses();
+          })["catch"](function (err) {
+            return console.log(err);
+          });
+        }
+      });
     }
   }
 });
@@ -5643,6 +5687,11 @@ var render = function render() {
       staticClass: "btn btn-outline-danger",
       attrs: {
         type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.deleteAddress(address.address_id);
+        }
       }
     }, [_c("i", {
       staticClass: "fa-solid fa-trash-can"

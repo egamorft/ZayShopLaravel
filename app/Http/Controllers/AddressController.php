@@ -54,7 +54,7 @@ class AddressController extends Controller
         $address->ward = $request->ward;
         $address->specific_address = $request->specific_address;
         $address->address_type = $request->address_type;
-        if ($request->is_default == true) {
+        if ($request->is_default == 1) {
             $address->is_default = 1;
             $is_default_address = Address::where('is_default', 1)->get();
             if ($is_default_address->count() > 0) {
@@ -118,7 +118,7 @@ class AddressController extends Controller
         $address->ward = $request->ward;
         $address->specific_address = $request->specific_address;
         $address->address_type = $request->address_type;
-        if ($request->is_default == true) {
+        if ($request->is_default == 1) {
             $address->is_default = 1;
             $is_default_address = Address::where('is_default', 1)->get();
             if ($is_default_address->count() > 0) {
@@ -136,11 +136,11 @@ class AddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $address
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Address $address)
     {
-        //
+        $address->delete();
     }
 }

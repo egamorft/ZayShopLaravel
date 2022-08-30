@@ -205,6 +205,7 @@
             >
             <a
               type="button"
+              @click="deleteAddress(address.address_id)"
               class="btn btn-outline-danger"
               v-if="address.is_default != true"
               ><i class="fa-solid fa-trash-can"></i
@@ -480,7 +481,8 @@ export default {
 
             Toast.fire({
               icon: "success",
-              title: "Update address " + this.address.address_id + " successfully",
+              title:
+                "Update address " + this.address.address_id + " successfully",
             });
             // alert
             this.errors = "";
@@ -573,6 +575,50 @@ export default {
       this.address.is_default = address.is_default;
       this.address.specific_address = address.specific_address;
       this.errors = "";
+    },
+    deleteAddress: function (id) {
+      Swal.fire({
+        title: "Delete address #" + id + " ?",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete("../api/address/" + id)
+            .then((res) => {
+              // alert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Delete address #"+id +"successfully",
+            });
+            // alert
+              this.fetchAddresses();
+            })
+            .catch((err) => console.log(err));
+        }
+      });
     },
   },
 };

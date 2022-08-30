@@ -531,6 +531,7 @@ https://templatemo.com/tm-559-zay-shop
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="{{asset('public/frontend/js/slick.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/simple.money.format.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     
     @if(Route::currentRouteNamed('check-out'))
             <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
