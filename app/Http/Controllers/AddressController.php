@@ -54,9 +54,9 @@ class AddressController extends Controller
         $address->ward = $request->ward;
         $address->specific_address = $request->specific_address;
         $address->address_type = $request->address_type;
-        if ($request->is_default == 1) {
+        if ($request->is_default == 1 || $request->is_default == true) {
             $address->is_default = 1;
-            $is_default_address = Address::where('is_default', 1)->get();
+            $is_default_address = Address::where('account_id', $account_id)->where('is_default', 1)->get();
             if ($is_default_address->count() > 0) {
                 foreach ($is_default_address as $default) {
                     $default->is_default = 0;
@@ -88,9 +88,10 @@ class AddressController extends Controller
      */
     public function edit(Address $address)
     {
+        $account_id = Session::get('account_id');
         if ($address->is_default == 0) {
             $address->is_default = 1;
-            $is_default_address = Address::where('is_default', 1)->get();
+            $is_default_address = Address::where('account_id', $account_id)->where('is_default', 1)->get();
             if ($is_default_address->count() > 0) {
                 foreach ($is_default_address as $default) {
                     $default->is_default = 0;
@@ -118,9 +119,9 @@ class AddressController extends Controller
         $address->ward = $request->ward;
         $address->specific_address = $request->specific_address;
         $address->address_type = $request->address_type;
-        if ($request->is_default == 1) {
+        if ($request->is_default == 1 || $request->is_default == true) {
             $address->is_default = 1;
-            $is_default_address = Address::where('is_default', 1)->get();
+            $is_default_address = Address::where('account_id', $account_id)->where('is_default', 1)->get();
             if ($is_default_address->count() > 0) {
                 foreach ($is_default_address as $default) {
                     $default->is_default = 0;

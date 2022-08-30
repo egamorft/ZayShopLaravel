@@ -25,7 +25,8 @@ Vue.component('coupon', require('./components/admin/Coupon.vue').default);
 Vue.component('category', require('./components/admin/Category.vue').default);
 Vue.component('subcategory', require('./components/admin/SubCategory.vue').default);
 Vue.component('slider', require('./components/admin/Slider.vue').default);
-Vue.component('profile_address', require('./components/public/Address.vue').default);
+Vue.component('profile-address', require('./components/public/Address.vue').default);
+Vue.component('checkout-address', require('./components/public/CheckoutAddress.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

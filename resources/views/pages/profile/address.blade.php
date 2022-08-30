@@ -64,7 +64,7 @@
         </div>
         @if(Session::get('account_id'))
             <div id="vue" class="col-lg-9 my-lg-0 my-1">
-                <profile_address></profile_address>
+                <profile-address></profile-address>
             </div>
         @else
         <div class="col-lg-9 my-lg-0 my-1">

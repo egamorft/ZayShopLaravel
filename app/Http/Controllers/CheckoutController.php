@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Address;
 use App\City;
 use App\Coupon;
 use App\Feeship;
@@ -20,6 +21,7 @@ class CheckoutController extends Controller
 {
     public function check_out()
     {
+        $account_id = Session::get('account_id');
         if (isset($_GET['resultCode'])) {
             if ($_GET['resultCode'] == 1006) {
                 Session::put('error', 'You just cancel your MOMO payment');
@@ -41,9 +43,10 @@ class CheckoutController extends Controller
                 return back();
             }
         }
-
         $city = City::orderby('matp', 'asc')->get();
-        return view('pages.checkout.shop_checkout')->with(compact('city'));
+        $address = Address::where('account_id', $account_id)->with('city_address')->with('province_address')->with('ward_address')->orderBy('is_default', 'desc')->first();
+        $address_list = Address::where('account_id', $account_id)->with('city_address')->with('province_address')->with('ward_address')->orderBy('is_default', 'desc')->get();
+        return view('pages.checkout.shop_checkout')->with(compact('city', 'address', 'address_list'));
     }
 
     public function confirm_order(Request $request)

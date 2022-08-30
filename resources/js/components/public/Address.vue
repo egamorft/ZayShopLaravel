@@ -14,147 +14,144 @@
       </div>
       <hr class="mb-2" />
       <h5>Address list</h5>
-      <div v-if="addresses != ''">
-        <!-- Modal -->
-
-        <div
-          class="modal fade"
-          id="staticBackdrop"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <form @submit.prevent="saveAddress">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">
-                    Address: #{{ address.address_id }}
-                  </h5>
-                  <a type="button">
-                    <i class="fa-solid fa-x" data-bs-dismiss="modal"></i>
-                  </a>
-                </div>
-                <div class="modal-body">
-                  <div class="input-group input-group-outline mb-3">
-                    <select
-                      class="form-control"
-                      @change="onChangeCity($event)"
-                      v-model="address.city"
-                      :class="{ ' is-invalid': errors.city }"
-                    >
-                      <option disabled value="">Select your city</option>
-                      <option
-                        v-for="city in cities"
-                        v-bind:value="city.matp"
-                        :key="city.matp"
-                      >
-                        {{ city.name_city }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="input-group input-group-outline mb-3">
-                    <select
-                      class="form-control"
-                      @change="onChangeProvince($event)"
-                      v-model="address.province"
-                      :class="{ ' is-invalid': errors.province }"
-                    >
-                      <option disabled value="">Select your province</option>
-                      <option
-                        v-for="province in provinces"
-                        v-bind:value="province.maqh"
-                        v-bind:key="province.maqh"
-                      >
-                        {{ province.name_quanhuyen }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="input-group input-group-outline mb-3">
-                    <select
-                      class="form-control"
-                      v-model="address.ward"
-                      :class="{ ' is-invalid': errors.ward }"
-                    >
-                      <option disabled value="">Select your ward</option>
-                      <option
-                        v-for="ward in wards"
-                        v-bind:value="ward.xaid"
-                        v-bind:key="ward.xaid"
-                      >
-                        {{ ward.name_xaphuong }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="input-group input-group-outline my-3">
-                    <textarea
-                      placeholder="Specific address"
-                      type="text"
-                      class="form-control"
-                      :class="{ ' is-invalid': errors.specific_address }"
-                      v-model="address.specific_address"
-                    ></textarea>
-                  </div>
-                  <br />
-                  <span>Address type:</span>
-                  <div class="form-check mb-3">
-                    <input
-                      type="radio"
-                      class="btn-check"
-                      id="success-outlined"
-                      value="1"
-                      v-model="address.address_type"
-                    />
-                    <label
-                      class="btn btn-outline-success"
-                      for="success-outlined"
-                      >Home</label
-                    >
-
-                    <input
-                      type="radio"
-                      class="btn-check"
-                      id="danger-outlined"
-                      value="2"
-                      v-model="address.address_type"
-                    />
-                    <label class="btn btn-outline-success" for="danger-outlined"
-                      >Office</label
-                    >
-                  </div>
-                  <span style="color: red" v-if="errors && errors.address_type">
-                    {{ errors.address_type[0] }}
-                  </span>
-                  <div class="form-check form-switch">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="flexSwitchCheckChecked"
-                      v-model="address.is_default"
-                    />
-                    <label class="form-check-label" for="flexSwitchCheckChecked"
-                      >Set as default address</label
-                    >
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <form @submit.prevent="saveAddress">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                  Address: #{{ address.address_id }}
+                </h5>
+                <a type="button">
+                  <i class="fa-solid fa-x" data-bs-dismiss="modal"></i>
+                </a>
+              </div>
+              <div class="modal-body">
+                <div class="input-group input-group-outline mb-3">
+                  <select
+                    class="form-control"
+                    @change="onChangeCity($event)"
+                    v-model="address.city"
+                    :class="{ ' is-invalid': errors.city }"
                   >
-                    Close
-                  </button>
-                  <button type="submit" class="btn btn-primary">Save</button>
+                    <option disabled value="">Select your city</option>
+                    <option
+                      v-for="city in cities"
+                      v-bind:value="city.matp"
+                      :key="city.matp"
+                    >
+                      {{ city.name_city }}
+                    </option>
+                  </select>
+                </div>
+                <div class="input-group input-group-outline mb-3">
+                  <select
+                    class="form-control"
+                    @change="onChangeProvince($event)"
+                    v-model="address.province"
+                    :class="{ ' is-invalid': errors.province }"
+                  >
+                    <option disabled value="">Select your province</option>
+                    <option
+                      v-for="province in provinces"
+                      v-bind:value="province.maqh"
+                      v-bind:key="province.maqh"
+                    >
+                      {{ province.name_quanhuyen }}
+                    </option>
+                  </select>
+                </div>
+                <div class="input-group input-group-outline mb-3">
+                  <select
+                    class="form-control"
+                    v-model="address.ward"
+                    :class="{ ' is-invalid': errors.ward }"
+                  >
+                    <option disabled value="">Select your ward</option>
+                    <option
+                      v-for="ward in wards"
+                      v-bind:value="ward.xaid"
+                      v-bind:key="ward.xaid"
+                    >
+                      {{ ward.name_xaphuong }}
+                    </option>
+                  </select>
+                </div>
+                <div class="input-group input-group-outline my-3">
+                  <textarea
+                    placeholder="Specific address"
+                    type="text"
+                    class="form-control"
+                    :class="{ ' is-invalid': errors.specific_address }"
+                    v-model="address.specific_address"
+                  ></textarea>
+                </div>
+                <br />
+                <span>Address type:</span>
+                <div class="form-check mb-3">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    id="success-outlined"
+                    value="1"
+                    v-model="address.address_type"
+                  />
+                  <label class="btn btn-outline-success" for="success-outlined"
+                    >Home</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    id="danger-outlined"
+                    value="2"
+                    v-model="address.address_type"
+                  />
+                  <label class="btn btn-outline-success" for="danger-outlined"
+                    >Office</label
+                  >
+                </div>
+                <span style="color: red" v-if="errors && errors.address_type">
+                  {{ errors.address_type[0] }}
+                </span>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="flexSwitchCheckChecked"
+                    v-model="address.is_default"
+                    :disabled="disabled"
+                  />
+                  <label class="form-check-label" for="flexSwitchCheckChecked"
+                    >Set as default address</label
+                  >
                 </div>
               </div>
-            </form>
-          </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </form>
         </div>
-        <!-- End Modal -->
-
+      </div>
+      <!-- End Modal -->
+      <div v-if="addresses != ''">
         <div
           class="d-flex my-4 flex-wrap justify-content-between"
           v-for="(address, index) in addresses"
@@ -258,6 +255,7 @@ export default {
       },
       edit: false,
       errors: {},
+      disabled: false,
     };
   },
   created() {
@@ -363,10 +361,15 @@ export default {
       if (this.edit === true) {
         this.edit = false;
       }
+      if(this.addresses.length == 0){
+        this.disabled = true;
+        this.address.is_default = true;
+      }else{
+        this.address.is_default = false;
+      }
       this.address.address_id = "";
       this.address.address_type = "1";
       this.address.city = "";
-      this.address.is_default = false;
       this.address.province = "";
       this.address.ward = "";
       this.address.specific_address = "";
@@ -597,23 +600,23 @@ export default {
             .delete("../api/address/" + id)
             .then((res) => {
               // alert
-            const Toast = Swal.mixin({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 2000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener("mouseenter", Swal.stopTimer);
-                toast.addEventListener("mouseleave", Swal.resumeTimer);
-              },
-            });
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
 
-            Toast.fire({
-              icon: "success",
-              title: "Delete address #"+id +"successfully",
-            });
-            // alert
+              Toast.fire({
+                icon: "success",
+                title: "Delete address #" + id + "successfully",
+              });
+              // alert
               this.fetchAddresses();
             })
             .catch((err) => console.log(err));
