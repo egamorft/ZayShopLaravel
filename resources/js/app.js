@@ -21,11 +21,11 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 Vue.use(CKEditor);
 
-Vue.component('coupon', require('./components/Coupon.vue').default);
-Vue.component('category', require('./components/Category.vue').default);
-Vue.component('subcategory', require('./components/SubCategory.vue').default);
-Vue.component('slider', require('./components/Slider.vue').default);
-Vue.component('profile_address', require('./components/Address.vue').default);
+Vue.component('coupon', require('./components/admin/Coupon.vue').default);
+Vue.component('category', require('./components/admin/Category.vue').default);
+Vue.component('subcategory', require('./components/admin/SubCategory.vue').default);
+Vue.component('slider', require('./components/admin/Slider.vue').default);
+Vue.component('profile_address', require('./components/public/Address.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

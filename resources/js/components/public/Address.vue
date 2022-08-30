@@ -46,7 +46,7 @@
                       :class="{ ' is-invalid': errors.city }"
                     >
                       <option disabled value="">Select your city</option>
-                      <option v-for="city in cities" v-bind:value="city.matp">
+                      <option v-for="city in cities" v-bind:value="city.matp" :key="city.matp">
                         {{ city.name_city }}
                       </option>
                     </select>
@@ -62,6 +62,7 @@
                       <option
                         v-for="province in provinces"
                         v-bind:value="province.maqh"
+                        v-bind:key="province.maqh"
                       >
                         {{ province.name_quanhuyen }}
                       </option>
@@ -74,7 +75,7 @@
                       :class="{ ' is-invalid': errors.ward }"
                     >
                       <option disabled value="">Select your ward</option>
-                      <option v-for="ward in wards" v-bind:value="ward.xaid">
+                      <option v-for="ward in wards" v-bind:value="ward.xaid" v-bind:key="ward.xaid">
                         {{ ward.name_xaphuong }}
                       </option>
                     </select>

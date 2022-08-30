@@ -89,7 +89,7 @@ class AddressController extends Controller
     public function edit(Address $address)
     {
         if ($address->is_default == 0) {
-            $address->is_default == 1;
+            $address->is_default = 1;
             $is_default_address = Address::where('is_default', 1)->get();
             if ($is_default_address->count() > 0) {
                 foreach ($is_default_address as $default) {
