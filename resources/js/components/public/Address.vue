@@ -170,25 +170,45 @@
               {{ address.city_address.name_city }}
             </div>
             <div class="d-flex my-4 flex-wrap">
-              <a class="btn btn-success" id="default" v-if="address.is_default == true">Default</a>
-              <a class="btn btn-dark" id="address_type" v-if="address.address_type == 1">
+              <a
+                class="btn btn-success"
+                id="default"
+                v-if="address.is_default == true"
+                >Default</a
+              >
+              <a
+                class="btn btn-dark"
+                id="address_type"
+                v-if="address.address_type == 1"
+              >
                 Home
               </a>
-              <a class="btn btn-dark" id="address_type" v-if="address.address_type == 2">
+              <a
+                class="btn btn-dark"
+                id="address_type"
+                v-if="address.address_type == 2"
+              >
                 Office
               </a>
             </div>
           </div>
           <div class="p-2"></div>
           <div class="p-2">
-            <a type="button" href="" class="btn btn-outline-success">Update</a>
             <a
               type="button"
-              href=""
+              @click="editAddress(address)"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              data-toggle="tooltip"
               class="btn btn-outline-success"
-              v-if="address.is_default != true"
-              >Delete address</a
+              >Update</a
             >
+            <a
+              type="button"
+              class="btn btn-outline-danger"
+              v-if="address.is_default != true"
+              ><i class="fa-solid fa-trash-can"></i
+            ></a>
             <div class="d-flex my-4 flex-wrap">
               <button
                 disabled
@@ -252,6 +272,24 @@ export default {
         })
         .catch((err) => console.log(err));
     },
+    fetchProvince: function (page_url) {
+      page_url = `../api/province/${page_url}`;
+      fetch(page_url)
+        .then((res) => res.json())
+        .then((res) => {
+          this.provinces = res.data;
+        })
+        .catch((err) => console.log(err));
+    },
+    fetchWard: function (page_url) {
+      page_url = `../api/ward/${page_url}`;
+      fetch(page_url)
+        .then((res) => res.json())
+        .then((res) => {
+          this.wards = res.data;
+        })
+        .catch((err) => console.log(err));
+    },
     fetchAddresses: function (page_url) {
       page_url = page_url || "../api/address";
       fetch(page_url)
@@ -262,6 +300,7 @@ export default {
         .catch((err) => console.log(err));
     },
     onChangeCity(event) {
+      this.address.province = null;
       axios
         .get(`../api/province/${event.target.value}`)
         .then((res) => {
@@ -290,6 +329,7 @@ export default {
     },
 
     onChangeProvince(event) {
+      this.address.ward = null;
       axios
         .get(`../api/ward/${event.target.value}`)
         .then((res) => {
@@ -335,23 +375,102 @@ export default {
     saveAddress: function () {
       if (this.edit === false) {
         //add address
-        let formData = new FormData();
-        formData.append("city", this.address.city);
-        formData.append("province", this.address.province);
-        formData.append("ward", this.address.ward);
-        formData.append("specific_address", this.address.specific_address);
-        formData.append("address_type", this.address.address_type);
-        formData.append("is_default", this.address.is_default);
+        if (this.addresses.length < 5) {
+          let formData = new FormData();
+          formData.append("city", this.address.city);
+          formData.append("province", this.address.province);
+          formData.append("ward", this.address.ward);
+          formData.append("specific_address", this.address.specific_address);
+          formData.append("address_type", this.address.address_type);
+          formData.append("is_default", this.address.is_default);
 
+          axios
+            .post("../api/address", formData)
+            .then((response) => {
+              // alert
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "success",
+                title: "Add successfully",
+              });
+              // alert
+              this.errors = "";
+              $("#staticBackdrop").modal("hide");
+              this.fetchAddresses();
+            })
+            .catch((error) => {
+              if (error.response.status == 422) {
+                this.errors = error.response.data.errors;
+              }
+              // alert
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "error",
+                title: "Oops! Something went wrong",
+              });
+              // alert
+            });
+        } else {
+          // alert
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "error",
+            title:
+              "Oops! You have reach maximum of 5 address, delete or edit ones",
+          });
+          // alert
+        }
+      } else {
+        //edit address
         axios
-          .post("../api/address", formData)
-          .then((response) => {
+          .put(`../api/address/${this.address.address_id}`, {
+            city: this.address.city,
+            province: this.address.province,
+            ward: this.address.ward,
+            specific_address: this.address.specific_address,
+            address_type: this.address.address_type,
+            is_default: this.address.is_default,
+          })
+          .then((res) => {
             // alert
             const Toast = Swal.mixin({
               toast: true,
               position: "top-end",
               showConfirmButton: false,
-              timer: 3000,
+              timer: 2000,
               timerProgressBar: true,
               didOpen: (toast) => {
                 toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -361,7 +480,7 @@ export default {
 
             Toast.fire({
               icon: "success",
-              title: "Add successfully",
+              title: "Update address " + this.address.address_id + " successfully",
             });
             // alert
             this.errors = "";
@@ -391,7 +510,6 @@ export default {
             });
             // alert
           });
-      } else {
       }
     },
     setAsDefault: function (address_id) {
@@ -439,6 +557,22 @@ export default {
           });
           // alert
         });
+    },
+    editAddress: function (address) {
+      this.fetchCity();
+      this.fetchProvince(address.city);
+      this.fetchWard(address.province);
+      if (this.edit === false) {
+        this.edit = true;
+      }
+      this.address.address_id = address.address_id;
+      this.address.address_type = address.address_type;
+      this.address.city = address.city;
+      this.address.province = address.province;
+      this.address.ward = address.ward;
+      this.address.is_default = address.is_default;
+      this.address.specific_address = address.specific_address;
+      this.errors = "";
     },
   },
 };

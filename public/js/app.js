@@ -3278,23 +3278,48 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(err);
       });
     },
-    fetchAddresses: function fetchAddresses(page_url) {
+    fetchProvince: function fetchProvince(page_url) {
       var _this2 = this;
+
+      page_url = "../api/province/".concat(page_url);
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this2.provinces = res.data;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    fetchWard: function fetchWard(page_url) {
+      var _this3 = this;
+
+      page_url = "../api/ward/".concat(page_url);
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this3.wards = res.data;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    fetchAddresses: function fetchAddresses(page_url) {
+      var _this4 = this;
 
       page_url = page_url || "../api/address";
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this2.addresses = res.data;
+        _this4.addresses = res.data;
       })["catch"](function (err) {
         return console.log(err);
       });
     },
     onChangeCity: function onChangeCity(event) {
-      var _this3 = this;
+      var _this5 = this;
 
+      this.address.province = null;
       axios.get("../api/province/".concat(event.target.value)).then(function (res) {
-        _this3.provinces = res.data.data;
+        _this5.provinces = res.data.data;
       })["catch"](function (error) {
         // alert
         var Toast = Swal.mixin({
@@ -3315,10 +3340,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     onChangeProvince: function onChangeProvince(event) {
-      var _this4 = this;
+      var _this6 = this;
 
+      this.address.ward = null;
       axios.get("../api/ward/".concat(event.target.value)).then(function (res) {
-        _this4.wards = res.data.data;
+        _this6.wards = res.data.data;
       })["catch"](function (error) {
         // alert
         var Toast = Swal.mixin({
@@ -3355,18 +3381,63 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = "";
     },
     saveAddress: function saveAddress() {
-      var _this5 = this;
+      var _this7 = this;
 
       if (this.edit === false) {
         //add address
-        var formData = new FormData();
-        formData.append("city", this.address.city);
-        formData.append("province", this.address.province);
-        formData.append("ward", this.address.ward);
-        formData.append("specific_address", this.address.specific_address);
-        formData.append("address_type", this.address.address_type);
-        formData.append("is_default", this.address.is_default);
-        axios.post("../api/address", formData).then(function (response) {
+        if (this.addresses.length < 5) {
+          var formData = new FormData();
+          formData.append("city", this.address.city);
+          formData.append("province", this.address.province);
+          formData.append("ward", this.address.ward);
+          formData.append("specific_address", this.address.specific_address);
+          formData.append("address_type", this.address.address_type);
+          formData.append("is_default", this.address.is_default);
+          axios.post("../api/address", formData).then(function (response) {
+            // alert
+            var Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: function didOpen(toast) {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Add successfully"
+            }); // alert
+
+            _this7.errors = "";
+            $("#staticBackdrop").modal("hide");
+
+            _this7.fetchAddresses();
+          })["catch"](function (error) {
+            if (error.response.status == 422) {
+              _this7.errors = error.response.data.errors;
+            } // alert
+
+
+            var Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: function didOpen(toast) {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              }
+            });
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong"
+            }); // alert
+          });
+        } else {
           // alert
           var Toast = Swal.mixin({
             toast: true,
@@ -3380,17 +3451,44 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
           Toast.fire({
+            icon: "error",
+            title: "Oops! You have reach maximum of 5 address, delete or edit ones"
+          }); // alert
+        }
+      } else {
+        //edit address
+        axios.put("../api/address/".concat(this.address.address_id), {
+          city: this.address.city,
+          province: this.address.province,
+          ward: this.address.ward,
+          specific_address: this.address.specific_address,
+          address_type: this.address.address_type,
+          is_default: this.address.is_default
+        }).then(function (res) {
+          // alert
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
             icon: "success",
-            title: "Add successfully"
+            title: "Update address " + _this7.address.address_id + " successfully"
           }); // alert
 
-          _this5.errors = "";
+          _this7.errors = "";
           $("#staticBackdrop").modal("hide");
 
-          _this5.fetchAddresses();
+          _this7.fetchAddresses();
         })["catch"](function (error) {
           if (error.response.status == 422) {
-            _this5.errors = error.response.data.errors;
+            _this7.errors = error.response.data.errors;
           } // alert
 
 
@@ -3410,10 +3508,10 @@ __webpack_require__.r(__webpack_exports__);
             title: "Oops! Something went wrong"
           }); // alert
         });
-      } else {}
+      }
     },
     setAsDefault: function setAsDefault(address_id) {
-      var _this6 = this;
+      var _this8 = this;
 
       axios.get("../api/address/".concat(address_id, "/edit")).then(function (res) {
         // alert
@@ -3433,7 +3531,7 @@ __webpack_require__.r(__webpack_exports__);
           title: "Set address as default"
         }); // alert
 
-        _this6.fetchAddresses();
+        _this8.fetchAddresses();
       })["catch"](function (error) {
         console.log(error); // alert
 
@@ -3453,6 +3551,24 @@ __webpack_require__.r(__webpack_exports__);
           title: "Oops! Something went wrong"
         }); // alert
       });
+    },
+    editAddress: function editAddress(address) {
+      this.fetchCity();
+      this.fetchProvince(address.city);
+      this.fetchWard(address.province);
+
+      if (this.edit === false) {
+        this.edit = true;
+      }
+
+      this.address.address_id = address.address_id;
+      this.address.address_type = address.address_type;
+      this.address.city = address.city;
+      this.address.province = address.province;
+      this.address.ward = address.ward;
+      this.address.is_default = address.is_default;
+      this.address.specific_address = address.specific_address;
+      this.errors = "";
     }
   }
 });
@@ -5514,15 +5630,23 @@ var render = function render() {
       staticClass: "btn btn-outline-success",
       attrs: {
         type: "button",
-        href: ""
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#staticBackdrop",
+        "data-toggle": "tooltip"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.editAddress(address);
+        }
       }
     }, [_vm._v("Update")]), _vm._v(" "), address.is_default != true ? _c("a", {
-      staticClass: "btn btn-outline-success",
+      staticClass: "btn btn-outline-danger",
       attrs: {
-        type: "button",
-        href: ""
+        type: "button"
       }
-    }, [_vm._v("Delete address")]) : _vm._e(), _vm._v(" "), _c("div", {
+    }, [_c("i", {
+      staticClass: "fa-solid fa-trash-can"
+    })]) : _vm._e(), _vm._v(" "), _c("div", {
       staticClass: "d-flex my-4 flex-wrap"
     }, [address.is_default == true ? _c("button", {
       staticClass: "btn btn-outline-dark",

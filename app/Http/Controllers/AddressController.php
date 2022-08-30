@@ -97,8 +97,6 @@ class AddressController extends Controller
                     $default->save();
                 }
             }
-        } else {
-            $address->is_default == 0;
         }
         $address->save();
     }
@@ -107,12 +105,32 @@ class AddressController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AddressRequest $request, Address $address)
     {
-        //
+        $account_id = Session::get('account_id');
+        $request->except('_token');
+        $address->account_id = $account_id;
+        $address->city = $request->city;
+        $address->province = $request->province;
+        $address->ward = $request->ward;
+        $address->specific_address = $request->specific_address;
+        $address->address_type = $request->address_type;
+        if ($request->is_default == true) {
+            $address->is_default = 1;
+            $is_default_address = Address::where('is_default', 1)->get();
+            if ($is_default_address->count() > 0) {
+                foreach ($is_default_address as $default) {
+                    $default->is_default = 0;
+                    $default->save();
+                }
+            }
+        } else {
+            $address->is_default = 0;
+        }
+        $address->save();
     }
 
     /**
