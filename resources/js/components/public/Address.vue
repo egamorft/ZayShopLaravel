@@ -46,7 +46,11 @@
                       :class="{ ' is-invalid': errors.city }"
                     >
                       <option disabled value="">Select your city</option>
-                      <option v-for="city in cities" v-bind:value="city.matp" :key="city.matp">
+                      <option
+                        v-for="city in cities"
+                        v-bind:value="city.matp"
+                        :key="city.matp"
+                      >
                         {{ city.name_city }}
                       </option>
                     </select>
@@ -75,7 +79,11 @@
                       :class="{ ' is-invalid': errors.ward }"
                     >
                       <option disabled value="">Select your ward</option>
-                      <option v-for="ward in wards" v-bind:value="ward.xaid" v-bind:key="ward.xaid">
+                      <option
+                        v-for="ward in wards"
+                        v-bind:value="ward.xaid"
+                        v-bind:key="ward.xaid"
+                      >
                         {{ ward.name_xaphuong }}
                       </option>
                     </select>
@@ -161,11 +169,14 @@
               {{ address.province_address.name_quanhuyen }},
               {{ address.city_address.name_city }}
             </div>
-            <div
-              class="d-flex my-4 flex-wrap"
-              v-if="address.is_default == true"
-            >
-              <div id="default">Default</div>
+            <div class="d-flex my-4 flex-wrap">
+              <a class="btn btn-success" id="default" v-if="address.is_default == true">Default</a>
+              <a class="btn btn-dark" id="address_type" v-if="address.address_type == 1">
+                Home
+              </a>
+              <a class="btn btn-dark" id="address_type" v-if="address.address_type == 2">
+                Office
+              </a>
             </div>
           </div>
           <div class="p-2"></div>

@@ -355,8 +355,17 @@ nav ul li a .cart::after {
 
 #default{
     display: block;
-    background-color: #008357;
-    color: white;
     font-size: 1rem;
     padding: 0px 3px;
+    pointer-events: none;
+    cursor: default;
+}
+
+#address_type{
+    display: block;
+    font-size: 1rem;
+    padding: 0px 3px;
+    margin-left: 5px;
+    pointer-events: none;
+    cursor: default;
 }
