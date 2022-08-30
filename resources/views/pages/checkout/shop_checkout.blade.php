@@ -41,58 +41,6 @@ $total_usd = 0;
         <hr style="width: 30%;">
     @else
 
-    <!--Modal list address-->
-        <!-- Modal -->
-        <form>
-            @csrf
-            <div class="modal fade" id="address_list" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="address_list">Your address list</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                @foreach ($address_list as $key => $address_list)
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <input id="address{{$key+1}}" name="select_address" type="radio" class="form-check-input select_address" value="{{$address_list->address_id}}" {{$address_list->is_default == 1 ? 'checked' : ''}}>
-                            </div>
-                            <div class="col-md-10">
-                                <label for="address{{$key+1}}">
-                                    <h6>
-                                        <strong>
-                                            {{$address_list->specific_address}}
-                                        </strong>
-                                    </h6>
-                                    <span>
-                                    {{$address_list->ward_address->name_xaphuong}}, {{$address_list->province_address->name_quanhuyen}}, {{$address_list->city_address->name_city}}
-                                    </span>
-                                    </br>
-                                    @if ($address_list->is_default == 1)
-                                    <span class="badge rounded-pill bg-success">Default</span>
-                                    @endif
-                                    @if ($address_list->address_type == 1)
-                                    <span class="badge rounded-pill bg-warning text-dark">Home</span>
-                                    @else
-                                    <span class="badge rounded-pill bg-warning text-dark">Office</span>
-                                    @endif
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                @endforeach
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary change_address">Save</button>
-                </div>
-                </div>
-            </div>
-            </div>
-        </form>
-    <!--Modal list address-->
-
     <div class="row g-5">
         <div class="col-md-5 col-lg-4 order-md-last" id="vue">
             <checkout-address></checkout-address>

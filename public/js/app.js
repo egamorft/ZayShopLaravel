@@ -3652,7 +3652,9 @@ __webpack_require__.r(__webpack_exports__);
         ward: ""
       },
       edit: false,
-      errors: {}
+      errors: {},
+      selected_address: 0,
+      checked_address: 0
     };
   },
   created: function created() {
@@ -3670,6 +3672,24 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         return console.log(err);
       });
+    },
+    openAdd: function openAdd() {
+      var _this2 = this;
+
+      if (this.selected_address == 0) {
+        this.addresses.forEach(function (value, index) {
+          if (value.is_default == 1) {
+            _this2.checked_address = value.address_id;
+          }
+        });
+      } else {
+        this.checked_address = this.selected_address;
+      }
+    },
+    saveAddress: function saveAddress() {
+      this.selected_address = this.checked_address;
+      $("#address_list").modal("hide");
+      this.fetchAddresses();
     }
   }
 });
@@ -5828,44 +5848,142 @@ render._withStripped = true;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", {
+  return _c("div", [_c("div", {
     staticClass: "card text-center"
   }, [_c("div", {
     staticClass: "card-header"
   }, [_vm._v("Shipping address")]), _vm._v(" "), this.addresses.length > 0 ? _c("div", _vm._l(_vm.addresses, function (address, index) {
     return _c("div", {
       key: index
-    }, [address.is_default == 1 ? _c("div", [_c("div", {
+    }, [address.address_id == _vm.selected_address ? _c("div", [_c("div", {
       staticClass: "card-body"
     }, [_c("h5", {
       staticClass: "card-title"
-    }, [_vm._v(_vm._s(address.specific_address))]), _vm._v(" "), _c("p", {
+    }, [_vm._v("\n              " + _vm._s(address.specific_address) + "\n            ")]), _vm._v(" "), _c("p", {
       staticClass: "card-text"
-    }, [_vm._v("\n            " + _vm._s(address.ward_address.name_xaphuong) + ",\n            " + _vm._s(address.province_address.name_quanhuyen) + ",\n            " + _vm._s(address.city_address.name_city) + "\n          ")]), _vm._v(" "), _c("span", {
+    }, [_vm._v("\n              " + _vm._s(address.ward_address.name_xaphuong) + ",\n              " + _vm._s(address.province_address.name_quanhuyen) + ",\n              " + _vm._s(address.city_address.name_city) + "\n            ")]), _vm._v(" "), _c("span", {
       staticClass: "badge rounded-pill bg-success"
-    }, [_vm._v("Default")])]), _vm._v(" "), _vm._m(0, true)]) : _vm._e()]);
-  }), 0) : _c("div", [_vm._m(1), _vm._v(" "), _vm._m(2)])]);
+    }, [_vm._v("Default")])]), _vm._v(" "), _c("div", {
+      staticClass: "card-footer"
+    }, [_c("button", {
+      staticClass: "btn btn-outline-success",
+      attrs: {
+        type: "button",
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#address_list"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.openAdd();
+        }
+      }
+    }, [_vm._v("\n              Change your address\n            ")])])]) : _vm._e(), _vm._v(" "), _vm.selected_address == 0 ? _c("div", [address.is_default == 1 ? _c("div", [_c("div", {
+      staticClass: "card-body"
+    }, [_c("h5", {
+      staticClass: "card-title"
+    }, [_vm._v("\n                " + _vm._s(address.specific_address) + "\n              ")]), _vm._v(" "), _c("p", {
+      staticClass: "card-text"
+    }, [_vm._v("\n                " + _vm._s(address.ward_address.name_xaphuong) + ",\n                " + _vm._s(address.province_address.name_quanhuyen) + ",\n                " + _vm._s(address.city_address.name_city) + "\n              ")]), _vm._v(" "), _c("span", {
+      staticClass: "badge rounded-pill bg-success"
+    }, [_vm._v("Default")])]), _vm._v(" "), _c("div", {
+      staticClass: "card-footer"
+    }, [_c("button", {
+      staticClass: "btn btn-outline-success",
+      attrs: {
+        type: "button",
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#address_list"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.openAdd();
+        }
+      }
+    }, [_vm._v("\n                Change your address\n              ")])])]) : _vm._e()]) : _vm._e()]);
+  }), 0) : _c("div", [_vm._m(0), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "address_list",
+      "data-bs-backdrop": "static",
+      "data-bs-keyboard": "false",
+      tabindex: "-1",
+      "aria-labelledby": "staticBackdropLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog"
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(2), _vm._v(" "), _vm._l(_vm.addresses, function (address, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "modal-body"
+    }, [_c("div", {
+      staticClass: "row"
+    }, [_c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.checked_address,
+        expression: "checked_address"
+      }],
+      staticClass: "form-check-input",
+      attrs: {
+        id: "address" + (index + 1),
+        type: "radio"
+      },
+      domProps: _defineProperty({
+        value: address.address_id,
+        checked: _vm.checked_address == address.address_id
+      }, "checked", _vm._q(_vm.checked_address, address.address_id)),
+      on: {
+        change: function change($event) {
+          _vm.checked_address = address.address_id;
+        }
+      }
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-10"
+    }, [_c("label", {
+      attrs: {
+        "for": "address" + (index + 1)
+      }
+    }, [_c("h6", [_c("strong", [_vm._v("\n                    " + _vm._s(address.specific_address) + "\n                  ")])]), _vm._v(" "), _c("span", [_vm._v("\n                  " + _vm._s(address.ward_address.name_xaphuong) + ",\n                  " + _vm._s(address.province_address.name_quanhuyen) + ",\n                  " + _vm._s(address.city_address.name_city) + "\n                ")]), _vm._v(" "), _c("br"), _vm._v(" "), address.is_default == 1 ? _c("span", {
+      staticClass: "badge rounded-pill bg-success"
+    }, [_vm._v("Default")]) : _vm._e(), _vm._v(" "), address.address_type == 1 ? _c("span", {
+      staticClass: "badge rounded-pill bg-warning text-dark"
+    }, [_vm._v("Home")]) : _c("span", {
+      staticClass: "badge rounded-pill bg-warning text-dark"
+    }, [_vm._v("Office")])])])])]);
+  }), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal"
+    }
+  }, [_vm._v("\n            Close\n          ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.saveAddress();
+      }
+    }
+  }, [_vm._v("\n            Save\n          ")])])], 2)])])]);
 };
 
 var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "card-footer"
-  }, [_c("button", {
-    staticClass: "btn btn-outline-success",
-    attrs: {
-      type: "button",
-      "data-bs-toggle": "modal",
-      "data-bs-target": "#address_list"
-    }
-  }, [_vm._v("\n            Change your address\n          ")])]);
-}, function () {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -5886,6 +6004,25 @@ var staticRenderFns = [function () {
       href: ""
     }
   }, [_vm._v("Add address now")])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "address_list"
+    }
+  }, [_vm._v("Your address list")]), _vm._v(" "), _c("button", {
+    staticClass: "btn-close",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  })]);
 }];
 render._withStripped = true;
 
