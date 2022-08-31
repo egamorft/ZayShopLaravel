@@ -3654,42 +3654,229 @@ __webpack_require__.r(__webpack_exports__);
       edit: false,
       errors: {},
       selected_address: 0,
-      checked_address: 0
+      checked_address: 0,
+      disabled: false
     };
   },
   created: function created() {
     this.fetchAddresses();
   },
   methods: {
-    fetchAddresses: function fetchAddresses(page_url) {
+    fetchCity: function fetchCity(page_url) {
       var _this = this;
+
+      page_url = page_url || "api/city";
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.cities = res.data;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    fetchProvince: function fetchProvince(page_url) {
+      var _this2 = this;
+
+      page_url = "api/province/".concat(page_url);
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this2.provinces = res.data;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    fetchWard: function fetchWard(page_url) {
+      var _this3 = this;
+
+      page_url = "api/ward/".concat(page_url);
+      fetch(page_url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this3.wards = res.data;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    fetchAddresses: function fetchAddresses(page_url) {
+      var _this4 = this;
 
       page_url = page_url || "api/address";
       fetch(page_url).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.addresses = res.data;
+        _this4.addresses = res.data;
       })["catch"](function (err) {
         return console.log(err);
       });
     },
-    openAdd: function openAdd() {
-      var _this2 = this;
+    onChangeCity: function onChangeCity(event) {
+      var _this5 = this;
+
+      this.address.province = null;
+      axios.get("api/province/".concat(event.target.value)).then(function (res) {
+        _this5.provinces = res.data.data;
+      })["catch"](function (error) {
+        // alert
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Oops! Something went wrong"
+        }); // alert
+      });
+    },
+    onChangeProvince: function onChangeProvince(event) {
+      var _this6 = this;
+
+      this.address.ward = null;
+      axios.get("api/ward/".concat(event.target.value)).then(function (res) {
+        _this6.wards = res.data.data;
+      })["catch"](function (error) {
+        // alert
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Oops! Something went wrong"
+        }); // alert
+      });
+    },
+    openChange: function openChange() {
+      var _this7 = this;
 
       if (this.selected_address == 0) {
         this.addresses.forEach(function (value, index) {
           if (value.is_default == 1) {
-            _this2.checked_address = value.address_id;
+            _this7.checked_address = value.address_id;
           }
         });
       } else {
         this.checked_address = this.selected_address;
       }
     },
-    saveAddress: function saveAddress() {
+    openAdd: function openAdd() {
+      $("#address_list").modal("hide");
+      this.fetchCity();
+
+      if (this.edit === true) {
+        this.edit = false;
+      }
+
+      if (this.addresses.length == 0) {
+        this.disabled = true;
+        this.address.is_default = true;
+      } else {
+        this.address.is_default = false;
+      }
+
+      this.address.address_id = "";
+      this.address.address_type = "1";
+      this.address.city = "";
+      this.address.province = "";
+      this.address.ward = "";
+      this.address.specific_address = "";
+      this.errors = "";
+    },
+    saveSelectedAddress: function saveSelectedAddress() {
       this.selected_address = this.checked_address;
       $("#address_list").modal("hide");
       this.fetchAddresses();
+    },
+    saveAddress: function saveAddress() {
+      var _this8 = this;
+
+      if (this.edit === false) {
+        //add address
+        if (this.addresses.length < 5) {
+          var formData = new FormData();
+          formData.append("city", this.address.city);
+          formData.append("province", this.address.province);
+          formData.append("ward", this.address.ward);
+          formData.append("specific_address", this.address.specific_address);
+          formData.append("address_type", this.address.address_type);
+          formData.append("is_default", this.address.is_default);
+          axios.post("api/address", formData).then(function (response) {
+            // alert
+            var Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: function didOpen(toast) {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Add successfully"
+            }); // alert
+
+            _this8.errors = "";
+            $("#staticBackdrop").modal("hide");
+
+            _this8.fetchAddresses();
+          })["catch"](function (error) {
+            if (error.response.status == 422) {
+              _this8.errors = error.response.data.errors;
+            } // alert
+
+
+            var Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: function didOpen(toast) {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              }
+            });
+            Toast.fire({
+              icon: "error",
+              title: "Oops! Something went wrong"
+            }); // alert
+          });
+        } else {
+          // alert
+          var Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: function didOpen(toast) {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Oops! You have reach maximum of 5 address, delete or edit ones"
+          }); // alert
+        }
+      }
     }
   }
 });
@@ -5880,7 +6067,7 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.openAdd();
+          return _vm.openChange();
         }
       }
     }, [_vm._v("\n              Change your address\n            ")])])]) : _vm._e(), _vm._v(" "), _vm.selected_address == 0 ? _c("div", [address.is_default == 1 ? _c("div", [_c("div", {
@@ -5902,11 +6089,297 @@ var render = function render() {
       },
       on: {
         click: function click($event) {
-          return _vm.openAdd();
+          return _vm.openChange();
         }
       }
     }, [_vm._v("\n                Change your address\n              ")])])]) : _vm._e()]) : _vm._e()]);
-  }), 0) : _c("div", [_vm._m(0), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
+  }), 0) : _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-success",
+    attrs: {
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#staticBackdrop"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.openAdd();
+      }
+    }
+  }, [_vm._v("\n          Add address now\n        ")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "staticBackdrop",
+      "data-bs-backdrop": "static",
+      "data-bs-keyboard": "false",
+      tabindex: "-1",
+      "aria-labelledby": "staticBackdropLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog"
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.saveAddress.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "staticBackdropLabel"
+    }
+  }, [_vm._v("\n              Address: #" + _vm._s(_vm.address.address_id) + "\n            ")]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("div", {
+    staticClass: "input-group input-group-outline mb-3"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.city,
+      expression: "address.city"
+    }],
+    staticClass: "form-control",
+    "class": {
+      " is-invalid": _vm.errors.city
+    },
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+
+        _vm.$set(_vm.address, "city", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }, function ($event) {
+        return _vm.onChangeCity($event);
+      }]
+    }
+  }, [_c("option", {
+    attrs: {
+      disabled: "",
+      value: ""
+    }
+  }, [_vm._v("Select your city")]), _vm._v(" "), _vm._l(_vm.cities, function (city) {
+    return _c("option", {
+      key: city.matp,
+      domProps: {
+        value: city.matp
+      }
+    }, [_vm._v("\n                  " + _vm._s(city.name_city) + "\n                ")]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "input-group input-group-outline mb-3"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.province,
+      expression: "address.province"
+    }],
+    staticClass: "form-control",
+    "class": {
+      " is-invalid": _vm.errors.province
+    },
+    on: {
+      change: [function ($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+
+        _vm.$set(_vm.address, "province", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }, function ($event) {
+        return _vm.onChangeProvince($event);
+      }]
+    }
+  }, [_c("option", {
+    attrs: {
+      disabled: "",
+      value: ""
+    }
+  }, [_vm._v("Select your province")]), _vm._v(" "), _vm._l(_vm.provinces, function (province) {
+    return _c("option", {
+      key: province.maqh,
+      domProps: {
+        value: province.maqh
+      }
+    }, [_vm._v("\n                  " + _vm._s(province.name_quanhuyen) + "\n                ")]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "input-group input-group-outline mb-3"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.ward,
+      expression: "address.ward"
+    }],
+    staticClass: "form-control",
+    "class": {
+      " is-invalid": _vm.errors.ward
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+
+        _vm.$set(_vm.address, "ward", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      disabled: "",
+      value: ""
+    }
+  }, [_vm._v("Select your ward")]), _vm._v(" "), _vm._l(_vm.wards, function (ward) {
+    return _c("option", {
+      key: ward.xaid,
+      domProps: {
+        value: ward.xaid
+      }
+    }, [_vm._v("\n                  " + _vm._s(ward.name_xaphuong) + "\n                ")]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "input-group input-group-outline my-3"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.specific_address,
+      expression: "address.specific_address"
+    }],
+    staticClass: "form-control",
+    "class": {
+      " is-invalid": _vm.errors.specific_address
+    },
+    attrs: {
+      placeholder: "Specific address",
+      type: "text"
+    },
+    domProps: {
+      value: _vm.address.specific_address
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.address, "specific_address", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", [_vm._v("Address type:")]), _vm._v(" "), _c("div", {
+    staticClass: "form-check mb-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.address_type,
+      expression: "address.address_type"
+    }],
+    staticClass: "btn-check",
+    attrs: {
+      type: "radio",
+      id: "success-outlined",
+      value: "1"
+    },
+    domProps: {
+      checked: _vm._q(_vm.address.address_type, "1")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.address, "address_type", "1");
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "btn btn-outline-success",
+    attrs: {
+      "for": "success-outlined"
+    }
+  }, [_vm._v("Home")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.address_type,
+      expression: "address.address_type"
+    }],
+    staticClass: "btn-check",
+    attrs: {
+      type: "radio",
+      id: "danger-outlined",
+      value: "2"
+    },
+    domProps: {
+      checked: _vm._q(_vm.address.address_type, "2")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.address, "address_type", "2");
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "btn btn-outline-success",
+    attrs: {
+      "for": "danger-outlined"
+    }
+  }, [_vm._v("Office")])]), _vm._v(" "), _vm.errors && _vm.errors.address_type ? _c("span", {
+    staticStyle: {
+      color: "red"
+    }
+  }, [_vm._v("\n              " + _vm._s(_vm.errors.address_type[0]) + "\n            ")]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "form-check form-switch"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.address.is_default,
+      expression: "address.is_default"
+    }],
+    staticClass: "form-check-input",
+    attrs: {
+      type: "checkbox",
+      id: "flexSwitchCheckChecked",
+      disabled: _vm.disabled
+    },
+    domProps: {
+      checked: Array.isArray(_vm.address.is_default) ? _vm._i(_vm.address.is_default, null) > -1 : _vm.address.is_default
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.address.is_default,
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
+
+        if (Array.isArray($$a)) {
+          var $$v = null,
+              $$i = _vm._i($$a, $$v);
+
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.address, "is_default", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.address, "is_default", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.address, "is_default", $$c);
+        }
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "form-check-label",
+    attrs: {
+      "for": "flexSwitchCheckChecked"
+    }
+  }, [_vm._v("Set as default address")])])]), _vm._v(" "), _vm._m(2)])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       id: "address_list",
@@ -5920,7 +6393,7 @@ var render = function render() {
     staticClass: "modal-dialog"
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(2), _vm._v(" "), _vm._l(_vm.addresses, function (address, index) {
+  }, [_vm._m(3), _vm._v(" "), _vm._l(_vm.addresses, function (address, index) {
     return _c("div", {
       key: index,
       staticClass: "modal-body"
@@ -5963,6 +6436,19 @@ var render = function render() {
       staticClass: "badge rounded-pill bg-warning text-dark"
     }, [_vm._v("Office")])])])])]);
   }), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
+    staticClass: "justify-content-start mx-2"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-primary",
+    attrs: {
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#staticBackdrop"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.openAdd();
+      }
+    }
+  }, [_vm._v("\n            Add more address\n          ")])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
   }, [_c("button", {
     staticClass: "btn btn-secondary",
@@ -5977,7 +6463,7 @@ var render = function render() {
     },
     on: {
       click: function click($event) {
-        return _vm.saveAddress();
+        return _vm.saveSelectedAddress();
       }
     }
   }, [_vm._v("\n            Save\n          ")])])], 2)])])]);
@@ -5996,14 +6482,34 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", {
-    staticClass: "card-footer"
-  }, [_c("a", {
-    staticClass: "btn btn-outline-success",
+  return _c("a", {
     attrs: {
-      href: ""
+      type: "button"
     }
-  }, [_vm._v("Add address now")])]);
+  }, [_c("i", {
+    staticClass: "fa-solid fa-x",
+    attrs: {
+      "data-bs-dismiss": "modal"
+    }
+  })]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-secondary",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal"
+    }
+  }, [_vm._v("\n              Close\n            ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Save")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
