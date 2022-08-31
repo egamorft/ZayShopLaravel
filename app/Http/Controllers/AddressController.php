@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\Address;
 use App\Http\Requests\AddressRequest;
 use App\Http\Resources\AddressResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class AddressController extends Controller
@@ -67,6 +69,10 @@ class AddressController extends Controller
             $address->is_default = 0;
         }
         $address->save();
+        $get_address = Address::where('account_id', $account_id)->where('is_default', 1)->first();
+        if($get_address->address_id){
+            Account::where('account_id', $account_id)->update(['address_id' => $get_address->address_id]);
+        }
     }
 
     /**
@@ -100,6 +106,10 @@ class AddressController extends Controller
             }
         }
         $address->save();
+        $get_address = Address::where('account_id', $account_id)->where('is_default', 1)->first();
+        if($get_address->address_id){
+            Account::where('account_id', $account_id)->update(['address_id' => $get_address->address_id]);
+        }
     }
 
     /**
@@ -132,6 +142,10 @@ class AddressController extends Controller
             $address->is_default = 0;
         }
         $address->save();
+        $get_address = Address::where('account_id', $account_id)->where('is_default', 1)->first();
+        if($get_address->address_id){
+            Account::where('account_id', $account_id)->update(['address_id' => $get_address->address_id]);
+        }
     }
 
     /**
