@@ -3797,12 +3797,35 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = "";
     },
     saveSelectedAddress: function saveSelectedAddress() {
+      var _this8 = this;
+
+      axios.get("api/address/".concat(this.checked_address, "/edit")).then(function (res) {
+        _this8.fetchAddresses();
+      })["catch"](function (error) {
+        console.log(error); // alert
+
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: function didOpen(toast) {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Oops! Something went wrong"
+        }); // alert
+      });
       this.selected_address = this.checked_address;
       $("#address_list").modal("hide");
       this.fetchAddresses();
     },
     saveAddress: function saveAddress() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (this.edit === false) {
         //add address
@@ -3832,13 +3855,13 @@ __webpack_require__.r(__webpack_exports__);
               title: "Add successfully"
             }); // alert
 
-            _this8.errors = "";
+            _this9.errors = "";
             $("#staticBackdrop").modal("hide");
 
-            _this8.fetchAddresses();
+            _this9.fetchAddresses();
           })["catch"](function (error) {
             if (error.response.status == 422) {
-              _this8.errors = error.response.data.errors;
+              _this9.errors = error.response.data.errors;
             } // alert
 
 
@@ -6051,8 +6074,35 @@ var render = function render() {
     }, [address.address_id == _vm.selected_address ? _c("div", [_c("div", {
       staticClass: "card-body"
     }, [_c("h5", {
-      staticClass: "card-title"
-    }, [_vm._v("\n              " + _vm._s(address.specific_address) + "\n            ")]), _vm._v(" "), _c("p", {
+      staticClass: "card-title",
+      attrs: {
+        id: "specific_address"
+      }
+    }, [_vm._v("\n              " + _vm._s(address.specific_address) + "\n            ")]), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "ward_address"
+      },
+      domProps: {
+        value: address.ward_address.xaid
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "province_address"
+      },
+      domProps: {
+        value: address.province_address.maqh
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "city_address"
+      },
+      domProps: {
+        value: address.city_address.matp
+      }
+    }), _vm._v(" "), _c("p", {
       staticClass: "card-text"
     }, [_vm._v("\n              " + _vm._s(address.ward_address.name_xaphuong) + ",\n              " + _vm._s(address.province_address.name_quanhuyen) + ",\n              " + _vm._s(address.city_address.name_city) + "\n            ")]), _vm._v(" "), _c("span", {
       staticClass: "badge rounded-pill bg-success"
@@ -6073,8 +6123,35 @@ var render = function render() {
     }, [_vm._v("\n              Change your address\n            ")])])]) : _vm._e(), _vm._v(" "), _vm.selected_address == 0 ? _c("div", [address.is_default == 1 ? _c("div", [_c("div", {
       staticClass: "card-body"
     }, [_c("h5", {
-      staticClass: "card-title"
-    }, [_vm._v("\n                " + _vm._s(address.specific_address) + "\n              ")]), _vm._v(" "), _c("p", {
+      staticClass: "card-title",
+      attrs: {
+        id: "specific_address"
+      }
+    }, [_vm._v("\n                " + _vm._s(address.specific_address) + "\n              ")]), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "ward_address"
+      },
+      domProps: {
+        value: address.ward_address.xaid
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "province_address"
+      },
+      domProps: {
+        value: address.province_address.maqh
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "city_address"
+      },
+      domProps: {
+        value: address.city_address.matp
+      }
+    }), _vm._v(" "), _c("p", {
       staticClass: "card-text"
     }, [_vm._v("\n                " + _vm._s(address.ward_address.name_xaphuong) + ",\n                " + _vm._s(address.province_address.name_quanhuyen) + ",\n                " + _vm._s(address.city_address.name_city) + "\n              ")]), _vm._v(" "), _c("span", {
       staticClass: "badge rounded-pill bg-success"
@@ -6457,7 +6534,7 @@ var render = function render() {
       "data-bs-dismiss": "modal"
     }
   }, [_vm._v("\n            Close\n          ")]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary",
+    staticClass: "btn btn-primary save_change_address",
     attrs: {
       type: "button"
     },
@@ -6509,7 +6586,7 @@ var staticRenderFns = [function () {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("Save")])]);
+  }, [_vm._v("Add")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;

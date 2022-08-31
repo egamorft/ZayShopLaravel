@@ -962,6 +962,38 @@ https://templatemo.com/tm-559-zay-shop
         </script>
     @endif 
 
+    @if(Route::currentRouteNamed('check-out'))
+    <script>
+        $(document).ready(function() {
+            $('.save_change_address').click(function() {
+                console.log('click');
+                setTimeout(function() {
+                var specific_address = $('#specific_address').html().trim();
+                var city = $('input[name="city_address"]').val();
+                var province = $('input[name="province_address"]').val();
+                var ward = $('input[name="ward_address"]').val();
+                var _token = $('input[name="_token"]').val();
+                if (city && province && ward) {
+                    $.ajax({
+                        url: '{{url("/calculate-fee")}}',
+                        method: 'POST',
+                        data: {
+                            city: city,
+                            province: province,
+                            ward: ward,
+                            _token: _token
+                        },
+                        success: function(data) {
+                            location.reload();
+                        }
+                    });
+                }
+            }, 1000);
+            })
+        })
+    </script>
+    @endif
+
     <script>
         $(document).ready(function() {
             $('#automate_check_out').click(function() {

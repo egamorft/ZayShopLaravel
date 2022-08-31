@@ -6,9 +6,24 @@
         <div v-for="(address, index) in addresses" v-bind:key="index">
           <div v-if="address.address_id == selected_address">
             <div class="card-body">
-              <h5 class="card-title">
+              <h5 class="card-title" id="specific_address">
                 {{ address.specific_address }}
               </h5>
+              <input
+                type="hidden"
+                name="ward_address"
+                v-bind:value="address.ward_address.xaid"
+              />
+              <input
+                type="hidden"
+                name="province_address"
+                v-bind:value="address.province_address.maqh"
+              />
+              <input
+                type="hidden"
+                name="city_address"
+                v-bind:value="address.city_address.matp"
+              />
               <p class="card-text">
                 {{ address.ward_address.name_xaphuong }},
                 {{ address.province_address.name_quanhuyen }},
@@ -31,9 +46,24 @@
           <div v-if="selected_address == 0">
             <div v-if="address.is_default == 1">
               <div class="card-body">
-                <h5 class="card-title">
+                <h5 class="card-title" id="specific_address">
                   {{ address.specific_address }}
                 </h5>
+                <input
+                  type="hidden"
+                  name="ward_address"
+                  v-bind:value="address.ward_address.xaid"
+                />
+                <input
+                  type="hidden"
+                  name="province_address"
+                  v-bind:value="address.province_address.maqh"
+                />
+                <input
+                  type="hidden"
+                  name="city_address"
+                  v-bind:value="address.city_address.matp"
+                />
                 <p class="card-text">
                   {{ address.ward_address.name_xaphuong }},
                   {{ address.province_address.name_quanhuyen }},
@@ -203,7 +233,7 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary">Add</button>
             </div>
           </div>
         </form>
@@ -305,7 +335,7 @@
             <button
               type="button"
               @click="saveSelectedAddress()"
-              class="btn btn-primary"
+              class="btn btn-primary save_change_address"
             >
               Save
             </button>
@@ -469,6 +499,32 @@ export default {
       this.errors = "";
     },
     saveSelectedAddress: function () {
+      axios
+        .get(`api/address/${this.checked_address}/edit`)
+        .then((res) => {
+          this.fetchAddresses();
+        })
+        .catch((error) => {
+          console.log(error);
+          // alert
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "error",
+            title: "Oops! Something went wrong",
+          });
+          // alert
+        });
       this.selected_address = this.checked_address;
       $("#address_list").modal("hide");
       this.fetchAddresses();

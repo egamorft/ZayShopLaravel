@@ -45,6 +45,27 @@ class CheckoutController extends Controller
         }
         $city = City::orderby('matp', 'asc')->get();
         $address = Address::where('account_id', $account_id)->with('city_address')->with('province_address')->with('ward_address')->orderBy('is_default', 'desc')->first();
+        if($address){
+            $city = $address->city;
+            $province = $address->province;
+            $ward = $address->ward;
+            $feeship = Feeship::where('fee_matp', $city)
+                    ->where('fee_maqh', $province)
+                    ->where('fee_xaid', $ward)->first();
+            if ($feeship) {
+                if(Session::get('fee')){
+                    Session::forget('fee');
+                }
+                Session::put('fee', $feeship->fee_feeship);
+                Session::save();
+            } else {
+                if(Session::get('fee')){
+                    Session::forget('fee');
+                }
+                Session::put('fee', 50000);
+                Session::save();
+            }
+        }
         $address_list = Address::where('account_id', $account_id)->with('city_address')->with('province_address')->with('ward_address')->orderBy('is_default', 'desc')->get();
         return view('pages.checkout.shop_checkout')->with(compact('city', 'address', 'address_list'));
     }

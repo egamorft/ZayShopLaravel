@@ -54,7 +54,7 @@ class AddressController extends Controller
         $address->ward = $request->ward;
         $address->specific_address = $request->specific_address;
         $address->address_type = $request->address_type;
-        if ($request->is_default == 1 || $request->is_default == true) {
+        if ($request->is_default == "true") {
             $address->is_default = 1;
             $is_default_address = Address::where('account_id', $account_id)->where('is_default', 1)->get();
             if ($is_default_address->count() > 0) {

@@ -135,9 +135,9 @@ class DeliveryController extends Controller
     public function calculate_fee(Request $request)
     {
         $data = $request->all();
-        $city_id = sprintf("%02d", $data['matp']);
-        $province_id = sprintf("%03d", $data['maqh']);
-        $ward_id = sprintf("%05d", $data['xaid']);
+        $city_id = $data['city'];
+        $province_id = $data['province'];
+        $ward_id = $data['ward'];
 
         $city = City::find($city_id);
         $province = Province::find($province_id);
@@ -145,19 +145,22 @@ class DeliveryController extends Controller
         Session::put('address', ['city' => $city->name_city, 
                                 'province' => $province->name_quanhuyen,
                                 'ward' => $ward->name_xaphuong]);
-        if ($data['matp']) {
+        if ($data['city']) {
 
-            $feeship = Feeship::where('fee_matp', $data['matp'])
-                ->where('fee_maqh', $data['maqh'])
-                ->where('fee_xaid', $data['xaid'])->get();
-            $count_feeship = $feeship->count();
+            $feeship = Feeship::where('fee_matp', $data['city'])
+                ->where('fee_maqh', $data['province'])
+                ->where('fee_xaid', $data['ward'])->first();
 
-            if ($count_feeship > 0) {
-                foreach ($feeship as $key => $fee) {
-                    Session::put('fee', $fee->fee_feeship);
-                    Session::save();
+            if ($feeship) {
+                if(Session::get('fee')){
+                    Session::forget('fee');
                 }
+                Session::put('fee', $feeship->fee_feeship);
+                Session::save();
             } else {
+                if(Session::get('fee')){
+                    Session::forget('fee');
+                }
                 Session::put('fee', 50000);
                 Session::save();
             }

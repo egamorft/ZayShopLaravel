@@ -143,14 +143,14 @@ $total_usd = 0;
                         {{number_format(Session::get('fee'), 0 , ',' , '.')}} đ
                     </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between bg-light">
+                <!-- <li class="list-group-item d-flex justify-content-between bg-light">
                     <p>
                         {{ __('checkout/checkout.Delete address here') }}
                     </p>
                     <a class="cart_quantity_delete" href="{{url('/del-fee')}}">
                         <i style="color: red; font-size:120% ;" class="fa fa-xmark"></i>
                     </a>
-                </li>
+                </li> -->
                 <?php
                 if (Session::get('fee') != null) {
                     $total_all = Cart::pricetotal(0, ',', '') - $money_discount + $tax + Session::get('fee');
