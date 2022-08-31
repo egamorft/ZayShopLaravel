@@ -28,7 +28,8 @@ class CheckoutController extends Controller
                 return Redirect::to('/check-out');
             } elseif (($_GET['resultCode'] == 0)) {
                 $signature = $_GET['signature'];
-                return Redirect::to('/check-out')->with('signature', $signature);
+                Session::put('signature', $signature);
+                return Redirect::to('/check-out');
             } else {
                 Session::put('error', 'Something went wrong, please try another payment gate');
                 return Redirect::to('/check-out');
@@ -84,16 +85,6 @@ class CheckoutController extends Controller
         $shipping->shipping_method = $data['payment_select'];
         $shipping->save();
 
-        $check_account = Account::where('account_id', $account_id)->first();
-        $check_account_address = $check_account->account_address;
-
-        if ($check_account_address == null) {
-            $account = $check_account;
-            $account->account_address = $data['shipping_address'];
-            $account->update();
-            Session::put('account_address', $data['shipping_address']);
-        }
-
         $checkout_code = substr(md5(microtime()), rand(0, 26), 5);
         $shipping_id = $shipping->shipping_id;
 
@@ -127,6 +118,7 @@ class CheckoutController extends Controller
 
             Cart::destroy();
             Session::forget('coupon');
+            Session::forget('signature');
         }
     }
 
@@ -202,19 +194,5 @@ class CheckoutController extends Controller
         //Just a example, please check more in there
         // dd($jsonResult);
         return $jsonResult['payUrl'];
-    }
-
-    public function momo_payment_save_address(Request $request)
-    {
-        $account_id = Session::get('account_id');
-
-        $check_account = Account::where('account_id', $account_id)->first();
-        $check_account_address = $check_account->account_address;
-
-        if ($check_account_address == null) {
-            $check_account->account_address = $request->shipping_address;
-            $check_account->update();
-            Session::put('account_address', $request->shipping_address);
-        }
     }
 }

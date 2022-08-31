@@ -4,6 +4,9 @@
 
 <?php
 
+use App\Account;
+use App\Address;
+
 $content = Cart::content();
 
 $tax = Cart::pricetotal(0, ',', '') * 10 / 100;
@@ -131,7 +134,7 @@ $total_usd = 0;
                         </span>
                     </li>
                 @endif
-                @if(Session::get('fee') || Session::get('address'))
+                @if(Session::get('fee'))
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-danger">
                         <h6 class="my-0">
@@ -143,14 +146,6 @@ $total_usd = 0;
                         {{number_format(Session::get('fee'), 0 , ',' , '.')}} đ
                     </span>
                 </li>
-                <!-- <li class="list-group-item d-flex justify-content-between bg-light">
-                    <p>
-                        {{ __('checkout/checkout.Delete address here') }}
-                    </p>
-                    <a class="cart_quantity_delete" href="{{url('/del-fee')}}">
-                        <i style="color: red; font-size:120% ;" class="fa fa-xmark"></i>
-                    </a>
-                </li> -->
                 <?php
                 if (Session::get('fee') != null) {
                     $total_all = Cart::pricetotal(0, ',', '') - $money_discount + $tax + Session::get('fee');
@@ -215,16 +210,6 @@ $total_usd = 0;
                         <input readonly type="email" class="form-control shipping_email" 
                             name="shipping_email" id="shipping_email" 
                                 value="{{Session::get('account_email')}}">
-                    </div>
-
-                    <div class="col-12">
-                        <label for="shipping_address" class="form-label">
-                            {{ __('checkout/checkout.Address') }}
-                        </label>
-                        <strong style="color: red;">*</strong>
-                        <input type="text" class="form-control shipping_address" 
-                            name="shipping_address" id="shipping_address" 
-                                placeholder="Where ur house?..." value="{{Session::get('account_address')}}">
                     </div>
 
                     <div class="col-12">
@@ -431,35 +416,25 @@ $total_usd = 0;
                                                         <span class="d-block text-muted">
                                                             {{ __('checkout/checkout.Shipping') }}
                                                         </span>
-                                                        @if (Session::get('address'))
                                                         <span>
                                                             <?php 
-                                                                echo Session::get('address')['city']; 
+                                                                $account = Account::where('account_id', Session::get('account_id'))->first();
+                                                                $address = Address::where('address_id', $account->address_id)->with('city_address')->with('province_address')->with('ward_address')->first();
+                                                                echo $address->city_address->name_city;
                                                             ?>
                                                         </span>
-                                                        @else
-                                                        <span id="shipping_city"></span>
-                                                        @endif
                                                     </br>
-                                                        @if (Session::get('address'))
                                                         <span>
                                                             <?php 
-                                                                echo Session::get('address')['province'];
+                                                                echo $address->province_address->name_quanhuyen;
                                                             ?>
                                                         </span>
-                                                        @else
-                                                        <span id="shipping_province"></span>
-                                                        @endif
                                                     </br>
-                                                        @if (Session::get('address'))
                                                         <span>
                                                             <?php 
-                                                                echo Session::get('address')['ward']; 
+                                                                echo $address->ward_address->name_xaphuong;
                                                             ?>
                                                         </span>
-                                                        @else
-                                                        <span id="shipping_ward"></span>
-                                                        @endif
 
                                                     </div>
                                                 </td>
@@ -469,7 +444,11 @@ $total_usd = 0;
                                                         <span class="d-block text-muted">
                                                             {{ __('checkout/checkout.Address') }}
                                                         </span>
-                                                        <span id="shipping_address_field"></span>
+                                                        <span>
+                                                            <?php 
+                                                                echo $address->specific_address;
+                                                            ?>
+                                                        </span>
 
                                                     </div>
                                                 </td>

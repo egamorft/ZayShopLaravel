@@ -607,9 +607,6 @@
                 var ma_id = $(this).val();
                 var _token = $('input[name="_token"]').val();
                 var result = '';
-                // alert(action);
-                // alert(matp);
-                // alert(_token);
                 if (action == 'city') {
                     result = 'province';
                 } else {

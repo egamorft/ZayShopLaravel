@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Account;
-use App\Address;
 use App\Order;
 use App\OrderDetails;
 use App\Rules\Captcha;
@@ -76,15 +75,12 @@ class AccountController extends Controller
         $get_account = Account::where('account_id', Session::get('account_id'))->first();
 
         $get_account->account_name = $data['account_name'];
-        $get_account->account_address = $data['account_address'];
         $get_account->account_phone = $data['account_phone'];
         $get_account->update();
         Session::put('message', 'Change your information');
         Session::forget('account_name');
-        Session::forget('account_address');
         Session::forget('account_phone');
         Session::put('account_name', $get_account->account_name);
-        Session::put('account_address', $get_account->account_address);
         Session::put('account_phone', $get_account->account_phone);
         return Redirect::back();
     }
@@ -176,19 +172,5 @@ class AccountController extends Controller
 
         Session::put('message', 'Your password has been reset');
         return Redirect::to('/login');
-    }
-
-    public function change_address()
-    {
-        $account_id = Session::get('account_id');
-        $address_list = Address::with('city_address')
-                            ->with('province_address')
-                                ->with('ward_address')
-                                    ->where('account_id', $account_id)
-                                        ->orderBy('is_default', 'desc')
-                                        ->orderBy('city', 'asc')
-                                        ->get();
-        // dd($address_list);
-        return view('pages.profile.address')->with(compact('address_list'));
     }
 }

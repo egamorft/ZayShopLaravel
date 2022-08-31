@@ -91,10 +91,6 @@
                                 <span style="color: red">{{$message}}</span>
                                 @enderror
 
-                                <div class="col-md-12"><label class="labels">{{ __('profile/UserProfile.Address') }}</label>
-                                    <input name="account_address" type="text" class="form-control" value="<?php echo Session::get('account_address') ?>">
-                                </div>
-
                                 <div class="col-md-12"><label class="labels">{{ __('profile/UserProfile.Phone Number') }}</label>
                                     <input name="account_phone" type="text" class="form-control" value="<?php echo Session::get('account_phone') ?>">
                                 </div>

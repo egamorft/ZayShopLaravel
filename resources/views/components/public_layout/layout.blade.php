@@ -713,7 +713,7 @@ https://templatemo.com/tm-559-zay-shop
                         if (result.isConfirmed) {
                             var shipping_email = $('.shipping_email').val();
                             var shipping_name = $('.shipping_name').val();
-                            var shipping_address = $('.shipping_address').val();
+                            var shipping_address = $('#specific_address').text().trim();
                             var shipping_phone = $('.shipping_phone').val();
                             var shipping_notes = $('.shipping_notes').val();
                             var payment_select = $('.payment_select').val();
@@ -776,7 +776,6 @@ https://templatemo.com/tm-559-zay-shop
                                                     } else {
                                                         document.getElementById("shipping_method").innerHTML = 'Unidentified';
                                                     }
-                                                    document.getElementById("shipping_address_field").innerHTML = shipping_address;
                                                     $("#OrderBill").modal("toggle");
 
                                                     $('#closeBill').click(function() {
@@ -818,7 +817,7 @@ https://templatemo.com/tm-559-zay-shop
                     if (result.isConfirmed) {
                         var shipping_email = $('.shipping_email').val();
                         var shipping_name = $('.shipping_name').val();
-                        var shipping_address = $('.shipping_address').val();
+                        var shipping_address = $('#specific_address').text().trim();
                         var shipping_phone = $('.shipping_phone').val();
                         var shipping_notes = $('.shipping_notes').val();
                         var payment_select = $('.payment_select').val();
@@ -830,41 +829,31 @@ https://templatemo.com/tm-559-zay-shop
                         if (order_fee) {
                             if (shipping_email && shipping_name && shipping_address && shipping_phone && payment_select) {
                                 $.ajax({
-                                    url: '{{url("/momo-payment-save-address")}}',
+                                    url: '{{url("/momo-payment")}}',
                                     method: 'POST',
                                     data: {
+                                        shipping_email: shipping_email,
+                                        shipping_name: shipping_name,
                                         shipping_address: shipping_address,
+                                        shipping_phone: shipping_phone,
+                                        shipping_notes: shipping_notes,
+                                        total_momo: total_momo,
                                         _token: _token
                                     },
-                                    success: function(data) {
-                                        $.ajax({
-                                            url: '{{url("/momo-payment")}}',
-                                            method: 'POST',
-                                            data: {
-                                                shipping_email: shipping_email,
-                                                shipping_name: shipping_name,
-                                                shipping_address: shipping_address,
-                                                shipping_phone: shipping_phone,
-                                                shipping_notes: shipping_notes,
-                                                total_momo: total_momo,
-                                                _token: _token
+                                    beforeSend: function(){
+                                        Swal.fire({
+                                            title: 'Doing your payment, please check it!',
+                                            allowOutsideClick: false,
+                                            showConfirmButton: false,
+                                            didOpen: () => {
+                                                Swal.showLoading()
                                             },
-                                            beforeSend: function(){
-                                                Swal.fire({
-                                                    title: 'Doing your payment, please check it!',
-                                                    allowOutsideClick: false,
-                                                    showConfirmButton: false,
-                                                    didOpen: () => {
-                                                        Swal.showLoading()
-                                                    },
-                                                });
-
-                                            },
-                                            success: function(data) {
-                                                // console.log(data);
-                                                location.replace(data);
-                                            }
                                         });
+
+                                    },
+                                    success: function(data) {
+                                        // console.log(data);
+                                        location.replace(data);
                                     }
                                 });
                             } else {
@@ -998,7 +987,7 @@ https://templatemo.com/tm-559-zay-shop
             $('#automate_check_out').click(function() {
                 var shipping_email = $('.shipping_email').val();
                 var shipping_name = $('.shipping_name').val();
-                var shipping_address = $('.shipping_address').val();
+                var shipping_address = $('#specific_address').text().trim();
                 var shipping_phone = $('.shipping_phone').val();
                 var shipping_notes = $('.shipping_notes').val();
                 var payment_select = $('input[name="payment_select"]:checked').val();
@@ -1061,7 +1050,6 @@ https://templatemo.com/tm-559-zay-shop
                                         } else {
                                             document.getElementById("shipping_method").innerHTML = 'Unidentified';
                                         }
-                                        document.getElementById("shipping_address_field").innerHTML = shipping_address;
                                         $("#OrderBill").modal("toggle");
 
                                         $('#closeBill').click(function() {
