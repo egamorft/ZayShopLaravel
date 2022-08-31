@@ -93,6 +93,9 @@
                                         Shipping address
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
+                                        Shipping place
+                                    </th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
                                         Phone number
                                     </th>
                                     <th class="text-uppercase text-secondary font-weight-bolder opacity-7 ps-2">
@@ -117,7 +120,18 @@
                                     </td>
                                     <td>
                                         <p class="font-weight-bold mb-0">
-                                            {{$shipping->shipping_address}}
+                                            {{$shipping->shipping_specific_address}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="font-weight-bold mb-0">
+                                            {{$shipping->shipping_ward}}
+                                        </p>
+                                        <p class="font-weight-bold mb-0">
+                                            {{$shipping->shipping_province}}
+                                        </p>
+                                        <p class="font-weight-bold mb-0">
+                                            {{$shipping->shipping_city}}
                                         </p>
                                     </td>
                                     <td>

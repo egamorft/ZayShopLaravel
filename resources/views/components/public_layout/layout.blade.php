@@ -566,6 +566,10 @@ https://templatemo.com/tm-559-zay-shop
                         // element.innerHTML = '';
                         // actions.redirect('http://localhost/shopZay/check-out?status='+orderData.status);
                         var shipping_notes = $('.shipping_notes').val();
+                        var shipping_address = $('#specific_address').text().trim();
+                        var shipping_city = $('input[name="city_name"]').val();
+                        var shipping_province = $('input[name="province_name"]').val();
+                        var shipping_ward = $('input[name="ward_name"]').val();
                         var order_coupon = $('.order_coupon').val();
                         var _token = $('input[name="_token"]').val();
                         $.ajax({
@@ -605,7 +609,10 @@ https://templatemo.com/tm-559-zay-shop
                                     data: {
                                         shipping_email: orderData.payer.email_address,
                                         shipping_name: orderData.payer.name.given_name + " "+ orderData.payer.name.surname,
-                                        shipping_address: orderData.payer.address.address_line_1,
+                                        shipping_address: shipping_address,
+                                        shipping_city: shipping_city,
+                                        shipping_province: shipping_province,
+                                        shipping_ward: shipping_ward,
                                         shipping_phone: orderData.payer.phone.phone_number.national_number,
                                         shipping_notes: shipping_notes,
                                         payment_select: 3,
@@ -614,24 +621,6 @@ https://templatemo.com/tm-559-zay-shop
                                         _token: _token
                                     },
                                     success: function() {
-                                        var shipping_address = document.getElementById("shipping_address_field");
-                                        var shipping_city = document.getElementById("shipping_city");
-                                        var shipping_province = document.getElementById("shipping_province");
-                                        var shipping_ward = document.getElementById("shipping_ward");
-                                        document.getElementById("shipping_method").innerHTML = 'PAYPAL';
-                                        if(typeof(shipping_address) != 'undefined' && shipping_address != null){
-                                            shipping_address.innerHTML = orderData.payer.address.address_line_1;
-                                        }
-                                        if(typeof(shipping_city) != 'undefined' && shipping_city != null){
-                                            shipping_city.innerHTML = orderData.payer.address.country_code;
-                                        }
-                                        if(typeof(shipping_province) != 'undefined' && shipping_province != null){
-                                            shipping_province.innerHTML = orderData.payer.address.admin_area_1;
-                                        }
-                                        if(typeof(shipping_ward) != 'undefined' && shipping_ward != null){
-                                            shipping_ward.innerHTML = orderData.payer.address.admin_area_2;
-                                        }
-
                                         var paid = document.getElementById("paid");
                                         if (paid.style.display === "none") {
                                             paid.style.display = "block"
@@ -716,6 +705,9 @@ https://templatemo.com/tm-559-zay-shop
                             var shipping_address = $('#specific_address').text().trim();
                             var shipping_phone = $('.shipping_phone').val();
                             var shipping_notes = $('.shipping_notes').val();
+                            var shipping_city = $('input[name="city_name"]').val();
+                            var shipping_province = $('input[name="province_name"]').val();
+                            var shipping_ward = $('input[name="ward_name"]').val();
                             var payment_select = $('.payment_select').val();
                             var order_fee = $('.order_fee').val();
                             var order_coupon = $('.order_coupon').val();
@@ -730,6 +722,9 @@ https://templatemo.com/tm-559-zay-shop
                                             shipping_email: shipping_email,
                                             shipping_name: shipping_name,
                                             shipping_address: shipping_address,
+                                            shipping_city: shipping_city,
+                                            shipping_ward: shipping_ward,
+                                            shipping_province: shipping_province,
                                             shipping_phone: shipping_phone,
                                             shipping_notes: shipping_notes,
                                             order_fee: order_fee,
@@ -761,6 +756,9 @@ https://templatemo.com/tm-559-zay-shop
                                                     shipping_email: shipping_email,
                                                     shipping_name: shipping_name,
                                                     shipping_address: shipping_address,
+                                                    shipping_city: shipping_city,
+                                                    shipping_province: shipping_province,
+                                                    shipping_ward: shipping_ward,
                                                     shipping_phone: shipping_phone,
                                                     shipping_notes: shipping_notes,
                                                     payment_select: payment_select,
@@ -955,7 +953,6 @@ https://templatemo.com/tm-559-zay-shop
     <script>
         $(document).ready(function() {
             $('.save_change_address').click(function() {
-                console.log('click');
                 setTimeout(function() {
                 var city = $('input[name="city_address"]').val();
                 var province = $('input[name="province_address"]').val();
@@ -988,6 +985,9 @@ https://templatemo.com/tm-559-zay-shop
                 var shipping_email = $('.shipping_email').val();
                 var shipping_name = $('.shipping_name').val();
                 var shipping_address = $('#specific_address').text().trim();
+                var shipping_city = $('input[name="city_name"]').val();
+                var shipping_province = $('input[name="province_name"]').val();
+                var shipping_ward = $('input[name="ward_name"]').val();
                 var shipping_phone = $('.shipping_phone').val();
                 var shipping_notes = $('.shipping_notes').val();
                 var payment_select = $('input[name="payment_select"]:checked').val();
@@ -1035,6 +1035,9 @@ https://templatemo.com/tm-559-zay-shop
                                         shipping_email: shipping_email,
                                         shipping_name: shipping_name,
                                         shipping_address: shipping_address,
+                                        shipping_city: shipping_city,
+                                        shipping_province: shipping_province,
+                                        shipping_ward: shipping_ward,
                                         shipping_phone: shipping_phone,
                                         shipping_notes: shipping_notes,
                                         payment_select: payment_select,
@@ -1076,6 +1079,13 @@ https://templatemo.com/tm-559-zay-shop
                     )
                 }
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            window.setTimeout(function() {
+                $("#alertMessage").fadeOut(1000)
+            }, 2000);
         });
     </script>
 </body>

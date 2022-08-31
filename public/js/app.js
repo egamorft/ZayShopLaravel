@@ -6106,6 +6106,30 @@ var render = function render() {
       domProps: {
         value: address.city_address.matp
       }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "ward_name"
+      },
+      domProps: {
+        value: address.ward_address.name_xaphuong
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "province_name"
+      },
+      domProps: {
+        value: address.province_address.name_quanhuyen
+      }
+    }), _vm._v(" "), _c("input", {
+      attrs: {
+        type: "hidden",
+        name: "city_name"
+      },
+      domProps: {
+        value: address.city_address.name_city
+      }
     }), _vm._v(" "), _c("p", {
       staticClass: "card-text"
     }, [_vm._v("\n              " + _vm._s(address.ward_address.name_xaphuong) + ",\n              " + _vm._s(address.province_address.name_quanhuyen) + ",\n              " + _vm._s(address.city_address.name_city) + "\n            ")]), _vm._v(" "), _c("span", {

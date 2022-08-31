@@ -76,11 +76,15 @@ class CheckoutController extends Controller
         $account_id = Session::get('account_id');
 
         $data = $request->all();
+        dd($data);
         $shipping = new Shipping();
         $shipping->shipping_name = $data['shipping_name'];
         $shipping->shipping_email = $data['shipping_email'];
         $shipping->shipping_phone = $data['shipping_phone'];
-        $shipping->shipping_address = $data['shipping_address'];
+        $shipping->shipping_specific_address = $data['shipping_address'];
+        $shipping->shipping_city = $data['shipping_city'];
+        $shipping->shipping_province = $data['shipping_province'];
+        $shipping->shipping_ward = $data['shipping_ward'];
         $shipping->shipping_notes = $data['shipping_notes'];
         $shipping->shipping_method = $data['payment_select'];
         $shipping->save();
