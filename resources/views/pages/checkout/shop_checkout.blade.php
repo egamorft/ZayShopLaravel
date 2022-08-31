@@ -380,6 +380,7 @@ $total_usd = 0;
 
                                 <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
 
+                                @if (Session::get('account_id'))
                                     <table class="table table-borderless">
 
                                         <tbody>
@@ -456,6 +457,7 @@ $total_usd = 0;
                                         </tbody>
 
                                     </table>
+                                @endif
 
 
 
