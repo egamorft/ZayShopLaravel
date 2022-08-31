@@ -3859,6 +3859,10 @@ __webpack_require__.r(__webpack_exports__);
             $("#staticBackdrop").modal("hide");
 
             _this9.fetchAddresses();
+
+            if (_this9.disabled) {
+              window.location.reload();
+            }
           })["catch"](function (error) {
             if (error.response.status == 422) {
               _this9.errors = error.response.data.errors;

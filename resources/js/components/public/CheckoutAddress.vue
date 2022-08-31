@@ -565,6 +565,9 @@ export default {
               this.errors = "";
               $("#staticBackdrop").modal("hide");
               this.fetchAddresses();
+              if(this.disabled){
+                window.location.reload();
+              }
             })
             .catch((error) => {
               if (error.response.status == 422) {

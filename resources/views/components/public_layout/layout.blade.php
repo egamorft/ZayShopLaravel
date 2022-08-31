@@ -539,7 +539,7 @@ https://templatemo.com/tm-559-zay-shop
             <script>
                 initPayPalButton();
                 function initPayPalButton() {
-                if(document.getElementById("fieldset") != null){
+                if(document.getElementById("fee_ship") != null){
                     var total_usd = document.getElementById("total_usd").value;
                     paypal.Buttons({
                     style: {
@@ -968,7 +968,6 @@ https://templatemo.com/tm-559-zay-shop
             $('.save_change_address').click(function() {
                 console.log('click');
                 setTimeout(function() {
-                var specific_address = $('#specific_address').html().trim();
                 var city = $('input[name="city_address"]').val();
                 var province = $('input[name="province_address"]').val();
                 var ward = $('input[name="ward_address"]').val();

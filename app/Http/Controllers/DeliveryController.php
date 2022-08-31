@@ -124,14 +124,6 @@ class DeliveryController extends Controller
         }
     }
 
-
-    public function del_fee()
-    {
-        Session::forget('fee');
-        Session::forget('address');
-
-        return redirect()->back()->with('message', 'Delete old address');
-    }
     public function calculate_fee(Request $request)
     {
         $data = $request->all();

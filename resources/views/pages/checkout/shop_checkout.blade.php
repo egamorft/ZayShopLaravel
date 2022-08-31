@@ -563,7 +563,7 @@ $total_usd = 0;
                                                     <td>
                                                         <div class="text-left">
 
-                                                            <span class="text-muted">
+                                                            <span class="text-muted" id="fee_ship">
                                                                 {{ __('checkout/checkout.Shipping Fee') }}
                                                             </span>
 
