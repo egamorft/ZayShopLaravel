@@ -6,8 +6,8 @@ use App\Category;
 use App\Http\Requests\AdminCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Product;
+use App\SubCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -71,12 +71,10 @@ class CategoryController extends Controller
         if ($category->category_status == 0) {
             $category->category_status = 1;
         } else {
-            DB::table('tbl_subcategory')
-                ->where('category_id', $category->category_id)
+            SubCategory::where('category_id', $category->category_id)
                 ->update(['subcategory_status' => 0]);
 
-            DB::table('tbl_product')
-                ->where('category_id', $category->category_id)
+            SubCategory::where('category_id', $category->category_id)
                 ->update(['product_status' => 0]);
             $category->category_status = 0;
         }
@@ -114,12 +112,10 @@ class CategoryController extends Controller
 
     public function shop_category(Request $request, $category_id)
     {
-        $category = DB::table('tbl_category')
-            ->where('category_status', '1')
+        $category = Category::where('category_status', '1')
             ->orderBy('category_id', 'asc')
             ->get();
-        $subcategory = DB::table('tbl_subcategory')
-            ->where('subcategory_status', '1')
+        $subcategory = Category::where('subcategory_status', '1')
             ->orderBy('category_id', 'asc')
             ->get();
 

@@ -9,7 +9,6 @@ use App\Rules\Captcha;
 use App\Statistic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Svg\Tag\Rect;
@@ -136,8 +135,7 @@ class AccountController extends Controller
         $data = array();
         $data['email'] = $email;
         $data['verify_code'] = $verify_code;
-        DB::table('tbl_account')
-            ->where('account_email', $email)
+        Account::where('account_email', $email)
             ->update(['verify_code' => $verify_code]);
 
         return redirect()->route('verify-code-reset-password', $data);
@@ -166,8 +164,7 @@ class AccountController extends Controller
         );
         $verify_code = $data['verify_code'];
         $new_password = md5($data['account_password']);
-        DB::table('tbl_account')
-            ->where('verify_code', $verify_code)
+        Account::where('verify_code', $verify_code)
             ->update(['account_password' => $new_password, 'verify_code' => null]);
 
         Session::put('message', 'Your password has been reset');

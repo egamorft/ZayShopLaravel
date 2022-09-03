@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Cart;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -14,8 +14,7 @@ class CartController extends Controller
     {
         $product_id = $request->productid_hidden;
         $quantity = $request->qty;
-        $product_info = DB::table('tbl_product')
-            ->where('product_id', $product_id)->first();
+        $product_info = Product::where('product_id', $product_id)->first();
 
         $data['id'] = $product_info->product_id;
         $data['qty'] = $quantity;
@@ -60,7 +59,7 @@ class CartController extends Controller
     {
         $product_id = $request->productid_hidden;
         $quantity = '1';
-        $product_info = DB::table('tbl_product')->where('product_id', $product_id)->first();
+        $product_info = Product::where('product_id', $product_id)->first();
 
         $data['id'] = $product_info->product_id;
         $data['qty'] = $quantity;

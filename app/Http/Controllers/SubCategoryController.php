@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\AdminSubCategoryRequest;
 use App\Http\Resources\SubCategoryResource;
 use App\Product;
 use App\SubCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SubCategoryController extends Controller
 {
@@ -70,8 +70,7 @@ class SubCategoryController extends Controller
         if ($subcategory->subcategory_status == 0) {
             $subcategory->subcategory_status = 1;
         } else {
-            DB::table('tbl_product')
-                ->where('subcategory_id', $subcategory->subcategory_id)
+            Product::where('subcategory_id', $subcategory->subcategory_id)
                 ->update(['product_status' => 0]);
             $subcategory->subcategory_status = 0;
         }
@@ -110,12 +109,10 @@ class SubCategoryController extends Controller
     //public page
     public function shop_subcategory(Request $request, $subcategory_id)
     {
-        $category = DB::table('tbl_category')
-            ->where('category_status', '1')
+        $category = Category::where('category_status', '1')
             ->orderBy('category_id', 'asc')
             ->get();
-        $subcategory = DB::table('tbl_subcategory')
-            ->where('subcategory_status', '1')
+        $subcategory = Subcategory::where('subcategory_status', '1')
             ->orderBy('category_id', 'asc')
             ->get();
 

@@ -7,7 +7,6 @@ use App\Feeship;
 use App\Province;
 use App\Wards;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -72,14 +71,11 @@ class DeliveryController extends Controller
         $fee_ship->fee_maqh = $data['province'];
         $fee_ship->fee_xaid = $data['wards'];
 
-        $check_matp = DB::table('tbl_feeship')
-            ->where('fee_matp', $fee_ship->fee_matp)
+        $check_matp = Feeship::where('fee_matp', $fee_ship->fee_matp)
             ->first();
-        $check_maqh = DB::table('tbl_feeship')
-            ->where('fee_maqh', $fee_ship->fee_maqh)
+        $check_maqh = Feeship::where('fee_maqh', $fee_ship->fee_maqh)
             ->first();
-        $check_xaid = DB::table('tbl_feeship')
-            ->where('fee_xaid', $fee_ship->fee_xaid)
+        $check_xaid = Feeship::where('fee_xaid', $fee_ship->fee_xaid)
             ->first();
 
         if ($check_matp == true && $check_maqh == true && $check_xaid == true) {

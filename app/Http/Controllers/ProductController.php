@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\AdminProductRequest;
 use App\Product;
+use App\SubCategory;
 use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,11 +18,9 @@ class ProductController extends Controller
     //Admin Page
     public function show_product()
     {
-        $get_category = DB::table('tbl_category')
-            ->where('category_status', '1')
+        $get_category = Category::where('category_status', '1')
             ->get();
-        $get_subcategory = DB::table('tbl_subcategory')
-            ->where('subcategory_status', '1')
+        $get_subcategory = SubCategory::where('subcategory_status', '1')
             ->get();
 
         if (isset($_GET['sort_by'])) {
@@ -115,8 +115,7 @@ class ProductController extends Controller
             $output = '';
 
             if ($data['action'] == "category") {
-                $select_subcategory = DB::table('tbl_subcategory')
-                    ->where('category_id', $data['cate_id'])
+                $select_subcategory = Subcategory::where('category_id', $data['cate_id'])
                     ->where('subcategory_status', '1')
                     ->orderby('category_id', 'asc')
                     ->get();
@@ -133,11 +132,9 @@ class ProductController extends Controller
 
     public function add_product()
     {
-        $get_category = DB::table('tbl_category')
-            ->where('category_status', '1')
+        $get_category = Category::where('category_status', '1')
             ->get();
-        $get_subcategory = DB::table('tbl_subcategory')
-            ->where('subcategory_status', '1')
+        $get_subcategory = SubCategory::where('subcategory_status', '1')
             ->get();
 
         return view('admin.product.add_product')->with(compact('get_category', 'get_subcategory'));
@@ -168,7 +165,7 @@ class ProductController extends Controller
                     . '.' . $get_image->getClientOriginalExtension();
                 $get_image->move('storage/app/public/products', $new_image);
                 $data['product_image'] = $new_image;
-                DB::table('tbl_product')->insert($data);
+                Product::insert($data);
                 Session::put('message', 'Add product');
                 return Redirect::to('/show-product');
             }
@@ -176,8 +173,7 @@ class ProductController extends Controller
     }
     public function unactive_product($product_id)
     {
-        $unactive_result = DB::table('tbl_product')
-            ->where('product_id', $product_id)
+        $unactive_result = Product::where('product_id', $product_id)
             ->update(['product_status' => 0]);
         if ($unactive_result != 0) {
             Session::put('message', 'Unactive product ' . $product_id);
@@ -189,8 +185,7 @@ class ProductController extends Controller
 
     public function active_product($product_id)
     {
-        $active_result = DB::table('tbl_product')
-            ->where('product_id', $product_id)
+        $active_result = Product::where('product_id', $product_id)
             ->update(['product_status' => 1]);
         if ($active_result != 0) {
             Session::put('message', 'Active product ' . $product_id);
@@ -202,14 +197,11 @@ class ProductController extends Controller
 
     public function edit_product($product_id)
     {
-        $get_category = DB::table('tbl_category')
-            ->where('category_status', '1')
+        $get_category = Category::where('category_status', '1')
             ->get();
-        $get_subcategory = DB::table('tbl_subcategory')
-            ->where('subcategory_status', '1')
+        $get_subcategory = SubCategory::where('subcategory_status', '1')
             ->get();
-        $edit_product = DB::table('tbl_product')
-            ->where('product_id', $product_id)
+        $edit_product = Product::where('product_id', $product_id)
             ->get();
 
         $manager_product = view('admin.product.edit_product')
@@ -247,15 +239,13 @@ class ProductController extends Controller
                     $get_image->getClientOriginalExtension();
                 $get_image->move('storage/app/public/products', $new_image);
                 $data['product_image'] = $new_image;
-                DB::table('tbl_product')
-                    ->where('product_id', $product_id)
+                Product::where('product_id', $product_id)
                     ->update($data);
 
                 Session::put('message', 'Update product' . $product_id);
                 return Redirect::to('/show-product');
             } else {
-                DB::table('tbl_product')
-                    ->where('product_id', $product_id)
+                Product::where('product_id', $product_id)
                     ->update($data);
 
                 Session::put('message', 'Update product ' . $product_id . ' without change image');
@@ -270,8 +260,7 @@ class ProductController extends Controller
         $product_image = $product->product_image;
         $old_file_path = 'storage/app/public/products/' . $product_image;
         unlink($old_file_path);
-        $delete_result = DB::table('tbl_product')
-            ->where('product_id', $product_id)
+        $delete_result = Product::where('product_id', $product_id)
             ->delete();
         if ($delete_result != 0) {
             Session::put('message', 'Successfully delete product ' . $product_id);

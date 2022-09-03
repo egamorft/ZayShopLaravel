@@ -11,7 +11,6 @@ use App\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\Imports\ExcelImport;
@@ -137,8 +136,7 @@ class OrderController extends Controller
       if ($get_coupon_code) {
         $new_coupon_time = $get_coupon_code->coupon_time - 1;
 
-        DB::table('tbl_coupon')
-          ->where('coupon_code', $coupon_code)
+        Coupon::where('coupon_code', $coupon_code)
           ->update(['coupon_time' => $new_coupon_time]);
       }
 
@@ -162,8 +160,7 @@ class OrderController extends Controller
       if ($get_coupon_code) {
         $new_coupon_time = $get_coupon_code->coupon_time + 1;
 
-        DB::table('tbl_coupon')
-          ->where('coupon_code', $coupon_code)
+        Coupon::where('coupon_code', $coupon_code)
           ->update(['coupon_time' => $new_coupon_time]);
       }
 

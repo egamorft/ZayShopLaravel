@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Category;
 use App\Http\Requests\PublicLoginRequest;
 use App\Http\Requests\PublicRegisterRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\Login;
@@ -14,6 +14,7 @@ use App\Product;
 use App\Social;
 use App\Rules\Captcha;
 use App\Slider;
+use App\SubCategory;
 use App\Visitors;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -54,12 +55,10 @@ class HomeController extends Controller
 
     public function shop()
     {
-        $category = DB::table('tbl_category')
-            ->where('category_status', '1')
+        $category = Category::where('category_status', '1')
             ->orderBy('category_id', 'asc')
             ->get();
-        $subcategory = DB::table('tbl_subcategory')
-            ->where('subcategory_status', '1')
+        $subcategory = SubCategory::where('subcategory_status', '1')
             ->orderBy('category_id', 'asc')
             ->get();
 
@@ -134,8 +133,7 @@ class HomeController extends Controller
         $request->except('_token');
         $email = $request->account_email;
         $password = md5($request->account_password);
-        $result = DB::table('tbl_account')
-            ->where('account_email', $email)
+        $result = Account::where('account_email', $email)
             ->where('account_password', $password)->first();
 
         if ($result) {
@@ -160,8 +158,7 @@ class HomeController extends Controller
     {
         $request->except('_token');
         $email = $request->account_email;
-        $result = DB::table('tbl_account')
-            ->where('account_email', $email)
+        $result = Account::where('account_email', $email)
             ->first();
 
         if ($result) {
@@ -176,7 +173,7 @@ class HomeController extends Controller
             $data['account_password'] = md5($request->account_password);
             $data['verify_code'] = md5(uniqid());
 
-            $account_id = DB::table('tbl_account')->insertGetId($data);
+            $account_id = Account::insertGetId($data);
 
             if ($account_id) {
                 return redirect()->route('confirm-account', $data);
@@ -191,11 +188,9 @@ class HomeController extends Controller
     {
         $check_verify_code = Account::where('verify_code', $verify_code)->first();
         if ($check_verify_code) {
-            DB::table('tbl_account')
-                ->where('verify_code', $verify_code)
+            Account::where('verify_code', $verify_code)
                 ->update(['account_confirmation' => 1]);
-            DB::table('tbl_account')
-                ->where('verify_code', $verify_code)
+            Account::where('verify_code', $verify_code)
                 ->update(['verify_code' => null]);
             Session::put('message', 'Verify your account, now you can login');
             return Redirect::to('/login');
@@ -219,8 +214,7 @@ class HomeController extends Controller
     {
         $users = Socialite::driver('google')->stateless()->user();
         // return $users->id;
-        $check_email_existed = DB::table('tbl_account')
-            ->where('account_email', $users->email)
+        $check_email_existed = Account::where('account_email', $users->email)
             ->first();
 
         if ($check_email_existed) {
@@ -330,11 +324,9 @@ class HomeController extends Controller
     {
         $keywords = $request->keywords_submit;
 
-        $category = DB::table('tbl_category')
-            ->where('category_status', '1')
+        $category = SubCategory::where('category_status', '1')
             ->orderBy('category_id', 'asc')->get();
-        $subcategory = DB::table('tbl_subcategory')
-            ->where('subcategory_status', '1')
+        $subcategory = SubCategory::where('subcategory_status', '1')
             ->orderBy('category_id', 'asc')->get();
 
         if (isset($_GET['sort_by'])) {
