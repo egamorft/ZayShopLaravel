@@ -76,7 +76,6 @@ class CheckoutController extends Controller
         $account_id = Session::get('account_id');
 
         $data = $request->all();
-        dd($data);
         $shipping = new Shipping();
         $shipping->shipping_name = $data['shipping_name'];
         $shipping->shipping_email = $data['shipping_email'];

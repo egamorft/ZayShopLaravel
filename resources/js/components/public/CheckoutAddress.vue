@@ -79,6 +79,21 @@
                   name="city_address"
                   v-bind:value="address.city_address.matp"
                 />
+              <input
+                type="hidden"
+                name="ward_name"
+                v-bind:value="address.ward_address.name_xaphuong"
+              />
+              <input
+                type="hidden"
+                name="province_name"
+                v-bind:value="address.province_address.name_quanhuyen"
+              />
+              <input
+                type="hidden"
+                name="city_name"
+                v-bind:value="address.city_address.name_city"
+              />
                 <p class="card-text">
                   {{ address.ward_address.name_xaphuong }},
                   {{ address.province_address.name_quanhuyen }},

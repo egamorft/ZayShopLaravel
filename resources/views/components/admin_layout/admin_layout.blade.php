@@ -912,6 +912,55 @@
                 });
             });
     </script>
+    <script>
+        $('.delete_order').click(function() {
+            var form =  $(this).closest("form");
+            Swal.fire({
+                title: "Delete this order ?",
+                showClass: {
+                popup: "animate__animated animate__fadeInDown",
+                },
+                hideClass: {
+                popup: "animate__animated animate__fadeOutUp",
+                },
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $('.delete_product').click(function() {
+            var form =  $(this).closest("form");
+            Swal.fire({
+                title: "Delete this product ?",
+                showClass: {
+                popup: "animate__animated animate__fadeInDown",
+                },
+                hideClass: {
+                popup: "animate__animated animate__fadeOutUp",
+                },
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

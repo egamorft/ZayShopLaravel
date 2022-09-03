@@ -180,11 +180,14 @@
                                         </a>
                                     </td>
                                     <td class="align-middle">
-                                        <a onclick="return confirm('Are you sure to delete?')" href="{{URL::to('/delete-product/'.$pro->product_id)}}" class="font-weight-bold" data-toggle="tooltip">
-                                            <i class="material-icons" style="font-size: 30px;">
-                                                delete
-                                            </i>
-                                        </a>
+                                        <form action="{{ URL::to('/delete-product/'.$pro->product_id) }}" method="GET">
+                                            @csrf
+                                            <a type="button" class="font-weight-bold delete_product" data-toggle="tooltip">
+                                                <i class="material-icons" style="font-size: 30px;">
+                                                    delete
+                                                </i>
+                                            </a>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
