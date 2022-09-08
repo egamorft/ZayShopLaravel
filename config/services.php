@@ -31,15 +31,15 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '508433067730596', 
-        'client_secret' => '32d6dc4d7a38e20848ca243923bf53ba', 
-        'redirect' => 'http://localhost/shopZay/callback' 
+        'client_id' => env('FACEBOOK_APP_ID'), 
+        'client_secret' => env('FACEBOOK_APP_SECRET'), 
+        'redirect' => env('FACEBOOK_APP_CALLBACK_URL'),
     ],
 
     'google' => [
-        'client_id' => '822453206136-g514hsocegdmnccc8ocog1d7adp1a6c8.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'http://localhost/shopZay/google/callback' 
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
     'captcha' => [
         'captcha_key' => env('CAPTCHA_KEY'),

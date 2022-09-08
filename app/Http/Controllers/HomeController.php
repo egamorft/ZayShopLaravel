@@ -228,9 +228,11 @@ class HomeController extends Controller
         } else {
 
             $authUser = $this->findOrCreateUser($users, 'google');
-            $account_name = Account::where('account_id', $authUser->user)->first();
+            $account_name = Account::where('account_id', $authUser)->first();
             Session::put('account_name', $account_name->account_name);
             Session::put('account_id', $account_name->account_id);
+            Session::put('account_email', $check_email_existed->account_email);
+            Session::put('account_phone', $check_email_existed->account_phone);
 
             return redirect('/shop')->with('message', 'Successfully login with google');
         }
@@ -264,10 +266,8 @@ class HomeController extends Controller
         $result->save();
 
         $account_name = Account::where('account_id', $result->user)->first();
-        Session::put('account_name', $account_name->account_name);
-        Session::put('account_id', $account_name->account_id);
-
-        return redirect('/shop')->with('message', 'Successfully login');
+      
+      	return $account_name->account_id;
     }
 
 
@@ -293,7 +293,7 @@ class HomeController extends Controller
 
             $result = new Social([
                 'provider_user_id' => $provider->getId(),
-                'provider' => 'facebook'
+                'provider' => 'FACEBOOK'
             ]);
 
             $orang = Account::where('account_email', $provider->getEmail())->first();

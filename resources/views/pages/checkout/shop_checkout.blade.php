@@ -217,7 +217,7 @@ $total_usd = 0;
                             {{ __('checkout/checkout.Phone') }}
                         </label>
                         <strong style="color: red;">*</strong>
-                        <input readonly type="text" class="form-control shipping_phone" 
+                        <input type="text" class="form-control shipping_phone" 
                             name="shipping_phone" id="shipping_phone" 
                                 value="{{Session::get('account_phone')}}">
                     </div>
